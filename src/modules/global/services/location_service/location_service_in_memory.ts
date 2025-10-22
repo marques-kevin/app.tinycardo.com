@@ -4,7 +4,7 @@ export class LocationServiceInMemory implements LocationService {
   private current_url: string
 
   constructor() {
-    this.current_url = "https://local.dev"
+    this.current_url = this.get_domain()
   }
 
   get_current_url(): string {
@@ -16,7 +16,11 @@ export class LocationServiceInMemory implements LocationService {
   }
 
   navigate(url: string): void {
-    this.current_url = url
+    if (url.startsWith("/")) {
+      this.current_url = this.get_domain() + url
+    } else {
+      this.current_url = url
+    }
   }
 
   refresh(): void {}
