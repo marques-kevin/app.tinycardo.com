@@ -112,15 +112,12 @@ describe("sessions actions", () => {
       `/sessions/${deck.id}/learn_new_words`,
     )
 
-    await redux.store.dispatch(
-      sessions_actions.start_session({
-        mode: "learn_new_words",
-      }),
-    )
+    await redux.store.dispatch(sessions_actions.start_session({}))
 
     const state = redux.store.getState().sessions
 
     expect(state.words_to_review.length).toEqual(2)
+    expect(state.mode).toEqual("learn_new_words")
   })
 
   it(`in randomized mode, should not update history`, async () => {
