@@ -9,7 +9,6 @@ import { CreateDeckPage } from "@/modules/decks/pages/create_deck_page"
 import { DeckDetailsPage } from "@/modules/decks/pages/deck_details_page"
 import { AuthenticationProtection } from "@/modules/authentication/components/authentication_protection/authentication_protection"
 import { DialogCrashError } from "./modules/dialog/components/dialog_crash_error/dialog_crash_error"
-import { GlobalFooter } from "./modules/global/components/global_footer/global_footer"
 
 function App() {
   return (
@@ -28,7 +27,6 @@ function App() {
             <Route path="/create_new_deck" element={<CreateDeckPage />} />
             <Route path="/sessions/:deck_id/:mode" element={<SessionPage />} />
           </Routes>
-          <GlobalFooter />
         </BrowserRouter>
         <Dialog />
         <DialogCrashError />
