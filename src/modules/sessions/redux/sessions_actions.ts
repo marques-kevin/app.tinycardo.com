@@ -63,7 +63,7 @@ export const start_session = createAsyncThunk<
     const { params } = getState()
     const url = extra.location_service.get_current_url()
 
-    const matched = UrlMatcherService.extract(`/decks/:deck_id/:mode`, url)
+    const matched = UrlMatcherService.extract(`/sessions/:deck_id/:mode`, url)
     let deck_id = matched.deck_id
     let mode = matched.mode as SessionsState["mode"]
 
