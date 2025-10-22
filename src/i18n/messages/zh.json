@@ -61,5 +61,10 @@
   "params_session_behavior/how_many_words_to_randomized/label": "随机模式下有多少张卡片？",
   "params_session_behavior/how_many_words_to_review/label": "要复习多少张卡片？",
   "params_session_behavior/section/description": "在这里，您可以选择每次训练中显示的卡片数量。",
-  "params_session_behavior/section/title": "会话设置"
+  "params_session_behavior/section/title": "会话设置",
+  "create_deck_footer_actions/save": "创建卡片组",
+  "decks_list_placeholder/create": "创建新课程",
+  "decks_list_placeholder/description": "您可以创建或搜索社区制作的课程。",
+  "decks_list_placeholder/discover": "发现课程",
+  "decks_list_placeholder/title": "想学习新知识吗？"
 }

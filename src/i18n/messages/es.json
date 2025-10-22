@@ -61,5 +61,10 @@
   "params_session_behavior/how_many_words_to_randomized/label": "¿Cuántas tarjetas en modo aleatorio?",
   "params_session_behavior/how_many_words_to_review/label": "¿Cuántas tarjetas revisar?",
   "params_session_behavior/section/description": "Aquí, puedes seleccionar el número de tarjetas que se mostrarán en cada sesión.",
-  "params_session_behavior/section/title": "Configuración de sesión"
+  "params_session_behavior/section/title": "Configuración de sesión",
+  "create_deck_footer_actions/save": "Crear mazo",
+  "decks_list_placeholder/create": "Crea una nueva lección",
+  "decks_list_placeholder/description": "Puedes crear o buscar lecciones hechas por la comunidad.",
+  "decks_list_placeholder/discover": "Descubre lecciones",
+  "decks_list_placeholder/title": "¿Quieres aprender cosas nuevas?"
 }

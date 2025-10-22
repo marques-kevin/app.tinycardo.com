@@ -61,5 +61,10 @@
   "params_session_behavior/how_many_words_to_randomized/label": "Wie viele Karten im Zufallsmodus?",
   "params_session_behavior/how_many_words_to_review/label": "Wie viele Karten überprüfen?",
   "params_session_behavior/section/description": "Hier können Sie die Anzahl der Karten auswählen, die in jeder Sitzung angezeigt werden.",
-  "params_session_behavior/section/title": "Sitzungseinstellungen"
+  "params_session_behavior/section/title": "Sitzungseinstellungen",
+  "create_deck_footer_actions/save": "Deck erstellen",
+  "decks_list_placeholder/create": "Neue Lektion erstellen",
+  "decks_list_placeholder/description": "Du kannst Lektionen erstellen oder nach von der Community erstellten Lektionen suchen.",
+  "decks_list_placeholder/discover": "Entdecke Lektionen",
+  "decks_list_placeholder/title": "Möchtest du Neues lernen?"
 }

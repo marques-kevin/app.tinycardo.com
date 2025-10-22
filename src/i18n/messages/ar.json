@@ -61,5 +61,10 @@
   "params_session_behavior/how_many_words_to_randomized/label": "عدد البطاقات في الوضع العشوائي؟",
   "params_session_behavior/how_many_words_to_review/label": "كم عدد البطاقات للمراجعة؟",
   "params_session_behavior/section/description": "هنا، يمكنك اختيار عدد البطاقات المعروضة في كل جلسة.",
-  "params_session_behavior/section/title": "إعدادات الجلسة"
+  "params_session_behavior/section/title": "إعدادات الجلسة",
+  "create_deck_footer_actions/save": "إنشاء مجموعة",
+  "decks_list_placeholder/create": "إنشاء درس جديد",
+  "decks_list_placeholder/description": "يمكنك إنشاء أو البحث عن دروس أنشأتها المجتمع.",
+  "decks_list_placeholder/discover": "اكتشف الدروس",
+  "decks_list_placeholder/title": "هل تريد تعلم أشياء جديدة؟"
 }

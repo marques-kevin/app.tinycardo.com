@@ -37,7 +37,7 @@ export function Wrapper(props: ContainerProps) {
         <div className="flex items-center gap-2">
           <select
             id="theme-picker"
-            className="select select-bordered select-sm"
+            className="select select-bordered appearance-none"
             value={props.selected_theme}
             onChange={(e) => props.on_change_theme(e.target.value)}
           >

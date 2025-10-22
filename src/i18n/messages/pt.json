@@ -61,5 +61,10 @@
   "params_session_behavior/how_many_words_to_randomized/label": "Quantas cartas no modo aleatório?",
   "params_session_behavior/how_many_words_to_review/label": "Quantas flashcards revisar?",
   "params_session_behavior/section/description": "Aqui, você pode selecionar o número de flashcards exibidos em cada sessão.",
-  "params_session_behavior/section/title": "Configurações da sessão"
+  "params_session_behavior/section/title": "Configurações da sessão",
+  "create_deck_footer_actions/save": "Criar baralho",
+  "decks_list_placeholder/create": "Criar uma nova aula",
+  "decks_list_placeholder/description": "Você pode criar ou buscar por lições feitas pela comunidade.",
+  "decks_list_placeholder/discover": "Descubra lições",
+  "decks_list_placeholder/title": "Quer aprender coisas novas?"
 }
