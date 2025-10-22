@@ -19,12 +19,12 @@ function App() {
           <Routes>
             <Route path="/" element={<DecksListPage />} />
             <Route path="/params" element={<ParamsPage />} />
-            <Route path="/decks/:deck_id/update" element={<CreateDeckPage />} />
+            <Route path="/create_new_deck" element={<CreateDeckPage />} />
+            <Route path="/update_deck/:deck_id" element={<CreateDeckPage />} />
             <Route
               path="/decks/:deck_id/details"
               element={<DeckDetailsPage />}
             />
-            <Route path="/create_new_deck" element={<CreateDeckPage />} />
             <Route path="/sessions/:deck_id/:mode" element={<SessionPage />} />
           </Routes>
         </BrowserRouter>
