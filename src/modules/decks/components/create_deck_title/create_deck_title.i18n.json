@@ -1,0 +1,4 @@
+{
+  "length_error": "This field must be 50 characters or less, here it's {length} long.",
+  "title/fieldset_legend": "Title"
+}

@@ -1,0 +1,35 @@
+# Tinycardo - Cursor Rules
+
+## Internationalization (i18n) Key Convention
+
+### Key Naming Rules
+
+- **File-based prefixes**: All i18n keys MUST begin with the name of the file where they are used
+- **One key, one file**: Never reuse a key across different files
+- **Easy cleanup**: When removing a file, you can easily identify and remove all corresponding translations
+
+### Examples
+
+```typescript
+// In file: create_deck_title.tsx
+const titleKey = "create_deck_title/title"
+const subtitleKey = "create_deck_title/subtitle"
+const buttonKey = "create_deck_title/create_button"
+
+// In file: deck_actions_dialog.tsx
+const deleteKey = "deck_actions_dialog/delete"
+const editKey = "deck_actions_dialog/edit"
+const shareKey = "deck_actions_dialog/share"
+
+// In file: session_-_cards.tsx
+const nextKey = "session_-_cards/next"
+const previousKey = "session_-_cards/previous"
+const finishKey = "session_-_cards/finish"
+```
+
+### Benefits
+
+- **Maintainability**: Easy to track which keys belong to which component
+- **Cleanup**: Simple to remove unused translations when deleting files
+- **Organization**: Clear separation of concerns in translation files
+- **Debugging**: Quick identification of missing translations by file

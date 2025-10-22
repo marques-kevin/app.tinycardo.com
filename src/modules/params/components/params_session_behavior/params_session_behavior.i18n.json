@@ -1,0 +1,7 @@
+{
+  "how_many_words_to_learn_new_words/label": "How many new cards to learn ?",
+  "how_many_words_to_randomized/label": "How many cards in randomize mode ?",
+  "how_many_words_to_review/label": "How many cards to review ?",
+  "section/description": "Here, you can select the number of cards displayed in each session.",
+  "section/title": "Session settings"
+}

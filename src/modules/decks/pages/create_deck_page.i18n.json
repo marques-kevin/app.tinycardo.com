@@ -1,0 +1,10 @@
+{
+  "csv_mapping/apply": "Apply",
+  "csv_mapping/back_column": "Back column",
+  "csv_mapping/cancel": "Cancel",
+  "csv_mapping/close": "Close",
+  "csv_mapping/front_column": "Front column",
+  "csv_mapping_title": "Map CSV columns",
+  "description": "Provide details and add your cards.",
+  "title": "Create deck"
+}

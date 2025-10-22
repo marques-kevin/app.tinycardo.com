@@ -1,0 +1,13 @@
+{
+  "return_back_button/tooltip": "Return to home",
+  "session_end_announcement/reviewed_summary": "You reviewed <totalKbd>{total}</totalKbd> cards. <knownKbd>{known}</knownKbd> cards are mastered, but <unknownKbd>{unknown}</unknownKbd> will need more review.",
+  "session_end_announcement/title": "Session completed!",
+  "session_ended_actions/back_to_reviewing": "Want to review cards?",
+  "session_ended_actions/continue_reviewing": "Continue reviewing?",
+  "session_ended_actions/learn_again_new_words": "Learn again new cards?",
+  "session_ended_actions/learn_new_words": "Learn new cards?",
+  "session_ended_words_reviewed_table/cards_to_review_title": "Cards to review",
+  "session_ended_words_reviewed_table/mastered_cards_title": "Mastered cards",
+  "words_reviewed_table_item/next_due_tooltip": "This card will be reviewable again on {date}",
+  "words_reviewed_table_item/streak_tooltip": "You've reviewed this card {count} times without mistakes"
+}

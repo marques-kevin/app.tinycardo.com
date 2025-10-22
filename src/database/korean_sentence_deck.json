@@ -1,0 +1,483 @@
+{
+  "cards": [
+    {
+      "id": "86734275-3d5e-47a9-b6fa-5e8da6d534e7",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je vais au magasin pour acheter des fruits.",
+      "back": "과일을 사러 가게에 가요."
+    },
+    {
+      "id": "b01ab098-69db-446b-8490-906d38073c08",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Parfois, j'aime jouer au basketball.",
+      "back": "가끔 농구를 하는 것을 좋아해요."
+    },
+    {
+      "id": "f588bf32-5617-4fe3-a0e0-c1d32f1e7f5b",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je prends un sac pour mes livres.",
+      "back": "책들을 위해 가방을 가져가요."
+    },
+    {
+      "id": "df2fbba2-c458-4f4a-a252-231428b08a4e",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le prix des légumes est assez bas.",
+      "back": "채소의 가격은 꽤 낮아요."
+    },
+    {
+      "id": "38c4587d-e10e-43e9-b963-f3203dfd68c9",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Il est important d'être en bonne santé.",
+      "back": "건강하게 사는 것이 중요해요."
+    },
+    {
+      "id": "a0316017-e276-4ffb-bca2-a322ddd613f2",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je vais marcher dans le parc.",
+      "back": "공원에서 걸을 거예요."
+    },
+    {
+      "id": "4a3c3a3a-6763-45eb-b2dc-5eddf80017f1",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Cet automne, les feuilles changent de couleur.",
+      "back": "이번 가을에 나뭇잎이 색이 변해요."
+    },
+    {
+      "id": "4a3b306b-37ba-4996-9482-7cacdc8ceb3e",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "La soupe est souvent chaude en hiver.",
+      "back": "겨울에 수프는 종종 뜨거워요."
+    },
+    {
+      "id": "c3572bc6-1a6d-42e2-98b5-0401ea6f8ba0",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Cette chanson est très populaire maintenant.",
+      "back": "이 노래는 지금 매우 인기가 있어요."
+    },
+    {
+      "id": "26d9ba37-1e60-4eb4-92e8-8385fc4bcd08",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "J'aime étudier la science à l'école.",
+      "back": "학교에서 과학을 공부하는 것을 좋아해요."
+    },
+    {
+      "id": "14981e84-bda6-40be-90d9-729da6021f75",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le chat est très mignon et joueur.",
+      "back": "고양이는 매우 귀엽고 장난꾸러기예요."
+    },
+    {
+      "id": "b0ede2f9-189b-40d9-8dc1-041691de9754",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Il fait toujours beau au printemps.",
+      "back": "봄에는 항상 날씨가 좋아요."
+    },
+    {
+      "id": "7fbd6c9a-349c-4932-b23c-3d084ccdb461",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "L'éléphant est un gros animal.",
+      "back": "코끼리는 큰 동물이예요."
+    },
+    {
+      "id": "f8183f02-520f-4ae2-95f7-24d2650828ea",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je vais souvent au cinéma le week-end.",
+      "back": "주말에 저는 자주 영화를 보러 가요."
+    },
+    {
+      "id": "69c2e477-d3b4-470b-a50d-b57f9c8b81bc",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Nous avons un chien et un chat à la maison.",
+      "back": "우리는 집에 개와 고양이가 있어요."
+    },
+    {
+      "id": "df3197ea-29b0-4180-8d8c-633943b29113",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Il est important de boire beaucoup d'eau.",
+      "back": "많은 물을 마시는 것이 중요해요."
+    },
+    {
+      "id": "ce5d8a5e-cd1d-4ee4-849a-57637cd95108",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le ciel est bleu aujourd'hui.",
+      "back": "오늘 하늘이 푸르러요."
+    },
+    {
+      "id": "c8749dec-c395-4ed2-b009-f5080b6032dd",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je fais du vélo régulièrement dans le parc.",
+      "back": "공원에서 정기적으로 자전거를 타요."
+    },
+    {
+      "id": "7d0c2bfd-9ed6-4750-bc71-767cd2dd0c61",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Pour le petit déjeuner, j'aime manger des œufs.",
+      "back": "아침 먹으러 계란을 먹는 것을 좋아해요."
+    },
+    {
+      "id": "d3622e28-6987-4c37-878a-ad1a9a96d57f",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Ce gâteau est délicieux et sucré.",
+      "back": "이 케이크는 맛있고 달콤해요."
+    },
+    {
+      "id": "9b2b04ef-0ae8-4f6e-a8fe-2d14a233991c",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je lis souvent des livres avant de dormir.",
+      "back": "자기 전에 책을 자주 읽어요."
+    },
+    {
+      "id": "251e8ab2-1c25-45f2-9365-66069b3b5f9c",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Il est bon de rester en contact avec sa famille.",
+      "back": "가족과 연락하는 것이 좋아요."
+    },
+    {
+      "id": "bd7a57e5-8889-4a8c-9ac3-851b646374f0",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les fleurs du jardin sont magnifiques.",
+      "back": "정원의 꽃들이 아름다워요."
+    },
+    {
+      "id": "8ad12d3d-3a8c-4376-b5a3-5fc6235ea951",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je veux apprendre à jouer de la guitare.",
+      "back": "기타를 배우고 싶어요."
+    },
+    {
+      "id": "c4f95f55-34cf-434c-937a-a3814efadfe1",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le fromage est un aliment populaire en France.",
+      "back": "치즈는 프랑스에서 인기 있는 음식이에요."
+    },
+    {
+      "id": "c91c7b41-f2d1-4367-9671-2516fe8bab93",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Nous avons décidé de partir en vacances en été.",
+      "back": "여름에 휴가를 가기로 결정했어요."
+    },
+    {
+      "id": "44f9e11c-87ce-4f93-8a53-39080c0c6d03",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le magasin est proche de ma maison.",
+      "back": "가게는 내 집에서 가까워요."
+    },
+    {
+      "id": "8aca22d0-551e-4831-b95f-e52990da3c59",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les enfants jouent joyeusement dans le parc.",
+      "back": "아이들은 공원에서 즐겁게 놀고 있어요."
+    },
+    {
+      "id": "05b48874-13e1-48c4-9c7e-f5e7c6f0531b",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les légumes sont bons pour la santé.",
+      "back": "채소는 건강에 좋아요."
+    },
+    {
+      "id": "e13faa8b-110b-430b-8a53-136801078f93",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je préfère le thé au café le matin.",
+      "back": "아침에는 커피보다 차를 선호해요."
+    },
+    {
+      "id": "3767b037-aa3f-46ea-86eb-aaa44501ffae",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Elle aime danser et chanter.",
+      "back": "그녀는 춤추고 노래하는 것을 좋아해요."
+    },
+    {
+      "id": "65b43fab-a836-45b0-b273-79dae30aa788",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le temps passe vite quand on s'amuse.",
+      "back": "재미있게 놀면 시간이 빨리 가요."
+    },
+    {
+      "id": "efe60c09-74bb-40c0-aab1-b140f2cef304",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je dois terminer mes devoirs ce soir.",
+      "back": "오늘 저녁에 숙제를 마쳐야 해요."
+    },
+    {
+      "id": "00ebf117-9413-43f5-b8d5-0fe7b0f1702d",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Ils prennent souvent le bus pour aller à l'école.",
+      "back": "그들은 학교에 가기 위해 자주 버스를 타요."
+    },
+    {
+      "id": "c50eabcc-28e1-46d0-81a9-2b7cbe18dfcb",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les étoiles brillent dans le ciel la nuit.",
+      "back": "밤하늘에 별들이 빛나요."
+    },
+    {
+      "id": "eb387037-7316-4990-8713-52157fbf794a",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "J'adore manger des fruits frais.",
+      "back": "신선한 과일을 먹는 것을 좋아해요."
+    },
+    {
+      "id": "64703a00-e229-4d5d-a1c7-8cb6159d63de",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Mon frère aime jouer aux jeux vidéo.",
+      "back": "내 남동생은 비디오 게임을 하는 것을 좋아해요."
+    },
+    {
+      "id": "fb1ddda1-9d69-4c22-abec-983892b230d9",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je vais au marché pour acheter de la viande.",
+      "back": "고기를 사러 시장에 가요."
+    },
+    {
+      "id": "8be1ec9c-34b7-4567-89fb-22330b062a42",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Lundi prochain, nous avons un examen.",
+      "back": "다음 주 월요일에 시험이 있어요."
+    },
+    {
+      "id": "79f244a0-7d8b-46e9-aadd-f85959e0a787",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Il est difficile d'apprendre une nouvelle langue.",
+      "back": "새로운 언어를 배우는 것은 어려워요."
+    },
+    {
+      "id": "3852550d-f546-4e56-9129-c7dcbb6cfa38",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le poulet rôti est un plat délicieux.",
+      "back": "구운 치킨은 맛있는 요리예요."
+    },
+    {
+      "id": "4a2e45bc-db32-4556-9d74-f161e07c4d00",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les nuages couvrent le ciel aujourd'hui.",
+      "back": "오늘 구름이 하늘을 덮고 있어요."
+    },
+    {
+      "id": "d766d64d-098f-4222-b55e-636370df758f",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Elle a une belle voix quand elle chante.",
+      "back": "그녀는 노래할 때 아름다운 목소리를 가져요."
+    },
+    {
+      "id": "9c62f7cc-ba94-4346-b6ba-5618b2207334",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "L'ordinateur est sur le bureau.",
+      "back": "컴퓨터는 책상 위에 있어요."
+    },
+    {
+      "id": "8ceff7de-ddda-4278-86c6-df56e5822601",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les femmes et les hommes peuvent travailler ensemble.",
+      "back": "여성과 남성은 함께 일할 수 있어요."
+    },
+    {
+      "id": "500ab720-dbd8-47b1-875c-fa04e32586da",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je préfère les films comiques aux drames.",
+      "back": "나는 드라마보다 코미디 영화를 선호해요."
+    },
+    {
+      "id": "a85c0c6c-4bcc-407c-b3a0-f1f51b0e1d7c",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le mois prochain, j'irai à la mer.",
+      "back": "다음 달에 바다에 갈 거예요."
+    },
+    {
+      "id": "62503f43-76e5-4905-93b0-00a4d2fc7b00",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Ce matin, il y a du brouillard.",
+      "back": "오늘 아침에 안개가 있어요."
+    },
+    {
+      "id": "27aaf1fb-defd-4179-8992-2f508ef0b2cb",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Nous faisons des activités amusantes à l'école.",
+      "back": "학교에서 재미있는 활동을 해요."
+    },
+    {
+      "id": "8291ca16-769d-4d27-841a-5f21b535fd77",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Il existe de nombreux types de fruits.",
+      "back": "많은 종류의 과일이 있어요."
+    },
+    {
+      "id": "f4550e00-1c7e-475c-a13d-0d7716437b50",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les enfants adorent les bonbons sucrés.",
+      "back": "아이들은 달콤한 사탕을 좋아해요."
+    },
+    {
+      "id": "29e2d337-e05f-4a0d-b900-e49faaef9185",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Il y a un vieux bâtiment au coin de la rue.",
+      "back": "거리 모퉁이에 오래된 건물이 있어요."
+    },
+    {
+      "id": "49ddf0f7-1377-4b53-a734-4598532e839b",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je vais chez un ami ce soir.",
+      "back": "오늘 저녁에 친구 집에 가요."
+    },
+    {
+      "id": "3049fece-05d9-480e-81a9-a271a67edbad",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le fromage et le pain sont souvent savoureux ensemble.",
+      "back": "치즈와 빵은 함께 먹으면 맛있어요."
+    },
+    {
+      "id": "947a1df0-aea7-4099-bfab-adaa0772d7eb",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les recettes simples sont les meilleures pour débutants.",
+      "back": "간단한 조리법은 초보자에게 최고예요."
+    },
+    {
+      "id": "8b3fee2d-cc3e-408c-be84-93f1e3ad8f34",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "La pluie aide les plantes à grandir.",
+      "back": "비는 식물이 자라는 것을 돕고 있어요."
+    },
+    {
+      "id": "c91467c8-7a04-4db0-82dd-484863eba85f",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Nous avons besoin de plus de temps pour terminer.",
+      "back": "우리는 끝내기에 더 많은 시간이 필요해요."
+    },
+    {
+      "id": "93956402-5fdb-43eb-977b-4a2925c21fe5",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "L'université est un endroit pour apprendre.",
+      "back": "대학교는 배우는 곳이에요."
+    },
+    {
+      "id": "60c9c5ca-9ecc-430c-a4bc-0e0eee0c3d71",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Faisons une promenade après le dîner.",
+      "back": "저녁 먹은 후에 산책해요."
+    },
+    {
+      "id": "48cc7f03-c264-4029-8caf-6efddc263902",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le chocolat est un aliment que beaucoup aiment.",
+      "back": "초콜릿은 많은 사람들이 좋아하는 음식이에요."
+    },
+    {
+      "id": "9a7e51e5-94ef-481c-88c4-ced3f97769cf",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "La peinture sur toile est un bel art.",
+      "back": "캔버스에 그린 그림은 아름다운 예술이에요."
+    },
+    {
+      "id": "0565e6f2-fc42-4f25-830d-2c5f3dc2772a",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les transports en commun sont pratiques à Séoul.",
+      "back": "서울에서 대중교통은 편리해요."
+    },
+    {
+      "id": "5aa9f414-fde1-4cfd-85a9-f8406f29f40b",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les vacances d'hiver commencent en décembre.",
+      "back": "겨울방학은 12월에 시작해요."
+    },
+    {
+      "id": "cec2aa9f-52f8-46fe-86d0-d2a4e2dd8324",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les fruits d'hiver sont souvent très sucrés.",
+      "back": "겨울 과일은 종종 매우 달콤해요."
+    },
+    {
+      "id": "009de49d-3fe4-420f-9701-a5ab66915586",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les cours d'art sont très intéressants.",
+      "back": "미술 수업은 매우 흥미로워요."
+    },
+    {
+      "id": "fed1e164-f48e-439e-a759-0fc6ab67f72c",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "La mer est calme et belle en été.",
+      "back": "여름에 바다는 잔잔하고 아름다워요."
+    },
+    {
+      "id": "39b363cd-d5af-4fd9-ac96-abd3727cb664",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "J'aime passer du temps avec mes amis le week-end.",
+      "back": "주말에 친구들과 함께 시간을 보내는 것을 좋아해요."
+    },
+    {
+      "id": "3ef9fdf4-a50f-418e-9b96-947deceac690",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le loup est un animal sauvage.",
+      "back": "늑대는 야생 동물이예요."
+    },
+    {
+      "id": "029704ff-f8d8-4262-bf14-5f4f5b8ddfdd",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le chocolat chaud est parfait en hiver.",
+      "back": "겨울에 핫초코는 완벽해요."
+    },
+    {
+      "id": "836186b9-9dbe-43ab-9355-f1c6bb30c2e0",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Je vais faire du jardinage ce week-end.",
+      "back": "이번 주말에 정원을 가꿀 거예요."
+    },
+    {
+      "id": "67b94125-ed86-49b5-9f9d-d3ae3aebd549",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les sapins sont verts toute l'année.",
+      "back": "전나무는 일 년 내내 푸르러요."
+    },
+    {
+      "id": "3acb2023-25fb-4c2d-a2b2-fbdb3ea97a7f",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les vacances d'été sont le moment de se reposer.",
+      "back": "여름 방학은 쉬는 시간이예요."
+    },
+    {
+      "id": "da9cc3b7-0253-4482-a758-7a9972d8ec61",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le poulet teriyaki est un plat japonais.",
+      "back": "테리야끼 치킨은 일본 요리예요."
+    },
+    {
+      "id": "2b985db5-5fa6-4ac0-8010-ae03e5b03b82",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les arbres fleurissent au printemps.",
+      "back": "봄에 나무가 꽃을 피워요."
+    },
+    {
+      "id": "5e16c869-eee7-47ba-b7d1-4d2ede9b65e9",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Les poissons nagent dans l'eau claire.",
+      "back": "물속에서 물고기가 헤엄쳐요."
+    },
+    {
+      "id": "29ad00d8-6342-4079-af90-dcabdbecdd12",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "La chaleur du soleil est agréable en été.",
+      "back": "여름에 태양의 열기는 기분이 좋아요."
+    },
+    {
+      "id": "2de3dd81-3ab2-46bc-ab76-b840b2598980",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Le dîner est généralement prêt à six heures.",
+      "back": "저녁은 보통 여섯 시에 준비돼요."
+    },
+    {
+      "id": "a42f5cf0-9ed4-44bf-8e9a-1c283ce56639",
+      "deck_id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+      "front": "Il est important de respirer un air frais.",
+      "back": "신선한 공기를 마시는 것이 중요해요."
+    }
+  ],
+  "deck": {
+    "id": "72482f2f-2a3b-475c-9d96-9223cfd3141a",
+    "name": "KO Sentences (FR→KO)",
+    "front_language": "fr",
+    "back_language": "ko",
+    "user_id": "system",
+    "updated_at": "2025-10-10T07:28:36.383Z",
+    "created_at": "2025-10-10T07:28:36.383Z",
+    "visibility": "unlisted",
+    "number_of_cards": 78
+  }
+}
