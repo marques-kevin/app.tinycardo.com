@@ -1,13 +1,8 @@
 {
-  "session_ended_splash_screen/return_back_button/tooltip": "العودة إلى الرئيسية",
   "session_ended_splash_screen/session_end_announcement/reviewed_summary": "لقد راجعت <totalKbd>{total}</totalKbd> بطاقة. تم إتقان <knownKbd>{known}</knownKbd> بطاقات، لكن <unknownKbd>{unknown}</unknownKbd> تحتاج إلى مزيد من المراجعة.",
   "session_ended_splash_screen/session_end_announcement/title": "انتهت الجلسة!",
   "session_ended_splash_screen/session_ended_actions/continue_reviewing": "هل تريد الاستمرار في المراجعة؟",
   "session_ended_splash_screen/session_ended_actions/learn_new_words": "هل تريد تعلم بطاقات جديدة؟",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/cards_to_review_title": "بطاقات للمراجعة",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/mastered_cards_title": "بطاقات إتقان",
-  "session_ended_splash_screen/words_reviewed_table_item/next_due_tooltip": "ستكون هذه البطاقة قابلة للمراجعة مرة أخرى في {date}",
-  "session_ended_splash_screen/words_reviewed_table_item/streak_tooltip": "لقد راجعت هذه البطاقة {count} مرات دون أخطاء",
   "deck_actions_dialog/cancel": "إلغاء",
   "deck_actions_dialog/learn_new_cards": "تعلم بطاقات جديدة",
   "deck_actions_dialog/not_ready": "غير جاهز: {count}",
@@ -66,5 +61,10 @@
   "decks_list_placeholder/create": "إنشاء درس جديد",
   "decks_list_placeholder/description": "يمكنك إنشاء أو البحث عن دروس أنشأتها المجتمع.",
   "decks_list_placeholder/discover": "اكتشف الدروس",
-  "decks_list_placeholder/title": "هل تريد تعلم أشياء جديدة؟"
+  "decks_list_placeholder/title": "هل تريد تعلم أشياء جديدة؟",
+  "session_return_back_button/return_back_button/tooltip": "عد إلى الرئيسية",
+  "session_reviewed_words_table/cards_to_review_title": "بطاقات تحتاج إلى مراجعتها مرة أخرى.",
+  "session_reviewed_words_table/mastered_cards_title": "بطاقات ستراجعها في المستقبل.",
+  "session_reviewed_words_table/next_due_tooltip": "ستكون هذه البطاقة قابلة للمراجعة مرة أخرى في {date}",
+  "session_reviewed_words_table/streak_tooltip": "لقد راجعت هذه البطاقة {count} مرة دون أخطاء"
 }

@@ -10,7 +10,7 @@ export function SessionReturnBackButton() {
         <XIcon className="size-6" />
         <div className="tooltip-content">
           {formatMessage({
-            id: "session_ended_splash_screen/return_back_button/tooltip",
+            id: "session_return_back_button/return_back_button/tooltip",
           })}
         </div>
       </Link>

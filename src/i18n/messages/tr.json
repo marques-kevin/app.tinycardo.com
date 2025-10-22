@@ -1,13 +1,8 @@
 {
-  "session_ended_splash_screen/return_back_button/tooltip": "Ana sayfaya dön",
   "session_ended_splash_screen/session_end_announcement/reviewed_summary": "Toplam <totalKbd>{total}</totalKbd> kartı gözden geçirdiniz. <knownKbd>{known}</knownKbd> kart ustalaştı, ancak <unknownKbd>{unknown}</unknownKbd> kartın daha fazla gözden geçirmeye ihtiyacı var.",
   "session_ended_splash_screen/session_end_announcement/title": "Seans tamamlandı!",
   "session_ended_splash_screen/session_ended_actions/continue_reviewing": "Devam et?",
   "session_ended_splash_screen/session_ended_actions/learn_new_words": "Yeni kartlar mı öğrenmek istersin?",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/cards_to_review_title": "Gözden geçirilecek kartlar",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/mastered_cards_title": "Kapsanan kartlar",
-  "session_ended_splash_screen/words_reviewed_table_item/next_due_tooltip": "Bu kart, {date} tarihinde tekrar gözden geçirilebilir.",
-  "session_ended_splash_screen/words_reviewed_table_item/streak_tooltip": "Bu kartı {count} kez hatasız gözden geçirdin.",
   "deck_actions_dialog/cancel": "İptal et",
   "deck_actions_dialog/learn_new_cards": "Yeni kartları öğrenin",
   "deck_actions_dialog/not_ready": "Hazır değil: {count}",
@@ -66,5 +61,10 @@
   "decks_list_placeholder/create": "Yeni ders oluştur",
   "decks_list_placeholder/description": "Topluluğun oluşturduğu dersleri arayabilir veya yaratabilirsiniz.",
   "decks_list_placeholder/discover": "Dersleri keşfet",
-  "decks_list_placeholder/title": "Yeni şeyler öğrenmek mi istiyorsun?"
+  "decks_list_placeholder/title": "Yeni şeyler öğrenmek mi istiyorsun?",
+  "session_return_back_button/return_back_button/tooltip": "Ana sayfaya dön",
+  "session_reviewed_words_table/cards_to_review_title": "Tekrar gözden geçirmeniz gereken kartlar.",
+  "session_reviewed_words_table/mastered_cards_title": "Gelecekte gözden geçireceğiniz kartlar.",
+  "session_reviewed_words_table/next_due_tooltip": "Bu kart bir kez daha {date} tarihinde tekrar gözden geçirilecek.",
+  "session_reviewed_words_table/streak_tooltip": "Bu kartı {count} kez hatasız incelediniz."
 }

@@ -1,13 +1,8 @@
 {
-  "session_ended_splash_screen/return_back_button/tooltip": "返回首页",
   "session_ended_splash_screen/session_end_announcement/reviewed_summary": "你已审核了 <totalKbd>{total}</totalKbd> 张卡片。<knownKbd>{known}</knownKbd> 张卡片已掌握，但 <unknownKbd>{unknown}</unknownKbd> 张卡片需要更多复习。",
   "session_ended_splash_screen/session_end_announcement/title": "训练完成！",
   "session_ended_splash_screen/session_ended_actions/continue_reviewing": "继续审查吗？",
   "session_ended_splash_screen/session_ended_actions/learn_new_words": "学习新卡片？",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/cards_to_review_title": "复习卡片",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/mastered_cards_title": "已掌握卡片",
-  "session_ended_splash_screen/words_reviewed_table_item/next_due_tooltip": "此卡片将在 {date} 再次可评审。",
-  "session_ended_splash_screen/words_reviewed_table_item/streak_tooltip": "你已经无错误地复习了这张卡片 {count} 次",
   "deck_actions_dialog/cancel": "取消",
   "deck_actions_dialog/learn_new_cards": "学习新卡片",
   "deck_actions_dialog/not_ready": "未准备好：{count}",
@@ -66,5 +61,10 @@
   "decks_list_placeholder/create": "创建新课程",
   "decks_list_placeholder/description": "您可以创建或搜索社区制作的课程。",
   "decks_list_placeholder/discover": "发现课程",
-  "decks_list_placeholder/title": "想学习新知识吗？"
+  "decks_list_placeholder/title": "想学习新知识吗？",
+  "session_return_back_button/return_back_button/tooltip": "返回首页",
+  "session_reviewed_words_table/cards_to_review_title": "你需要重新复习的卡片。",
+  "session_reviewed_words_table/mastered_cards_title": "将来要复习的卡片。",
+  "session_reviewed_words_table/next_due_tooltip": "此卡将在 {date} 重新复习。",
+  "session_reviewed_words_table/streak_tooltip": "您已无错误地复习此卡片 {count} 次。"
 }
