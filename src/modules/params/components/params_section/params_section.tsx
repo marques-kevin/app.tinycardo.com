@@ -4,18 +4,16 @@ export function ParamsSection(props: {
   children: React.ReactNode
 }) {
   return (
-    <section className="rounded-lg border border-base-200 bg-base-100">
+    <section className="border-base-300 bg-base-100 rounded-lg border">
       {(props.title || props.description) && (
-        <header className="px-4 py-3 border-b border-base-200">
+        <header className="border-base-300 border-b p-4">
           {props.title && (
-            <h2 className="text-lg font-semibold text-base-content">
+            <h2 className="text-base-content text-xl font-semibold">
               {props.title}
             </h2>
           )}
           {props.description && (
-            <p className="mt-1 text-sm text-base-content/70">
-              {props.description}
-            </p>
+            <p className="text-base-content/70">{props.description}</p>
           )}
         </header>
       )}

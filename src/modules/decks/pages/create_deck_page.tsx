@@ -51,7 +51,6 @@ export function CreateDeckPage() {
         ) : (
           <div className="grid grid-cols-1 gap-4">
             <CreateDeckTitle />
-
             <CreateDeckCardsListTable />
             <CreateDeckFooterActions />
           </div>

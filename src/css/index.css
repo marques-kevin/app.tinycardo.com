@@ -6,17 +6,8 @@
   themes: all;
 }
 
-@font-face {
-  font-family: "American Typewriter";
-  src: local("American Typewriter");
-}
-
 @layer base {
   body {
-    font-family:
-      monospace,
-      -apple-system,
-      system-ui,
-      sans-serif;
+    font-family: -apple-system, system-ui, sans-serif;
   }
 }

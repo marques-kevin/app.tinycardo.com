@@ -61,5 +61,10 @@
   "params_session_behavior/how_many_words_to_randomized/label": "Сколько карточек в режиме рандомизации?",
   "params_session_behavior/how_many_words_to_review/label": "Сколько карточек проверить?",
   "params_session_behavior/section/description": "Здесь вы можете выбрать количество карточек, отображаемых в каждой сессии.",
-  "params_session_behavior/section/title": "Настройки сессии"
+  "params_session_behavior/section/title": "Настройки сессии",
+  "create_deck_footer_actions/save": "Создать колоду",
+  "decks_list_placeholder/create": "Создайте новый урок",
+  "decks_list_placeholder/description": "Вы можете создавать или искать уроки, созданные сообществом.",
+  "decks_list_placeholder/discover": "Откройте уроки",
+  "decks_list_placeholder/title": "Хотите узнать что-то новое?"
 }

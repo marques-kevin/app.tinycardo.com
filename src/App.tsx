@@ -25,7 +25,7 @@ function App() {
               path="/decks/:deck_id/details"
               element={<DeckDetailsPage />}
             />
-            <Route path="/decks/:deck_id" element={<CreateDeckPage />} />
+            <Route path="/create_new_deck" element={<CreateDeckPage />} />
             <Route path="/sessions/:deck_id/:mode" element={<SessionPage />} />
           </Routes>
           <GlobalFooter />

@@ -61,5 +61,10 @@
   "params_session_behavior/how_many_words_to_randomized/label": "Rastgele modda kaç kart?",
   "params_session_behavior/how_many_words_to_review/label": "Kaç kart gözden geçirilecek?",
   "params_session_behavior/section/description": "Burada, her seansta görüntülenen kart sayısını seçebilirsiniz.",
-  "params_session_behavior/section/title": "Oturum ayarları"
+  "params_session_behavior/section/title": "Oturum ayarları",
+  "create_deck_footer_actions/save": "Deck oluştur",
+  "decks_list_placeholder/create": "Yeni ders oluştur",
+  "decks_list_placeholder/description": "Topluluğun oluşturduğu dersleri arayabilir veya yaratabilirsiniz.",
+  "decks_list_placeholder/discover": "Dersleri keşfet",
+  "decks_list_placeholder/title": "Yeni şeyler öğrenmek mi istiyorsun?"
 }

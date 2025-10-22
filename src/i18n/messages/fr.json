@@ -61,5 +61,10 @@
   "params_session_behavior/how_many_words_to_randomized/label": "Combien de flashcards en mode aléatoire ?",
   "params_session_behavior/how_many_words_to_review/label": "Combien de cartes à réviser ?",
   "params_session_behavior/section/description": "Ici, vous pouvez choisir le nombre de cartes affichées dans chaque session.",
-  "params_session_behavior/section/title": "Paramètres de session"
+  "params_session_behavior/section/title": "Paramètres de session",
+  "create_deck_footer_actions/save": "Créer le deck",
+  "decks_list_placeholder/create": "Créer une nouvelle leçon",
+  "decks_list_placeholder/description": "Vous pouvez créer ou rechercher des leçons créées par la communauté.",
+  "decks_list_placeholder/discover": "Découvrez des leçons",
+  "decks_list_placeholder/title": "Envie d'apprendre de nouvelles choses ?"
 }
