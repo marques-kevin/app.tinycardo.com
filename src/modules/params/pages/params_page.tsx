@@ -4,21 +4,23 @@ import { GlobalNavbar } from "@/modules/global/components/global_navbar/global_n
 import { ParamsSelectSessionBehavior } from "@/modules/params/components/params_session_behavior/params_session_behavior"
 import { ParamsDangerZone } from "@/modules/params/components/params_danger_zone/params_danger_zone"
 import { ParamsAccountSection } from "@/modules/params/components/params_account_section/params_account_section"
+import { GlobalLayout } from "@/modules/global/components/global_layout/global_layout"
+import { GlobalFooter } from "@/modules/global/components/global_footer/global_footer"
 
 export function ParamsPage() {
   return (
-    <div>
+    <GlobalLayout>
       <GlobalNavbar />
 
-      <main className="container mx-auto">
-        <div className="flex flex-col gap-6">
-          <ParamsSelectLanguage />
-          <ParamsSelectSessionBehavior />
-          <ParamsSelectTheme />
-          <ParamsAccountSection />
-          <ParamsDangerZone />
-        </div>
-      </main>
-    </div>
+      <div className="flex flex-col gap-6">
+        <ParamsSelectLanguage />
+        <ParamsSelectSessionBehavior />
+        <ParamsSelectTheme />
+        <ParamsAccountSection />
+        <ParamsDangerZone />
+      </div>
+
+      <GlobalFooter />
+    </GlobalLayout>
   )
 }

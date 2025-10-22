@@ -7,7 +7,7 @@ export function GlobalNavbar() {
   const { formatMessage } = useIntl()
 
   return (
-    <nav className="text-base-content container mx-auto">
+    <nav className="text-base-content w-full">
       <div className="flex items-center justify-between gap-4 py-8">
         <Link to="/" className="flex items-center gap-2">
           <GlobalLogo className="size-10" />
@@ -27,7 +27,7 @@ export function GlobalNavbar() {
 
         <div className="flex items-center gap-2">
           <NavLink
-            to="create_new_deck"
+            to="/create_new_deck/"
             className={({ isActive }: { isActive: boolean }) =>
               `btn btn-ghost ${isActive ? "btn-active" : ""}`
             }
@@ -39,7 +39,7 @@ export function GlobalNavbar() {
           </NavLink>
 
           <NavLink
-            to="/params"
+            to="/params/"
             className={({ isActive }: { isActive: boolean }) =>
               `btn btn-ghost ${isActive ? "btn-active" : ""}`
             }

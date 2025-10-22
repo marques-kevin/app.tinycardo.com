@@ -5,6 +5,7 @@ import { GlobalNavbar } from "@/modules/global/components/global_navbar/global_n
 import { useAppSelector, useAppDispatch } from "@/redux/store"
 import * as actions from "@/modules/decks/redux/decks_actions"
 import { useIntl } from "react-intl"
+import { GlobalLayout } from "@/modules/global/components/global_layout/global_layout"
 
 export function CreateDeckPage() {
   const dispatch = useAppDispatch()
@@ -32,9 +33,9 @@ export function CreateDeckPage() {
   }
 
   return (
-    <>
+    <GlobalLayout>
       <GlobalNavbar />
-      <div className="mx-auto max-w-4xl">
+      <div className="w-full">
         <div className="mb-6">
           <h1 className="mb-2 text-2xl font-bold">
             {formatMessage({ id: "create_deck_page/title" })}
@@ -135,6 +136,6 @@ export function CreateDeckPage() {
           </form>
         </dialog>
       )}
-    </>
+    </GlobalLayout>
   )
 }
