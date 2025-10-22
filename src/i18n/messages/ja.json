@@ -1,13 +1,8 @@
 {
-  "session_ended_splash_screen/return_back_button/tooltip": "ホームに戻る",
   "session_ended_splash_screen/session_end_announcement/reviewed_summary": "あなたは<totalKbd>{total}</totalKbd>枚のカードを確認しました。<knownKbd>{known}</knownKbd>枚のカードは習得済みですが、<unknownKbd>{unknown}</unknownKbd>枚は追加の確認が必要です。",
   "session_ended_splash_screen/session_end_announcement/title": "セッション完了！",
   "session_ended_splash_screen/session_ended_actions/continue_reviewing": "レビューを続けますか？",
   "session_ended_splash_screen/session_ended_actions/learn_new_words": "新しいカードを学ぶ？",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/cards_to_review_title": "レビュー対象のカード",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/mastered_cards_title": "習得したカード",
-  "session_ended_splash_screen/words_reviewed_table_item/next_due_tooltip": "このカードは{date}に再度レビュー可能になります。",
-  "session_ended_splash_screen/words_reviewed_table_item/streak_tooltip": "このカードを{count}回ミスなく復習しました",
   "deck_actions_dialog/cancel": "キャンセル",
   "deck_actions_dialog/learn_new_cards": "新しいカードを学ぶ",
   "deck_actions_dialog/not_ready": "準備完了ではありません: {count}",
@@ -66,5 +61,10 @@
   "decks_list_placeholder/create": "新しいレッスンを作成",
   "decks_list_placeholder/description": "コミュニティが作成したレッスンを作成または検索できます。",
   "decks_list_placeholder/discover": "レッスンを探す",
-  "decks_list_placeholder/title": "新しいことを学びたいですか？"
+  "decks_list_placeholder/title": "新しいことを学びたいですか？",
+  "session_return_back_button/return_back_button/tooltip": "ホームに戻る",
+  "session_reviewed_words_table/cards_to_review_title": "再レビューが必要なカード。",
+  "session_reviewed_words_table/mastered_cards_title": "将来レビューするカード。",
+  "session_reviewed_words_table/next_due_tooltip": "このカードは{date}に再度レビュー可能です。",
+  "session_reviewed_words_table/streak_tooltip": "このカードを{count}回間違えずに復習しました"
 }

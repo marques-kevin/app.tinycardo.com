@@ -1,13 +1,8 @@
 {
-  "session_ended_splash_screen/return_back_button/tooltip": "Voltar para a página inicial",
   "session_ended_splash_screen/session_end_announcement/reviewed_summary": "Você revisou <totalKbd>{total}</totalKbd> cards. <knownKbd>{known}</knownKbd> cards estão dominadas, mas <unknownKbd>{unknown}</unknownKbd> precisarão de mais revisão.",
   "session_ended_splash_screen/session_end_announcement/title": "Sessão concluída!",
   "session_ended_splash_screen/session_ended_actions/continue_reviewing": "Continuar revisando?",
   "session_ended_splash_screen/session_ended_actions/learn_new_words": "Aprender novos cartões?",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/cards_to_review_title": "Cartões para revisar",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/mastered_cards_title": "Cartões dominados",
-  "session_ended_splash_screen/words_reviewed_table_item/next_due_tooltip": "Este cartão será revisável novamente em {date}.",
-  "session_ended_splash_screen/words_reviewed_table_item/streak_tooltip": "Você revisou este cartão {count} vezes sem erros",
   "deck_actions_dialog/cancel": "Cancelar",
   "deck_actions_dialog/learn_new_cards": "Aprender novas flashcards",
   "deck_actions_dialog/not_ready": "Não está pronto: {count}",
@@ -66,5 +61,10 @@
   "decks_list_placeholder/create": "Criar uma nova aula",
   "decks_list_placeholder/description": "Você pode criar ou buscar por lições feitas pela comunidade.",
   "decks_list_placeholder/discover": "Descubra lições",
-  "decks_list_placeholder/title": "Quer aprender coisas novas?"
+  "decks_list_placeholder/title": "Quer aprender coisas novas?",
+  "session_return_back_button/return_back_button/tooltip": "Retornar para a página inicial",
+  "session_reviewed_words_table/cards_to_review_title": "Cartões que você precisa revisar novamente.",
+  "session_reviewed_words_table/mastered_cards_title": "Cartões que você revisará no futuro.",
+  "session_reviewed_words_table/next_due_tooltip": "Este cartão poderá ser revisado novamente em {date}",
+  "session_reviewed_words_table/streak_tooltip": "Você revisou este cartão {count} vezes sem erros"
 }

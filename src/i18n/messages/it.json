@@ -1,13 +1,8 @@
 {
-  "session_ended_splash_screen/return_back_button/tooltip": "Torna alla home",
   "session_ended_splash_screen/session_end_announcement/reviewed_summary": "Hai esaminato <totalKbd>{total}</totalKbd> schede. <knownKbd>{known}</knownKbd> schede sono padroneggiate, ma <unknownKbd>{unknown}</unknownKbd> necessitano di ulteriore revisione.",
   "session_ended_splash_screen/session_end_announcement/title": "Session completata!",
   "session_ended_splash_screen/session_ended_actions/continue_reviewing": "Continua a rivedere?",
   "session_ended_splash_screen/session_ended_actions/learn_new_words": "Scoprire nuove schede?",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/cards_to_review_title": "Schede da rivedere",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/mastered_cards_title": "Carte padroneggiate",
-  "session_ended_splash_screen/words_reviewed_table_item/next_due_tooltip": "Questa scheda sarà nuovamente revisionabile il {date}",
-  "session_ended_splash_screen/words_reviewed_table_item/streak_tooltip": "Hai esaminato questa scheda {count} volte senza errori.",
   "deck_actions_dialog/cancel": "Annulla",
   "deck_actions_dialog/learn_new_cards": "Impara nuove schede",
   "deck_actions_dialog/not_ready": "Non pronto: {count}",
@@ -66,5 +61,10 @@
   "decks_list_placeholder/create": "Crea una nuova lezione",
   "decks_list_placeholder/description": "Puoi creare o cercare lezioni realizzate dalla community.",
   "decks_list_placeholder/discover": "Scopri le lezioni",
-  "decks_list_placeholder/title": "Vuoi imparare cose nuove?"
+  "decks_list_placeholder/title": "Vuoi imparare cose nuove?",
+  "session_return_back_button/return_back_button/tooltip": "Torna alla home",
+  "session_reviewed_words_table/cards_to_review_title": "Flashcard da rivedere.",
+  "session_reviewed_words_table/mastered_cards_title": "Schede che rivedrai in futuro.",
+  "session_reviewed_words_table/next_due_tooltip": "Questa scheda sarà nuovamente rivedibile il {date}.",
+  "session_reviewed_words_table/streak_tooltip": "Hai esaminato questa scheda {count} volte senza errori."
 }

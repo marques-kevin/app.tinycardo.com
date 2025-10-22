@@ -1,0 +1,6 @@
+{
+  "cards_to_review_title": "Cards you need to review again.",
+  "mastered_cards_title": "Cards you will review in the future.",
+  "next_due_tooltip": "This card will be reviewable again on {date}",
+  "streak_tooltip": "You've reviewed this card {count} times without mistakes"
+}

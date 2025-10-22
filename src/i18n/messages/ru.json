@@ -1,13 +1,8 @@
 {
-  "session_ended_splash_screen/return_back_button/tooltip": "Вернуться на главную",
   "session_ended_splash_screen/session_end_announcement/reviewed_summary": "Вы просмотрели <totalKbd>{total}</totalKbd> карточек. <knownKbd>{known}</knownKbd> карточек освоены, но <unknownKbd>{unknown}</unknownKbd> требуют повторения.",
   "session_ended_splash_screen/session_end_announcement/title": "Сессия завершена!",
   "session_ended_splash_screen/session_ended_actions/continue_reviewing": "Продолжить просмотр?",
   "session_ended_splash_screen/session_ended_actions/learn_new_words": "Изучить новые карточки?",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/cards_to_review_title": "Карты на проверку",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/mastered_cards_title": "Освоенные карточки",
-  "session_ended_splash_screen/words_reviewed_table_item/next_due_tooltip": "Эта карточка будет доступна для повторного просмотра {date}.",
-  "session_ended_splash_screen/words_reviewed_table_item/streak_tooltip": "Вы проверили эту карточку {count} раз без ошибок.",
   "deck_actions_dialog/cancel": "Отмена",
   "deck_actions_dialog/learn_new_cards": "Изучить новые карточки",
   "deck_actions_dialog/not_ready": "Не готово: {count}",
@@ -66,5 +61,10 @@
   "decks_list_placeholder/create": "Создайте новый урок",
   "decks_list_placeholder/description": "Вы можете создавать или искать уроки, созданные сообществом.",
   "decks_list_placeholder/discover": "Откройте уроки",
-  "decks_list_placeholder/title": "Хотите узнать что-то новое?"
+  "decks_list_placeholder/title": "Хотите узнать что-то новое?",
+  "session_return_back_button/return_back_button/tooltip": "Вернуться на главную",
+  "session_reviewed_words_table/cards_to_review_title": "Карты, которые нужно пересмотреть.",
+  "session_reviewed_words_table/mastered_cards_title": "Карты, которые вы будете просматривать в будущем.",
+  "session_reviewed_words_table/next_due_tooltip": "Эта карточка будет доступна для повторного просмотра {date}",
+  "session_reviewed_words_table/streak_tooltip": "Вы проверили эту карточку {count} раз без ошибок"
 }

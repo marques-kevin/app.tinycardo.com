@@ -14,43 +14,46 @@ function WordsReviewedTableItem(props: {
   const { formatMessage } = useIntl()
   return (
     <li className="list-row px-0">
-      <div className="list-col-grow">
-        <div className="text-lg">{props.word.front}</div>
-        <div className="text-base-content/80 text-sm">{props.word.back}</div>
-      </div>
-      <div className="text-right">
-        <div className="tooltip tooltip-left text-base-content">
-          {dayjs(props.word.next_due_at).fromNow()}
-
-          <div className="tooltip-content">
-            {formatMessage(
-              {
-                id: "session_ended_splash_screen/words_reviewed_table_item/next_due_tooltip",
-              },
-              {
-                date: dayjs(props.word.next_due_at).format(
-                  "DD MMMM YYYY HH:mm",
-                ),
-              },
-            )}
-          </div>
+      <div className="list-col-grow w-full justify-between lg:flex">
+        <div>
+          <div className="text-lg">{props.word.front}</div>
+          <div className="text-base-content/80 text-sm">{props.word.back}</div>
         </div>
 
-        {props.streak > 0 && (
-          <div>
-            <div className="badge badge-sm badge-ghost tooltip tooltip-left">
-              <FlameIcon className="size-3 fill-current" /> {props.streak}
-              <div className="tooltip-content">
-                {formatMessage(
-                  {
-                    id: "session_ended_splash_screen/words_reviewed_table_item/streak_tooltip",
-                  },
-                  { count: props.streak },
-                )}
-              </div>
+        <div className="mt-4 text-right lg:mt-0">
+          <div className="tooltip tooltip-left text-base-content">
+            {dayjs(props.word.next_due_at).fromNow()}
+
+            <div className="tooltip-content">
+              {formatMessage(
+                {
+                  id: "session_reviewed_words_table/next_due_tooltip",
+                },
+                {
+                  date: dayjs(props.word.next_due_at).format(
+                    "DD MMMM YYYY HH:mm",
+                  ),
+                },
+              )}
             </div>
           </div>
-        )}
+
+          {props.streak > 0 && (
+            <div>
+              <div className="badge badge-sm badge-ghost tooltip tooltip-left">
+                <FlameIcon className="size-3 fill-current" /> {props.streak}
+                <div className="tooltip-content">
+                  {formatMessage(
+                    {
+                      id: "session_reviewed_words_table/streak_tooltip",
+                    },
+                    { count: props.streak },
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </li>
   )
@@ -84,7 +87,7 @@ function Wrapper(props: ContainerProps) {
           <h3 className="card-title">
             <XIcon className="text-error size-4" />
             {formatMessage({
-              id: "session_ended_splash_screen/session_ended_words_reviewed_table/cards_to_review_title",
+              id: "session_reviewed_words_table/cards_to_review_title",
             })}
           </h3>
 
@@ -97,7 +100,7 @@ function Wrapper(props: ContainerProps) {
           <h3 className="card-title">
             <CheckCircleIcon className="text-success size-4" />
             {formatMessage({
-              id: "session_ended_splash_screen/session_ended_words_reviewed_table/mastered_cards_title",
+              id: "session_reviewed_words_table/mastered_cards_title",
             })}
           </h3>
 

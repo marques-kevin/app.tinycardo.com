@@ -1,13 +1,8 @@
 {
-  "session_ended_splash_screen/return_back_button/tooltip": "Zurück zur Startseite",
   "session_ended_splash_screen/session_end_announcement/reviewed_summary": "Du hast <totalKbd>{total}</totalKbd> Karten überprüft. <knownKbd>{known}</knownKbd> Karten sind beherrscht, aber <unknownKbd>{unknown}</unknownKbd> benötigen weitere Überprüfung.",
   "session_ended_splash_screen/session_end_announcement/title": "Sitzung abgeschlossen!",
   "session_ended_splash_screen/session_ended_actions/continue_reviewing": "Weiter überprüfen?",
   "session_ended_splash_screen/session_ended_actions/learn_new_words": "Neue Karten lernen?",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/cards_to_review_title": "Karten zum Überprüfen",
-  "session_ended_splash_screen/session_ended_words_reviewed_table/mastered_cards_title": "Beherrschte Karten",
-  "session_ended_splash_screen/words_reviewed_table_item/next_due_tooltip": "Diese Karte wird am {date} erneut überprüfbar sein.",
-  "session_ended_splash_screen/words_reviewed_table_item/streak_tooltip": "Du hast diese Karte {count} Mal fehlerfrei wiederholt.",
   "deck_actions_dialog/cancel": "Abbrechen",
   "deck_actions_dialog/learn_new_cards": "Neue Karten lernen",
   "deck_actions_dialog/not_ready": "Nicht bereit: {count}",
@@ -66,5 +61,10 @@
   "decks_list_placeholder/create": "Neue Lektion erstellen",
   "decks_list_placeholder/description": "Du kannst Lektionen erstellen oder nach von der Community erstellten Lektionen suchen.",
   "decks_list_placeholder/discover": "Entdecke Lektionen",
-  "decks_list_placeholder/title": "Möchtest du Neues lernen?"
+  "decks_list_placeholder/title": "Möchtest du Neues lernen?",
+  "session_return_back_button/return_back_button/tooltip": "Zurück zum Start",
+  "session_reviewed_words_table/cards_to_review_title": "Karten, die du erneut überprüfen musst.",
+  "session_reviewed_words_table/mastered_cards_title": "Karten, die du in Zukunft wiederholen wirst.",
+  "session_reviewed_words_table/next_due_tooltip": "Diese Karte wird am {date} erneut überprüfbar sein.",
+  "session_reviewed_words_table/streak_tooltip": "Du hast diese Karte {count} Mal ohne Fehler überprüft."
 }
