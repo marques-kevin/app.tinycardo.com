@@ -261,7 +261,7 @@ export const set_review_word = createAsyncThunk<
     }
 
     if (sessions.mode !== "randomized") {
-      await extra.sessions_repository.update_card_status(updated_card_reviewed)
+      extra.sessions_repository.update_card_status(updated_card_reviewed)
     }
 
     dispatch(
