@@ -27,7 +27,7 @@ export function GlobalNavbar() {
 
         <div className="flex items-center gap-2">
           <NavLink
-            to="/decks/new"
+            to="create_new_deck"
             className={({ isActive }: { isActive: boolean }) =>
               `btn btn-ghost ${isActive ? "btn-active" : ""}`
             }

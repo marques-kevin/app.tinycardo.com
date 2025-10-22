@@ -61,5 +61,10 @@
   "params_session_behavior/how_many_words_to_randomized/label": "ランダムモードのカード数は？",
   "params_session_behavior/how_many_words_to_review/label": "レビューするカードの枚数は？",
   "params_session_behavior/section/description": "各セッションに表示されるカードの数を選択できます。",
-  "params_session_behavior/section/title": "セッション設定"
+  "params_session_behavior/section/title": "セッション設定",
+  "create_deck_footer_actions/save": "デッキを作成",
+  "decks_list_placeholder/create": "新しいレッスンを作成",
+  "decks_list_placeholder/description": "コミュニティが作成したレッスンを作成または検索できます。",
+  "decks_list_placeholder/discover": "レッスンを探す",
+  "decks_list_placeholder/title": "新しいことを学びたいですか？"
 }

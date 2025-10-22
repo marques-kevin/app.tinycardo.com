@@ -61,5 +61,10 @@
   "params_session_behavior/how_many_words_to_randomized/label": "Quante schede nella modalità randomizzata?",
   "params_session_behavior/how_many_words_to_review/label": "Quante schede rivedere?",
   "params_session_behavior/section/description": "Qui puoi selezionare il numero di schede visualizzate in ciascuna sessione.",
-  "params_session_behavior/section/title": "Impostazioni sessione"
+  "params_session_behavior/section/title": "Impostazioni sessione",
+  "create_deck_footer_actions/save": "Crea mazzo",
+  "decks_list_placeholder/create": "Crea una nuova lezione",
+  "decks_list_placeholder/description": "Puoi creare o cercare lezioni realizzate dalla community.",
+  "decks_list_placeholder/discover": "Scopri le lezioni",
+  "decks_list_placeholder/title": "Vuoi imparare cose nuove?"
 }

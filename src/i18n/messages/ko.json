@@ -61,5 +61,10 @@
   "params_session_behavior/how_many_words_to_randomized/label": "무작위 모드에서 몇 장의 카드가 필요합니까?",
   "params_session_behavior/how_many_words_to_review/label": "복습할 카드 수는 몇 개입니까?",
   "params_session_behavior/section/description": "각 세션에 표시될 카드 수를 선택할 수 있습니다.",
-  "params_session_behavior/section/title": "세션 설정"
+  "params_session_behavior/section/title": "세션 설정",
+  "create_deck_footer_actions/save": "덱 만들기",
+  "decks_list_placeholder/create": "새로운 레슨 생성",
+  "decks_list_placeholder/description": "커뮤니티가 만든 수업을 생성하거나 검색할 수 있습니다.",
+  "decks_list_placeholder/discover": "수업 찾아보기",
+  "decks_list_placeholder/title": "새로운 것을 배우고 싶나요?"
 }
