@@ -107,6 +107,19 @@ describe("sessions actions", () => {
     expect(session_repository.history.get("card-1")).toBeDefined()
   })
 
+  it(`should be able to start a session based on url id`, async () => {
+    await redux.dependencies.location_service.navigate(
+      `/sessions/${deck.id}/learn_new_words`,
+    )
+
+    await redux.store.dispatch(sessions_actions.start_session({}))
+
+    const state = redux.store.getState().sessions
+
+    expect(state.words_to_review.length).toEqual(2)
+    expect(state.mode).toEqual("learn_new_words")
+  })
+
   it(`in randomized mode, should not update history`, async () => {
     await session_repository.save_history({
       deck_id: deck.id,
