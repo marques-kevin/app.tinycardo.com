@@ -1,6 +1,8 @@
 {
-  "cards_to_review_title": "Cards you need to review again.",
-  "mastered_cards_title": "Cards you will review in the future.",
+  "cards_to_review_empty": "Great job! You got all the cards right this time.",
+  "cards_to_review_title": "More cards you'll probably get wrong next time…",
+  "mastered_cards_empty": "Well, well… looks like you haven't mastered any cards yet, but hey, at least you're trying!",
+  "mastered_cards_title": "Cards you mastered... for now!",
   "next_due_tooltip": "This card will be reviewable again on {date}",
   "streak_tooltip": "You've reviewed this card {count} times without mistakes"
 }
