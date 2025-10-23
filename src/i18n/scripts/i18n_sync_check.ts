@@ -9,6 +9,9 @@ async function checkI18nSync() {
     const en_content = await fs.readFile(en_path, "utf-8")
     const restore_content = await fs.readFile(restore_path, "utf-8")
 
+    console.info("en_content:", en_content)
+    console.info("restore_content:", restore_content)
+
     const en_json = JSON.parse(en_content)
     const restore_json = JSON.parse(restore_content)
 
