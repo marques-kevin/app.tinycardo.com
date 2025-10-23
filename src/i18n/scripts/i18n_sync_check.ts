@@ -1,7 +1,7 @@
 import { promises as fs } from "fs"
 import path from "path"
 
-async function checkI18nSync() {
+async function i18n_sync_check() {
   try {
     const en_path = path.resolve("src/i18n/messages/en.json")
     const restore_path = path.resolve("src/i18n/.keep/restore.en.json")
@@ -75,4 +75,4 @@ async function checkI18nSync() {
   }
 }
 
-checkI18nSync()
+i18n_sync_check()
