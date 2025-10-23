@@ -18,10 +18,7 @@ export function Wrapper() {
         </p>
       </div>
       <div className="mt-8 flex flex-wrap justify-center gap-4">
-        <Link
-          to="/discover_decks/"
-          className="btn lg:btn-lg btn-secondary gap-2"
-        >
+        <Link to="/discover/" className="btn lg:btn-lg btn-secondary gap-2">
           <SearchIcon className="size-5" />
           <span>
             {formatMessage({ id: "decks_list_placeholder/discover" })}

@@ -9,6 +9,7 @@ import { CreateDeckPage } from "@/modules/decks/pages/create_deck_page"
 import { DeckDetailsPage } from "@/modules/decks/pages/deck_details_page"
 import { AuthenticationProtection } from "@/modules/authentication/components/authentication_protection/authentication_protection"
 import { DialogCrashError } from "./modules/dialog/components/dialog_crash_error/dialog_crash_error"
+import { DiscoverIndexPage } from "./modules/discover/pages/discover_index_page"
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               element={<DeckDetailsPage />}
             />
             <Route path="/sessions/:deck_id/:mode" element={<SessionPage />} />
+            <Route path="/discover" element={<DiscoverIndexPage />} />
           </Routes>
         </BrowserRouter>
         <Dialog />

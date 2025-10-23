@@ -22,6 +22,10 @@ import type { DiscoverDecksRepository } from "@/modules/discover/repositories/di
 import { DiscoverDecksRepositoryInMemory } from "@/modules/discover/repositories/discover_decks_repository_in_memory"
 import { DiscoverDecksRepositoryApi } from "@/modules/discover/repositories/discover_decks_repository_api"
 
+import { seed_decks } from "./__seed__/seed_decks"
+import { seed_cards } from "./__seed__/seed_cards"
+import { seed_discover_decks } from "./__seed__/seed_discover_decks"
+
 export type Dependencies = {
   location_service: LocationService
   local_storage_service: LocalStorageService
@@ -54,13 +58,18 @@ export function build_dependencies(
       location_service: new LocationServiceWindow(),
       local_storage_service: new LocalStorageServiceWindow(),
       downloader_service: new DownloaderServiceWindow(),
-      decks_repository: new DecksRepositoryInMemory(),
+      decks_repository: new DecksRepositoryInMemory({
+        decks: seed_decks,
+        cards: seed_cards,
+      }),
       sessions_repository: new SessionsRepositoryInMemory(),
       users_repository: new UsersRepositoryInMemory({
         user: { id: "1", email: "test@example.com" },
       }),
       session_help_service: new SessionHelpServiceInMemory(),
-      discover_decks_repository: new DiscoverDecksRepositoryInMemory(),
+      discover_decks_repository: new DiscoverDecksRepositoryInMemory({
+        decks: seed_discover_decks,
+      }),
     }
   }
 

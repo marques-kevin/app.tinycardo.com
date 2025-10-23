@@ -6,12 +6,32 @@ export class DecksRepositoryInMemory implements DecksRepository {
   private decks: DeckEntity[] = []
   private cards: Record<string, CardEntity[]> = {}
 
+  constructor(
+    params: Partial<{
+      decks?: DeckEntity[]
+      cards?: CardEntity[]
+    }> = {},
+  ) {
+    this.decks = params.decks ?? []
+    this.store_cards(params.cards ?? [])
+  }
+
+  private store_cards(cards: CardEntity[]): void {
+    this.cards = cards.reduce(
+      (acc, card) => {
+        acc[card.deck_id] = [...(acc[card.deck_id] || []), card]
+        return acc
+      },
+      {} as Record<string, CardEntity[]>,
+    )
+  }
+
   async sync_deck(params: {
     deck: DeckEntity
     cards: CardEntity[]
   }): ReturnType<DecksRepository["sync_deck"]> {
     this.decks = [...this.decks, params.deck]
-    this.cards[params.deck.id] = params.cards
+    this.store_cards(params.cards)
 
     return params.deck
   }
