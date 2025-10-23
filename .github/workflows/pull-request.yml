@@ -126,6 +126,28 @@ jobs:
       - name: Lint
         run: yarn lint
 
+  i18n:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: Restore cached dependencies
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .yarn/cache
+            .yarn/install-state.gz
+            node_modules
+          key: ${{ runner.os }}-yarn-
+
+      - name: Check i18n sync
+        run: yarn i18n:sync:check
+
   build:
     needs: install
     runs-on: ubuntu-latest
