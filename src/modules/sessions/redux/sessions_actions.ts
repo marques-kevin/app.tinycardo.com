@@ -64,10 +64,11 @@ export const start_session = createAsyncThunk<
     const location = extra.location_service.get_current_url()
     const pathname = new URL(location).pathname
 
-    const matched = UrlMatcherService.extract(
-      `/sessions/:deck_id/:mode`,
-      pathname,
-    )
+    const matched = UrlMatcherService.extract({
+      pattern: `/sessions/:deck_id/:mode`,
+      url: pathname,
+    })
+
     let deck_id = matched.deck_id
     let mode = matched.mode as SessionsState["mode"]
 
@@ -399,10 +400,10 @@ export const global_route_changed = createAsyncThunk<
 >("sessions/global_route_changed", async (params, { dispatch, extra }) => {
   const location = extra.location_service.get_current_url()
   const pathname = new URL(location).pathname
-  const { deck_id, mode } = UrlMatcherService.extract(
-    "/sessions/:deck_id/:mode",
-    pathname,
-  )
+  const { deck_id, mode } = UrlMatcherService.extract({
+    pattern: "/sessions/:deck_id/:mode",
+    url: pathname,
+  })
 
   if (deck_id && mode) {
     await dispatch(

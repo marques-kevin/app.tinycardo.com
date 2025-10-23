@@ -6,6 +6,7 @@ import { decks_reducers } from "@/modules/decks/redux/decks_reducers"
 import { dialog_reducers } from "@/modules/dialog/redux/dialog_reducers"
 import { sessions_reducers } from "@/modules/sessions/redux/sessions_reducers"
 import { authentication_reducers } from "@/modules/authentication/redux/authentication_reducers"
+import { discover_reducers } from "@/modules/discover/redux/discover_reducers"
 
 export const reducers = combineReducers({
   sessions: sessions_reducers,
@@ -15,4 +16,5 @@ export const reducers = combineReducers({
   params: params_reducers,
   dialog: dialog_reducers,
   authentication: authentication_reducers,
+  discover: discover_reducers,
 })

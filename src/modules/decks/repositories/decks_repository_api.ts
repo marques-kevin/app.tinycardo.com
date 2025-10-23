@@ -148,4 +148,74 @@ export class DecksRepositoryApi implements DecksRepository {
       number_of_cards: 0,
     }
   }
+
+  async upsert_cards(params: {
+    deck_id: string
+    cards: Array<{
+      id?: string
+      front: string
+      back: string
+    }>
+  }): ReturnType<DecksRepository["upsert_cards"]> {
+    await this.api_service.post<
+      paths["/decks/upsert_cards"]["post"]["responses"]["201"]
+    >("/decks/upsert_cards", {
+      deck_id: params.deck_id,
+      cards: params.cards,
+    })
+
+    // The upsert_cards endpoint doesn't return the cards, so we need to fetch them
+    const cards = await this.api_service.post<
+      paths["/cards/get_cards"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/cards/get_cards", {
+      deck_id: params.deck_id,
+    })
+
+    return cards.map((card) => ({
+      id: card.id,
+      deck_id: card.deck_id,
+      front: card.front,
+      back: card.back,
+    }))
+  }
+
+  async create_card(params: {
+    deck_id: string
+    front: string
+    back: string
+  }): ReturnType<DecksRepository["create_card"]> {
+    const card = await this.api_service.post<
+      paths["/cards/create_card"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/cards/create_card", params)
+
+    return {
+      id: card.id,
+      deck_id: card.deck_id,
+      front: card.front,
+      back: card.back,
+    }
+  }
+
+  async update_card(params: {
+    card_id: string
+    front?: string
+    back?: string
+  }): ReturnType<DecksRepository["update_card"]> {
+    const card = await this.api_service.post<
+      paths["/cards/update_card"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/cards/update_card", params)
+
+    return {
+      id: card.id,
+      deck_id: card.deck_id,
+      front: card.front,
+      back: card.back,
+    }
+  }
+
+  async delete_card(params: {
+    card_id: string
+  }): ReturnType<DecksRepository["delete_card"]> {
+    await this.api_service.post<{ id: string }>("/cards/delete_card", params)
+  }
 }

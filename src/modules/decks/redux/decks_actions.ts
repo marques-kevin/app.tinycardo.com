@@ -253,10 +253,10 @@ export const global_route_changed = createAsyncThunk<
 >("decks/global_route_changed", async (_, { dispatch, extra }) => {
   const location = extra.location_service.get_current_url()
   const pathname = new URL(location).pathname
-  const { deck_id } = UrlMatcherService.extract(
-    "/decks/:deck_id/update",
-    pathname,
-  )
+  const { deck_id } = UrlMatcherService.extract({
+    pattern: "/decks/:deck_id/update",
+    url: pathname,
+  })
   if (deck_id) {
     await dispatch(load_deck_into_create_form({ deck_id }))
   } else {
@@ -309,10 +309,10 @@ export const create_deck_submit = createAsyncThunk<
   }
 
   const pathname = new URL(extra.location_service.get_current_url()).pathname
-  const extracted = UrlMatcherService.extract(
-    "/decks/:deck_id/update",
-    pathname,
-  )
+  const extracted = UrlMatcherService.extract({
+    pattern: "/decks/:deck_id/update",
+    url: pathname,
+  })
 
   let deck: DeckEntity
 
@@ -321,14 +321,12 @@ export const create_deck_submit = createAsyncThunk<
     deck = await extra.decks_repository.update_deck({
       id: extracted.deck_id,
       name: create.title.trim(),
-      description: "", // TODO: Add description to form
       front_language: create.front_language,
       back_language: create.back_language,
     })
   } else {
     deck = await extra.decks_repository.create_deck({
       name: create.title.trim(),
-      description: "", // TODO: Add description to form
       front_language: create.front_language,
       back_language: create.back_language,
     })
@@ -340,7 +338,7 @@ export const create_deck_submit = createAsyncThunk<
     back: create.cards_map[c]?.back.trim(),
   }))
 
-  await extra.cards_repository.upsert_cards({
+  await extra.decks_repository.upsert_cards({
     deck_id: deck.id,
     cards,
   })

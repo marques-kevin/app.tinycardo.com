@@ -18,19 +18,19 @@ import type { SessionHelpService } from "@/modules/sessions/services/session_hel
 import { SessionHelpServiceInMemory } from "@/modules/sessions/services/session_help_service/session_help_service_in_memory"
 import { SessionHelpServiceApi } from "@/modules/sessions/services/session_help_service/session_help_service_api"
 import { DecksRepositoryApi } from "@/modules/decks/repositories/decks_repository_api"
-import type { CardsRepository } from "@/modules/cards/repositories/cards_repository"
-import { CardsRepositoryInMemory } from "@/modules/cards/repositories/cards_repository_in_memory"
-import { CardsRepositoryApi } from "@/modules/cards/repositories/cards_repository_api"
+import type { DiscoverDecksRepository } from "@/modules/discover/repositories/discover_decks_repository"
+import { DiscoverDecksRepositoryInMemory } from "@/modules/discover/repositories/discover_decks_repository_in_memory"
+import { DiscoverDecksRepositoryApi } from "@/modules/discover/repositories/discover_decks_repository_api"
 
 export type Dependencies = {
   location_service: LocationService
   local_storage_service: LocalStorageService
   downloader_service: DownloaderService
   decks_repository: DecksRepository
-  cards_repository: CardsRepository
   sessions_repository: SessionsRepository
   users_repository: UsersRepository
   session_help_service: SessionHelpService
+  discover_decks_repository: DiscoverDecksRepository
 }
 
 export function build_dependencies(
@@ -42,10 +42,10 @@ export function build_dependencies(
       local_storage_service: new LocalStorageServiceInMemory(),
       downloader_service: new DownloaderServiceWindow(),
       decks_repository: new DecksRepositoryInMemory(),
-      cards_repository: new CardsRepositoryInMemory(),
       sessions_repository: new SessionsRepositoryInMemory(),
       users_repository: new UsersRepositoryInMemory(),
       session_help_service: new SessionHelpServiceInMemory(),
+      discover_decks_repository: new DiscoverDecksRepositoryInMemory(),
     }
   }
 
@@ -55,12 +55,12 @@ export function build_dependencies(
       local_storage_service: new LocalStorageServiceWindow(),
       downloader_service: new DownloaderServiceWindow(),
       decks_repository: new DecksRepositoryInMemory(),
-      cards_repository: new CardsRepositoryInMemory(),
       sessions_repository: new SessionsRepositoryInMemory(),
       users_repository: new UsersRepositoryInMemory({
         user: { id: "1", email: "test@example.com" },
       }),
       session_help_service: new SessionHelpServiceInMemory(),
+      discover_decks_repository: new DiscoverDecksRepositoryInMemory(),
     }
   }
 
@@ -69,9 +69,9 @@ export function build_dependencies(
     local_storage_service: new LocalStorageServiceWindow(),
     downloader_service: new DownloaderServiceWindow(),
     decks_repository: new DecksRepositoryApi(),
-    cards_repository: new CardsRepositoryApi(),
     sessions_repository: new SessionsRepositoryApi(),
     users_repository: new UsersRepositoryApi(),
     session_help_service: new SessionHelpServiceApi(),
+    discover_decks_repository: new DiscoverDecksRepositoryApi(),
   }
 }
