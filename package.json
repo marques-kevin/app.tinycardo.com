@@ -16,6 +16,7 @@
     "build-storybook": "storybook build",
     "prettier": "prettier --write .",
     "i18n:translate": "tsx src/i18n/scripts/i18n_translate.ts",
+    "i18n:sync:check": "tsx src/i18n/scripts/i18n_sync_check.ts",
     "i18n:merge": "tsx src/scripts/merge_local_i18n_to_global.ts",
     "i18n:merge:watch": "tsx src/scripts/merge_local_i18n_to_global.ts --watch",
     "generate:sentence-deck": "tsx src/scripts/generate_sentence_deck.ts",
