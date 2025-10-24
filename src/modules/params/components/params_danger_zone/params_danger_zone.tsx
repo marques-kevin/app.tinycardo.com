@@ -13,7 +13,10 @@ export function Wrapper(props: ContainerProps) {
       })}
     >
       <div className="w-full">
-        <button className="btn btn-error" onClick={props.on_delete_all_data}>
+        <button
+          className="btn btn-lg btn-error"
+          onClick={props.on_delete_all_data}
+        >
           {formatMessage({ id: "params_danger_zone/delete_account_button" })}
         </button>
       </div>

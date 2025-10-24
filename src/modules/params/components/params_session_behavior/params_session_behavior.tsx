@@ -17,13 +17,13 @@ export function Wrapper(props: ContainerProps) {
     >
       <div className="flex w-full flex-col gap-2">
         <fieldset className="fieldset">
-          <legend className="fieldset-legend">
+          <legend className="label text-sm">
             {formatMessage({
               id: "params_session_behavior/how_many_words_to_review/label",
             })}
           </legend>
           <input
-            className="input"
+            className="input input-lg"
             type="number"
             min={1}
             value={props.how_many_words_to_review}
@@ -33,14 +33,14 @@ export function Wrapper(props: ContainerProps) {
           />
         </fieldset>
         <fieldset className="fieldset">
-          <legend className="fieldset-legend">
+          <legend className="label text-sm">
             {formatMessage({
               id: "params_session_behavior/how_many_words_to_learn_new_words/label",
             })}
           </legend>
           <input
             type="number"
-            className="input"
+            className="input input-lg"
             min={1}
             value={props.how_many_words_to_learn_new_words}
             onChange={(e) =>
@@ -52,13 +52,13 @@ export function Wrapper(props: ContainerProps) {
         </fieldset>
 
         <fieldset className="fieldset">
-          <legend className="fieldset-legend">
+          <legend className="label text-sm">
             {formatMessage({
               id: "params_session_behavior/how_many_words_to_randomized/label",
             })}
           </legend>
           <input
-            className="input"
+            className="input input-lg"
             type="number"
             min={1}
             value={props.how_many_words_to_randomized}

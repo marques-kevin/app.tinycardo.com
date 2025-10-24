@@ -4,13 +4,13 @@ import * as drawer_actions from "@/modules/drawer/redux/drawer_actions"
 
 const map_state = (state: RootState) => {
   return {
-    is_open: Boolean(state.drawer.deck_details_drawer),
+    is_open: Boolean(state.drawer.deck_update_drawer),
   }
 }
 
 const map_dispatch = (dispatch: Dispatch) => ({
   on_close: () => {
-    dispatch(drawer_actions.close_drawer({ key: "deck_details_drawer" }))
+    dispatch(drawer_actions.close_drawer({ key: "deck_update_drawer" }))
   },
 })
 

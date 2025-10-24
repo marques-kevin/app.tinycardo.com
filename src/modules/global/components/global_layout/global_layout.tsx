@@ -6,7 +6,7 @@ export function GlobalLayout(props: { children: ReactNode }) {
   return (
     <div>
       <GlobalNavbar />
-      <div className="container mx-auto px-4 py-4">{props.children}</div>
+      <div className="px-4 py-4">{props.children}</div>
       <GlobalFooter />
     </div>
   )

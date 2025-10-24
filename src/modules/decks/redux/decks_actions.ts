@@ -6,6 +6,7 @@ import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { open as open_dialog } from "@/modules/dialog/redux/dialog_actions"
 import { UrlMatcherService } from "@/modules/global/services/url_matcher_service/url_matcher_service"
 import type { MessageI18nKeys } from "@/intl"
+import { add_hash } from "@/modules/drawer/utils/add_hash"
 
 export const _store_decks_stats = createAction<
   Record<
@@ -34,7 +35,13 @@ export const go_on_update_deck_page = createAsyncThunk<
   { deck_id: string },
   AsyncThunkConfig
 >("decks/go_on_update_deck_page", async ({ deck_id }, { extra }) => {
-  extra.location_service.navigate(`/decks/${deck_id}/update`)
+  extra.location_service.navigate(
+    add_hash({
+      path: "deck_update_drawer",
+      value: deck_id,
+      current_hash: extra.location_service.get_current_hash(),
+    }),
+  )
 })
 
 export const create_deck = createAsyncThunk<void, void, AsyncThunkConfig>(
@@ -416,20 +423,14 @@ export const on_decks_update_page = createAsyncThunk<
   if (!authentication.user) return
 
   const location = extra.location_service.get_current_url()
-  const { pathname } = new URL(location)
-  const is_on_update_page = UrlMatcherService.exact_match({
-    url: pathname,
-    pattern: "/decks/:deck_id/update",
+  const { hash } = new URL(location)
+  const { deck_update_drawer } = UrlMatcherService.extract_from_hash({
+    hash,
   })
 
-  if (!is_on_update_page) return
+  if (!deck_update_drawer) return
 
-  const { deck_id } = UrlMatcherService.extract({
-    pattern: "/decks/:deck_id/update",
-    url: pathname,
-  })
-
-  await dispatch(load_deck_into_create_form({ deck_id: deck_id! }))
+  await dispatch(load_deck_into_create_form({ deck_id: deck_update_drawer }))
 })
 
 export const on_decks_home_page = createAsyncThunk<

@@ -9,7 +9,17 @@ export function RouteChangeListener() {
 
   useEffect(() => {
     dispatch(global_route_changed())
-  }, [location.pathname, location.search, location.hash, dispatch])
+
+    const handle_pop_state = () => {
+      dispatch(global_route_changed())
+    }
+
+    window.addEventListener("popstate", handle_pop_state)
+
+    return () => {
+      window.removeEventListener("popstate", handle_pop_state)
+    }
+  }, [location.pathname, location.search, location.hash])
 
   return null
 }

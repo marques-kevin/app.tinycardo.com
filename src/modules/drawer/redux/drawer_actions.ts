@@ -3,33 +3,37 @@ import type { AsyncThunkConfig } from "@/redux/store"
 import { UrlMatcherService } from "@/modules/global/services/url_matcher_service/url_matcher_service"
 import { add_hash } from "../utils/add_hash"
 import { remove_hash } from "../utils/remove_hash"
+import { DRAWER_KEYS } from "./drawer_types"
 
-export const _set_deck_details_drawer = createAction<{ value: string | null }>(
-  "drawer/_set_deck_details_drawer",
-)
+export const _set_drawer = createAction<{
+  key: keyof typeof DRAWER_KEYS
+  value: string | null
+}>("drawer/_set_drawer")
 
-export const open_deck_details_drawer = createAsyncThunk<
+export const open_drawer = createAsyncThunk<
   void,
-  { deck_id: string },
+  { key: keyof typeof DRAWER_KEYS; value: string | null },
   AsyncThunkConfig
->("drawer/open_deck_details_drawer", async ({ deck_id }, { extra }) => {
+>("drawer/open_drawer", async ({ key, value }, { extra }) => {
   extra.location_service.navigate(
     add_hash({
-      path: "deck_details_drawer",
-      value: deck_id,
+      path: key,
+      value: value ?? undefined,
       current_hash: extra.location_service.get_current_hash(),
     }),
   )
 })
 
-export const close_deck_details_drawer = createAsyncThunk<
+export const close_drawer = createAsyncThunk<
   void,
-  void,
+  { key: keyof typeof DRAWER_KEYS },
   AsyncThunkConfig
->("drawer/close_deck_details_drawer", async (_, { extra }) => {
+>("drawer/close_drawer", async ({ key }, { dispatch, extra }) => {
+  dispatch(_set_drawer({ key, value: null }))
+
   extra.location_service.navigate(
     remove_hash({
-      path: "deck_details_drawer",
+      path: key,
       current_hash: extra.location_service.get_current_hash(),
     }),
   )
@@ -44,9 +48,16 @@ export const global_route_changed = createAsyncThunk<
 
   const { hash } = new URL(location)
 
-  const { deck_details_drawer } = UrlMatcherService.extract_from_hash({
+  const hash_keys = UrlMatcherService.extract_from_hash({
     hash,
   })
 
-  dispatch(_set_deck_details_drawer({ value: deck_details_drawer || null }))
+  for (const key of Object.keys(DRAWER_KEYS)) {
+    dispatch(
+      _set_drawer({
+        key: key as keyof typeof DRAWER_KEYS,
+        value: hash_keys[key] || null,
+      }),
+    )
+  }
 })
