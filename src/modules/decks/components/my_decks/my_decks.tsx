@@ -1,8 +1,7 @@
-import { emoji_flags } from "@/modules/decks/utils/emoji_flags"
-import { useAppSelector, useAppDispatch } from "@/redux/store"
 import { CheckIcon, EyeIcon, GalleryHorizontalEndIcon } from "lucide-react"
-import { _open_deck_actions_dialog } from "@/modules/decks/redux/decks_actions"
 import { DeckActionsDialog } from "@/modules/decks/components/deck_actions_dialog/deck_actions_dialog"
+import { connector, type ContainerProps } from "./my_decks.container"
+import { DecksProgressRadialChart } from "../decks_progress_radial_chart/decks_progress_radial_chart"
 
 function Deck(props: {
   name: string
@@ -12,48 +11,45 @@ function Deck(props: {
   number_of_cards: number
   number_of_cards_ready_to_be_reviewed: number
   number_of_cards_not_ready_to_be_reviewed: number
+  on_click: () => void
 }) {
-  const dispatch = useAppDispatch()
-
-  const handleCardClick = () => {
-    dispatch(
-      _open_deck_actions_dialog({
-        deck: {
-          id: props.deck_id,
-          name: props.name,
-          front_language: props.front_language,
-          back_language: props.back_language,
-          number_of_cards: props.number_of_cards,
-          number_of_cards_ready_to_be_reviewed:
-            props.number_of_cards_ready_to_be_reviewed,
-          number_of_cards_not_ready_to_be_reviewed:
-            props.number_of_cards_not_ready_to_be_reviewed,
-        },
-      }),
-    )
-  }
-
   return (
     <div className="stack">
       <div
-        onClick={handleCardClick}
-        className="border-base-300 card bg-base-100 flex h-[300px] cursor-pointer flex-col border py-4"
+        onClick={props.on_click}
+        className="deck flex aspect-[3/4] cursor-pointer flex-col py-4"
       >
-        <header className="flex justify-between px-4">
-          <span className="text-lg font-bold">
-            {emoji_flags[props.front_language]}
-          </span>
-          <span className="text-lg font-bold">
-            {emoji_flags[props.back_language]}
-          </span>
+        <header className="flex items-center justify-between px-4">
+          <div className="avatar-group -space-x-2">
+            <div className="avatar">
+              <div className="w-6">
+                <img src={`/flags/${props.front_language}.svg`} />
+              </div>
+            </div>
+
+            <div className="avatar">
+              <div className="w-6">
+                <img src={`/flags/${props.back_language}.svg`} />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <DecksProgressRadialChart
+              total={props.number_of_cards}
+              mastered={props.number_of_cards_ready_to_be_reviewed}
+              size={20}
+              thickness={4}
+            />
+          </div>
         </header>
 
-        <main className="flex h-full items-center justify-center text-center text-lg font-bold">
+        <main className="flex h-full items-center justify-center px-4 text-center text-lg font-medium tracking-wider text-balance">
           {props.name}
         </main>
 
-        <footer className="grid grid-cols-3 px-4 text-sm">
-          <div className="mt-auto flex items-center justify-start gap-2">
+        <footer className="mt-auto grid grid-cols-3 px-4 font-medium">
+          <div className="flex items-center justify-start gap-2">
             <div
               className="tooltip tooltip-right flex items-center justify-end gap-2"
               data-tip="Total cards in the deck"
@@ -90,37 +86,32 @@ function Deck(props: {
       </div>
 
       {Array.from({ length: 3 }).map((c, i) => (
-        <div key={i} className="border-base-300 card bg-base-100 border" />
+        <div key={i} className="border-base-300 card bg-base-100 border-2" />
       ))}
     </div>
   )
 }
 
-export function MyDecks() {
-  const { decks: downloaded_decks, stats: downloaded_decks_stats } =
-    useAppSelector((state) => state.decks)
-
+export function Wrapper(props: ContainerProps) {
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {downloaded_decks.map((deck) => (
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+        {props.decks.map((deck) => (
           <Deck
             key={deck.id}
             name={deck.name}
             deck_id={deck.id}
-            back_language={deck.front_language}
-            front_language={deck.back_language}
-            number_of_cards={
-              downloaded_decks_stats[deck.id]?.number_of_cards || 0
-            }
+            back_language={deck.back_language}
+            front_language={deck.front_language}
+            number_of_cards={props.stats[deck.id]?.number_of_cards || 0}
             number_of_cards_ready_to_be_reviewed={
-              downloaded_decks_stats[deck.id]
-                ?.number_of_cards_ready_to_be_reviewed || 0
+              props.stats[deck.id]?.number_of_cards_ready_to_be_reviewed || 0
             }
             number_of_cards_not_ready_to_be_reviewed={
-              downloaded_decks_stats[deck.id]
-                ?.number_of_cards_not_ready_to_be_reviewed || 0
+              props.stats[deck.id]?.number_of_cards_not_ready_to_be_reviewed ||
+              0
             }
+            on_click={() => props.on_click(deck.id)}
           />
         ))}
       </div>
@@ -129,3 +120,5 @@ export function MyDecks() {
     </>
   )
 }
+
+export const MyDecks = connector(Wrapper)
