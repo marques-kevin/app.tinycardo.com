@@ -12,7 +12,7 @@ export function Wrapper(props: ContainerProps) {
     <fieldset className="fieldset">
       <input
         className={cn(
-          "input w-full",
+          "input input-lg w-full",
           props.title.length > 50 && "text-error input-error",
         )}
         placeholder={formatMessage({

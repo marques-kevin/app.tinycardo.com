@@ -4,8 +4,6 @@
   "authentication_protection/title": "Sign in to continue",
   "create_deck_footer_actions/back": "Back",
   "create_deck_footer_actions/save": "Save",
-  "create_deck_page/description": "Provide details and add your cards.",
-  "create_deck_page/title": "Create deck",
   "create_deck_title/length_error": "This field must be 50 characters or less, here it's {length} long.",
   "create_deck_title/title/placeholder": "Enter a title for your deck",
   "deck_actions_dialog/cancel": "Cancel",

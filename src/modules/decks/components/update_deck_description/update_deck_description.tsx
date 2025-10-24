@@ -11,8 +11,9 @@ export function Wrapper(props: ContainerProps) {
   return (
     <fieldset className="fieldset">
       <textarea
+        rows={4}
         className={cn(
-          "textarea w-full",
+          "textarea textarea-lg w-full resize-none",
           props.description.length > 250 && "text-error input-error",
         )}
         placeholder={formatMessage({
@@ -28,10 +29,6 @@ export function Wrapper(props: ContainerProps) {
           props.description.length > 250 && "text-error",
         )}
       >
-        {props.description.length <= 250 && (
-          <span>{props.description.length}/250</span>
-        )}
-
         {props.description.length > 250 && (
           <span>
             {formatMessage(

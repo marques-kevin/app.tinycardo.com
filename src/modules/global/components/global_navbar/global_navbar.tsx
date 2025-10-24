@@ -9,7 +9,7 @@ export function Wrapper(props: ContainerProps) {
 
   return (
     <div className="mt-2 px-4">
-      <nav className="bg-accent text-accent-content border-accent-content/20 w-full rounded-full border-2 px-2 py-2 pl-4">
+      <nav className="bg-accent text-accent-content border-accent-content/20 rounded-box w-full border-2 px-2 py-2 pl-4">
         <div className="flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2">
             <GlobalLogo className="size-10" />
@@ -30,7 +30,7 @@ export function Wrapper(props: ContainerProps) {
             <NavLink
               to="/discover/"
               className={({ isActive }: { isActive: boolean }) =>
-                `btn btn-accent btn-ghost gap-2 rounded-full uppercase ${isActive ? "btn-active" : ""}`
+                `btn btn-accent btn-ghost gap-2 uppercase ${isActive ? "btn-active" : ""}`
               }
             >
               <SearchIcon className="size-5" />
@@ -40,7 +40,7 @@ export function Wrapper(props: ContainerProps) {
             <button
               onClick={props.on_create_new_deck}
               role="button"
-              className="btn btn-accent btn-ghost gap-2 rounded-full uppercase"
+              className="btn btn-accent btn-ghost gap-2 uppercase"
             >
               <PlusIcon className="size-5" />
               <span>{formatMessage({ id: "global_navbar/create_deck" })}</span>
@@ -49,7 +49,7 @@ export function Wrapper(props: ContainerProps) {
             <NavLink
               to="/params/"
               className={({ isActive }: { isActive: boolean }) =>
-                `btn btn-accent btn-ghost gap-2 rounded-full uppercase ${isActive ? "btn-active" : ""}`
+                `btn btn-accent btn-ghost gap-2 uppercase ${isActive ? "btn-active" : ""}`
               }
             >
               <CogIcon className="size-5" />

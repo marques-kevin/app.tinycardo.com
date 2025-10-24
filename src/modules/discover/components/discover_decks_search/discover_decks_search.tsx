@@ -1,0 +1,20 @@
+import {
+  connector,
+  type ContainerProps,
+} from "./discover_decks_search.container"
+import { FilterIcon } from "lucide-react"
+
+export function Wrapper(props: ContainerProps) {
+  return (
+    <div className="flex items-center gap-2">
+      <input
+        type="text"
+        placeholder="Rechercher un deck"
+        className="input input-lg w-full"
+      />
+      <button className="btn btn-lg btn-secondary">Search</button>
+    </div>
+  )
+}
+
+export const DiscoverDecksSearch = connector(Wrapper)

@@ -6,15 +6,15 @@ import { TrashIcon } from "lucide-react"
 
 export function Wrapper(props: ContainerProps) {
   return (
-    <div className="flex w-full gap-2">
+    <div className="flex w-full items-center gap-2">
       <input
-        className="input w-1/2"
+        className="input input-lg w-1/2"
         value={props.front}
         onChange={(e) => props.on_update("front", e.target.value)}
       />
 
       <input
-        className="input w-1/2"
+        className="input input-lg w-1/2"
         value={props.back}
         onChange={(e) => props.on_update("back", e.target.value)}
       />

@@ -10,10 +10,10 @@ import { CsvImportButton } from "@/modules/decks/components/csv_import_button/cs
 export function Wrapper(props: ContainerProps) {
   return (
     <div className="w-full">
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2">
         <div className="w-1/2">
           <select
-            className="select text-base-content w-full"
+            className="select select-lg text-base-content w-full"
             value={props.front_language}
             onChange={(e) => props.on_update_front_language(e.target.value)}
           >
@@ -31,7 +31,7 @@ export function Wrapper(props: ContainerProps) {
         </div>
         <div className="w-1/2">
           <select
-            className="select text-base-content w-full"
+            className="select select-lg text-base-content w-full"
             value={props.back_language}
             onChange={(e) => props.on_update_back_language(e.target.value)}
           >
