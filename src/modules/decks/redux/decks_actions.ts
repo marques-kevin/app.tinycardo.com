@@ -26,7 +26,37 @@ export const go_on_deck_details_page = createAsyncThunk<
   { deck_id: string },
   AsyncThunkConfig
 >("decks/go_on_deck_details_page", async ({ deck_id }, { extra }) => {
-  extra.location_service.navigate(`/decks/${deck_id}/`)
+  extra.location_service.navigate(`#deck_details_drawer=${deck_id}`)
+})
+
+export const go_on_update_deck_page = createAsyncThunk<
+  void,
+  { deck_id: string },
+  AsyncThunkConfig
+>("decks/go_on_update_deck_page", async ({ deck_id }, { extra }) => {
+  extra.location_service.navigate(`/decks/${deck_id}/update`)
+})
+
+export const create_deck = createAsyncThunk<void, void, AsyncThunkConfig>(
+  "decks/create_deck",
+  async (_, { dispatch, extra }) => {
+    const deck = await extra.decks_repository.create_deck({
+      name: "New Deck",
+      back_language: "en",
+      front_language: "fr",
+    })
+
+    dispatch(go_on_update_deck_page({ deck_id: deck.id }))
+  },
+)
+
+export const exit_update_deck_page = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("decks/exit_update_deck_page", async (_, { dispatch, extra }) => {
+  extra.location_service.navigate("/")
+  dispatch(reset_create_deck())
 })
 
 export const fetch_decks = createAsyncThunk<void, void, AsyncThunkConfig>(
@@ -254,24 +284,6 @@ export const load_deck_into_create_form = createAsyncThunk<
   },
 )
 
-export const global_route_changed = createAsyncThunk<
-  void,
-  void,
-  AsyncThunkConfig
->("decks/global_route_changed", async (_, { dispatch, extra }) => {
-  const location = extra.location_service.get_current_url()
-  const pathname = new URL(location).pathname
-  const { deck_id } = UrlMatcherService.extract({
-    pattern: "/decks/:deck_id/update",
-    url: pathname,
-  })
-  if (deck_id) {
-    await dispatch(load_deck_into_create_form({ deck_id }))
-  } else {
-    dispatch(reset_create_deck())
-  }
-})
-
 export const create_deck_submit = createAsyncThunk<
   void,
   void,
@@ -356,6 +368,16 @@ export const create_deck_submit = createAsyncThunk<
   extra.location_service.navigate("/")
 })
 
+export const delete_deck = createAsyncThunk<
+  void,
+  { deck_id: string },
+  AsyncThunkConfig
+>("decks/delete_deck", async ({ deck_id }, { extra }) => {
+  await extra.decks_repository.delete_deck({ id: deck_id })
+
+  extra.location_service.navigate("/")
+})
+
 /**
  *
  *
@@ -373,6 +395,60 @@ export const global_app_initialized = createAsyncThunk<
   void,
   void,
   AsyncThunkConfig
->("decks/global_app_initialized", async (params, { dispatch }) => {
-  await dispatch(fetch_decks())
+>("decks/global_app_initialized", async (params, { dispatch }) => {})
+
+export const global_route_changed = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("decks/global_route_changed", async (_, { dispatch, extra }) => {
+  dispatch(on_decks_update_page())
+  dispatch(on_decks_home_page())
+})
+
+export const on_decks_update_page = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("decks/global_route_changed", async (_, { dispatch, extra, getState }) => {
+  const { authentication } = getState()
+
+  if (!authentication.user) return
+
+  const location = extra.location_service.get_current_url()
+  const { pathname } = new URL(location)
+  const is_on_update_page = UrlMatcherService.exact_match({
+    url: pathname,
+    pattern: "/decks/:deck_id/update",
+  })
+
+  if (!is_on_update_page) return
+
+  const { deck_id } = UrlMatcherService.extract({
+    pattern: "/decks/:deck_id/update",
+    url: pathname,
+  })
+
+  await dispatch(load_deck_into_create_form({ deck_id: deck_id! }))
+})
+
+export const on_decks_home_page = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("decks/global_route_changed", async (_, { dispatch, extra, getState }) => {
+  const { authentication } = getState()
+
+  if (!authentication.user) return
+
+  const location = extra.location_service.get_current_url()
+  const { pathname } = new URL(location)
+  const is_on_home_page = UrlMatcherService.exact_match({
+    url: pathname,
+    pattern: "/",
+  })
+
+  if (!is_on_home_page) return
+
+  dispatch(fetch_decks())
 })

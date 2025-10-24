@@ -21,13 +21,12 @@ export const global_route_changed = createAsyncThunk<
   AsyncThunkConfig
 >("decks_details/global_route_changed", async (_, { dispatch, extra }) => {
   const location = extra.location_service.get_current_url()
-  const pathname = new URL(location).pathname
-  const { deck_id } = UrlMatcherService.extract({
-    pattern: "/decks/:deck_id",
-    url: pathname,
+  const { hash } = new URL(location)
+  const { deck_details_drawer } = UrlMatcherService.extract_from_hash({
+    hash,
   })
 
-  if (deck_id) {
-    await dispatch(fetch_deck_details({ deck_id }))
+  if (deck_details_drawer) {
+    await dispatch(fetch_deck_details({ deck_id: deck_details_drawer }))
   }
 })

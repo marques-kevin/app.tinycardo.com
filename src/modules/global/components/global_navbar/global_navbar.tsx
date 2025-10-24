@@ -2,8 +2,9 @@ import { Link, NavLink } from "react-router-dom"
 import { CogIcon, PlusIcon, SearchIcon } from "lucide-react"
 import { GlobalLogo } from "@/modules/global/components/global_logo/global_logo"
 import { useIntl } from "react-intl"
+import { connector, type ContainerProps } from "./global_navbar.container"
 
-export function GlobalNavbar() {
+export function Wrapper(props: ContainerProps) {
   const { formatMessage } = useIntl()
 
   return (
@@ -25,7 +26,7 @@ export function GlobalNavbar() {
             </span>
           </Link>
 
-          <div className="flex items-center font-medium">
+          <div className="hidden items-center font-medium lg:flex">
             <NavLink
               to="/discover/"
               className={({ isActive }: { isActive: boolean }) =>
@@ -36,15 +37,14 @@ export function GlobalNavbar() {
               <span>{formatMessage({ id: "global_navbar/discover" })}</span>
             </NavLink>
 
-            <NavLink
-              to="/create_new_deck/"
-              className={({ isActive }: { isActive: boolean }) =>
-                `btn btn-accent btn-ghost gap-2 rounded-full uppercase ${isActive ? "btn-active" : ""}`
-              }
+            <button
+              onClick={props.on_create_new_deck}
+              role="button"
+              className="btn btn-accent btn-ghost gap-2 rounded-full uppercase"
             >
               <PlusIcon className="size-5" />
               <span>{formatMessage({ id: "global_navbar/create_deck" })}</span>
-            </NavLink>
+            </button>
 
             <NavLink
               to="/params/"
@@ -61,3 +61,5 @@ export function GlobalNavbar() {
     </div>
   )
 }
+
+export const GlobalNavbar = connector(Wrapper)

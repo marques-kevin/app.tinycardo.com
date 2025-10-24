@@ -2,11 +2,12 @@
   "authentication_protection/continue_with_google": "Continue with Google",
   "authentication_protection/description": "Sign in to save your progress and access your decks from any device.",
   "authentication_protection/title": "Sign in to continue",
-  "create_deck_footer_actions/save": "Create deck",
+  "create_deck_footer_actions/back": "Back",
+  "create_deck_footer_actions/save": "Save",
   "create_deck_page/description": "Provide details and add your cards.",
   "create_deck_page/title": "Create deck",
   "create_deck_title/length_error": "This field must be 50 characters or less, here it's {length} long.",
-  "create_deck_title/title/fieldset_legend": "Title",
+  "create_deck_title/title/placeholder": "Enter a title for your deck",
   "deck_actions_dialog/cancel": "Cancel",
   "deck_actions_dialog/learn_new_cards": "Learn new cards",
   "deck_actions_dialog/not_ready": "Not ready: {count}",
@@ -76,5 +77,8 @@
   "session_reviewed_words_table/mastered_cards_empty": "Well, well… looks like you haven't mastered any cards yet, but hey, at least you're trying!",
   "session_reviewed_words_table/mastered_cards_title": "Cards you mastered... for now!",
   "session_reviewed_words_table/next_due_tooltip": "This card will be reviewable again on {date}",
-  "session_reviewed_words_table/streak_tooltip": "You've reviewed this card {count} times without mistakes"
+  "session_reviewed_words_table/streak_tooltip": "You've reviewed this card {count} times without mistakes",
+  "update_deck_description/description/fieldset_legend": "Description",
+  "update_deck_description/description/placeholder": "Describe your deck in a few words",
+  "update_deck_description/length_error": "This field must be 50 characters or less, here it's {length} long."
 }

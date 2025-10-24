@@ -9,7 +9,7 @@ export function RouteChangeListener() {
 
   useEffect(() => {
     dispatch(global_route_changed())
-  }, [location.pathname, dispatch])
+  }, [location.pathname, location.search, location.hash, dispatch])
 
   return null
 }

@@ -1,0 +1,5 @@
+{
+  "description/fieldset_legend": "Description",
+  "description/placeholder": "Describe your deck in a few words",
+  "length_error": "This field must be 50 characters or less, here it's {length} long."
+}

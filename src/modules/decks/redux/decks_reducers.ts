@@ -43,6 +43,7 @@ export type DecksState = {
     cards: CardEntity["id"][]
     cards_map: Record<string, CardEntity>
     title: string
+    description: string
     front_language: string
     back_language: string
     is_loading: boolean
@@ -71,6 +72,7 @@ const initialState: DecksState = {
     cards: [],
     cards_map: {},
     title: "",
+    description: "",
     front_language: "en",
     back_language: "fr",
     is_loading: false,
@@ -214,6 +216,7 @@ export const decks_reducers = createReducer(initialState, (builder) => {
       cards: [],
       cards_map: {},
       title: "",
+      description: "",
       front_language: "en",
       back_language: "fr",
       is_loading: false,
@@ -250,6 +253,10 @@ export const decks_reducers = createReducer(initialState, (builder) => {
       state.create_deck.front_language = action.payload.language
     },
   )
+
+  builder.addCase(actions._draft_set_description, (state, action) => {
+    state.create_deck.description = action.payload.description
+  })
 
   builder.addCase(actions.create_deck_update_back_language, (state, action) => {
     state.create_deck.back_language = action.payload.language

@@ -200,4 +200,20 @@ export class UrlMatcherService {
 
     return extracted_params
   }
+
+  static extract_from_hash(params: {
+    hash: string
+  }): Record<string, string | undefined> {
+    const extracted_params: Record<string, string | undefined> = {}
+
+    params.hash
+      .replace("#", "")
+      .split("&")
+      .forEach((param) => {
+        const [key, value] = param.split("=")
+        extracted_params[key] = value
+      })
+
+    return extracted_params
+  }
 }

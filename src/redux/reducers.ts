@@ -8,6 +8,7 @@ import { sessions_reducers } from "@/modules/sessions/redux/sessions_reducers"
 import { authentication_reducers } from "@/modules/authentication/redux/authentication_reducers"
 import { discover_reducers } from "@/modules/discover/redux/discover_reducers"
 import { decks_details_reducers } from "@/modules/deck_details/redux/deck_details_reducers"
+import { drawer_reducers } from "@/modules/drawer/redux/drawer_reducers"
 
 export const reducers = combineReducers({
   sessions: sessions_reducers,
@@ -19,4 +20,5 @@ export const reducers = combineReducers({
   dialog: dialog_reducers,
   authentication: authentication_reducers,
   discover: discover_reducers,
+  drawer: drawer_reducers,
 })

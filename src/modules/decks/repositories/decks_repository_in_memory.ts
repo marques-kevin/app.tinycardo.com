@@ -69,7 +69,7 @@ export class DecksRepositoryInMemory implements DecksRepository {
     back_language: string
   }): ReturnType<DecksRepository["create_deck"]> {
     const deck: DeckEntity = {
-      id: `${Date.now().toString()}/${Math.random()}`,
+      id: `${Date.now().toString()}-${Math.random()}`,
       name: params.name,
       front_language: params.front_language,
       back_language: params.back_language,
