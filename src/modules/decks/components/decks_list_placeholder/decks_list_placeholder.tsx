@@ -7,13 +7,13 @@ export function Wrapper() {
 
   return (
     <div className="bg-base-200 border-base-300 rounded-lg border px-4 py-8 text-center lg:p-8 lg:py-16">
-      <FolderOpenIcon className="inline-block size-10 lg:size-18" />
+      <FolderOpenIcon className="inline-block size-10 lg:size-14" />
 
       <div className="mt-4 text-balance">
         <div className="text-xl font-bold lg:text-2xl">
           {formatMessage({ id: "decks_list_placeholder/title" })}
         </div>
-        <p className="text-base-content/60 mt-2 lg:text-lg">
+        <p className="text-base-content/60 lg:text-lg">
           {formatMessage({ id: "decks_list_placeholder/description" })}
         </p>
       </div>

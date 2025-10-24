@@ -18,13 +18,13 @@ export function Wrapper(props: ContainerProps) {
         <div className="mt-8 flex flex-col gap-2">
           <button
             className="btn"
-            onClick={() => props.on_show_deck(props.deck_id)}
+            onClick={() => props.on_show_deck(props?.deck_id ?? "")}
           >
             {formatMessage({ id: "discover_decks_action_dialog/show_deck" })}
           </button>
           <button
             className="btn btn-primary"
-            onClick={() => props.on_start_using_deck(props.deck_id)}
+            onClick={() => props.on_start_using_deck(props?.deck_id ?? "")}
           >
             <PlayIcon className="size-4" />
             <span>

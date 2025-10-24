@@ -21,6 +21,14 @@ export const _store_decks_stats = createAction<
 
 export const _store_decks = createAction<DeckEntity[]>("decks/_store_decks")
 
+export const go_on_deck_details_page = createAsyncThunk<
+  void,
+  { deck_id: string },
+  AsyncThunkConfig
+>("decks/go_on_deck_details_page", async ({ deck_id }, { extra }) => {
+  extra.location_service.navigate(`/decks/${deck_id}/`)
+})
+
 export const fetch_decks = createAsyncThunk<void, void, AsyncThunkConfig>(
   "decks/fetch_decks",
   async (params, { dispatch, extra }) => {

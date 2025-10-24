@@ -24,7 +24,7 @@ export const on_view_deck = createAsyncThunk<
   { deck_id: string },
   AsyncThunkConfig
 >("discover/on_view_deck", async (_, { extra }) => {
-  extra.location_service.navigate(`/decks/${_.deck_id}/details`)
+  extra.location_service.navigate(`/decks/${_.deck_id}/`)
 })
 
 export const on_use_deck = createAsyncThunk<

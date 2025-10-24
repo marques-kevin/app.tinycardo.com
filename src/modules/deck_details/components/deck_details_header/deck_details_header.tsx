@@ -10,7 +10,7 @@ import {
 
 export function Wrapper(props: ContainerProps) {
   return (
-    <header className="space-y-4">
+    <header className="space-y-4 py-8">
       <div>
         <h1 className="text-4xl font-bold">{props.name}</h1>
         <p className="text-base-content/80 max-w-prose text-xl text-balance">

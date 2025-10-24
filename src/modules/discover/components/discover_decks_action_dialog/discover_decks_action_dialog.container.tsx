@@ -4,8 +4,8 @@ import * as actions from "../../redux/discover_actions"
 
 const map_state = (state: RootState) => ({
   is_open: state.discover.actions.is_open,
-  name: state.discover.actions.deck!.name,
-  deck_id: state.discover.actions.deck!.id,
+  name: state.discover.actions.deck?.name,
+  deck_id: state.discover.actions.deck?.id,
 })
 
 const map_dispatch = (dispatch: Dispatch) => ({

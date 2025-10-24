@@ -1,54 +1,63 @@
-import { useIntl } from "react-intl"
 import { Link, NavLink } from "react-router-dom"
-import { Cog, Plus } from "lucide-react"
-import { GlobalLogo } from "../global_logo/global_logo"
+import { CogIcon, PlusIcon, SearchIcon } from "lucide-react"
+import { GlobalLogo } from "@/modules/global/components/global_logo/global_logo"
+import { useIntl } from "react-intl"
 
 export function GlobalNavbar() {
   const { formatMessage } = useIntl()
 
   return (
-    <nav className="text-base-content w-full">
-      <div className="flex items-center justify-between gap-4 py-8">
-        <Link to="/" className="flex items-center gap-2">
-          <GlobalLogo className="size-10" />
+    <div className="mt-2 px-4">
+      <nav className="bg-accent text-accent-content border-accent-content/20 w-full rounded-full border-2 px-2 py-2 pl-4">
+        <div className="flex items-center justify-between gap-4">
+          <Link to="/" className="flex items-center gap-2">
+            <GlobalLogo className="size-10" />
 
-          <span
-            className="text-primary text-lg font-semibold tracking-wider"
-            style={{
-              textDecoration: "underline",
-              textDecorationThickness: "2px",
-              textDecorationColor: "var(--color-primary-content)",
-              textUnderlineOffset: "2px",
-            }}
-          >
-            tinycardo
-          </span>
-        </Link>
+            <span
+              className="text-lg font-semibold tracking-wider"
+              style={{
+                textDecoration: "underline",
+                textDecorationThickness: "2px",
+                textUnderlineOffset: "2px",
+              }}
+            >
+              tinycardo
+            </span>
+          </Link>
 
-        <div className="flex items-center gap-2">
-          <NavLink
-            to="/create_new_deck/"
-            className={({ isActive }: { isActive: boolean }) =>
-              `btn btn-ghost ${isActive ? "btn-active" : ""}`
-            }
-            title={formatMessage({
-              id: "global_navbar/create_deck",
-            })}
-          >
-            <Plus size={18} />
-          </NavLink>
+          <div className="flex items-center font-medium">
+            <NavLink
+              to="/discover/"
+              className={({ isActive }: { isActive: boolean }) =>
+                `btn btn-accent btn-ghost gap-2 rounded-full uppercase ${isActive ? "btn-active" : ""}`
+              }
+            >
+              <SearchIcon className="size-5" />
+              <span>{formatMessage({ id: "global_navbar/discover" })}</span>
+            </NavLink>
 
-          <NavLink
-            to="/params/"
-            className={({ isActive }: { isActive: boolean }) =>
-              `btn btn-ghost ${isActive ? "btn-active" : ""}`
-            }
-            title={formatMessage({ id: "global_navbar/params" })}
-          >
-            <Cog size={18} />
-          </NavLink>
+            <NavLink
+              to="/create_new_deck/"
+              className={({ isActive }: { isActive: boolean }) =>
+                `btn btn-accent btn-ghost gap-2 rounded-full uppercase ${isActive ? "btn-active" : ""}`
+              }
+            >
+              <PlusIcon className="size-5" />
+              <span>{formatMessage({ id: "global_navbar/create_deck" })}</span>
+            </NavLink>
+
+            <NavLink
+              to="/params/"
+              className={({ isActive }: { isActive: boolean }) =>
+                `btn btn-accent btn-ghost gap-2 rounded-full uppercase ${isActive ? "btn-active" : ""}`
+              }
+            >
+              <CogIcon className="size-5" />
+              <span>{formatMessage({ id: "global_navbar/params" })}</span>
+            </NavLink>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   )
 }
