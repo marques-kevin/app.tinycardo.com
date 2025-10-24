@@ -50,6 +50,17 @@ export class DecksRepositoryLocalStorage implements DecksRepository {
     return this.get_item<DeckEntity[]>(this.decks_key) || []
   }
 
+  async get_deck_by_id(params: {
+    id: string
+  }): ReturnType<DecksRepository["get_deck_by_id"]> {
+    const decks = await this.fetch_decks()
+    const deck = decks.find((d) => d.id === params.id)
+    if (!deck) {
+      throw new Error("Deck not found")
+    }
+    return deck
+  }
+
   async fetch_cards(params: {
     deck_id: string
   }): ReturnType<DecksRepository["fetch_cards"]> {
@@ -57,6 +68,12 @@ export class DecksRepositoryLocalStorage implements DecksRepository {
       this.get_item<Record<string, CardEntity[]>>(`cards`) || {}
 
     return deck_cards[params.deck_id] || []
+  }
+
+  async get_cards_by_deck_id(params: {
+    deck_id: string
+  }): ReturnType<DecksRepository["get_cards_by_deck_id"]> {
+    return this.fetch_cards(params)
   }
 
   async create_deck(params: {

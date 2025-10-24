@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import type { AsyncThunkConfig } from "@/redux/store"
 import * as decks_actions from "@/modules/decks/redux/decks_actions"
+import * as deck_details_actions from "@/modules/deck_details/redux/deck_details_actions"
 import * as sessions_actions from "@/modules/sessions/redux/sessions_actions"
 import * as params_actions from "@/modules/params/redux/params_actions"
 import * as dialog_actions from "@/modules/dialog/redux/dialog_actions"
@@ -31,6 +32,7 @@ export const global_route_changed = createAsyncThunk<
 >("global/route_changed", async (_, { dispatch }) => {
   dispatch(sessions_actions.global_route_changed())
   dispatch(decks_actions.global_route_changed())
+  dispatch(deck_details_actions.global_route_changed())
   dispatch(discover_actions.global_route_changed())
 })
 

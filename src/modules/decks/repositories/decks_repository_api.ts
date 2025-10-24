@@ -65,6 +65,17 @@ export class DecksRepositoryApi implements DecksRepository {
     }))
   }
 
+  async get_deck_by_id(params: {
+    id: string
+  }): ReturnType<DecksRepository["get_deck_by_id"]> {
+    const decks = await this.fetch_decks()
+    const deck = decks.find((d) => d.id === params.id)
+    if (!deck) {
+      throw new Error("Deck not found")
+    }
+    return deck
+  }
+
   async fetch_cards(params: {
     deck_id: string
   }): ReturnType<DecksRepository["fetch_cards"]> {
@@ -80,6 +91,12 @@ export class DecksRepositoryApi implements DecksRepository {
       front: card.front,
       back: card.back,
     }))
+  }
+
+  async get_cards_by_deck_id(params: {
+    deck_id: string
+  }): ReturnType<DecksRepository["get_cards_by_deck_id"]> {
+    return this.fetch_cards(params)
   }
 
   async create_deck(params: {

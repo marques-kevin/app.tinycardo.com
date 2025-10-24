@@ -40,10 +40,26 @@ export class DecksRepositoryInMemory implements DecksRepository {
     return this.decks
   }
 
+  async get_deck_by_id(params: {
+    id: string
+  }): ReturnType<DecksRepository["get_deck_by_id"]> {
+    const deck = this.decks.find((d) => d.id === params.id)
+    if (!deck) {
+      throw new Error("Deck not found")
+    }
+    return deck
+  }
+
   async fetch_cards(params: {
     deck_id: string
   }): ReturnType<DecksRepository["fetch_cards"]> {
-    return this.cards[params.deck_id]
+    return this.cards[params.deck_id] || []
+  }
+
+  async get_cards_by_deck_id(params: {
+    deck_id: string
+  }): ReturnType<DecksRepository["get_cards_by_deck_id"]> {
+    return this.fetch_cards(params)
   }
 
   async create_deck(params: {

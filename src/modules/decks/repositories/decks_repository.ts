@@ -9,6 +9,8 @@ export interface DecksRepository {
 
   fetch_decks(): Promise<DeckEntity[]>
 
+  get_deck_by_id(params: { id: string }): Promise<DeckEntity>
+
   create_deck(params: {
     name: string
     front_language: string
@@ -25,6 +27,8 @@ export interface DecksRepository {
   delete_deck(params: { id: string }): Promise<DeckEntity>
 
   fetch_cards(params: { deck_id: string }): Promise<CardEntity[]>
+
+  get_cards_by_deck_id(params: { deck_id: string }): Promise<CardEntity[]>
 
   upsert_cards(params: {
     deck_id: string

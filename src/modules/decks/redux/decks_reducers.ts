@@ -84,63 +84,11 @@ export const decks_reducers = createReducer(initialState, (builder) => {
   builder.addCase(actions._store_decks_stats, (state, action) => {
     state.stats = action.payload
   })
-  // builder.addCase(_set_fetching, (state, action) => {
-  //   // state.fetching[action.payload.key] = action.payload.value
-  // })
-  // builder.addCase(_set_decks, (state, action) => {
-  //   state.decks = action.payload
-  // })
-  // builder.addCase(_set_filter_fields, (state, action) => {
-  //   state.filter = { ...state.filter, ...action.payload }
-  // })
-  // builder.addCase(clear_filter, (state) => {
-  //   state.filter = {
-  //     name: null,
-  //     origin_language: null,
-  //     learning_language: null,
-  //   }
-  // })
-  // builder.addCase(_set_pagination, (state, action) => {
-  //   if (typeof action.payload.current_page === "number") {
-  //     state.pagination.current_page = action.payload.current_page
-  //   }
-  //   if (typeof action.payload.total_pages === "number") {
-  //     state.pagination.total_pages = action.payload.total_pages
-  //   }
-  //   if (typeof action.payload.limit === "number") {
-  //     state.pagination.limit = action.payload.limit
-  //   }
-  // })
-  // builder.addCase(_set_cards, (state, action) => {
-  //   state.cards = action.payload
-  // })
-  // // Draft handlers
+
   builder.addCase(actions._draft_set_title, (state, action) => {
     state.create_deck.title = action.payload.title
   })
-  // builder.addCase(_draft_set_description, (state, action) => {
-  //   state.draft.description = action.payload.description
-  // })
-  // builder.addCase(_draft_add_card, (state, action) => {
-  //   state.draft.cards.push(action.payload)
-  // })
-  // builder.addCase(_draft_update_card, (state, action) => {
-  //   const idx = state.draft.cards.findIndex((c) => c.id === action.payload.id)
-  //   if (idx >= 0) {
-  //     state.draft.cards[idx][action.payload.field] = action.payload.value
-  //   }
-  // })
-  // builder.addCase(actions._draft_remove_card, (state, action) => {
-  //   state.draft.cards = state.draft.cards.filter(
-  //     (c) => c.id !== action.payload.id,
-  //   )
-  // })
-  // builder.addCase(actions._draft_add_cards_bulk, (state, action) => {
-  //   state.draft.cards = state.draft.cards.concat(action.payload)
-  // })
-  // builder.addCase(actions._draft_clear, (state) => {
-  //   state.draft = { title: "", description: "", cards: [] }
-  // })
+
   builder.addCase(actions._open_csv_import_dialog, (state, action) => {
     state.create_deck.csv_import_dialog = {
       open: true,
@@ -176,19 +124,14 @@ export const decks_reducers = createReducer(initialState, (builder) => {
   })
 
   builder.addCase(actions._close_deck_actions_dialog, (state) => {
-    state.deck_actions_dialog = {
-      open: false,
-      deck: null,
-    }
+    state.deck_actions_dialog.open = false
   })
 
-  // Fetch cards
   builder.addCase(actions.fetch_cards.pending, (state) => {
     state.fetching.fetching_cards = true
   })
   builder.addCase(actions.fetch_cards.fulfilled, (state, action) => {
     state.fetching.fetching_cards = false
-    // Extract deck_id from the action meta
     const deck_id = action.meta.arg.deck_id
     state.cards[deck_id] = action.payload
   })
@@ -277,7 +220,6 @@ export const decks_reducers = createReducer(initialState, (builder) => {
     }
   })
 
-  // Loading for update page prefetch
   builder.addCase(actions.load_deck_into_create_form.pending, (state) => {
     state.create_deck.is_loading = true
   })
