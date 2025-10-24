@@ -11,7 +11,7 @@ type LessonEntity = {
 
 export function Wrapper(props: { lessons: LessonEntity[] }) {
   return (
-    <div className="grid grid-cols-6 gap-2">
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {props.lessons.map((lesson) => (
         <div key={lesson.id} className="stack relative">
           <div className="deck flex aspect-[3/4] cursor-pointer flex-col p-4">

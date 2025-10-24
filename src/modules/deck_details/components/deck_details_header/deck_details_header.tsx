@@ -19,7 +19,7 @@ export function Wrapper(props: ContainerProps) {
         </p>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <div className="badge badge-xl badge-accent badge-soft">
           <GalleryHorizontalEndIcon className="size-4" />
           <span>{props.number_of_cards}</span>
@@ -43,7 +43,7 @@ export function Wrapper(props: ContainerProps) {
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <button className="btn btn-lg btn-primary">
           <PlayIcon className="size-4" />
           Commencer à apprendre

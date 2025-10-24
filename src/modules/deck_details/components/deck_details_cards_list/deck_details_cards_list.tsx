@@ -16,7 +16,7 @@ export function Wrapper(props: ContainerProps) {
   const total_size = row_virtualizer.getTotalSize()
 
   return (
-    <div className="rounded-box border-base-content/10 bg-base-100 border">
+    <div className="rounded-box border-base-content/10 bg-base-100">
       <div className="text-base-content divide-base-content/10 border-base-content/10 grid grid-cols-2 gap-2 divide-x border-b text-xl">
         <div className="p-4">{emoji_flags[props.front_language]}</div>
         <div className="p-4">{emoji_flags[props.back_language]}</div>

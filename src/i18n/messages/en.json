@@ -16,6 +16,8 @@
   "deck_actions_dialog/total_cards": "Total cards: {count}",
   "deck_actions_dialog/update_deck": "Update deck",
   "deck_actions_dialog/view_deck_details": "View deck details",
+  "deck_details_tabs/cards": "Cards",
+  "deck_details_tabs/lessons": "Lessons",
   "decks_actions/dialog/create_deck/errors/at_least_one_card": "Add at least one card.",
   "decks_actions/dialog/create_deck/errors/dialog/description": "Please correct the following:",
   "decks_actions/dialog/create_deck/errors/dialog/title": "Fix issues before saving",
