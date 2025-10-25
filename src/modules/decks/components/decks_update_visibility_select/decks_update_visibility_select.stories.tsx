@@ -1,8 +1,8 @@
-import { Wrapper } from "./update_deck_description"
+import { Wrapper } from "./decks_update_visibility_select"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "decks/update deck/description",
+  title: "decks/update/update_deck_visibility",
   component: Wrapper,
 }
 
@@ -11,13 +11,12 @@ type Story = StoryObj<typeof Wrapper>
 
 export const Default: Story = {
   args: {
-    description: "Topik 1 (1000 words)",
+    visibility: "public",
   },
 }
 
 export const TooLong: Story = {
   args: {
-    description:
-      "A very big title that is too long to be displayed, that should not be accepted",
+    visibility: "private",
   },
 }

@@ -2,7 +2,6 @@ import {
   connector,
   type ContainerProps,
 } from "./discover_decks_search.container"
-import { FilterIcon } from "lucide-react"
 
 export function Wrapper(props: ContainerProps) {
   return (

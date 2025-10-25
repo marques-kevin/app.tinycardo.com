@@ -5,6 +5,15 @@ import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { create_uuid_for_cards } from "@/modules/decks/utils/create_uuid_for_cards"
 import { v4 } from "uuid"
 
+const create_card = (): CardEntity => {
+  return {
+    id: v4() as CardEntity["id"],
+    front: "",
+    back: "",
+    deck_id: "local",
+  }
+}
+
 export type DecksState = {
   decks: DeckEntity[]
   stats: Record<
@@ -33,6 +42,7 @@ export type DecksState = {
     } | null
   }
   create_deck: {
+    autofocus_card_id: string | null
     csv_import_dialog: {
       open: boolean
       headers: string[]
@@ -44,7 +54,9 @@ export type DecksState = {
     cards_map: Record<string, CardEntity>
     title: string
     description: string
+    visibility: "public" | "private" | "unlisted"
     front_language: string
+    selected_cards: CardEntity["id"][]
     back_language: string
     is_loading: boolean
   }
@@ -61,7 +73,9 @@ const initialState: DecksState = {
     open: false,
     deck: null,
   },
+
   create_deck: {
+    autofocus_card_id: null,
     csv_import_dialog: {
       open: false,
       headers: [],
@@ -69,10 +83,12 @@ const initialState: DecksState = {
       selected_front: 0,
       selected_back: 1,
     },
+    selected_cards: [],
     cards: [],
     cards_map: {},
     title: "",
     description: "",
+    visibility: "public",
     front_language: "en",
     back_language: "fr",
     is_loading: false,
@@ -85,10 +101,6 @@ export const decks_reducers = createReducer(initialState, (builder) => {
   })
   builder.addCase(actions._store_decks_stats, (state, action) => {
     state.stats = action.payload
-  })
-
-  builder.addCase(actions._draft_set_title, (state, action) => {
-    state.create_deck.title = action.payload.title
   })
 
   builder.addCase(actions._open_csv_import_dialog, (state, action) => {
@@ -116,17 +128,6 @@ export const decks_reducers = createReducer(initialState, (builder) => {
       selected_front: 0,
       selected_back: 1,
     }
-  })
-
-  builder.addCase(actions._open_deck_actions_dialog, (state, action) => {
-    state.deck_actions_dialog = {
-      open: true,
-      deck: action.payload.deck,
-    }
-  })
-
-  builder.addCase(actions._close_deck_actions_dialog, (state) => {
-    state.deck_actions_dialog.open = false
   })
 
   builder.addCase(actions.fetch_cards.pending, (state) => {
@@ -182,17 +183,6 @@ export const decks_reducers = createReducer(initialState, (builder) => {
     }
   })
 
-  builder.addCase(actions.create_deck_add_new_card, (state) => {
-    const id = v4() as CardEntity["id"]
-    state.create_deck.cards.push(id)
-    state.create_deck.cards_map[id] = {
-      id,
-      front: "",
-      back: "",
-      deck_id: "local",
-    }
-  })
-
   builder.addCase(actions._create_deck_set_cards, (state, action) => {
     state.create_deck.cards = action.payload.map((c) => c.id)
     state.create_deck.cards_map = action.payload.reduce(
@@ -205,22 +195,7 @@ export const decks_reducers = createReducer(initialState, (builder) => {
   })
 
   builder.addCase(actions.reset_create_deck, (state) => {
-    state.create_deck = {
-      csv_import_dialog: {
-        open: false,
-        headers: [],
-        rows: [],
-        selected_front: 0,
-        selected_back: 1,
-      },
-      cards: [],
-      cards_map: {},
-      title: "",
-      description: "",
-      front_language: "en",
-      back_language: "fr",
-      is_loading: false,
-    }
+    state.create_deck = { ...initialState.create_deck }
   })
 
   builder.addCase(actions.load_deck_into_create_form.pending, (state) => {
@@ -233,6 +208,35 @@ export const decks_reducers = createReducer(initialState, (builder) => {
     state.create_deck.is_loading = false
   })
 
+  /**
+   *
+   *
+   *
+   *
+   * UPDATE DECK ACTIONS
+   *
+   *
+   *
+   *
+   */
+
+  builder.addCase(actions.create_deck_update_card, (state, action) => {
+    state.create_deck.cards_map[action.payload.id] = {
+      ...state.create_deck.cards_map[action.payload.id],
+      [action.payload.field]: action.payload.value,
+    }
+
+    const last_card_id =
+      state.create_deck.cards[state.create_deck.cards.length - 1]
+    const last_card = state.create_deck.cards_map[last_card_id]
+
+    if (last_card.front !== "" || last_card.back !== "") {
+      const card = create_card()
+      state.create_deck.cards.push(card.id)
+      state.create_deck.cards_map[card.id] = card
+    }
+  })
+
   builder.addCase(actions.create_deck_remove_card, (state, action) => {
     state.create_deck.cards = state.create_deck.cards.filter(
       (c) => c !== action.payload.id,
@@ -240,11 +244,63 @@ export const decks_reducers = createReducer(initialState, (builder) => {
     delete state.create_deck.cards_map[action.payload.id]
   })
 
-  builder.addCase(actions.create_deck_update_card, (state, action) => {
-    state.create_deck.cards_map[action.payload.id] = {
-      ...state.create_deck.cards_map[action.payload.id],
-      [action.payload.field]: action.payload.value,
+  builder.addCase(actions.update_deck_toggle_select_card, (state, action) => {
+    state.create_deck.selected_cards =
+      state.create_deck.selected_cards.includes(action.payload.card_id)
+        ? state.create_deck.selected_cards.filter(
+            (c) => c !== action.payload.card_id,
+          )
+        : [...state.create_deck.selected_cards, action.payload.card_id]
+  })
+
+  builder.addCase(actions.update_deck_delete_selected_cards, (state) => {
+    state.create_deck.cards = state.create_deck.cards.filter(
+      (c) => !state.create_deck.selected_cards.includes(c),
+    )
+    state.create_deck.cards_map = Object.fromEntries(
+      Object.entries(state.create_deck.cards_map).filter(
+        ([key]) => !state.create_deck.selected_cards.includes(key),
+      ),
+    )
+    state.create_deck.selected_cards = []
+
+    const last_card_id =
+      state.create_deck.cards[state.create_deck.cards.length - 1]
+    const last_card = state.create_deck.cards_map[last_card_id]
+
+    if (
+      state.create_deck.cards.length === 0 ||
+      last_card.front !== "" ||
+      last_card.back !== ""
+    ) {
+      const card = create_card()
+      state.create_deck.cards.push(card.id)
+      state.create_deck.cards_map[card.id] = card
     }
+  })
+
+  builder.addCase(actions.update_deck_toggle_select_all_cards, (state) => {
+    if (
+      state.create_deck.selected_cards.length === state.create_deck.cards.length
+    ) {
+      state.create_deck.selected_cards = []
+    } else {
+      state.create_deck.selected_cards = state.create_deck.cards.map(
+        (card_id) => card_id,
+      )
+    }
+  })
+
+  builder.addCase(actions.update_deck_set_title, (state, action) => {
+    state.create_deck.title = action.payload.title
+  })
+
+  builder.addCase(actions.update_deck_set_description, (state, action) => {
+    state.create_deck.description = action.payload.description
+  })
+
+  builder.addCase(actions.update_deck_set_visibility, (state, action) => {
+    state.create_deck.visibility = action.payload.visibility
   })
 
   builder.addCase(
@@ -253,10 +309,6 @@ export const decks_reducers = createReducer(initialState, (builder) => {
       state.create_deck.front_language = action.payload.language
     },
   )
-
-  builder.addCase(actions._draft_set_description, (state, action) => {
-    state.create_deck.description = action.payload.description
-  })
 
   builder.addCase(actions.create_deck_update_back_language, (state, action) => {
     state.create_deck.back_language = action.payload.language

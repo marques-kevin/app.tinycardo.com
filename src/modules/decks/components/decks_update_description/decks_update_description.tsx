@@ -1,7 +1,7 @@
 import {
   connector,
   type ContainerProps,
-} from "./update_deck_description.container"
+} from "./decks_update_description.container"
 import { cn } from "@/lib/utils"
 import { useIntl } from "react-intl"
 
@@ -17,7 +17,7 @@ export function Wrapper(props: ContainerProps) {
           props.description.length > 250 && "text-error input-error",
         )}
         placeholder={formatMessage({
-          id: "update_deck_description/description/placeholder",
+          id: "decks_update_description/description/placeholder",
         })}
         value={props.description}
         onChange={(e) => props.on_change(e.target.value)}
@@ -32,7 +32,7 @@ export function Wrapper(props: ContainerProps) {
         {props.description.length > 250 && (
           <span>
             {formatMessage(
-              { id: "create_deck_title/length_error" },
+              { id: "decks_update_description/length_error" },
               { length: props.description.length },
             )}
           </span>
@@ -42,4 +42,4 @@ export function Wrapper(props: ContainerProps) {
   )
 }
 
-export const UpdateDeckDescription = connector(Wrapper)
+export const DecksUpdateDescription = connector(Wrapper)

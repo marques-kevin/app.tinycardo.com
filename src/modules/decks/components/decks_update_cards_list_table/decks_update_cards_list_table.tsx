@@ -1,16 +1,23 @@
 import {
   connector,
   type ContainerProps,
-} from "@/modules/decks/components/create_deck_cards_list_table/create_deck_cards_list_table.container"
+} from "./decks_update_cards_list_table.container"
 import { PlusIcon } from "lucide-react"
 import { emoji_flags } from "@/modules/decks/utils/emoji_flags"
-import { CreateDeckCardsListItem } from "@/modules/decks/components/create_deck_cards_list_item/create_deck_cards_list_item"
-import { CsvImportButton } from "@/modules/decks/components/csv_import_button/csv_import_button"
+import { DecksUpdateCardsListTableItem } from "@/modules/decks/components/decks_update_cards_list_table_item/decks_update_cards_list_table_item"
 
 export function Wrapper(props: ContainerProps) {
   return (
     <div className="w-full">
       <div className="flex items-center gap-2">
+        <div className="flex-shrink-0">
+          <input
+            type="checkbox"
+            className="radio"
+            checked={props.is_selected}
+            onChange={() => props.on_toggle_select_all_cards()}
+          />
+        </div>
         <div className="w-1/2">
           <select
             className="select select-lg text-base-content w-full"
@@ -47,29 +54,29 @@ export function Wrapper(props: ContainerProps) {
             <option value="zh">{emoji_flags.zh} Chinese</option>
           </select>
         </div>
+      </div>
+
+      {/* <div className="mt-2 flex w-full items-center gap-2">
         <div className="flex-shrink-0">
-          <CsvImportButton />
+          <input type="checkbox" className="radio opacity-0" tabIndex={-1} />
         </div>
-      </div>
-
-      <div className="mt-2 space-y-2">
-        {props.cards.map((card) => (
-          <CreateDeckCardsListItem key={card} card_id={card} />
-        ))}
-      </div>
-
-      <div className="relative mt-4 flex items-center justify-center">
-        <div className="border-primary absolute inset-0 my-auto h-1 border-t"></div>
 
         <button
-          onClick={() => props.on_add()}
-          className="btn btn-primary btn-sm relative z-10"
+          className="btn btn-outline w-full flex-1 gap-2 uppercase"
+          onClick={props.on_add_card}
         >
-          <PlusIcon className="size-4" />
+          <PlusIcon className="size-5" />
+          <span>Add card</span>
         </button>
+      </div> */}
+
+      <div className="mt-2">
+        {props.cards.map((card) => (
+          <DecksUpdateCardsListTableItem key={card} card_id={card} />
+        ))}
       </div>
     </div>
   )
 }
 
-export const CreateDeckCardsListTable = connector(Wrapper)
+export const DecksUpdateCardsListTable = connector(Wrapper)

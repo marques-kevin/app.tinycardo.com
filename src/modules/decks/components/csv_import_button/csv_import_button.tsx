@@ -35,7 +35,7 @@ export function CsvImportButton() {
         data-tip="Import from csv file"
         onClick={handleClick}
       >
-        <DownloadIcon className="size-4" />
+        <DownloadIcon className="size-5" />
       </button>
       <input
         ref={fileInputRef}

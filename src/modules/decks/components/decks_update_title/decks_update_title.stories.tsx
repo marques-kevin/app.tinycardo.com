@@ -1,13 +1,13 @@
-import { Wrapper as CreateDeckTitle } from "@/modules/decks/components/create_deck_title/create_deck_title"
+import { Wrapper } from "./decks_update_title"
 import type { Meta, StoryObj } from "@storybook/react"
 
-const meta: Meta<typeof CreateDeckTitle> = {
-  title: "decks/create deck/title",
-  component: CreateDeckTitle,
+const meta: Meta<typeof Wrapper> = {
+  title: "decks/update/decks_update_title",
+  component: Wrapper,
 }
 
 export default meta
-type Story = StoryObj<typeof CreateDeckTitle>
+type Story = StoryObj<typeof Wrapper>
 
 export const Default: Story = {
   args: {

@@ -6,7 +6,6 @@ import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { open as open_dialog } from "@/modules/dialog/redux/dialog_actions"
 import { UrlMatcherService } from "@/modules/global/services/url_matcher_service/url_matcher_service"
 import type { MessageI18nKeys } from "@/intl"
-import { add_hash } from "@/modules/drawer/utils/add_hash"
 
 export const _store_decks_stats = createAction<
   Record<
@@ -27,7 +26,7 @@ export const go_on_deck_details_page = createAsyncThunk<
   { deck_id: string },
   AsyncThunkConfig
 >("decks/go_on_deck_details_page", async ({ deck_id }, { extra }) => {
-  extra.location_service.navigate(`#deck_details_drawer=${deck_id}`)
+  extra.location_service.navigate(`/decks/${deck_id}/`)
 })
 
 export const go_on_update_deck_page = createAsyncThunk<
@@ -35,13 +34,7 @@ export const go_on_update_deck_page = createAsyncThunk<
   { deck_id: string },
   AsyncThunkConfig
 >("decks/go_on_update_deck_page", async ({ deck_id }, { extra }) => {
-  extra.location_service.navigate(
-    add_hash({
-      path: "deck_update_drawer",
-      value: deck_id,
-      current_hash: extra.location_service.get_current_hash(),
-    }),
-  )
+  extra.location_service.navigate(`/decks/${deck_id}/update`)
 })
 
 export const create_deck = createAsyncThunk<void, void, AsyncThunkConfig>(
@@ -123,8 +116,19 @@ export const fetch_decks = createAsyncThunk<void, void, AsyncThunkConfig>(
   },
 )
 
-export const create_deck_add_new_card = createAction(
+export const _create_deck_add_new_card = createAction<void>(
+  "decks/_create_deck_add_new_card",
+)
+
+export const create_deck_add_new_card = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>(
   "decks/create_deck_add_new_card",
+  async (_, { dispatch, extra, getState }) => {
+    dispatch(_create_deck_add_new_card())
+  },
 )
 
 export const create_deck_remove_card = createAction<{ id: string }>(
@@ -229,16 +233,123 @@ export const apply_csv_import_mapping = createAsyncThunk<
   return mapped
 })
 
-// // ==============================================
-// // Draft Deck state (title, description, cards)
-// // ==============================================
+export const delete_deck = createAsyncThunk<
+  void,
+  { deck_id: string },
+  AsyncThunkConfig
+>("decks/delete_deck", async ({ deck_id }, { extra }) => {
+  await extra.decks_repository.delete_deck({ id: deck_id })
 
-export const _draft_set_title = createAction<{ title: string }>(
-  "decks/_draft_set_title",
+  extra.location_service.navigate("/")
+})
+
+/**
+ *
+ *
+ *
+ *
+ *
+ * GLOBAL EVENT HANDLERS
+ *
+ *
+ *
+ *
+ */
+
+export const global_app_initialized = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("decks/global_app_initialized", async (params, { dispatch }) => {})
+
+export const global_route_changed = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("decks/global_route_changed", async (_, { dispatch, extra }) => {
+  dispatch(when_user_is_on_update_deck_page())
+  dispatch(when_user_is_on_home_page())
+})
+
+export const when_user_is_on_update_deck_page = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>(
+  "decks/when_user_is_on_update_deck_page",
+  async (_, { dispatch, extra, getState }) => {
+    const { authentication } = getState()
+
+    if (!authentication.user) return
+
+    const location = extra.location_service.get_current_url()
+    const { pathname } = new URL(location)
+    const { deck_id } = UrlMatcherService.extract({
+      pattern: "/decks/:deck_id/update",
+      url: pathname,
+    })
+
+    if (!deck_id) return
+
+    await dispatch(load_deck_into_create_form({ deck_id }))
+  },
 )
-export const _draft_set_description = createAction<{ description: string }>(
-  "decks/_draft_set_description",
+
+export const when_user_is_on_home_page = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>(
+  "decks/when_user_is_on_home_page",
+  async (_, { dispatch, extra, getState }) => {
+    const { authentication } = getState()
+
+    if (!authentication.user) return
+
+    const location = extra.location_service.get_current_url()
+    const { pathname } = new URL(location)
+    const is_on_home_page = UrlMatcherService.exact_match({
+      url: pathname,
+      pattern: "/",
+    })
+
+    if (!is_on_home_page) return
+
+    dispatch(fetch_decks())
+  },
 )
+
+/** ==============================================
+ *
+ *
+ *
+ *
+ *
+ * UPDATE DECK ACTIONS
+ *
+ *
+ *
+ * ============================================== */
+
+export const update_deck_set_visibility = createAction<{
+  visibility: "public" | "private" | "unlisted"
+}>("decks/update_deck_set_visibility")
+
+export const update_deck_set_title = createAction<{ title: string }>(
+  "decks/update_deck_set_title",
+)
+export const update_deck_set_description = createAction<{
+  description: string
+}>("decks/update_deck_set_description")
+
+export const update_deck_toggle_select_card = createAction<{
+  card_id: string
+}>("decks/update_deck_toggle_select_card")
+
+export const update_deck_toggle_select_all_cards = createAction<void>(
+  "decks/update_deck_toggle_select_all_cards",
+)
+
 export const _draft_add_card = createAction<CardEntity>("decks/_draft_add_card")
 export const _draft_update_card = createAction<{
   id: string
@@ -256,6 +367,7 @@ export const _draft_clear = createAction("decks/_draft_clear")
 export const create_deck_update_front_language = createAction<{
   language: string
 }>("decks/create_deck_update_front_language")
+
 export const create_deck_update_back_language = createAction<{
   language: string
 }>("decks/create_deck_update_back_language")
@@ -278,7 +390,9 @@ export const load_deck_into_create_form = createAsyncThunk<
 
     if (!deck) return
 
-    dispatch(_draft_set_title({ title: deck.name }))
+    dispatch(update_deck_set_title({ title: deck.name }))
+    dispatch(update_deck_set_description({ description: "" }))
+    dispatch(update_deck_set_visibility({ visibility: deck.visibility }))
     dispatch(
       create_deck_update_front_language({ language: deck.front_language }),
     )
@@ -375,81 +489,6 @@ export const create_deck_submit = createAsyncThunk<
   extra.location_service.navigate("/")
 })
 
-export const delete_deck = createAsyncThunk<
-  void,
-  { deck_id: string },
-  AsyncThunkConfig
->("decks/delete_deck", async ({ deck_id }, { extra }) => {
-  await extra.decks_repository.delete_deck({ id: deck_id })
-
-  extra.location_service.navigate("/")
-})
-
-/**
- *
- *
- *
- *
- *
- * GLOBAL EVENT HANDLERS
- *
- *
- *
- *
- */
-
-export const global_app_initialized = createAsyncThunk<
-  void,
-  void,
-  AsyncThunkConfig
->("decks/global_app_initialized", async (params, { dispatch }) => {})
-
-export const global_route_changed = createAsyncThunk<
-  void,
-  void,
-  AsyncThunkConfig
->("decks/global_route_changed", async (_, { dispatch, extra }) => {
-  dispatch(on_decks_update_page())
-  dispatch(on_decks_home_page())
-})
-
-export const on_decks_update_page = createAsyncThunk<
-  void,
-  void,
-  AsyncThunkConfig
->("decks/global_route_changed", async (_, { dispatch, extra, getState }) => {
-  const { authentication } = getState()
-
-  if (!authentication.user) return
-
-  const location = extra.location_service.get_current_url()
-  const { hash } = new URL(location)
-  const { deck_update_drawer } = UrlMatcherService.extract_from_hash({
-    hash,
-  })
-
-  if (!deck_update_drawer) return
-
-  await dispatch(load_deck_into_create_form({ deck_id: deck_update_drawer }))
-})
-
-export const on_decks_home_page = createAsyncThunk<
-  void,
-  void,
-  AsyncThunkConfig
->("decks/global_route_changed", async (_, { dispatch, extra, getState }) => {
-  const { authentication } = getState()
-
-  if (!authentication.user) return
-
-  const location = extra.location_service.get_current_url()
-  const { pathname } = new URL(location)
-  const is_on_home_page = UrlMatcherService.exact_match({
-    url: pathname,
-    pattern: "/",
-  })
-
-  if (!is_on_home_page) return
-
-  dispatch(fetch_decks())
-})
+export const update_deck_delete_selected_cards = createAction<void>(
+  "decks/update_deck_delete_selected_cards",
+)

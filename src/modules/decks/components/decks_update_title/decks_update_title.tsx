@@ -1,7 +1,4 @@
-import {
-  connector,
-  type ContainerProps,
-} from "@/modules/decks/components/create_deck_title/create_deck_title.container"
+import { connector, type ContainerProps } from "./decks_update_title.container"
 import { cn } from "@/lib/utils"
 import { useIntl } from "react-intl"
 
@@ -16,29 +13,24 @@ export function Wrapper(props: ContainerProps) {
           props.title.length > 50 && "text-error input-error",
         )}
         placeholder={formatMessage({
-          id: "create_deck_title/title/placeholder",
+          id: "decks_update_title/title/placeholder",
         })}
         value={props.title}
         onChange={(e) => props.on_change(e.target.value)}
       />
 
-      <div
-        className={cn(
-          "label flex justify-end text-right",
-          props.title.length > 50 && "text-error",
-        )}
-      >
-        {props.title.length > 50 && (
+      {props.title.length > 50 && (
+        <div className={cn("label text-error flex justify-end text-right")}>
           <span>
             {formatMessage(
-              { id: "create_deck_title/length_error" },
+              { id: "decks_update_title/length_error" },
               { length: props.title.length },
             )}
           </span>
-        )}
-      </div>
+        </div>
+      )}
     </fieldset>
   )
 }
 
-export const CreateDeckTitle = connector(Wrapper)
+export const DecksUpdateTitle = connector(Wrapper)
