@@ -1,14 +1,16 @@
 import { type Dispatch, type RootState } from "@/redux/store"
 import { connect, type ConnectedProps } from "react-redux"
-import * as decks_actions from "@/modules/decks/redux/decks_actions"
+import * as deck_update_actions from "@/modules/deck_update/redux/deck_update_actions"
 
 const mapState = (state: RootState) => ({
-  description: state.decks.update.description,
+  description: state.deck_update.description,
 })
 
 const mapDispatch = (dispatch: Dispatch) => ({
   on_change: (v: string) => {
-    dispatch(decks_actions.update_deck_set_description({ description: v }))
+    dispatch(
+      deck_update_actions.update_deck_set_description({ description: v }),
+    )
   },
 })
 

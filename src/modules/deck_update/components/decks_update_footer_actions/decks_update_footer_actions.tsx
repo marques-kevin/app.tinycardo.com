@@ -1,11 +1,55 @@
 import {
   connector,
   type ContainerProps,
-} from "@/modules/decks/components/decks_update_footer_actions/decks_update_footer_actions.container"
+} from "@/modules/deck_update/components/decks_update_footer_actions/decks_update_footer_actions.container"
 import { useIntl } from "react-intl"
 import { SaveIcon, TrashIcon, XIcon } from "lucide-react"
-import { CsvImportButton } from "@/modules/decks/components/csv_import_button/csv_import_button"
 import { cn } from "@/lib/utils"
+import { useRef } from "react"
+import { DownloadIcon } from "lucide-react"
+
+function CsvImportButton(props: { on_import_csv: (content: string) => void }) {
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handle_file_change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const content = e.target?.result as string
+      if (content) {
+        props.on_import_csv(content)
+      }
+    }
+    reader.readAsText(file)
+
+    event.target.value = ""
+  }
+
+  const handle_click = () => {
+    fileInputRef.current?.click()
+  }
+
+  return (
+    <>
+      <button
+        className="btn text-base-content btn-ghost tooltip tooltip-left"
+        data-tip="Import from csv file"
+        onClick={handle_click}
+      >
+        <DownloadIcon className="size-5" />
+      </button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".csv,text/csv"
+        className="hidden"
+        onChange={handle_file_change}
+      />
+    </>
+  )
+}
 
 export function Wrapper(props: ContainerProps) {
   const { formatMessage } = useIntl()
@@ -46,7 +90,7 @@ export function Wrapper(props: ContainerProps) {
         </div>
 
         <div className="flex items-center justify-end gap-2">
-          <CsvImportButton />
+          <CsvImportButton on_import_csv={props.on_import_csv} />
 
           <button
             onClick={props.on_save}

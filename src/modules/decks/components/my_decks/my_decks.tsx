@@ -1,4 +1,3 @@
-import { DeckActionsDialog } from "@/modules/decks/components/deck_actions_dialog/deck_actions_dialog"
 import { connector, type ContainerProps } from "./my_decks.container"
 import { DecksDeck } from "@/modules/decks/components/decks_deck/decks_deck"
 
@@ -24,8 +23,6 @@ export function Wrapper(props: ContainerProps) {
           />
         ))}
       </div>
-
-      <DeckActionsDialog />
     </>
   )
 }

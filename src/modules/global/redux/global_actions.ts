@@ -8,6 +8,7 @@ import * as dialog_actions from "@/modules/dialog/redux/dialog_actions"
 import * as authentication_actions from "@/modules/authentication/redux/authentication_actions"
 import * as discover_actions from "@/modules/discover/redux/discover_actions"
 import * as drawer_actions from "@/modules/drawer/redux/drawer_actions"
+import * as deck_update_actions from "@/modules/deck_update/redux/deck_update_actions"
 
 export const global_app_initialized = createAsyncThunk<
   void,
@@ -36,6 +37,7 @@ export const global_route_changed = createAsyncThunk<
   dispatch(deck_details_actions.global_route_changed())
   dispatch(discover_actions.global_route_changed())
   dispatch(drawer_actions.global_route_changed())
+  dispatch(deck_update_actions.global_route_changed())
 })
 
 export const session_ended = createAsyncThunk<void, void, AsyncThunkConfig>(

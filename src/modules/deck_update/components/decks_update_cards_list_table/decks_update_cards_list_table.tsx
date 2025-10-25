@@ -4,7 +4,7 @@ import {
 } from "./decks_update_cards_list_table.container"
 import { PlusIcon } from "lucide-react"
 import { emoji_flags } from "@/modules/decks/utils/emoji_flags"
-import { DecksUpdateCardsListTableItem } from "@/modules/decks/components/decks_update_cards_list_table_item/decks_update_cards_list_table_item"
+import { DecksUpdateCardsListTableItem } from "@/modules/deck_update/components/decks_update_cards_list_table_item/decks_update_cards_list_table_item"
 
 export function Wrapper(props: ContainerProps) {
   return (

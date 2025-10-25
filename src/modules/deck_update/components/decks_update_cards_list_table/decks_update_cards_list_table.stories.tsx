@@ -1,4 +1,4 @@
-import { Wrapper } from "@/modules/decks/components/decks_update_cards_list_table/decks_update_cards_list_table"
+import { Wrapper } from "@/modules/deck_update/components/decks_update_cards_list_table/decks_update_cards_list_table"
 import { seed_cards } from "@/redux/__seed__/seed_cards"
 import type { Meta, StoryObj } from "@storybook/react"
 

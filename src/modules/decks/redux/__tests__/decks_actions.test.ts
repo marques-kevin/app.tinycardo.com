@@ -81,26 +81,4 @@ describe("decks actions", () => {
       },
     })
   })
-
-  it("should be able to create a new deck", async () => {
-    const { store } = await create_store_for_tests()
-
-    expect(store.getState().decks.update.cards).toEqual([])
-    expect(store.getState().decks.update.title).toEqual("")
-    expect(store.getState().decks.update.csv_import_dialog.open).toBe(false)
-
-    store.dispatch(actions.create_deck_add_new_card())
-
-    expect(store.getState().decks.update.cards).toEqual(
-      expect.arrayContaining([expect.any(String)]),
-    )
-
-    const id = store.getState().decks.update.cards[0]
-
-    store.dispatch(
-      actions.create_deck_update_card({ id, field: "front", value: "test" }),
-    )
-
-    expect(store.getState().decks.update.cards[0]).toEqual(id)
-  })
 })
