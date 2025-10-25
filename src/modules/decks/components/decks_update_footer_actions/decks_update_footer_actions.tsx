@@ -5,6 +5,7 @@ import {
 import { useIntl } from "react-intl"
 import { SaveIcon, TrashIcon, XIcon } from "lucide-react"
 import { CsvImportButton } from "@/modules/decks/components/csv_import_button/csv_import_button"
+import { cn } from "@/lib/utils"
 
 export function Wrapper(props: ContainerProps) {
   const { formatMessage } = useIntl()
@@ -49,9 +50,14 @@ export function Wrapper(props: ContainerProps) {
 
           <button
             onClick={props.on_save}
-            className="btn btn-primary gap-2 uppercase"
+            disabled={props.is_updating}
+            className={cn("btn btn-primary gap-2 uppercase")}
           >
-            <SaveIcon className="size-5" />
+            {props.is_updating ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              <SaveIcon className="size-5" />
+            )}
             <span>
               {formatMessage({ id: "decks_update_footer_actions/save" })}
             </span>

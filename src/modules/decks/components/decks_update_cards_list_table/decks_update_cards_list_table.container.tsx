@@ -3,10 +3,10 @@ import { type Dispatch, type RootState } from "@/redux/store"
 import * as actions from "@/modules/decks/redux/decks_actions"
 
 const mapState = (state: RootState) => ({
-  cards: state.decks.create_deck.cards,
-  front_language: state.decks.create_deck.front_language,
-  back_language: state.decks.create_deck.back_language,
-  is_selected: state.decks.create_deck.selected_cards.length > 0,
+  cards: state.decks.update.cards,
+  front_language: state.decks.update.front_language,
+  back_language: state.decks.update.back_language,
+  is_selected: state.decks.update.selected_cards.length > 0,
 })
 
 const mapDispatch = (dispatch: Dispatch) => ({

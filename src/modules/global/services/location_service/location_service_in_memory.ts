@@ -11,6 +11,10 @@ export class LocationServiceInMemory implements LocationService {
     return this.current_url
   }
 
+  get_current_pathname(): string {
+    return new URL(this.current_url).pathname
+  }
+
   get_current_hash(): string {
     return new URL(this.current_url).hash
   }

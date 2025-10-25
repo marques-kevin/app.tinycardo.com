@@ -41,8 +41,8 @@ export type DecksState = {
       number_of_cards_not_ready_to_be_reviewed: number
     } | null
   }
-  create_deck: {
-    autofocus_card_id: string | null
+  update: {
+    deck_id: string | null
     csv_import_dialog: {
       open: boolean
       headers: string[]
@@ -59,6 +59,7 @@ export type DecksState = {
     selected_cards: CardEntity["id"][]
     back_language: string
     is_loading: boolean
+    is_updating: boolean
   }
 }
 
@@ -74,8 +75,8 @@ const initialState: DecksState = {
     deck: null,
   },
 
-  create_deck: {
-    autofocus_card_id: null,
+  update: {
+    deck_id: null,
     csv_import_dialog: {
       open: false,
       headers: [],
@@ -83,6 +84,7 @@ const initialState: DecksState = {
       selected_front: 0,
       selected_back: 1,
     },
+    is_updating: false,
     selected_cards: [],
     cards: [],
     cards_map: {},
@@ -104,7 +106,7 @@ export const decks_reducers = createReducer(initialState, (builder) => {
   })
 
   builder.addCase(actions._open_csv_import_dialog, (state, action) => {
-    state.create_deck.csv_import_dialog = {
+    state.update.csv_import_dialog = {
       open: true,
       headers: action.payload.headers,
       rows: action.payload.rows,
@@ -114,14 +116,14 @@ export const decks_reducers = createReducer(initialState, (builder) => {
   })
 
   builder.addCase(actions._update_csv_import_dialog, (state, action) => {
-    if (!state.create_deck.csv_import_dialog) return
-    state.create_deck.csv_import_dialog = {
-      ...state.create_deck.csv_import_dialog,
+    if (!state.update.csv_import_dialog) return
+    state.update.csv_import_dialog = {
+      ...state.update.csv_import_dialog,
       ...action.payload,
     }
   })
   builder.addCase(actions._close_csv_import_dialog, (state) => {
-    state.create_deck.csv_import_dialog = {
+    state.update.csv_import_dialog = {
       open: false,
       headers: [],
       rows: [],
@@ -145,10 +147,10 @@ export const decks_reducers = createReducer(initialState, (builder) => {
   builder.addCase(
     actions.apply_csv_import_mapping.fulfilled,
     (state, action) => {
-      state.create_deck.cards = action.payload.map((c) =>
+      state.update.cards = action.payload.map((c) =>
         create_uuid_for_cards({ front: c.front, back: c.back }),
       )
-      state.create_deck.cards_map = action.payload.reduce(
+      state.update.cards_map = action.payload.reduce(
         (acc, c) => {
           acc[create_uuid_for_cards({ front: c.front, back: c.back })] = {
             id: create_uuid_for_cards({ front: c.front, back: c.back }),
@@ -165,10 +167,10 @@ export const decks_reducers = createReducer(initialState, (builder) => {
 
   builder.addCase(actions.import_cards_from_csv.fulfilled, (state, action) => {
     if (action.payload && action.payload.length > 0) {
-      state.create_deck.cards = action.payload.map((c) =>
+      state.update.cards = action.payload.map((c) =>
         create_uuid_for_cards({ front: c.front, back: c.back }),
       )
-      state.create_deck.cards_map = action.payload.reduce(
+      state.update.cards_map = action.payload.reduce(
         (acc, c) => {
           acc[create_uuid_for_cards({ front: c.front, back: c.back })] = {
             id: create_uuid_for_cards({ front: c.front, back: c.back }),
@@ -184,8 +186,8 @@ export const decks_reducers = createReducer(initialState, (builder) => {
   })
 
   builder.addCase(actions._create_deck_set_cards, (state, action) => {
-    state.create_deck.cards = action.payload.map((c) => c.id)
-    state.create_deck.cards_map = action.payload.reduce(
+    state.update.cards = action.payload.map((c) => c.id)
+    state.update.cards_map = action.payload.reduce(
       (acc, c) => {
         acc[c.id] = c
         return acc
@@ -195,17 +197,7 @@ export const decks_reducers = createReducer(initialState, (builder) => {
   })
 
   builder.addCase(actions.reset_create_deck, (state) => {
-    state.create_deck = { ...initialState.create_deck }
-  })
-
-  builder.addCase(actions.load_deck_into_create_form.pending, (state) => {
-    state.create_deck.is_loading = true
-  })
-  builder.addCase(actions.load_deck_into_create_form.fulfilled, (state) => {
-    state.create_deck.is_loading = false
-  })
-  builder.addCase(actions.load_deck_into_create_form.rejected, (state) => {
-    state.create_deck.is_loading = false
+    state.update = { ...initialState.update }
   })
 
   /**
@@ -221,96 +213,130 @@ export const decks_reducers = createReducer(initialState, (builder) => {
    */
 
   builder.addCase(actions.create_deck_update_card, (state, action) => {
-    state.create_deck.cards_map[action.payload.id] = {
-      ...state.create_deck.cards_map[action.payload.id],
+    state.update.cards_map[action.payload.id] = {
+      ...state.update.cards_map[action.payload.id],
       [action.payload.field]: action.payload.value,
     }
 
-    const last_card_id =
-      state.create_deck.cards[state.create_deck.cards.length - 1]
-    const last_card = state.create_deck.cards_map[last_card_id]
+    const last_card_id = state.update.cards[state.update.cards.length - 1]
+    const last_card = state.update.cards_map[last_card_id]
 
     if (last_card.front !== "" || last_card.back !== "") {
       const card = create_card()
-      state.create_deck.cards.push(card.id)
-      state.create_deck.cards_map[card.id] = card
+      state.update.cards.push(card.id)
+      state.update.cards_map[card.id] = card
     }
   })
 
   builder.addCase(actions.create_deck_remove_card, (state, action) => {
-    state.create_deck.cards = state.create_deck.cards.filter(
+    state.update.cards = state.update.cards.filter(
       (c) => c !== action.payload.id,
     )
-    delete state.create_deck.cards_map[action.payload.id]
+    delete state.update.cards_map[action.payload.id]
   })
 
   builder.addCase(actions.update_deck_toggle_select_card, (state, action) => {
-    state.create_deck.selected_cards =
-      state.create_deck.selected_cards.includes(action.payload.card_id)
-        ? state.create_deck.selected_cards.filter(
-            (c) => c !== action.payload.card_id,
-          )
-        : [...state.create_deck.selected_cards, action.payload.card_id]
+    state.update.selected_cards = state.update.selected_cards.includes(
+      action.payload.card_id,
+    )
+      ? state.update.selected_cards.filter((c) => c !== action.payload.card_id)
+      : [...state.update.selected_cards, action.payload.card_id]
   })
 
   builder.addCase(actions.update_deck_delete_selected_cards, (state) => {
-    state.create_deck.cards = state.create_deck.cards.filter(
-      (c) => !state.create_deck.selected_cards.includes(c),
+    state.update.cards = state.update.cards.filter(
+      (c) => !state.update.selected_cards.includes(c),
     )
-    state.create_deck.cards_map = Object.fromEntries(
-      Object.entries(state.create_deck.cards_map).filter(
-        ([key]) => !state.create_deck.selected_cards.includes(key),
+    state.update.cards_map = Object.fromEntries(
+      Object.entries(state.update.cards_map).filter(
+        ([key]) => !state.update.selected_cards.includes(key),
       ),
     )
-    state.create_deck.selected_cards = []
+    state.update.selected_cards = []
 
-    const last_card_id =
-      state.create_deck.cards[state.create_deck.cards.length - 1]
-    const last_card = state.create_deck.cards_map[last_card_id]
+    const last_card_id = state.update.cards[state.update.cards.length - 1]
+    const last_card = state.update.cards_map[last_card_id]
 
     if (
-      state.create_deck.cards.length === 0 ||
+      state.update.cards.length === 0 ||
       last_card.front !== "" ||
       last_card.back !== ""
     ) {
       const card = create_card()
-      state.create_deck.cards.push(card.id)
-      state.create_deck.cards_map[card.id] = card
+      state.update.cards.push(card.id)
+      state.update.cards_map[card.id] = card
     }
   })
 
   builder.addCase(actions.update_deck_toggle_select_all_cards, (state) => {
-    if (
-      state.create_deck.selected_cards.length === state.create_deck.cards.length
-    ) {
-      state.create_deck.selected_cards = []
+    if (state.update.selected_cards.length === state.update.cards.length) {
+      state.update.selected_cards = []
     } else {
-      state.create_deck.selected_cards = state.create_deck.cards.map(
-        (card_id) => card_id,
-      )
+      state.update.selected_cards = state.update.cards.map((card_id) => card_id)
     }
   })
 
   builder.addCase(actions.update_deck_set_title, (state, action) => {
-    state.create_deck.title = action.payload.title
+    state.update.title = action.payload.title
   })
 
   builder.addCase(actions.update_deck_set_description, (state, action) => {
-    state.create_deck.description = action.payload.description
+    state.update.description = action.payload.description
   })
 
   builder.addCase(actions.update_deck_set_visibility, (state, action) => {
-    state.create_deck.visibility = action.payload.visibility
+    state.update.visibility = action.payload.visibility
   })
 
   builder.addCase(
     actions.create_deck_update_front_language,
     (state, action) => {
-      state.create_deck.front_language = action.payload.language
+      state.update.front_language = action.payload.language
     },
   )
 
   builder.addCase(actions.create_deck_update_back_language, (state, action) => {
-    state.create_deck.back_language = action.payload.language
+    state.update.back_language = action.payload.language
   })
+
+  builder.addCase(actions.update_deck.pending, (state) => {
+    state.update.is_updating = true
+  })
+  builder.addCase(actions.update_deck.fulfilled, (state) => {
+    state.update.is_updating = false
+  })
+  builder.addCase(actions.update_deck.rejected, (state) => {
+    state.update.is_updating = false
+  })
+
+  builder.addCase(actions.load_deck_into_create_form.pending, (state) => {
+    state.update.is_loading = true
+  })
+
+  builder.addCase(actions.load_deck_into_create_form.rejected, (state) => {
+    state.update.is_loading = false
+  })
+
+  builder.addCase(
+    actions.load_deck_into_create_form.fulfilled,
+    (state, action) => {
+      state.update.is_loading = false
+
+      if (!action.payload) return
+
+      state.update.deck_id = action.payload.deck.id
+      state.update.title = action.payload.deck.name
+      state.update.visibility = action.payload.deck.visibility
+      state.update.front_language = action.payload.deck.front_language
+      state.update.back_language = action.payload.deck.back_language
+      state.update.cards = action.payload.cards.map((c) => c.id)
+      state.update.cards_map = action.payload.cards.reduce(
+        (acc, c) => {
+          acc[c.id] = c
+          return acc
+        },
+        {} as Record<string, CardEntity>,
+      )
+    },
+  )
 })

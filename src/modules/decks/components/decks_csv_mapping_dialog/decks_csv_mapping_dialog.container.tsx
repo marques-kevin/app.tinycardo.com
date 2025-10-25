@@ -4,7 +4,7 @@ import * as decks_actions from "@/modules/decks/redux/decks_actions"
 
 const map_state = (state: RootState) => {
   return {
-    ...state.decks.create_deck.csv_import_dialog,
+    ...state.decks.update.csv_import_dialog,
   }
 }
 

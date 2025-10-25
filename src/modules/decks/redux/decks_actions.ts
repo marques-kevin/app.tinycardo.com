@@ -6,6 +6,7 @@ import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { open as open_dialog } from "@/modules/dialog/redux/dialog_actions"
 import { UrlMatcherService } from "@/modules/global/services/url_matcher_service/url_matcher_service"
 import type { MessageI18nKeys } from "@/intl"
+import type { DecksState } from "./decks_reducers"
 
 export const _store_decks_stats = createAction<
   Record<
@@ -54,8 +55,11 @@ export const exit_update_deck_page = createAsyncThunk<
   void,
   void,
   AsyncThunkConfig
->("decks/exit_update_deck_page", async (_, { dispatch, extra }) => {
-  extra.location_service.navigate("/")
+>("decks/exit_update_deck_page", async (_, { dispatch, extra, getState }) => {
+  const { deck_id } = getState().decks.update
+
+  extra.location_service.navigate(`/decks/${deck_id}/`)
+
   dispatch(reset_create_deck())
 })
 
@@ -217,14 +221,14 @@ export const apply_csv_import_mapping = createAsyncThunk<
 >("decks/apply_csv_import_mapping", async (_, { getState, dispatch }) => {
   const { decks } = getState()
 
-  if (!decks.create_deck.csv_import_dialog.open) return []
+  if (!decks.update.csv_import_dialog.open) return []
 
-  const data_rows = decks.create_deck.csv_import_dialog.rows
+  const data_rows = decks.update.csv_import_dialog.rows
 
   const mapped = data_rows
     .map((cols) => ({
-      front: cols[decks.create_deck.csv_import_dialog.selected_front] ?? "",
-      back: cols[decks.create_deck.csv_import_dialog.selected_back] ?? "",
+      front: cols[decks.update.csv_import_dialog.selected_front] ?? "",
+      back: cols[decks.update.csv_import_dialog.selected_back] ?? "",
     }))
     .filter((r) => r.front || r.back)
 
@@ -377,42 +381,25 @@ export const _create_deck_set_cards = createAction<CardEntity[]>(
 )
 
 export const reset_create_deck = createAction("decks/reset_create_deck")
+
 export const load_deck_into_create_form = createAsyncThunk<
-  void,
+  { deck: DeckEntity; cards: CardEntity[] } | null,
   { deck_id: string },
   AsyncThunkConfig
->(
-  "decks/load_deck_into_create_form",
-  async ({ deck_id }, { dispatch, extra }) => {
-    const decks = await extra.decks_repository.fetch_decks()
-    const deck = decks.find((d) => d.id === deck_id)
-    const cards = await extra.decks_repository.fetch_cards({ deck_id })
+>("decks/load_deck_into_create_form", async ({ deck_id }, { extra }) => {
+  const decks = await extra.decks_repository.fetch_decks()
+  const deck = decks.find((d) => d.id === deck_id)
+  const cards = await extra.decks_repository.fetch_cards({ deck_id })
 
-    if (!deck) return
+  if (!deck) return null
 
-    dispatch(update_deck_set_title({ title: deck.name }))
-    dispatch(update_deck_set_description({ description: "" }))
-    dispatch(update_deck_set_visibility({ visibility: deck.visibility }))
-    dispatch(
-      create_deck_update_front_language({ language: deck.front_language }),
-    )
-    dispatch(create_deck_update_back_language({ language: deck.back_language }))
-    dispatch(
-      _create_deck_set_cards(
-        cards.map((c) => ({ id: c.id, front: c.front, back: c.back, deck_id })),
-      ),
-    )
-  },
-)
+  return {
+    deck,
+    cards,
+  }
+})
 
-export const create_deck_submit = createAsyncThunk<
-  void,
-  void,
-  AsyncThunkConfig
->("decks/create_deck_submit", async (_, { getState, dispatch, extra }) => {
-  const { decks } = getState()
-  const create = decks.create_deck
-
+const validate_update_deck = (create: DecksState["update"]) => {
   const errors: MessageI18nKeys[] = []
 
   if (!create.title || create.title.trim().length === 0) {
@@ -424,70 +411,63 @@ export const create_deck_submit = createAsyncThunk<
   if (create.cards.length < 1) {
     errors.push("decks_actions/dialog/create_deck/errors/at_least_one_card")
   }
-  const has_empty = create.cards.some(
-    (c) =>
-      (create.cards_map[c]?.front ?? "").trim() === "" ||
-      (create.cards_map[c]?.back ?? "").trim() === "",
-  )
-  if (has_empty) {
-    errors.push("decks_actions/dialog/create_deck/errors/front_back_required")
-  }
+
   if (create.front_language === create.back_language) {
     errors.push(
       "decks_actions/dialog/create_deck/errors/languages_cannot_match",
     )
   }
 
-  if (errors.length > 0) {
-    await dispatch(
-      open_dialog({
-        type: "error",
-        title: "decks_actions/dialog/create_deck/title",
-        description: errors[0],
-      }),
-    )
-    return
-  }
+  return errors
+}
 
-  const pathname = new URL(extra.location_service.get_current_url()).pathname
-  const extracted = UrlMatcherService.extract({
-    pattern: "/decks/:deck_id/update",
-    url: pathname,
-  })
+export const update_deck = createAsyncThunk<void, void, AsyncThunkConfig>(
+  "decks/update_deck",
+  async (_, { getState, dispatch, extra }) => {
+    const { decks } = getState()
 
-  let deck: DeckEntity
+    const errors = validate_update_deck(decks.update)
 
-  if (extracted.deck_id) {
-    // Update existing deck
-    deck = await extra.decks_repository.update_deck({
-      id: extracted.deck_id,
-      name: create.title.trim(),
-      front_language: create.front_language,
-      back_language: create.back_language,
+    if (errors.length > 0) {
+      await dispatch(
+        open_dialog({
+          type: "error",
+          title: "decks_actions/dialog/create_deck/title",
+          description: errors[0],
+        }),
+      )
+      return
+    }
+
+    const pathname = new URL(extra.location_service.get_current_url()).pathname
+    const extracted = UrlMatcherService.extract({
+      pattern: "/decks/:deck_id/update",
+      url: pathname,
     })
-  } else {
-    deck = await extra.decks_repository.create_deck({
-      name: create.title.trim(),
-      front_language: create.front_language,
-      back_language: create.back_language,
+
+    await extra.decks_repository.update_deck({
+      id: extracted.deck_id!,
+      name: decks.update.title.trim(),
+      front_language: decks.update.front_language,
+      back_language: decks.update.back_language,
     })
-  }
 
-  const cards = create.cards.map((c) => ({
-    id: c,
-    front: create.cards_map[c]?.front.trim(),
-    back: create.cards_map[c]?.back.trim(),
-  }))
+    const cards = decks.update.cards
+      .map((c) => ({
+        id: c,
+        front: decks.update.cards_map[c]?.front.trim(),
+        back: decks.update.cards_map[c]?.back.trim(),
+      }))
+      .filter((c) => c.front || c.back)
 
-  await extra.decks_repository.upsert_cards({
-    deck_id: deck.id,
-    cards,
-  })
+    await extra.decks_repository.upsert_cards({
+      deck_id: extracted.deck_id!,
+      cards,
+    })
 
-  await dispatch(fetch_decks())
-
-  extra.location_service.navigate("/")
-})
+    await dispatch(fetch_decks())
+  },
+)
 
 export const update_deck_delete_selected_cards = createAction<void>(
   "decks/update_deck_delete_selected_cards",

@@ -4,7 +4,7 @@ import { connect, type ConnectedProps } from "react-redux"
 
 const map_state = (state: RootState) => {
   return {
-    is_creating_deck: state.decks.create_deck.is_loading,
+    is_creating_deck: state.decks.update.is_loading,
   }
 }
 

@@ -3,7 +3,7 @@ import { connect, type ConnectedProps } from "react-redux"
 import * as decks_actions from "@/modules/decks/redux/decks_actions"
 
 const map_state = (state: RootState) => ({
-  visibility: state.decks.create_deck.visibility,
+  visibility: state.decks.update.visibility,
 })
 
 const map_dispatch = (dispatch: Dispatch) => ({

@@ -3,17 +3,15 @@ import { type Dispatch, type RootState } from "@/redux/store"
 import * as actions from "@/modules/decks/redux/decks_actions"
 
 const mapState = (state: RootState, props: { card_id: string }) => {
-  const card = state.decks.create_deck.cards_map[props.card_id]
-  const is_selected = state.decks.create_deck.selected_cards.includes(
-    props.card_id,
-  )
+  const card = state.decks.update.cards_map[props.card_id]
+  const is_selected = state.decks.update.selected_cards.includes(props.card_id)
 
   return {
     front: card?.front || "",
     back: card?.back || "",
     card_id: props.card_id,
     is_selected,
-    autofocus: props.card_id === state.decks.create_deck.autofocus_card_id,
+    autofocus: props.card_id === state.decks.update.autofocus_card_id,
   }
 }
 

@@ -3,7 +3,7 @@ import { connect, type ConnectedProps } from "react-redux"
 import * as decks_actions from "@/modules/decks/redux/decks_actions"
 
 const map_state = (state: RootState) => ({
-  title: state.decks.create_deck.title,
+  title: state.decks.update.title,
 })
 
 const map_dispatch = (dispatch: Dispatch) => ({
