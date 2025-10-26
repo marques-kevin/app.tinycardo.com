@@ -5,6 +5,7 @@ import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { create_store_for_tests } from "@/tests/create_store_for_tests"
 import { describe, it, expect } from "vitest"
 import { delay } from "@/modules/global/utils/delay"
+import type { UsersRepositoryInMemory } from "@/modules/authentication/repositories/users_repository_in_memory"
 
 describe("decks_details_actions", () => {
   const deck: DeckEntity = {
@@ -40,11 +41,20 @@ describe("decks_details_actions", () => {
 
     dependencies.location_service.navigate("/decks/deck-1/")
 
+    const users_repository =
+      dependencies.users_repository as UsersRepositoryInMemory
+
+    await users_repository.set_authenticated_user({
+      id: deck.user_id,
+      email: "test@test.com",
+    })
+
     const decks_repository =
       dependencies.decks_repository as DecksRepositoryInMemory
 
     await decks_repository.sync_deck({ deck, cards })
 
+    await store.dispatch(global_actions.global_app_initialized())
     await store.dispatch(global_actions.global_route_changed())
 
     await delay()

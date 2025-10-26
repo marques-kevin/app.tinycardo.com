@@ -122,12 +122,9 @@ export const create_deck_add_new_card = createAsyncThunk<
   void,
   void,
   AsyncThunkConfig
->(
-  "decks/create_deck_add_new_card",
-  async (_, { dispatch, extra, getState }) => {
-    dispatch(_create_deck_add_new_card())
-  },
-)
+>("decks/create_deck_add_new_card", async (_, { dispatch }) => {
+  dispatch(_create_deck_add_new_card())
+})
 
 export const create_deck_remove_card = createAction<{ id: string }>(
   "decks/create_deck_remove_card",
@@ -178,13 +175,13 @@ export const global_app_initialized = createAsyncThunk<
   void,
   void,
   AsyncThunkConfig
->("decks/global_app_initialized", async (params, { dispatch }) => {})
+>("decks/global_app_initialized", async () => {})
 
 export const global_route_changed = createAsyncThunk<
   void,
   void,
   AsyncThunkConfig
->("decks/global_route_changed", async (_, { dispatch, extra }) => {
+>("decks/global_route_changed", async (_, { dispatch }) => {
   dispatch(when_user_is_on_home_page())
 })
 

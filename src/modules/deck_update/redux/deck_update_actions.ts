@@ -300,6 +300,6 @@ export const global_route_changed = createAsyncThunk<
   void,
   void,
   AsyncThunkConfig
->("deck_update/global_route_changed", async (_, { dispatch, extra }) => {
+>("deck_update/global_route_changed", async (_, { dispatch }) => {
   dispatch(when_user_is_on_update_deck_page())
 })

@@ -1,5 +1,5 @@
 import { connect, type ConnectedProps } from "react-redux"
-import type { Dispatch, RootState } from "@/redux/store"
+import type { RootState } from "@/redux/store"
 
 function mapState(state: RootState) {
   return {
@@ -9,9 +9,9 @@ function mapState(state: RootState) {
   }
 }
 
-function mapDispatch(dispatch: Dispatch) {
+function map_dispatch() {
   return {}
 }
 
-export const connector = connect(mapState, mapDispatch)
+export const connector = connect(mapState, map_dispatch)
 export type ContainerProps = ConnectedProps<typeof connector>

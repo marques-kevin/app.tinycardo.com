@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom"
-import { CogIcon, FlameIcon, PlusIcon, SearchIcon } from "lucide-react"
+import { CogIcon, PlusIcon, SearchIcon } from "lucide-react"
 import { GlobalLogo } from "@/modules/global/components/global_logo/global_logo"
 import { useIntl } from "react-intl"
 import { connector, type ContainerProps } from "./global_navbar.container"

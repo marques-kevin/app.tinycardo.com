@@ -1,12 +1,12 @@
 import { connect, type ConnectedProps } from "react-redux"
-import type { Dispatch, RootState } from "@/redux/store"
+import type { Dispatch } from "@/redux/store"
 import { create_deck } from "@/modules/decks/redux/decks_actions"
 
-function mapState(state: RootState) {
+function map_state(): Record<string, unknown> {
   return {}
 }
 
-function mapDispatch(dispatch: Dispatch) {
+function map_dispatch(dispatch: Dispatch) {
   return {
     on_create_new_deck() {
       dispatch(create_deck())
@@ -14,5 +14,5 @@ function mapDispatch(dispatch: Dispatch) {
   }
 }
 
-export const connector = connect(mapState, mapDispatch)
+export const connector = connect(map_state, map_dispatch)
 export type ContainerProps = ConnectedProps<typeof connector>

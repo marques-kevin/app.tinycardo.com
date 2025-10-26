@@ -1,9 +1,6 @@
-import {
-  connector,
-  type ContainerProps,
-} from "./discover_decks_search.container"
+import { connector } from "./discover_decks_search.container"
 
-export function Wrapper(props: ContainerProps) {
+export function Wrapper() {
   return (
     <div className="flex items-center gap-2">
       <input
