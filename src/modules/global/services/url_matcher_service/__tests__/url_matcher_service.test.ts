@@ -5,66 +5,74 @@ describe("url_matcher_service", () => {
   describe("exact_match", () => {
     it("should return false for non-exact matches", () => {
       expect(
-        UrlMatcherService.exact_match(
-          "/dashboard/keywords/123/",
-          "/dashboard/keywords/",
-        ),
+        UrlMatcherService.exact_match({
+          url: "/dashboard/keywords/123/",
+          pattern: "/dashboard/keywords/",
+        }),
       ).toBe(false)
     })
 
     it("should return true for exact matches", () => {
       expect(
-        UrlMatcherService.exact_match(
-          "/dashboard/keywords/",
-          "/dashboard/keywords/",
-        ),
+        UrlMatcherService.exact_match({
+          url: "/dashboard/keywords/",
+          pattern: "/dashboard/keywords/",
+        }),
       ).toBe(true)
     })
 
     it("should handle trailing slashes correctly", () => {
       expect(
-        UrlMatcherService.exact_match(
-          "/dashboard/keywords",
-          "/dashboard/keywords/",
-        ),
+        UrlMatcherService.exact_match({
+          url: "/dashboard/keywords",
+          pattern: "/dashboard/keywords/",
+        }),
       ).toBe(true)
     })
 
     it("should handle empty strings", () => {
-      expect(UrlMatcherService.exact_match("", "")).toBe(true)
-      expect(UrlMatcherService.exact_match("/", "")).toBe(false)
-      expect(UrlMatcherService.exact_match("", "/")).toBe(false)
+      expect(UrlMatcherService.exact_match({ url: "", pattern: "" })).toBe(true)
+      expect(UrlMatcherService.exact_match({ url: "/", pattern: "" })).toBe(
+        false,
+      )
+      expect(UrlMatcherService.exact_match({ url: "", pattern: "/" })).toBe(
+        false,
+      )
     })
 
     it("should handle root path", () => {
-      expect(UrlMatcherService.exact_match("/", "/")).toBe(true)
-      expect(UrlMatcherService.exact_match("", "/")).toBe(false)
+      expect(UrlMatcherService.exact_match({ url: "/", pattern: "/" })).toBe(
+        true,
+      )
+      expect(UrlMatcherService.exact_match({ url: "", pattern: "/" })).toBe(
+        false,
+      )
     })
 
     it("should handle query parameters", () => {
       expect(
-        UrlMatcherService.exact_match(
-          "/dashboard/keywords/?page=1",
-          "/dashboard/keywords/",
-        ),
+        UrlMatcherService.exact_match({
+          url: "/dashboard/keywords/?page=1",
+          pattern: "/dashboard/keywords/",
+        }),
       ).toBe(false)
     })
 
     it("should handle hash fragments", () => {
       expect(
-        UrlMatcherService.exact_match(
-          "/dashboard/keywords/#section",
-          "/dashboard/keywords/",
-        ),
+        UrlMatcherService.exact_match({
+          url: "/dashboard/keywords/#section",
+          pattern: "/dashboard/keywords/",
+        }),
       ).toBe(false)
     })
 
     it("should handle parameters", () => {
       expect(
-        UrlMatcherService.exact_match(
-          "/dashboard/keywords/123/",
-          "/dashboard/keywords/:id/",
-        ),
+        UrlMatcherService.exact_match({
+          url: "/dashboard/keywords/123/",
+          pattern: "/dashboard/keywords/:id/",
+        }),
       ).toBe(true)
     })
   })
@@ -72,95 +80,105 @@ describe("url_matcher_service", () => {
   describe("match", () => {
     it("should return true for matching patterns", () => {
       expect(
-        UrlMatcherService.match(
-          "/dashboard/keywords/123/",
-          "/dashboard/keywords/",
-        ),
+        UrlMatcherService.match({
+          url: "/dashboard/keywords/123/",
+          pattern: "/dashboard/keywords/",
+        }),
       ).toBe(true)
     })
 
     it("should return false for non-matching patterns", () => {
       expect(
-        UrlMatcherService.match(
-          "/dashboard/keywords/123/",
-          "/dashboard/users/",
-        ),
+        UrlMatcherService.match({
+          url: "/dashboard/keywords/123/",
+          pattern: "/dashboard/users/",
+        }),
       ).toBe(false)
     })
 
     it("should handle trailing slashes correctly", () => {
       expect(
-        UrlMatcherService.match("/dashboard/keywords", "/dashboard/keywords/"),
+        UrlMatcherService.match({
+          url: "/dashboard/keywords",
+          pattern: "/dashboard/keywords/",
+        }),
       ).toBe(true)
     })
 
     it("should handle empty pattern", () => {
-      expect(UrlMatcherService.match("/dashboard/keywords/", "")).toBe(true)
-      expect(UrlMatcherService.match("", "")).toBe(true)
+      expect(
+        UrlMatcherService.match({ url: "/dashboard/keywords/", pattern: "" }),
+      ).toBe(true)
+      expect(UrlMatcherService.match({ url: "", pattern: "" })).toBe(true)
     })
 
     it("should handle root path", () => {
-      expect(UrlMatcherService.match("/dashboard/keywords/", "/")).toBe(true)
-      expect(UrlMatcherService.match("/", "/")).toBe(true)
+      expect(
+        UrlMatcherService.match({ url: "/dashboard/keywords/", pattern: "/" }),
+      ).toBe(true)
+      expect(UrlMatcherService.match({ url: "/", pattern: "/" })).toBe(true)
     })
 
     it("should handle case sensitivity", () => {
       expect(
-        UrlMatcherService.match("/Dashboard/Keywords/", "/dashboard/keywords/"),
+        UrlMatcherService.match({
+          url: "/Dashboard/Keywords/",
+          pattern: "/dashboard/keywords/",
+        }),
       ).toBe(false)
     })
 
     it("should handle special characters", () => {
       expect(
-        UrlMatcherService.match(
-          "/dashboard/keywords/search?q=test",
-          "/dashboard/keywords/",
-        ),
+        UrlMatcherService.match({
+          url: "/dashboard/keywords/search?q=test",
+          pattern: "/dashboard/keywords/",
+        }),
       ).toBe(true)
     })
 
     it("should handle URL encoding", () => {
       expect(
-        UrlMatcherService.match(
-          "/dashboard/keywords/search%20term/",
-          "/dashboard/keywords/",
-        ),
+        UrlMatcherService.match({
+          url: "/dashboard/keywords/search%20term/",
+          pattern: "/dashboard/keywords/",
+        }),
       ).toBe(true)
     })
 
     it("should handle nested paths", () => {
       expect(
-        UrlMatcherService.match(
-          "/dashboard/keywords/123/edit/",
-          "/dashboard/keywords/",
-        ),
+        UrlMatcherService.match({
+          url: "/dashboard/keywords/123/edit/",
+          pattern: "/dashboard/keywords/",
+        }),
       ).toBe(true)
     })
 
     it("should handle parameter placeholders", () => {
       expect(
-        UrlMatcherService.match(
-          "/dashboard/keywords/123/",
-          "/dashboard/keywords/:id/",
-        ),
+        UrlMatcherService.match({
+          url: "/dashboard/keywords/123/",
+          pattern: "/dashboard/keywords/:id/",
+        }),
       ).toBe(true)
     })
 
     it("should handle parameter placeholders with nested paths", () => {
       expect(
-        UrlMatcherService.match(
-          "/dashboard/keywords/123/edit/",
-          "/dashboard/keywords/:id/",
-        ),
+        UrlMatcherService.match({
+          url: "/dashboard/keywords/123/edit/",
+          pattern: "/dashboard/keywords/:id/",
+        }),
       ).toBe(true)
     })
 
     it("should handle multiple parameter placeholders", () => {
       expect(
-        UrlMatcherService.match(
-          "/dashboard/keywords/123/edit/",
-          "/dashboard/:section/:id/",
-        ),
+        UrlMatcherService.match({
+          url: "/dashboard/keywords/123/edit/",
+          pattern: "/dashboard/:section/:id/",
+        }),
       ).toBe(true)
     })
   })
@@ -168,10 +186,10 @@ describe("url_matcher_service", () => {
   describe("extract", () => {
     it("should extract single parameter", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/keywords/:id/",
-          "/dashboard/keywords/123/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/keywords/:id/",
+          url: "/dashboard/keywords/123/",
+        }),
       ).toEqual({
         id: "123",
       })
@@ -179,10 +197,10 @@ describe("url_matcher_service", () => {
 
     it("should extract multiple parameters", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/:section/:id/",
-          "/dashboard/keywords/123/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/:section/:id/",
+          url: "/dashboard/keywords/123/",
+        }),
       ).toEqual({
         section: "keywords",
         id: "123",
@@ -191,10 +209,10 @@ describe("url_matcher_service", () => {
 
     it("should handle trailing slashes correctly", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/keywords/:id",
-          "/dashboard/keywords/123/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/keywords/:id",
+          url: "/dashboard/keywords/123/",
+        }),
       ).toEqual({
         id: "123",
       })
@@ -202,38 +220,38 @@ describe("url_matcher_service", () => {
 
     it("should return empty object for non-matching patterns", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/keywords/:id/",
-          "/dashboard/users/123/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/keywords/:id/",
+          url: "/dashboard/users/123/",
+        }),
       ).toEqual({})
     })
 
     it("should return empty object for different path lengths", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/keywords/:id/",
-          "/dashboard/keywords/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/keywords/:id/",
+          url: "/dashboard/keywords/",
+        }),
       ).toEqual({})
     })
 
     it("should handle empty strings", () => {
-      expect(UrlMatcherService.extract("", "")).toEqual({})
-      expect(UrlMatcherService.extract("/", "")).toEqual({})
-      expect(UrlMatcherService.extract("", "/")).toEqual({})
+      expect(UrlMatcherService.extract({ pattern: "", url: "" })).toEqual({})
+      expect(UrlMatcherService.extract({ pattern: "/", url: "" })).toEqual({})
+      expect(UrlMatcherService.extract({ pattern: "", url: "/" })).toEqual({})
     })
 
     it("should handle root path", () => {
-      expect(UrlMatcherService.extract("/", "/")).toEqual({})
+      expect(UrlMatcherService.extract({ pattern: "/", url: "/" })).toEqual({})
     })
 
     it("should handle parameters with special characters", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/keywords/:id/",
-          "/dashboard/keywords/123-456/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/keywords/:id/",
+          url: "/dashboard/keywords/123-456/",
+        }),
       ).toEqual({
         id: "123-456",
       })
@@ -241,10 +259,10 @@ describe("url_matcher_service", () => {
 
     it("should handle parameters with underscores", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/keywords/:keyword_id/",
-          "/dashboard/keywords/abc_123/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/keywords/:keyword_id/",
+          url: "/dashboard/keywords/abc_123/",
+        }),
       ).toEqual({
         keyword_id: "abc_123",
       })
@@ -252,10 +270,10 @@ describe("url_matcher_service", () => {
 
     it("should handle mixed static and dynamic parts", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/:section/:id/edit/",
-          "/dashboard/keywords/123/edit/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/:section/:id/edit/",
+          url: "/dashboard/keywords/123/edit/",
+        }),
       ).toEqual({
         section: "keywords",
         id: "123",
@@ -264,10 +282,10 @@ describe("url_matcher_service", () => {
 
     it("should handle parameters at the beginning", () => {
       expect(
-        UrlMatcherService.extract(
-          "/:lang/dashboard/keywords/",
-          "/en/dashboard/keywords/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/:lang/dashboard/keywords/",
+          url: "/en/dashboard/keywords/",
+        }),
       ).toEqual({
         lang: "en",
       })
@@ -275,10 +293,10 @@ describe("url_matcher_service", () => {
 
     it("should handle parameters at the end", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/keywords/:id",
-          "/dashboard/keywords/123",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/keywords/:id",
+          url: "/dashboard/keywords/123",
+        }),
       ).toEqual({
         id: "123",
       })
@@ -286,7 +304,10 @@ describe("url_matcher_service", () => {
 
     it("should handle consecutive parameters", () => {
       expect(
-        UrlMatcherService.extract("/:year/:month/:day/", "/2023/12/25/"),
+        UrlMatcherService.extract({
+          pattern: "/:year/:month/:day/",
+          url: "/2023/12/25/",
+        }),
       ).toEqual({
         year: "2023",
         month: "12",
@@ -296,10 +317,10 @@ describe("url_matcher_service", () => {
 
     it("should handle empty parameter values", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/keywords/:id/",
-          "/dashboard/keywords//",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/keywords/:id/",
+          url: "/dashboard/keywords//",
+        }),
       ).toEqual({
         id: "",
       })
@@ -307,10 +328,10 @@ describe("url_matcher_service", () => {
 
     it("should handle URL encoded parameters", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/keywords/:search/",
-          "/dashboard/keywords/search%20term/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/keywords/:search/",
+          url: "/dashboard/keywords/search%20term/",
+        }),
       ).toEqual({
         search: "search%20term",
       })
@@ -318,10 +339,10 @@ describe("url_matcher_service", () => {
 
     it("should handle parameters with dots", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/files/:filename/",
-          "/dashboard/files/document.pdf/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/files/:filename/",
+          url: "/dashboard/files/document.pdf/",
+        }),
       ).toEqual({
         filename: "document.pdf",
       })
@@ -329,10 +350,10 @@ describe("url_matcher_service", () => {
 
     it("should handle parameters with multiple special characters", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/users/:username/",
-          "/dashboard/users/john.doe@example.com/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/users/:username/",
+          url: "/dashboard/users/john.doe@example.com/",
+        }),
       ).toEqual({
         username: "john.doe@example.com",
       })
@@ -340,10 +361,10 @@ describe("url_matcher_service", () => {
 
     it("should handle numeric parameters", () => {
       expect(
-        UrlMatcherService.extract(
-          "/dashboard/analytics/:year/:month/",
-          "/dashboard/analytics/2023/12/",
-        ),
+        UrlMatcherService.extract({
+          pattern: "/dashboard/analytics/:year/:month/",
+          url: "/dashboard/analytics/2023/12/",
+        }),
       ).toEqual({
         year: "2023",
         month: "12",

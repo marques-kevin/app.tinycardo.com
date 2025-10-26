@@ -29,10 +29,19 @@ const filter_by_status = <T extends { next_due_at: Date }>(
 export const session_builder_algorithm = (params: {
   cards: CardEntity[]
   history: SessionHistoryEntity[]
-  mode?: "review" | "learn_new_words" | "randomized"
-  count?: number
+  mode?: "review" | "learn_new_words" | "randomized" | "auto"
+  count?: {
+    review: number
+    learn_new_words: number
+    randomized: number
+  }
 }): SessionHistoryWithCardEntity[] => {
-  const { cards, history, count = 10, mode = "review" } = params
+  const {
+    cards,
+    history,
+    mode = "auto",
+    count = { review: 10, learn_new_words: 10, randomized: 10 },
+  } = params
 
   const history_to_card_entity = history.map(
     (history): SessionHistoryWithCardEntity => ({
@@ -42,17 +51,23 @@ export const session_builder_algorithm = (params: {
     }),
   )
 
-  if (mode === "randomized") {
-    return shuffle(history_to_card_entity).slice(0, count)
+  let mode_to_use = mode
+
+  if (mode_to_use === "randomized") {
+    return shuffle(history_to_card_entity).slice(0, count.randomized)
   }
 
   const due_words = filter_by_status(history_to_card_entity, "due")
 
-  if (mode === "review") {
-    return shuffle(due_words).slice(0, count)
+  if (mode === "auto") {
+    mode_to_use = due_words.length > 0 ? "review" : "learn_new_words"
   }
 
-  if (mode === "learn_new_words") {
+  if (mode_to_use === "review") {
+    return shuffle(due_words).slice(0, count.review)
+  }
+
+  if (mode_to_use === "learn_new_words") {
     const never_reviewed_words = cards.filter(
       (card) => !history_to_card_entity.some((h) => h.card_id === card.id),
     )
@@ -72,7 +87,7 @@ export const session_builder_algorithm = (params: {
           back: card.back,
         }),
       )
-      .slice(0, count)
+      .slice(0, count.learn_new_words)
   }
 
   throw new Error(`Invalid mode: ${mode}`)

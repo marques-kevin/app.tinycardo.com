@@ -54,6 +54,14 @@ export const go_on_session_page = createAsyncThunk<
   extra.location_service.navigate(`/sessions/${params.deck_id}/${params.mode}`)
 })
 
+export const no_cards_to_review = createAsyncThunk<
+  SessionsState["no_cards_to_review"],
+  SessionsState["no_cards_to_review"],
+  AsyncThunkConfig
+>("sessions/no_cards_to_review", async (_) => {
+  return _
+})
+
 export const start_session = createAsyncThunk<
   void,
   { deck_id?: string; mode?: SessionsState["mode"] },
@@ -64,16 +72,16 @@ export const start_session = createAsyncThunk<
     const location = extra.location_service.get_current_url()
     const pathname = new URL(location).pathname
 
-    const matched = UrlMatcherService.extract(
-      `/sessions/:deck_id/:mode`,
-      pathname,
-    )
+    const matched = UrlMatcherService.extract({
+      pattern: `/sessions/:deck_id/:mode`,
+      url: pathname,
+    })
+
     let deck_id = matched.deck_id
     let mode = matched.mode as SessionsState["mode"]
 
     if (_.mode) mode = _.mode
     if (_.deck_id) deck_id = _.deck_id
-
     if (!deck_id) throw new Error(`deck_id is undefined`)
 
     dispatch(_set_is_loading({ is_loading: true }))
@@ -87,21 +95,28 @@ export const start_session = createAsyncThunk<
 
     dispatch(_set_is_loading({ is_loading: false }))
 
-    const get_number_of_words_to_review = () => {
-      if (mode === "review") return params.how_many_words_to_review
-      if (mode === "learn_new_words")
-        return params.how_many_words_to_learn_new_words
-      if (mode === "randomized") return params.how_many_words_to_randomized
-
-      throw new Error(`mode is undefined`)
-    }
-
     const cards_to_review = session_builder_algorithm({
       cards: cards,
       history: history,
       mode: mode,
-      count: get_number_of_words_to_review(),
+      count: {
+        review: params.how_many_words_to_review,
+        learn_new_words: params.how_many_words_to_learn_new_words,
+        randomized: params.how_many_words_to_randomized,
+      },
     })
+
+    if (cards_to_review.length === 0) {
+      if (history.length === cards.length) {
+        dispatch(no_cards_to_review("reviewed_and_learned_all_cards"))
+      } else if (mode === "review") {
+        dispatch(no_cards_to_review("reviewed_all_cards"))
+      } else if (mode === "learn_new_words") {
+        dispatch(no_cards_to_review("learned_all_cards"))
+      }
+
+      return
+    }
 
     dispatch(
       _start_session({
@@ -399,10 +414,10 @@ export const global_route_changed = createAsyncThunk<
 >("sessions/global_route_changed", async (params, { dispatch, extra }) => {
   const location = extra.location_service.get_current_url()
   const pathname = new URL(location).pathname
-  const { deck_id, mode } = UrlMatcherService.extract(
-    "/sessions/:deck_id/:mode",
-    pathname,
-  )
+  const { deck_id, mode } = UrlMatcherService.extract({
+    pattern: "/sessions/:deck_id/:mode",
+    url: pathname,
+  })
 
   if (deck_id && mode) {
     await dispatch(

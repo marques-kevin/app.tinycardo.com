@@ -9,13 +9,13 @@
  * @example
  * ```typescript
  * // Exact matching
- * UrlMatcherService.exact_match("/dashboard/keywords/", "/dashboard/keywords/") // true
+ * UrlMatcherService.exact_match({ url: "/dashboard/keywords/", pattern: "/dashboard/keywords/" }) // true
  *
  * // Pattern matching
- * UrlMatcherService.match("/dashboard/keywords/123/", "/dashboard/keywords/") // true
+ * UrlMatcherService.match({ url: "/dashboard/keywords/123/", pattern: "/dashboard/keywords/" }) // true
  *
  * // Parameter extraction
- * UrlMatcherService.extract("/dashboard/keywords/:id/", "/dashboard/keywords/123/")
+ * UrlMatcherService.extract({ pattern: "/dashboard/keywords/:id/", url: "/dashboard/keywords/123/" })
  * // Returns: { id: "123" }
  * ```
  */
@@ -28,48 +28,46 @@ export class UrlMatcherService {
    * root paths and empty strings. When the pattern contains parameter placeholders
    * (denoted by `:paramName`), it performs parameter-aware matching.
    *
-   * @param url - The URL to check
-   * @param pattern - The exact pattern to match against (can include parameter placeholders)
    * @returns `true` if the URLs match exactly (ignoring trailing slashes and parameters), `false` otherwise
    *
    * @example
    * ```typescript
-   * UrlMatcherService.exact_match("/dashboard/keywords/", "/dashboard/keywords/") // true
-   * UrlMatcherService.exact_match("/dashboard/keywords", "/dashboard/keywords/") // true
-   * UrlMatcherService.exact_match("/dashboard/keywords/123/", "/dashboard/keywords/") // false
-   * UrlMatcherService.exact_match("/dashboard/keywords/123/", "/dashboard/keywords/:id/") // true
-   * UrlMatcherService.exact_match("/", "/") // true
-   * UrlMatcherService.exact_match("", "") // true
+   * UrlMatcherService.exact_match({ url: "/dashboard/keywords/", pattern: "/dashboard/keywords/" }) // true
+   * UrlMatcherService.exact_match({ url: "/dashboard/keywords", pattern: "/dashboard/keywords/" }) // true
+   * UrlMatcherService.exact_match({ url: "/dashboard/keywords/123/", pattern: "/dashboard/keywords/" }) // false
+   * UrlMatcherService.exact_match({ url: "/dashboard/keywords/123/", pattern: "/dashboard/keywords/:id/" }) // true
+   * UrlMatcherService.exact_match({ url: "/", pattern: "/" }) // true
+   * UrlMatcherService.exact_match({ url: "", pattern: "" }) // true
    * ```
    */
-  static exact_match(url: string, pattern: string): boolean {
+  static exact_match(params: { url: string; pattern: string }): boolean {
     // Handle root path specially
-    if (url === "/" && pattern === "/") return true
-    if (url === "/" && pattern === "") return false
-    if (url === "" && pattern === "/") return false
+    if (params.url === "/" && params.pattern === "/") return true
+    if (params.url === "/" && params.pattern === "") return false
+    if (params.url === "" && params.pattern === "/") return false
 
     // Remove trailing slashes for comparison
-    const normalizedUrl = url.replace(/\/$/, "")
-    const normalizedPattern = pattern.replace(/\/$/, "")
+    const normalized_url = params.url.replace(/\/$/, "")
+    const normalized_pattern = params.pattern.replace(/\/$/, "")
 
     // If pattern contains parameters (starts with ':'), use parameter matching
-    if (normalizedPattern.includes(":")) {
-      const patternParts = normalizedPattern.split("/")
-      const urlParts = normalizedUrl.split("/")
+    if (normalized_pattern.includes(":")) {
+      const pattern_parts = normalized_pattern.split("/")
+      const url_parts = normalized_url.split("/")
 
       // Check if the pattern and URL have the same number of parts
-      if (patternParts.length !== urlParts.length) {
+      if (pattern_parts.length !== url_parts.length) {
         return false
       }
 
-      for (let i = 0; i < patternParts.length; i++) {
-        const patternPart = patternParts[i]
-        const urlPart = urlParts[i]
+      for (let i = 0; i < pattern_parts.length; i++) {
+        const pattern_part = pattern_parts[i]
+        const url_part = url_parts[i]
 
         // If the pattern part starts with ':', it's a parameter - skip comparison
-        if (patternPart.startsWith(":")) {
+        if (pattern_part.startsWith(":")) {
           continue
-        } else if (patternPart !== urlPart) {
+        } else if (pattern_part !== url_part) {
           // If it's not a parameter and doesn't match, return false
           return false
         }
@@ -78,7 +76,7 @@ export class UrlMatcherService {
     }
 
     // Otherwise, do exact string comparison
-    return normalizedUrl === normalizedPattern
+    return normalized_url === normalized_pattern
   }
 
   /**
@@ -90,45 +88,43 @@ export class UrlMatcherService {
    * When the pattern contains parameter placeholders (denoted by `:paramName`),
    * it performs parameter-aware matching.
    *
-   * @param url - The URL to check
-   * @param pattern - The pattern to match against (can include parameter placeholders)
    * @returns `true` if the URL starts with the pattern, `false` otherwise
    *
    * @example
    * ```typescript
-   * UrlMatcherService.match("/dashboard/keywords/123/", "/dashboard/keywords/") // true
-   * UrlMatcherService.match("/dashboard/keywords/edit/", "/dashboard/keywords/") // true
-   * UrlMatcherService.match("/dashboard/users/", "/dashboard/keywords/") // false
-   * UrlMatcherService.match("/dashboard/keywords", "/dashboard/keywords/") // true
-   * UrlMatcherService.match("/dashboard/keywords/123/", "/dashboard/keywords/:id/") // true
-   * UrlMatcherService.match("/dashboard/keywords/123/edit/", "/dashboard/keywords/:id/") // true
+   * UrlMatcherService.match({ url: "/dashboard/keywords/123/", pattern: "/dashboard/keywords/" }) // true
+   * UrlMatcherService.match({ url: "/dashboard/keywords/edit/", pattern: "/dashboard/keywords/" }) // true
+   * UrlMatcherService.match({ url: "/dashboard/users/", pattern: "/dashboard/keywords/" }) // false
+   * UrlMatcherService.match({ url: "/dashboard/keywords", pattern: "/dashboard/keywords/" }) // true
+   * UrlMatcherService.match({ url: "/dashboard/keywords/123/", pattern: "/dashboard/keywords/:id/" }) // true
+   * UrlMatcherService.match({ url: "/dashboard/keywords/123/edit/", pattern: "/dashboard/keywords/:id/" }) // true
    * ```
    */
-  static match(url: string, pattern: string): boolean {
+  static match(params: { url: string; pattern: string }): boolean {
     // Remove trailing slashes for comparison
-    const normalizedUrl = url.replace(/\/$/, "")
-    const normalizedPattern = pattern.replace(/\/$/, "")
+    const normalized_url = params.url.replace(/\/$/, "")
+    const normalized_pattern = params.pattern.replace(/\/$/, "")
 
     // If pattern contains parameters (starts with ':'), use parameter-aware matching
-    if (normalizedPattern.includes(":")) {
-      const patternParts = normalizedPattern.split("/")
-      const urlParts = normalizedUrl.split("/")
+    if (normalized_pattern.includes(":")) {
+      const pattern_parts = normalized_pattern.split("/")
+      const url_parts = normalized_url.split("/")
 
       // For match, we check if the URL starts with the pattern structure
       // We need at least as many parts in the URL as in the pattern
-      if (urlParts.length < patternParts.length) {
+      if (url_parts.length < pattern_parts.length) {
         return false
       }
 
       // Check each pattern part against the corresponding URL part
-      for (let i = 0; i < patternParts.length; i++) {
-        const patternPart = patternParts[i]
-        const urlPart = urlParts[i]
+      for (let i = 0; i < pattern_parts.length; i++) {
+        const pattern_part = pattern_parts[i]
+        const url_part = url_parts[i]
 
         // If the pattern part starts with ':', it's a parameter - skip comparison
-        if (patternPart.startsWith(":")) {
+        if (pattern_part.startsWith(":")) {
           continue
-        } else if (patternPart !== urlPart) {
+        } else if (pattern_part !== url_part) {
           // If it's not a parameter and doesn't match, return false
           return false
         }
@@ -137,7 +133,7 @@ export class UrlMatcherService {
     }
 
     // Otherwise, do simple startsWith comparison
-    return normalizedUrl.startsWith(normalizedPattern)
+    return normalized_url.startsWith(normalized_pattern)
   }
 
   /**
@@ -154,54 +150,70 @@ export class UrlMatcherService {
    * @example
    * ```typescript
    * // Single parameter
-   * UrlMatcherService.extract("/dashboard/keywords/:id/", "/dashboard/keywords/123/")
+   * UrlMatcherService.extract({ pattern: "/dashboard/keywords/:id/", url: "/dashboard/keywords/123/" })
    * // Returns: { id: "123" }
    *
    * // Multiple parameters
-   * UrlMatcherService.extract("/dashboard/:section/:id/", "/dashboard/keywords/123/")
+   * UrlMatcherService.extract({ pattern: "/dashboard/:section/:id/", url: "/dashboard/keywords/123/" })
    * // Returns: { section: "keywords", id: "123" }
    *
    * // Parameters with special characters
-   * UrlMatcherService.extract("/users/:username/", "/users/john.doe@example.com/")
+   * UrlMatcherService.extract({ pattern: "/users/:username/", url: "/users/john.doe@example.com/" })
    * // Returns: { username: "john.doe@example.com" }
    *
    * // No match (different structure)
-   * UrlMatcherService.extract("/dashboard/keywords/:id/", "/dashboard/keywords/")
+   * UrlMatcherService.extract({ pattern: "/dashboard/keywords/:id/", url: "/dashboard/keywords/" })
    * // Returns: {}
    * ```
    */
-  static extract(
-    pattern: string,
-    url: string,
-  ): Record<string, string | undefined> {
+  static extract(params: {
+    pattern: string
+    url: string
+  }): Record<string, string | undefined> {
     // Remove trailing slashes for comparison
-    const normalizedUrl = url.replace(/\/$/, "")
-    const normalizedPattern = pattern.replace(/\/$/, "")
+    const normalized_url = params.url.replace(/\/$/, "")
+    const normalized_pattern = params.pattern.replace(/\/$/, "")
 
-    const patternParts = normalizedPattern.split("/")
-    const urlParts = normalizedUrl.split("/")
+    const pattern_parts = normalized_pattern.split("/")
+    const url_parts = normalized_url.split("/")
 
-    const params: Record<string, string | undefined> = {}
+    const extracted_params: Record<string, string | undefined> = {}
 
     // Check if the pattern and URL have the same number of parts
-    if (patternParts.length !== urlParts.length) {
-      return params
+    if (pattern_parts.length !== url_parts.length) {
+      return extracted_params
     }
 
-    for (let i = 0; i < patternParts.length; i++) {
-      const patternPart = patternParts[i]
-      const urlPart = urlParts[i]
+    for (let i = 0; i < pattern_parts.length; i++) {
+      const pattern_part = pattern_parts[i]
+      const url_part = url_parts[i]
 
       // If the pattern part starts with ':', it's a parameter
-      if (patternPart.startsWith(":")) {
-        const paramName = patternPart.slice(1) // Remove the ':' prefix
-        params[paramName] = urlPart
-      } else if (patternPart !== urlPart) {
+      if (pattern_part.startsWith(":")) {
+        const param_name = pattern_part.slice(1) // Remove the ':' prefix
+        extracted_params[param_name] = url_part
+      } else if (pattern_part !== url_part) {
         // If it's not a parameter and doesn't match, return empty object
         return {}
       }
     }
 
-    return params
+    return extracted_params
+  }
+
+  static extract_from_hash(params: {
+    hash: string
+  }): Record<string, string | undefined> {
+    const extracted_params: Record<string, string | undefined> = {}
+
+    params.hash
+      .replace("#", "")
+      .split("&")
+      .forEach((param) => {
+        const [key, value] = param.split("=")
+        extracted_params[key] = value
+      })
+
+    return extracted_params
   }
 }

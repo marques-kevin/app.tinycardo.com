@@ -1,6 +1,6 @@
 import { useIntl } from "react-intl"
 import type { ContainerProps } from "./decks_csv_mapping_dialog.container"
-import { ImportIcon, ScanTextIcon } from "lucide-react"
+import { ScanTextIcon } from "lucide-react"
 
 export function Wrapper(props: ContainerProps) {
   const { formatMessage } = useIntl()

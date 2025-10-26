@@ -8,13 +8,18 @@ export interface SessionsState {
   deck_id: string
   is_card_flipped: boolean
   is_loading: boolean
-  mode: "review" | "learn_new_words" | "randomized"
+  mode: "review" | "learn_new_words" | "randomized" | "auto"
   current_word: SessionHistoryWithCardEntity | null
   words_to_review: SessionHistoryWithCardEntity[]
   known_words: SessionHistoryWithCardEntity[]
   unknown_words: SessionHistoryWithCardEntity[]
   current_index: number
   is_ended: boolean
+  no_cards_to_review:
+    | null
+    | "reviewed_all_cards"
+    | "learned_all_cards"
+    | "reviewed_and_learned_all_cards"
   help: {
     history: Record<string, string>
     is_open: boolean
@@ -33,6 +38,7 @@ const initial_state: SessionsState = {
   known_words: [],
   unknown_words: [],
   current_index: 0,
+  no_cards_to_review: null,
   is_ended: false,
   help: {
     history: {},
@@ -58,6 +64,7 @@ export const sessions_reducers = createReducer(initial_state, (builder) => {
         current_word: action.payload.words_to_review[0],
         current_index: 0,
         is_ended: false,
+        no_cards_to_review: null,
         mode: action.payload.mode,
         help_cards_explained: {},
       }
@@ -88,6 +95,12 @@ export const sessions_reducers = createReducer(initial_state, (builder) => {
     })
     .addCase(actions._set_help_loading, (state, action) => {
       state.help.is_loading = action.payload.is_loading
+    })
+    .addCase(actions.no_cards_to_review.fulfilled, (state, action) => {
+      return {
+        ...state,
+        no_cards_to_review: action.payload,
+      }
     })
     .addCase(actions._reset_session, () => {
       return {

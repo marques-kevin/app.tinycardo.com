@@ -14,6 +14,14 @@ export class LocationServiceWindow implements LocationService {
     }
   }
 
+  get_current_pathname(): string {
+    return window.location.pathname
+  }
+
+  get_current_hash(): string {
+    return window.location.hash
+  }
+
   open_new_tab(url: string): void {
     window.open(url, "_blank")
   }

@@ -7,9 +7,12 @@ import { SessionReviewedWordsTable } from "@/modules/sessions/components/session
 import { useAppSelector } from "@/redux/store"
 import { SessionMobileControls } from "@/modules/sessions/components/session_mobile_controls/session_mobile_controls"
 import { SessionHelpDialog } from "@/modules/sessions/components/session_help_dialog/session_help_dialog"
+import { SessionNoMoreReview } from "../components/session_no_more_review/session_no_more_review"
 
 export function SessionPage() {
-  const { is_ended, is_loading } = useAppSelector((state) => state.sessions)
+  const { is_ended, is_loading, no_cards_to_review } = useAppSelector(
+    (state) => state.sessions,
+  )
 
   if (is_loading) {
     return (
@@ -17,6 +20,10 @@ export function SessionPage() {
         <span className="loading loading-spinner loading-xl"></span>
       </div>
     )
+  }
+
+  if (no_cards_to_review) {
+    return <SessionNoMoreReview />
   }
 
   if (is_ended) {

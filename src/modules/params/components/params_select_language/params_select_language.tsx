@@ -18,7 +18,7 @@ export function Wrapper(props: ContainerProps) {
       })}
     >
       <select
-        className="select"
+        className="select select-lg"
         value={value}
         onChange={(e) => on_change(e.target.value)}
       >

@@ -89,57 +89,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/cards/create_card": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Create a new card */
-        post: operations["CardsController_create_card"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/cards/update_card": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Update a card */
-        post: operations["CardsController_update_card"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/cards/delete_card": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Delete a card */
-        post: operations["CardsController_delete_card"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/decks/get_decks": {
         parameters: {
             query?: never;
@@ -151,6 +100,23 @@ export interface paths {
         put?: never;
         /** Get user decks */
         post: operations["DecksController_get_decks"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/decks/get_deck_by_id": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get a deck by ID */
+        post: operations["DecksController_get_deck_by_id"];
         delete?: never;
         options?: never;
         head?: never;
@@ -309,15 +275,35 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Health check endpoint
+         * @description Returns the health status of the API. Used by load balancers and monitoring systems.
+         */
+        get: operations["HealthController_getHealth"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        GetGoogleAuthenticationUrlDto: {
+        AuthenticationGetGoogleAuthenticationUrlDto: {
             /** @description Callback URL for OAuth redirect */
             callback_url: string;
         };
-        AuthenticateWithGoogleCodeDto: {
+        AuthenticationAuthenticateWithGoogleCodeDto: {
             /** @description Google OAuth authorization code */
             code: string;
             /** @description Callback URL for OAuth redirect */
@@ -325,7 +311,7 @@ export interface components {
             /** @description User preferred language */
             language?: string;
         };
-        GetCardsDto: {
+        CardsGetCardsDto: {
             /** @description ID of the deck */
             deck_id: string;
         };
@@ -349,27 +335,7 @@ export interface components {
              */
             updated_at: string;
         };
-        CreateCardDto: {
-            /** @description ID of the deck */
-            deck_id: string;
-            /** @description Front content of the card */
-            front: string;
-            /** @description Back content of the card */
-            back: string;
-        };
-        UpdateCardDto: {
-            /** @description ID of the card to update */
-            card_id: string;
-            /** @description New front content */
-            front?: string;
-            /** @description New back content */
-            back?: string;
-        };
-        DeleteCardDto: {
-            /** @description ID of the card to delete */
-            card_id: string;
-        };
-        GetDecksDto: {
+        DecksGetDecksDto: {
             /** @description Number of decks to retrieve */
             take?: number;
             /** @description Number of decks to skip */
@@ -380,12 +346,16 @@ export interface components {
             id: string;
             /** @description Name of the deck */
             name: string;
+            /** @description Description of the deck */
+            description: string;
             /** @description User ID who owns the deck */
             user_id: string;
             /** @description Language of the front side of cards */
             front_language: string;
             /** @description Language of the back side of cards */
             back_language: string;
+            /** @description Public visibility of the deck */
+            visibility: string;
             /**
              * Format: date-time
              * @description Creation timestamp
@@ -402,7 +372,11 @@ export interface components {
              */
             deleted_at: string | null;
         };
-        SearchDecksDto: {
+        DecksGetDeckByIdDto: {
+            /** @description ID of the deck to retrieve */
+            id: string;
+        };
+        DecksSearchDecksDto: {
             /** @description Number of results per page */
             limit?: number;
             /** @description Page number */
@@ -414,15 +388,23 @@ export interface components {
             /** @description Search by title (partial match) */
             title?: string;
         };
-        CreateDeckDto: {
+        DecksCreateDeckDto: {
             /** @description Name of the deck */
             name: string;
             /** @description Language code for the front of the cards */
             front_language: string;
             /** @description Language code for the back of the cards */
             back_language: string;
+            /** @description Description of the deck */
+            description?: string;
+            /**
+             * @description Visibility of the deck
+             * @default private
+             * @enum {string}
+             */
+            visibility: "public" | "private" | "unlisted";
         };
-        UpdateDeckDto: {
+        DecksUpdateDeckDto: {
             /** @description ID of the deck to update */
             id: string;
             /** @description New name for the deck */
@@ -431,16 +413,23 @@ export interface components {
             front_language?: string;
             /** @description New back language code */
             back_language?: string;
+            /** @description New description for the deck */
+            description: string;
+            /**
+             * @description New visibility for the deck
+             * @enum {string}
+             */
+            visibility: "public" | "private" | "unlisted";
         };
-        DeleteDeckDto: {
+        DecksDeleteDeckDto: {
             /** @description ID of the deck to delete */
             id: string;
         };
-        DuplicateDeckDto: {
+        DecksDuplicateDeckDto: {
             /** @description ID of the deck to duplicate */
             deck_id: string;
         };
-        UpsertCardsDto: {
+        DecksUpsertCardsDto: {
             /** @description ID of the deck */
             deck_id: string;
             /** @description Array of cards to upsert */
@@ -453,7 +442,7 @@ export interface components {
                 back: string;
             }[];
         };
-        ReviewCardDto: {
+        HistoryReviewCardDto: {
             /** @description ID of the card to review */
             card_id: string;
             /**
@@ -502,7 +491,7 @@ export interface components {
              */
             updated_at: string;
         };
-        GetDeckHistoryDto: {
+        HistoryGetDeckHistoryDto: {
             /** @description ID of the deck */
             deck_id: string;
         };
@@ -524,7 +513,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["GetGoogleAuthenticationUrlDto"];
+                "application/json": components["schemas"]["AuthenticationGetGoogleAuthenticationUrlDto"];
             };
         };
         responses: {
@@ -545,7 +534,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["AuthenticateWithGoogleCodeDto"];
+                "application/json": components["schemas"]["AuthenticationAuthenticateWithGoogleCodeDto"];
             };
         };
         responses: {
@@ -600,7 +589,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["GetCardsDto"];
+                "application/json": components["schemas"]["CardsGetCardsDto"];
             };
         };
         responses: {
@@ -614,73 +603,6 @@ export interface operations {
             };
         };
     };
-    CardsController_create_card: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateCardDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CardsEntity"];
-                };
-            };
-        };
-    };
-    CardsController_update_card: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateCardDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CardsEntity"];
-                };
-            };
-        };
-    };
-    CardsController_delete_card: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DeleteCardDto"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     DecksController_get_decks: {
         parameters: {
             query?: never;
@@ -690,7 +612,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["GetDecksDto"];
+                "application/json": components["schemas"]["DecksGetDecksDto"];
             };
         };
         responses: {
@@ -704,6 +626,29 @@ export interface operations {
             };
         };
     };
+    DecksController_get_deck_by_id: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DecksGetDeckByIdDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecksEntity"];
+                };
+            };
+        };
+    };
     DecksController_search_decks: {
         parameters: {
             query?: never;
@@ -713,7 +658,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["SearchDecksDto"];
+                "application/json": components["schemas"]["DecksSearchDecksDto"];
             };
         };
         responses: {
@@ -734,7 +679,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateDeckDto"];
+                "application/json": components["schemas"]["DecksCreateDeckDto"];
             };
         };
         responses: {
@@ -757,7 +702,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UpdateDeckDto"];
+                "application/json": components["schemas"]["DecksUpdateDeckDto"];
             };
         };
         responses: {
@@ -780,7 +725,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["DeleteDeckDto"];
+                "application/json": components["schemas"]["DecksDeleteDeckDto"];
             };
         };
         responses: {
@@ -803,7 +748,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["DuplicateDeckDto"];
+                "application/json": components["schemas"]["DecksDuplicateDeckDto"];
             };
         };
         responses: {
@@ -826,7 +771,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UpsertCardsDto"];
+                "application/json": components["schemas"]["DecksUpsertCardsDto"];
             };
         };
         responses: {
@@ -847,7 +792,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ReviewCardDto"];
+                "application/json": components["schemas"]["HistoryReviewCardDto"];
             };
         };
         responses: {
@@ -870,7 +815,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["GetDeckHistoryDto"];
+                "application/json": components["schemas"]["HistoryGetDeckHistoryDto"];
             };
         };
         responses: {
@@ -898,6 +843,48 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    HealthController_getHealth: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description API is healthy and operational */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description Health status of the API
+                         * @example ok
+                         */
+                        status?: string;
+                        /**
+                         * @description Human-readable status message
+                         * @example Tinycardo API is running successfully
+                         */
+                        message?: string;
+                        /**
+                         * Format: date-time
+                         * @description Timestamp of the health check
+                         * @example 2025-01-14T10:30:00.000Z
+                         */
+                        timestamp?: string;
+                        /**
+                         * @description API uptime in seconds
+                         * @example 3600
+                         */
+                        uptime?: number;
+                    };
+                };
             };
         };
     };

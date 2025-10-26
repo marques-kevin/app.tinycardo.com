@@ -13,6 +13,16 @@ import {
 } from "lucide-react"
 import { useIntl } from "react-intl"
 
+function EmptyPlaceholder(props: { children: ReactNode }) {
+  return (
+    <div className="bg-base-200 border-base-300 text-base-content w-full rounded-md border px-4 py-8 text-center font-medium">
+      <GalleryHorizontalEndIcon className="mx-auto mb-2 inline-block size-6" />
+
+      <div>{props.children}</div>
+    </div>
+  )
+}
+
 function WordsReviewedTableItem(props: {
   word: SessionHistoryWithCardEntity
   streak: number
@@ -141,13 +151,3 @@ export function Wrapper(props: ContainerProps) {
 }
 
 export const SessionReviewedWordsTable = connector(Wrapper)
-
-function EmptyPlaceholder(props: { children: ReactNode }) {
-  return (
-    <div className="bg-base-200 border-base-300 text-base-content w-full rounded-md border px-4 py-8 text-center font-medium">
-      <GalleryHorizontalEndIcon className="mx-auto mb-2 inline-block size-6" />
-
-      <div>{props.children}</div>
-    </div>
-  )
-}

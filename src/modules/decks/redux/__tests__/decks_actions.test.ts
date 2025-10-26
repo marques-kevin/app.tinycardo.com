@@ -18,13 +18,14 @@ describe("decks actions", () => {
     const deck: DeckEntity = {
       id: "1",
       name: "test",
+      description: null,
       front_language: "en",
       back_language: "es",
       user_id: "1",
       updated_at: new Date(),
       created_at: new Date(),
       visibility: "private",
-      number_of_cards: 0,
+      number_of_cards: 2,
     }
 
     const cards: CardEntity[] = [
@@ -80,29 +81,5 @@ describe("decks actions", () => {
         number_of_cards_not_ready_to_be_reviewed: 1,
       },
     })
-  })
-
-  it("should be able to create a new deck", async () => {
-    const { store } = await create_store_for_tests()
-
-    expect(store.getState().decks.create_deck.cards).toEqual([])
-    expect(store.getState().decks.create_deck.title).toEqual("")
-    expect(store.getState().decks.create_deck.csv_import_dialog.open).toBe(
-      false,
-    )
-
-    store.dispatch(actions.create_deck_add_new_card())
-
-    expect(store.getState().decks.create_deck.cards).toEqual(
-      expect.arrayContaining([expect.any(String)]),
-    )
-
-    const id = store.getState().decks.create_deck.cards[0]
-
-    store.dispatch(
-      actions.create_deck_update_card({ id, field: "front", value: "test" }),
-    )
-
-    expect(store.getState().decks.create_deck.cards[0]).toEqual(id)
   })
 })

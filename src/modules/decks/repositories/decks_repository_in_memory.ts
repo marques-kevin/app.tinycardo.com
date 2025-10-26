@@ -1,43 +1,86 @@
 import { type DeckEntity } from "@/modules/decks/entities/deck_entity"
 import { type DecksRepository } from "@/modules/decks/repositories/decks_repository"
 import type { CardEntity } from "@/modules/decks/entities/card_entity"
+import { v4 } from "uuid"
 
 export class DecksRepositoryInMemory implements DecksRepository {
   private decks: DeckEntity[] = []
   private cards: Record<string, CardEntity[]> = {}
 
-  async sync_deck(params: {
-    deck: DeckEntity
-    cards: CardEntity[]
-  }): ReturnType<DecksRepository["sync_deck"]> {
+  constructor(
+    params: Partial<{
+      decks?: DeckEntity[]
+      cards?: CardEntity[]
+    }> = {},
+  ) {
+    this.decks = params.decks ?? []
+    this.store_cards(params.cards ?? [])
+  }
+
+  private store_cards(cards: CardEntity[]): void {
+    this.cards = cards.reduce(
+      (acc, card) => {
+        acc[card.deck_id] = [...(acc[card.deck_id] || []), card]
+        return acc
+      },
+      {} as Record<string, CardEntity[]>,
+    )
+  }
+
+  async sync_deck(params: { deck: DeckEntity; cards: CardEntity[] }) {
     this.decks = [...this.decks, params.deck]
-    this.cards[params.deck.id] = params.cards
+    this.store_cards(params.cards)
 
     return params.deck
   }
 
   async fetch_decks(): ReturnType<DecksRepository["fetch_decks"]> {
-    return this.decks
+    return this.decks.map((deck) => ({
+      ...deck,
+      number_of_cards: this.cards[deck.id]?.length ?? 0,
+    }))
+  }
+
+  async get_deck_by_id(
+    params: Parameters<DecksRepository["get_deck_by_id"]>[0],
+  ): ReturnType<DecksRepository["get_deck_by_id"]> {
+    const decks = await this.fetch_decks()
+
+    const deck = decks.find((d) => d.id === params.deck_id)
+
+    if (!deck) {
+      throw new Error("Deck not found")
+    }
+
+    return deck
   }
 
   async fetch_cards(params: {
     deck_id: string
   }): ReturnType<DecksRepository["fetch_cards"]> {
-    return this.cards[params.deck_id]
+    return this.cards[params.deck_id] || []
+  }
+
+  async get_cards_by_deck_id(params: {
+    deck_id: string
+  }): ReturnType<DecksRepository["get_cards_by_deck_id"]> {
+    return this.fetch_cards(params)
   }
 
   async create_deck(params: {
     name: string
+    user_id: string
     description: string
     front_language: string
     back_language: string
   }): ReturnType<DecksRepository["create_deck"]> {
     const deck: DeckEntity = {
-      id: `${Date.now().toString()}/${Math.random()}`,
+      id: `${Date.now().toString()}-${Math.random()}`,
       name: params.name,
+      description: params.description,
       front_language: params.front_language,
       back_language: params.back_language,
-      user_id: "test",
+      user_id: params.user_id,
       visibility: "private",
       created_at: new Date(),
       updated_at: new Date(),
@@ -56,23 +99,22 @@ export class DecksRepositoryInMemory implements DecksRepository {
     front_language?: string
     back_language?: string
   }): ReturnType<DecksRepository["update_deck"]> {
-    const deck_index = this.decks.findIndex((d) => d.id === params.id)
+    const deck = this.decks.find((d) => d.id === params.id)
 
-    if (deck_index === -1) {
+    if (!deck) {
       throw new Error("Deck not found")
     }
 
     const updated_deck: DeckEntity = {
-      ...this.decks[deck_index],
-      name: params.name ?? this.decks[deck_index].name,
-      front_language:
-        params.front_language ?? this.decks[deck_index].front_language,
-      back_language:
-        params.back_language ?? this.decks[deck_index].back_language,
+      ...deck,
+      name: params.name ?? deck.name,
+      front_language: params.front_language ?? deck.front_language,
+      back_language: params.back_language ?? deck.back_language,
       updated_at: new Date(),
     }
 
-    this.decks[deck_index] = updated_deck
+    this.decks = this.decks.map((d) => (d.id === params.id ? updated_deck : d))
+
     return updated_deck
   }
 
@@ -89,5 +131,50 @@ export class DecksRepositoryInMemory implements DecksRepository {
     delete this.cards[params.id]
 
     return deck
+  }
+
+  async upsert_cards(params: {
+    deck_id: string
+    cards: Array<{
+      id?: string
+      front: string
+      back: string
+    }>
+  }): ReturnType<DecksRepository["upsert_cards"]> {
+    this.cards[params.deck_id] = params.cards.map((card) => ({
+      id: card.id || v4(),
+      deck_id: params.deck_id,
+      front: card.front,
+      back: card.back,
+    }))
+  }
+
+  async duplicate_deck(
+    params: Parameters<DecksRepository["duplicate_deck"]>[0],
+  ): ReturnType<DecksRepository["duplicate_deck"]> {
+    const deck = await this.get_deck_by_id({
+      deck_id: params.deck_id,
+      user_id: params.user_id,
+    })
+    const cards = await this.fetch_cards({ deck_id: deck.id })
+
+    const new_deck = await this.create_deck({
+      name: `${deck.name} (Copy)`,
+      description: deck.description ?? "",
+      front_language: deck.front_language,
+      back_language: deck.back_language,
+      user_id: params.user_id,
+    })
+
+    await this.upsert_cards({
+      deck_id: new_deck.id,
+      cards: cards.map((card) => ({
+        ...card,
+        id: v4(),
+        deck_id: new_deck.id,
+      })),
+    })
+
+    return new_deck
   }
 }
