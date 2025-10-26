@@ -11,12 +11,13 @@ export interface DecksRepository {
 
   get_deck_by_id(params: { id: string }): Promise<DeckEntity>
 
-  duplicate_deck(params: { id: string }): Promise<DeckEntity>
+  duplicate_deck(params: { id: string; user_id: string }): Promise<DeckEntity>
 
   create_deck(params: {
     name: string
     front_language: string
     back_language: string
+    user_id: string
   }): Promise<DeckEntity>
 
   update_deck(params: {

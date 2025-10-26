@@ -112,7 +112,12 @@ export function Wrapper(props: ContainerProps) {
             </DropdownMenuItem>
             <hr className="border-base-300 my-2" />
 
-            <DropdownMenuItem className="text-lg">
+            <DropdownMenuItem
+              className="text-lg"
+              onClick={() => {
+                props.on_duplicate(props.deck_id!)
+              }}
+            >
               <CopyIcon className="size-4" />
               <span>
                 {formatMessage({ id: "deck_details_header/duplicate" })}

@@ -4,6 +4,7 @@ import { go_on_session_page } from "@/modules/sessions/redux/sessions_actions"
 import {
   go_on_update_deck_page,
   delete_deck,
+  duplicate_deck,
 } from "@/modules/decks/redux/decks_actions"
 import type { SessionsState } from "@/modules/sessions/redux/sessions_reducers"
 
@@ -32,6 +33,9 @@ function mapDispatch(dispatch: Dispatch) {
     },
     on_delete: (deck_id: string) => {
       dispatch(delete_deck({ deck_id }))
+    },
+    on_duplicate: (deck_id: string) => {
+      dispatch(duplicate_deck({ deck_id }))
     },
   }
 }

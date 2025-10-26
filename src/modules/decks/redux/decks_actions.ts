@@ -36,14 +36,24 @@ export const go_on_update_deck_page = createAsyncThunk<
 
 export const create_deck = createAsyncThunk<void, void, AsyncThunkConfig>(
   "decks/create_deck",
-  async (_, { dispatch, extra }) => {
+  async (_, { dispatch, extra, getState }) => {
+    const { authentication } = getState()
+
+    if (!authentication.user) return
+
     const deck = await extra.decks_repository.create_deck({
       name: "New Deck",
       back_language: "en",
       front_language: "fr",
+      user_id: authentication.user.id,
     })
 
     dispatch(go_on_update_deck_page({ deck_id: deck.id }))
+
+    extra.toast_service.toast({
+      title: "decks_actions/toast/deck_created_successfully_title",
+      type: "success",
+    })
   },
 )
 
@@ -145,6 +155,10 @@ export const delete_deck = createAsyncThunk<
   await extra.decks_repository.delete_deck({ id: deck_id })
 
   extra.location_service.navigate("/")
+  extra.toast_service.toast({
+    title: "decks_actions/toast/deck_deleted_successfully_title",
+    type: "success",
+  })
 })
 
 /**
@@ -197,3 +211,25 @@ export const when_user_is_on_home_page = createAsyncThunk<
     dispatch(fetch_decks())
   },
 )
+
+export const duplicate_deck = createAsyncThunk<
+  void,
+  { deck_id: string },
+  AsyncThunkConfig
+>("decks/duplicate_deck", async ({ deck_id }, { extra, getState }) => {
+  const { authentication } = getState()
+
+  if (!authentication.user) return
+
+  const copied_deck = await extra.decks_repository.duplicate_deck({
+    id: deck_id,
+    user_id: authentication.user.id,
+  })
+
+  extra.location_service.navigate(`/decks/${copied_deck.id}/update`)
+  extra.toast_service.toast({
+    title: "decks_actions/toast/deck_duplicated_successfully_title",
+    description: "decks_actions/toast/deck_duplicated_successfully_description",
+    type: "success",
+  })
+})

@@ -18,13 +18,14 @@ describe("decks actions", () => {
     const deck: DeckEntity = {
       id: "1",
       name: "test",
+      description: null,
       front_language: "en",
       back_language: "es",
       user_id: "1",
       updated_at: new Date(),
       created_at: new Date(),
       visibility: "private",
-      number_of_cards: 0,
+      number_of_cards: 2,
     }
 
     const cards: CardEntity[] = [

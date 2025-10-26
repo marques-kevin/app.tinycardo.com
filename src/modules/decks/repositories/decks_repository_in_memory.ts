@@ -40,7 +40,7 @@ export class DecksRepositoryInMemory implements DecksRepository {
   async fetch_decks(): ReturnType<DecksRepository["fetch_decks"]> {
     return this.decks.map((deck) => ({
       ...deck,
-      number_of_cards: this.cards[deck.id].length,
+      number_of_cards: this.cards[deck.id]?.length ?? 0,
     }))
   }
 
@@ -72,6 +72,7 @@ export class DecksRepositoryInMemory implements DecksRepository {
 
   async create_deck(params: {
     name: string
+    user_id: string
     description: string
     front_language: string
     back_language: string
@@ -82,7 +83,7 @@ export class DecksRepositoryInMemory implements DecksRepository {
       description: params.description,
       front_language: params.front_language,
       back_language: params.back_language,
-      user_id: "test",
+      user_id: params.user_id,
       visibility: "private",
       created_at: new Date(),
       updated_at: new Date(),
@@ -155,20 +156,27 @@ export class DecksRepositoryInMemory implements DecksRepository {
 
   async duplicate_deck(params: {
     id: string
+    user_id: string
   }): ReturnType<DecksRepository["duplicate_deck"]> {
     const deck = await this.get_deck_by_id({ id: params.id })
+    const cards = await this.fetch_cards({ deck_id: deck.id })
 
     const new_deck = await this.create_deck({
       name: `${deck.name} (Copy)`,
       description: deck.description ?? "",
       front_language: deck.front_language,
       back_language: deck.back_language,
+      user_id: params.user_id,
     })
 
-    this.cards[new_deck.id] = this.cards[deck.id].map((card) => ({
-      ...card,
+    await this.upsert_cards({
       deck_id: new_deck.id,
-    }))
+      cards: cards.map((card) => ({
+        ...card,
+        id: v4(),
+        deck_id: new_deck.id,
+      })),
+    })
 
     return new_deck
   }

@@ -235,20 +235,12 @@ export const apply_csv_import_mapping = createAsyncThunk<
   return mapped
 })
 
-export const global_route_changed = createAsyncThunk<
-  void,
-  void,
-  AsyncThunkConfig
->("deck_update/global_route_changed", async (_, { dispatch, extra }) => {
-  dispatch(when_user_is_on_update_deck_page())
-})
-
 export const when_user_is_on_update_deck_page = createAsyncThunk<
   void,
   void,
   AsyncThunkConfig
 >(
-  "decks/when_user_is_on_update_deck_page",
+  "deck_update/when_user_is_on_update_deck_page",
   async (_, { dispatch, extra, getState }) => {
     const { authentication } = getState()
 
@@ -266,3 +258,29 @@ export const when_user_is_on_update_deck_page = createAsyncThunk<
     await dispatch(load_deck_into_create_form({ deck_id }))
   },
 )
+
+/**
+ * ------------------------------------------------------------
+ *
+ *
+ *
+ *
+ *
+ *
+ * GLOBAL APP ACTIONS
+ *
+ *
+ *
+ *
+ *
+ *
+ * ------------------------------------------------------------
+ */
+
+export const global_route_changed = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("deck_update/global_route_changed", async (_, { dispatch, extra }) => {
+  dispatch(when_user_is_on_update_deck_page())
+})

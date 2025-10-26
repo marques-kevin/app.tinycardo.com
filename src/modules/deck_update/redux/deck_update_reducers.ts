@@ -255,13 +255,16 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
 
       if (!action.payload) return
 
+      const cards =
+        action.payload.cards.length > 0 ? action.payload.cards : [create_card()]
+
       state.deck_id = action.payload.deck.id
       state.title = action.payload.deck.name
       state.visibility = action.payload.deck.visibility
       state.front_language = action.payload.deck.front_language
       state.back_language = action.payload.deck.back_language
-      state.cards = action.payload.cards.map((c) => c.id)
-      state.cards_map = action.payload.cards.reduce(
+      state.cards = cards.map((c) => c.id)
+      state.cards_map = cards.reduce(
         (acc, c) => {
           acc[c.id] = c
           return acc
