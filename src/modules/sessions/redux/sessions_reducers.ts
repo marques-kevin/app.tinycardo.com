@@ -15,6 +15,7 @@ export interface SessionsState {
   unknown_words: SessionHistoryWithCardEntity[]
   current_index: number
   is_ended: boolean
+  no_cards_to_review: null | SessionsState["mode"]
   help: {
     history: Record<string, string>
     is_open: boolean
@@ -33,6 +34,7 @@ const initial_state: SessionsState = {
   known_words: [],
   unknown_words: [],
   current_index: 0,
+  no_cards_to_review: null,
   is_ended: false,
   help: {
     history: {},
@@ -58,6 +60,7 @@ export const sessions_reducers = createReducer(initial_state, (builder) => {
         current_word: action.payload.words_to_review[0],
         current_index: 0,
         is_ended: false,
+        no_cards_to_review: null,
         mode: action.payload.mode,
         help_cards_explained: {},
       }
@@ -88,6 +91,12 @@ export const sessions_reducers = createReducer(initial_state, (builder) => {
     })
     .addCase(actions._set_help_loading, (state, action) => {
       state.help.is_loading = action.payload.is_loading
+    })
+    .addCase(actions.no_cards_to_review.fulfilled, (state, action) => {
+      return {
+        ...state,
+        no_cards_to_review: action.payload.mode,
+      }
     })
     .addCase(actions._reset_session, () => {
       return {

@@ -54,6 +54,16 @@ export const go_on_session_page = createAsyncThunk<
   extra.location_service.navigate(`/sessions/${params.deck_id}/${params.mode}`)
 })
 
+export const no_cards_to_review = createAsyncThunk<
+  { mode: SessionsState["mode"] },
+  { mode: SessionsState["mode"] },
+  AsyncThunkConfig
+>("sessions/no_cards_to_review", async (_) => {
+  return {
+    mode: _.mode,
+  }
+})
+
 export const start_session = createAsyncThunk<
   void,
   { deck_id?: string; mode?: SessionsState["mode"] },
@@ -74,7 +84,6 @@ export const start_session = createAsyncThunk<
 
     if (_.mode) mode = _.mode
     if (_.deck_id) deck_id = _.deck_id
-
     if (!deck_id) throw new Error(`deck_id is undefined`)
 
     dispatch(_set_is_loading({ is_loading: true }))
@@ -103,6 +112,11 @@ export const start_session = createAsyncThunk<
       mode: mode,
       count: get_number_of_words_to_review(),
     })
+
+    if (cards_to_review.length === 0) {
+      dispatch(no_cards_to_review({ mode }))
+      return
+    }
 
     dispatch(
       _start_session({
