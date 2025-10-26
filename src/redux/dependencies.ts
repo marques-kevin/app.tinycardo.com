@@ -21,10 +21,17 @@ import { DecksRepositoryApi } from "@/modules/decks/repositories/decks_repositor
 import type { DiscoverDecksRepository } from "@/modules/discover/repositories/discover_decks_repository"
 import { DiscoverDecksRepositoryInMemory } from "@/modules/discover/repositories/discover_decks_repository_in_memory"
 import { DiscoverDecksRepositoryApi } from "@/modules/discover/repositories/discover_decks_repository_api"
+import type { ToastService } from "@/modules/global/services/toast_service/toast_service"
+import { ToastServiceInMemory } from "@/modules/global/services/toast_service/toast_service_in_memory"
+import { ToastServiceSonner } from "@/modules/global/services/toast_service/toast_service_sonner"
+import type { StreakRepository } from "@/modules/streak/repositories/streak_repository/streak_repository"
+import { StreakRepositoryInMemory } from "@/modules/streak/repositories/streak_repository/streak_repository_in_memory"
 
 import { seed_decks } from "./__seed__/seed_decks"
 import { seed_cards } from "./__seed__/seed_cards"
 import { seed_discover_decks } from "./__seed__/seed_discover_decks"
+import { seed_authenticated_user } from "./__seed__/seed_users"
+import { seed_streaks } from "./__seed__/seed_streaks"
 
 export type Dependencies = {
   location_service: LocationService
@@ -35,6 +42,8 @@ export type Dependencies = {
   users_repository: UsersRepository
   session_help_service: SessionHelpService
   discover_decks_repository: DiscoverDecksRepository
+  toast_service: ToastService
+  streak_repository: StreakRepository
 }
 
 export function build_dependencies(
@@ -50,6 +59,8 @@ export function build_dependencies(
       users_repository: new UsersRepositoryInMemory(),
       session_help_service: new SessionHelpServiceInMemory(),
       discover_decks_repository: new DiscoverDecksRepositoryInMemory(),
+      toast_service: new ToastServiceInMemory(),
+      streak_repository: new StreakRepositoryInMemory(),
     }
   }
 
@@ -64,11 +75,15 @@ export function build_dependencies(
       }),
       sessions_repository: new SessionsRepositoryInMemory(),
       users_repository: new UsersRepositoryInMemory({
-        user: { id: "1", email: "test@example.com" },
+        user: seed_authenticated_user,
       }),
       session_help_service: new SessionHelpServiceInMemory(),
       discover_decks_repository: new DiscoverDecksRepositoryInMemory({
         decks: seed_discover_decks,
+      }),
+      toast_service: new ToastServiceSonner(),
+      streak_repository: new StreakRepositoryInMemory({
+        streaks: seed_streaks,
       }),
     }
   }
@@ -82,5 +97,7 @@ export function build_dependencies(
     users_repository: new UsersRepositoryApi(),
     session_help_service: new SessionHelpServiceApi(),
     discover_decks_repository: new DiscoverDecksRepositoryApi(),
+    toast_service: new ToastServiceSonner(),
+    streak_repository: new StreakRepositoryInMemory(),
   }
 }

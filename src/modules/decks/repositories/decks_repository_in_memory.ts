@@ -1,6 +1,7 @@
 import { type DeckEntity } from "@/modules/decks/entities/deck_entity"
 import { type DecksRepository } from "@/modules/decks/repositories/decks_repository"
 import type { CardEntity } from "@/modules/decks/entities/card_entity"
+import { v4 } from "uuid"
 
 export class DecksRepositoryInMemory implements DecksRepository {
   private decks: DeckEntity[] = []
@@ -37,16 +38,23 @@ export class DecksRepositoryInMemory implements DecksRepository {
   }
 
   async fetch_decks(): ReturnType<DecksRepository["fetch_decks"]> {
-    return this.decks
+    return this.decks.map((deck) => ({
+      ...deck,
+      number_of_cards: this.cards[deck.id].length,
+    }))
   }
 
   async get_deck_by_id(params: {
     id: string
   }): ReturnType<DecksRepository["get_deck_by_id"]> {
-    const deck = this.decks.find((d) => d.id === params.id)
+    const decks = await this.fetch_decks()
+
+    const deck = decks.find((d) => d.id === params.id)
+
     if (!deck) {
       throw new Error("Deck not found")
     }
+
     return deck
   }
 
@@ -71,6 +79,7 @@ export class DecksRepositoryInMemory implements DecksRepository {
     const deck: DeckEntity = {
       id: `${Date.now().toString()}-${Math.random()}`,
       name: params.name,
+      description: params.description,
       front_language: params.front_language,
       back_language: params.back_language,
       user_id: "test",
@@ -92,23 +101,22 @@ export class DecksRepositoryInMemory implements DecksRepository {
     front_language?: string
     back_language?: string
   }): ReturnType<DecksRepository["update_deck"]> {
-    const deck_index = this.decks.findIndex((d) => d.id === params.id)
+    const deck = this.decks.find((d) => d.id === params.id)
 
-    if (deck_index === -1) {
+    if (!deck) {
       throw new Error("Deck not found")
     }
 
     const updated_deck: DeckEntity = {
-      ...this.decks[deck_index],
-      name: params.name ?? this.decks[deck_index].name,
-      front_language:
-        params.front_language ?? this.decks[deck_index].front_language,
-      back_language:
-        params.back_language ?? this.decks[deck_index].back_language,
+      ...deck,
+      name: params.name ?? deck.name,
+      front_language: params.front_language ?? deck.front_language,
+      back_language: params.back_language ?? deck.back_language,
       updated_at: new Date(),
     }
 
-    this.decks[deck_index] = updated_deck
+    this.decks = this.decks.map((d) => (d.id === params.id ? updated_deck : d))
+
     return updated_deck
   }
 
@@ -135,46 +143,34 @@ export class DecksRepositoryInMemory implements DecksRepository {
       back: string
     }>
   }): ReturnType<DecksRepository["upsert_cards"]> {
-    const deck_cards = this.cards[params.deck_id] || []
+    this.cards[params.deck_id] = params.cards.map((card) => ({
+      id: card.id || v4(),
+      deck_id: params.deck_id,
+      front: card.front,
+      back: card.back,
+    }))
 
-    const upserted_cards: CardEntity[] = params.cards.map((card) => {
-      if (card.id) {
-        // Update existing card
-        const existing_card_index = deck_cards.findIndex(
-          (c) => c.id === card.id,
-        )
-        if (existing_card_index !== -1) {
-          return {
-            ...deck_cards[existing_card_index],
-            front: card.front,
-            back: card.back,
-          }
-        }
-      }
+    return this.cards[params.deck_id]
+  }
 
-      // Create new card
-      return {
-        id: card.id || crypto.randomUUID(),
-        deck_id: params.deck_id,
-        front: card.front,
-        back: card.back,
-      }
+  async duplicate_deck(params: {
+    id: string
+  }): ReturnType<DecksRepository["duplicate_deck"]> {
+    const deck = await this.get_deck_by_id({ id: params.id })
+
+    const new_deck = await this.create_deck({
+      name: `${deck.name} (Copy)`,
+      description: deck.description ?? "",
+      front_language: deck.front_language,
+      back_language: deck.back_language,
     })
 
-    // Merge with existing cards
-    const updated_deck_cards = [...deck_cards]
-    upserted_cards.forEach((card) => {
-      const index = updated_deck_cards.findIndex((c) => c.id === card.id)
-      if (index !== -1) {
-        updated_deck_cards[index] = card
-      } else {
-        updated_deck_cards.push(card)
-      }
-    })
+    this.cards[new_deck.id] = this.cards[deck.id].map((card) => ({
+      ...card,
+      deck_id: new_deck.id,
+    }))
 
-    this.cards[params.deck_id] = updated_deck_cards
-
-    return upserted_cards
+    return new_deck
   }
 
   async create_card(params: {
@@ -185,7 +181,7 @@ export class DecksRepositoryInMemory implements DecksRepository {
     const deck_cards = this.cards[params.deck_id] || []
 
     const new_card: CardEntity = {
-      id: crypto.randomUUID(),
+      id: v4(),
       deck_id: params.deck_id,
       front: params.front,
       back: params.back,
@@ -201,7 +197,6 @@ export class DecksRepositoryInMemory implements DecksRepository {
     front?: string
     back?: string
   }): ReturnType<DecksRepository["update_card"]> {
-    // Find the deck that contains this card
     let found_card: CardEntity | null = null
     let deck_id: string | null = null
 

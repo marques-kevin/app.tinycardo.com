@@ -18,15 +18,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/lib/shadcn/dropdown-menu"
+import { useIntl } from "react-intl"
+import { dayjs } from "@/lib/date"
 
 export function Wrapper(props: ContainerProps) {
+  const { formatMessage } = useIntl()
   return (
     <header className="space-y-4 py-8">
       <div>
         <h1 className="text-4xl font-bold">{props.name}</h1>
         <p className="text-base-content/80 max-w-prose text-xl text-balance">
-          Ce paquet de cartes est destiné à apprendre les bases du coréen. Il
-          est divisé en plusieurs leçons, allant de facile à difficile.
+          {props.description}
         </p>
       </div>
 
@@ -50,7 +52,14 @@ export function Wrapper(props: ContainerProps) {
         </div>
         <div className="badge badge-lg badge-accent badge-soft">
           <CalendarIcon className="size-4" />
-          <span>2 days ago</span>
+          <span>
+            {formatMessage(
+              { id: "deck_details_header/updated_at" },
+              {
+                updated_at: dayjs(props.updated_at).fromNow(),
+              },
+            )}
+          </span>
         </div>
       </div>
 
@@ -62,7 +71,9 @@ export function Wrapper(props: ContainerProps) {
           }
         >
           <PlayIcon className="size-4" />
-          Faire une session
+          <span>
+            {formatMessage({ id: "deck_details_header/start_session" })}
+          </span>
         </button>
 
         <DropdownMenu>
@@ -81,7 +92,9 @@ export function Wrapper(props: ContainerProps) {
               }}
             >
               <PlayIcon />
-              Apprendre de nouvelles cartes
+              <span>
+                {formatMessage({ id: "deck_details_header/learn_new_cards" })}
+              </span>
             </DropdownMenuItem>
             <DropdownMenuItem
               className="text-lg"
@@ -92,12 +105,18 @@ export function Wrapper(props: ContainerProps) {
                 })
               }}
             >
-              <ShuffleIcon /> Session aléatoire
+              <ShuffleIcon />
+              <span>
+                {formatMessage({ id: "deck_details_header/random_session" })}
+              </span>
             </DropdownMenuItem>
             <hr className="border-base-300 my-2" />
 
             <DropdownMenuItem className="text-lg">
-              <CopyIcon className="size-4" /> Dupliquer
+              <CopyIcon className="size-4" />
+              <span>
+                {formatMessage({ id: "deck_details_header/duplicate" })}
+              </span>
             </DropdownMenuItem>
 
             {props.is_user_owner && (
@@ -108,7 +127,10 @@ export function Wrapper(props: ContainerProps) {
                     props.on_edit(props.deck_id!)
                   }}
                 >
-                  <PencilIcon className="size-4" /> Modifier
+                  <PencilIcon className="size-4" />
+                  <span>
+                    {formatMessage({ id: "deck_details_header/edit" })}
+                  </span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="text-lg"
@@ -116,7 +138,10 @@ export function Wrapper(props: ContainerProps) {
                     props.on_delete(props.deck_id!)
                   }}
                 >
-                  <TrashIcon className="size-4" /> Supprimer
+                  <TrashIcon className="size-4" />
+                  <span>
+                    {formatMessage({ id: "deck_details_header/delete" })}
+                  </span>
                 </DropdownMenuItem>
               </>
             )}

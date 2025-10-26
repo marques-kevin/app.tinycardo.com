@@ -1,8 +1,9 @@
 import { Link, NavLink } from "react-router-dom"
-import { CogIcon, PlusIcon, SearchIcon } from "lucide-react"
+import { CogIcon, FlameIcon, PlusIcon, SearchIcon } from "lucide-react"
 import { GlobalLogo } from "@/modules/global/components/global_logo/global_logo"
 import { useIntl } from "react-intl"
 import { connector, type ContainerProps } from "./global_navbar.container"
+import { StreakIcon } from "@/modules/streak/components/streak_icon/streak_icon"
 
 export function Wrapper(props: ContainerProps) {
   const { formatMessage } = useIntl()
@@ -27,6 +28,21 @@ export function Wrapper(props: ContainerProps) {
           </Link>
 
           <div className="hidden items-center font-medium lg:flex">
+            <button
+              onClick={props.on_open_streak_modal}
+              className="btn btn-accent btn-ghost gap-2 uppercase"
+            >
+              <StreakIcon className="size-5" />
+              <span>
+                {formatMessage(
+                  { id: "global_navbar/streak" },
+                  {
+                    streak: props.current_streak,
+                  },
+                )}
+              </span>
+            </button>
+
             <NavLink
               to="/discover/"
               className={({ isActive }: { isActive: boolean }) =>

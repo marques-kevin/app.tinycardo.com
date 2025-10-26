@@ -2,14 +2,14 @@ import { connect, type ConnectedProps } from "react-redux"
 import { type Dispatch, type RootState } from "@/redux/store"
 import * as deck_update_actions from "@/modules/deck_update/redux/deck_update_actions"
 
-const mapState = (state: RootState) => ({
+const map_state = (state: RootState) => ({
   cards: state.deck_update.cards,
   front_language: state.deck_update.front_language,
   back_language: state.deck_update.back_language,
   is_selected: state.deck_update.selected_cards.length > 0,
 })
 
-const mapDispatch = (dispatch: Dispatch) => ({
+const map_dispatch = (dispatch: Dispatch) => ({
   on_toggle_select_all_cards() {
     dispatch(deck_update_actions.update_deck_toggle_select_all_cards())
   },
@@ -26,5 +26,5 @@ const mapDispatch = (dispatch: Dispatch) => ({
   },
 })
 
-export const connector = connect(mapState, mapDispatch)
+export const connector = connect(map_state, map_dispatch)
 export type ContainerProps = ConnectedProps<typeof connector>

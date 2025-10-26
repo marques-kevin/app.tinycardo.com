@@ -39,17 +39,19 @@ export function DecksProgressRadialChart(props: {
         strokeDasharray={`${circumference}`}
         strokeDashoffset={0}
       />
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={radius}
-        fill="none"
-        className="stroke-success"
-        strokeWidth={thickness}
-        strokeDasharray={`${mastered_length} ${circumference - mastered_length}`}
-        strokeDashoffset={0}
-        strokeLinecap="round"
-      />
+      {mastered > 0 && (
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          className="stroke-success"
+          strokeWidth={thickness}
+          strokeDasharray={`${mastered_length} ${circumference - mastered_length}`}
+          strokeDashoffset={0}
+          strokeLinecap="round"
+        />
+      )}
     </svg>
   )
 }

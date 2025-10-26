@@ -9,6 +9,7 @@ import * as authentication_actions from "@/modules/authentication/redux/authenti
 import * as discover_actions from "@/modules/discover/redux/discover_actions"
 import * as drawer_actions from "@/modules/drawer/redux/drawer_actions"
 import * as deck_update_actions from "@/modules/deck_update/redux/deck_update_actions"
+import * as streak_actions from "@/modules/streak/redux/streak_actions"
 
 export const global_app_initialized = createAsyncThunk<
   void,
@@ -24,6 +25,7 @@ export const global_app_user_authenticated = createAsyncThunk<
   AsyncThunkConfig
 >("global/global_app_user_authenticated", async (_, { dispatch }) => {
   dispatch(decks_actions.global_app_initialized())
+  dispatch(streak_actions.fetch_streaks())
   dispatch(params_actions.global_app_initialized())
 })
 

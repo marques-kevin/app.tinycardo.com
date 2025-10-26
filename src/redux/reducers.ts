@@ -10,6 +10,7 @@ import { discover_reducers } from "@/modules/discover/redux/discover_reducers"
 import { decks_details_reducers } from "@/modules/deck_details/redux/deck_details_reducers"
 import { drawer_reducers } from "@/modules/drawer/redux/drawer_reducers"
 import { deck_update_reducers } from "@/modules/deck_update/redux/deck_update_reducers"
+import { streak_reducers } from "@/modules/streak/redux/streak_reducers"
 
 export const reducers = combineReducers({
   deck_update: deck_update_reducers,
@@ -18,6 +19,7 @@ export const reducers = combineReducers({
   language: language_reducers,
   decks: decks_reducers,
   decks_details: decks_details_reducers,
+  streak: streak_reducers,
   params: params_reducers,
   dialog: dialog_reducers,
   authentication: authentication_reducers,

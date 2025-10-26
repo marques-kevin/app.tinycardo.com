@@ -139,6 +139,12 @@ export const update_deck = createAsyncThunk<void, void, AsyncThunkConfig>(
       deck_id: extracted.deck_id!,
       cards,
     })
+
+    await extra.toast_service.toast({
+      title: "deck_update_actions/toast/deck_updated",
+      description: "deck_update_actions/toast/deck_updated/description",
+      type: "success",
+    })
   },
 )
 

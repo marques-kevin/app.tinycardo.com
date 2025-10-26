@@ -21,7 +21,7 @@ export function DeckDetailsTabs(props: {
         {active_tab === "cards" && props.children("cards")}
       </div>
 
-      <a
+      {/* <a
         role="tab"
         className={cn("tab", active_tab === "lessons" && "tab-active")}
         onClick={() => set_active_tab("lessons")}
@@ -31,7 +31,7 @@ export function DeckDetailsTabs(props: {
 
       <div className="tab-content bg-base-100 border-base-300">
         {active_tab === "lessons" && props.children("lessons")}
-      </div>
+      </div> */}
     </div>
   )
 }

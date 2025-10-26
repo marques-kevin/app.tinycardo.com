@@ -10,6 +10,7 @@ import type { SessionsState } from "@/modules/sessions/redux/sessions_reducers"
 function mapState(state: RootState) {
   return {
     deck_id: state.decks_details.deck?.id,
+    description: state.decks_details.deck?.description,
     name: state.decks_details.deck?.name,
     number_of_cards: state.decks_details.deck?.number_of_cards,
     updated_at: state.decks_details.deck?.updated_at,

@@ -11,6 +11,8 @@ export interface DecksRepository {
 
   get_deck_by_id(params: { id: string }): Promise<DeckEntity>
 
+  duplicate_deck(params: { id: string }): Promise<DeckEntity>
+
   create_deck(params: {
     name: string
     front_language: string
