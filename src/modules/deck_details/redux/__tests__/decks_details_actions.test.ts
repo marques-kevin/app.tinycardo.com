@@ -10,6 +10,7 @@ describe("decks_details_actions", () => {
   const deck: DeckEntity = {
     id: "deck-1",
     name: "Test Deck",
+    description: "Test Description",
     front_language: "en",
     back_language: "es",
     user_id: "user-1",

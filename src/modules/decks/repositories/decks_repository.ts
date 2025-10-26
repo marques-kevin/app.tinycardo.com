@@ -2,11 +2,6 @@ import { type DeckEntity } from "@/modules/decks/entities/deck_entity"
 import type { CardEntity } from "@/modules/decks/entities/card_entity"
 
 export interface DecksRepository {
-  sync_deck(params: {
-    deck: DeckEntity
-    cards: CardEntity[]
-  }): Promise<DeckEntity>
-
   fetch_decks(): Promise<DeckEntity[]>
 
   get_deck_by_id(params: { id: string }): Promise<DeckEntity>
@@ -40,19 +35,5 @@ export interface DecksRepository {
       front: string
       back: string
     }>
-  }): Promise<CardEntity[]>
-
-  create_card(params: {
-    deck_id: string
-    front: string
-    back: string
-  }): Promise<CardEntity>
-
-  update_card(params: {
-    card_id: string
-    front?: string
-    back?: string
-  }): Promise<CardEntity>
-
-  delete_card(params: { card_id: string }): Promise<void>
+  }): Promise<void>
 }

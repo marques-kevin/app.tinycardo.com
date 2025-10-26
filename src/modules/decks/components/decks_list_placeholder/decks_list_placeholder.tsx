@@ -1,8 +1,12 @@
 import { FolderOpenIcon, PlusIcon, SearchIcon } from "lucide-react"
 import { useIntl } from "react-intl"
 import { Link } from "react-router-dom"
+import {
+  connector,
+  type ContainerProps,
+} from "./decks_list_placeholder.container"
 
-export function Wrapper() {
+export function Wrapper(props: ContainerProps) {
   const { formatMessage } = useIntl()
 
   return (
@@ -24,16 +28,16 @@ export function Wrapper() {
             {formatMessage({ id: "decks_list_placeholder/discover" })}
           </span>
         </Link>
-        <Link
-          to="/create_new_deck/"
+        <button
+          onClick={props.on_create_new_deck}
           className="btn lg:btn-lg btn-primary gap-2"
         >
           <PlusIcon className="size-5" />
           <span>{formatMessage({ id: "decks_list_placeholder/create" })}</span>
-        </Link>
+        </button>
       </div>
     </div>
   )
 }
 
-export const DecksListPlaceholder = Wrapper
+export const DecksListPlaceholder = connector(Wrapper)

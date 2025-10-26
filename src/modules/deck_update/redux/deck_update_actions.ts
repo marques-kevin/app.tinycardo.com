@@ -66,7 +66,7 @@ export const load_deck_into_create_form = createAsyncThunk<
   const deck = decks.find((d) => d.id === deck_id)
   const cards = await extra.decks_repository.fetch_cards({ deck_id })
 
-  if (!deck) return null
+  if (!deck) throw new Error(`Deck not found`)
 
   return {
     deck,
