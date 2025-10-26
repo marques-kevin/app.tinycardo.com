@@ -55,13 +55,11 @@ export const go_on_session_page = createAsyncThunk<
 })
 
 export const no_cards_to_review = createAsyncThunk<
-  { mode: SessionsState["mode"] },
-  { mode: SessionsState["mode"] },
+  SessionsState["no_cards_to_review"],
+  SessionsState["no_cards_to_review"],
   AsyncThunkConfig
 >("sessions/no_cards_to_review", async (_) => {
-  return {
-    mode: _.mode,
-  }
+  return _
 })
 
 export const start_session = createAsyncThunk<
@@ -97,24 +95,26 @@ export const start_session = createAsyncThunk<
 
     dispatch(_set_is_loading({ is_loading: false }))
 
-    const get_number_of_words_to_review = () => {
-      if (mode === "review") return params.how_many_words_to_review
-      if (mode === "learn_new_words")
-        return params.how_many_words_to_learn_new_words
-      if (mode === "randomized") return params.how_many_words_to_randomized
-
-      throw new Error(`mode is undefined`)
-    }
-
     const cards_to_review = session_builder_algorithm({
       cards: cards,
       history: history,
       mode: mode,
-      count: get_number_of_words_to_review(),
+      count: {
+        review: params.how_many_words_to_review,
+        learn_new_words: params.how_many_words_to_learn_new_words,
+        randomized: params.how_many_words_to_randomized,
+      },
     })
 
     if (cards_to_review.length === 0) {
-      dispatch(no_cards_to_review({ mode }))
+      if (history.length === cards.length) {
+        dispatch(no_cards_to_review("reviewed_and_learned_all_cards"))
+      } else if (mode === "review") {
+        dispatch(no_cards_to_review("reviewed_all_cards"))
+      } else if (mode === "learn_new_words") {
+        dispatch(no_cards_to_review("learned_all_cards"))
+      }
+
       return
     }
 

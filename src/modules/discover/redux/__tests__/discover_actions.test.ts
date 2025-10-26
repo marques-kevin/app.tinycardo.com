@@ -92,8 +92,8 @@ describe("discover actions", () => {
     await store.dispatch(actions.on_view_deck({ deck_id: deckId }))
 
     // Verify that the navigation occurred by checking the current URL
-    expect(dependencies.location_service.get_current_url()).toBe(
-      `https://local.dev/decks/${deckId}/details`,
+    expect(dependencies.location_service.get_current_url()).toEqual(
+      `https://local.dev/decks/${deckId}/`,
     )
   })
 

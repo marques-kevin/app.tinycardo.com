@@ -67,7 +67,7 @@ export function Wrapper(props: ContainerProps) {
         <button
           className="btn btn-lg btn-primary"
           onClick={() =>
-            props.on_start_session({ deck_id: props.deck_id!, mode: "review" })
+            props.on_start_session({ deck_id: props.deck_id!, mode: "auto" })
           }
         >
           <PlayIcon className="size-4" />
