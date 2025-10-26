@@ -8,12 +8,22 @@ export const fetch_deck_details = createAsyncThunk<
   { deck: DeckEntity; cards: CardEntity[] },
   { deck_id: string },
   AsyncThunkConfig
->("decks_details/fetch_deck_details", async ({ deck_id }, { extra }) => {
-  const deck = await extra.decks_repository.get_deck_by_id({ id: deck_id })
-  const cards = await extra.decks_repository.get_cards_by_deck_id({ deck_id })
+>(
+  "decks_details/fetch_deck_details",
+  async ({ deck_id }, { extra, getState }) => {
+    const { authentication } = getState()
 
-  return { deck, cards }
-})
+    if (!authentication.user) throw new Error("User not authenticated")
+
+    const deck = await extra.decks_repository.get_deck_by_id({
+      deck_id: deck_id,
+      user_id: authentication.user.id,
+    })
+    const cards = await extra.decks_repository.get_cards_by_deck_id({ deck_id })
+
+    return { deck, cards }
+  },
+)
 
 export const global_route_changed = createAsyncThunk<
   void,

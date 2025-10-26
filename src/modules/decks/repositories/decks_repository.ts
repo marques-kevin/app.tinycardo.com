@@ -4,9 +4,15 @@ import type { CardEntity } from "@/modules/decks/entities/card_entity"
 export interface DecksRepository {
   fetch_decks(): Promise<DeckEntity[]>
 
-  get_deck_by_id(params: { id: string }): Promise<DeckEntity>
+  get_deck_by_id(params: {
+    deck_id: string
+    user_id: string
+  }): Promise<DeckEntity>
 
-  duplicate_deck(params: { id: string; user_id: string }): Promise<DeckEntity>
+  duplicate_deck(params: {
+    deck_id: string
+    user_id: string
+  }): Promise<DeckEntity>
 
   create_deck(params: {
     name: string
@@ -18,6 +24,8 @@ export interface DecksRepository {
   update_deck(params: {
     id: string
     name?: string
+    description: string
+    visibility: "public" | "private" | "unlisted"
     front_language?: string
     back_language?: string
   }): Promise<DeckEntity>

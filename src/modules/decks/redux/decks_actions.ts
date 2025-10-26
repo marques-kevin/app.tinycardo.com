@@ -222,7 +222,7 @@ export const duplicate_deck = createAsyncThunk<
   if (!authentication.user) return
 
   const copied_deck = await extra.decks_repository.duplicate_deck({
-    id: deck_id,
+    deck_id: deck_id,
     user_id: authentication.user.id,
   })
 

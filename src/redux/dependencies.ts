@@ -69,24 +69,38 @@ export function build_dependencies(
       location_service: new LocationServiceWindow(),
       local_storage_service: new LocalStorageServiceWindow(),
       downloader_service: new DownloaderServiceWindow(),
-      decks_repository: new DecksRepositoryInMemory({
-        decks: seed_decks,
-        cards: seed_cards,
-      }),
-      sessions_repository: new SessionsRepositoryInMemory(),
-      users_repository: new UsersRepositoryInMemory({
-        user: seed_authenticated_user,
-      }),
-      session_help_service: new SessionHelpServiceInMemory(),
-      discover_decks_repository: new DiscoverDecksRepositoryInMemory({
-        decks: seed_discover_decks,
-      }),
+      decks_repository: new DecksRepositoryApi(),
+      sessions_repository: new SessionsRepositoryApi(),
+      users_repository: new UsersRepositoryApi(),
+      session_help_service: new SessionHelpServiceApi(),
+      discover_decks_repository: new DiscoverDecksRepositoryApi(),
       toast_service: new ToastServiceSonner(),
-      streak_repository: new StreakRepositoryInMemory({
-        streaks: seed_streaks,
-      }),
+      streak_repository: new StreakRepositoryInMemory(),
     }
   }
+  // if (mode === "development") {
+  //   return {
+  //     location_service: new LocationServiceWindow(),
+  //     local_storage_service: new LocalStorageServiceWindow(),
+  //     downloader_service: new DownloaderServiceWindow(),
+  //     decks_repository: new DecksRepositoryInMemory({
+  //       decks: seed_decks,
+  //       cards: seed_cards,
+  //     }),
+  //     sessions_repository: new SessionsRepositoryInMemory(),
+  //     users_repository: new UsersRepositoryInMemory({
+  //       user: seed_authenticated_user,
+  //     }),
+  //     session_help_service: new SessionHelpServiceInMemory(),
+  //     discover_decks_repository: new DiscoverDecksRepositoryInMemory({
+  //       decks: seed_discover_decks,
+  //     }),
+  //     toast_service: new ToastServiceSonner(),
+  //     streak_repository: new StreakRepositoryInMemory({
+  //       streaks: seed_streaks,
+  //     }),
+  //   }
+  // }
 
   return {
     location_service: new LocationServiceWindow(),

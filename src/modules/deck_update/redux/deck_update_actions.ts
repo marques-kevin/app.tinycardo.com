@@ -61,18 +61,27 @@ export const load_deck_into_create_form = createAsyncThunk<
   { deck: DeckEntity; cards: CardEntity[] } | null,
   { deck_id: string },
   AsyncThunkConfig
->("deck_update/load_deck_into_create_form", async ({ deck_id }, { extra }) => {
-  const decks = await extra.decks_repository.fetch_decks()
-  const deck = decks.find((d) => d.id === deck_id)
-  const cards = await extra.decks_repository.fetch_cards({ deck_id })
+>(
+  "deck_update/load_deck_into_create_form",
+  async ({ deck_id }, { extra, getState }) => {
+    const { authentication } = getState()
 
-  if (!deck) throw new Error(`Deck not found`)
+    if (!authentication.user) return null
 
-  return {
-    deck,
-    cards,
-  }
-})
+    const deck = await extra.decks_repository.get_deck_by_id({
+      deck_id: deck_id,
+      user_id: authentication.user.id,
+    })
+    const cards = await extra.decks_repository.fetch_cards({ deck_id })
+
+    if (!deck) throw new Error(`Deck not found`)
+
+    return {
+      deck,
+      cards,
+    }
+  },
+)
 
 const validate_update_deck = (create: DeckUpdateState) => {
   const errors: MessageI18nKeys[] = []
@@ -84,6 +93,14 @@ const validate_update_deck = (create: DeckUpdateState) => {
     errors.push("decks_actions/dialog/create_deck/errors/title_too_long")
   }
   if (create.cards.length < 1) {
+    errors.push("decks_actions/dialog/create_deck/errors/at_least_one_card")
+  }
+  if (
+    create.cards.filter(
+      (c) =>
+        create.cards_map[c]?.front.trim() && create.cards_map[c]?.back.trim(),
+    ).length < 1
+  ) {
     errors.push("decks_actions/dialog/create_deck/errors/at_least_one_card")
   }
 
@@ -125,6 +142,8 @@ export const update_deck = createAsyncThunk<void, void, AsyncThunkConfig>(
       name: deck_update.title.trim(),
       front_language: deck_update.front_language,
       back_language: deck_update.back_language,
+      description: deck_update.description.trim(),
+      visibility: deck_update.visibility,
     })
 
     const cards = deck_update.cards

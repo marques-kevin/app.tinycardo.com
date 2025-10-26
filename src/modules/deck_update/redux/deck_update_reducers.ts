@@ -261,6 +261,7 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
       state.deck_id = action.payload.deck.id
       state.title = action.payload.deck.name
       state.visibility = action.payload.deck.visibility
+      state.description = action.payload.deck.description || ""
       state.front_language = action.payload.deck.front_language
       state.back_language = action.payload.deck.back_language
       state.cards = cards.map((c) => c.id)

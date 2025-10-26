@@ -28,15 +28,22 @@ export class DecksRepositoryApi implements DecksRepository {
     }))
   }
 
-  async get_deck_by_id(params: {
-    id: string
-  }): ReturnType<DecksRepository["get_deck_by_id"]> {
-    const decks = await this.fetch_decks()
-    const deck = decks.find((d) => d.id === params.id)
-    if (!deck) {
-      throw new Error("Deck not found")
+  async get_deck_by_id(
+    params: Parameters<DecksRepository["get_deck_by_id"]>[0],
+  ): ReturnType<DecksRepository["get_deck_by_id"]> {
+    const data = await this.api_service.post<
+      paths["/decks/get_deck_by_id"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/decks/get_deck_by_id", {
+      id: params.deck_id,
+    })
+
+    return {
+      ...data,
+      number_of_cards: 0,
+      created_at: new Date(data.created_at),
+      updated_at: new Date(data.updated_at),
+      visibility: data.visibility as "public" | "private" | "unlisted",
     }
-    return deck
   }
 
   async fetch_cards(params: {
@@ -70,16 +77,11 @@ export class DecksRepositoryApi implements DecksRepository {
     >("/decks/create_deck", params)
 
     return {
-      id: deck_response.id,
-      name: deck_response.name,
-      description: "",
-      front_language: deck_response.front_language,
-      back_language: deck_response.back_language,
-      user_id: deck_response.user_id,
-      visibility: "public",
+      ...deck_response,
+      number_of_cards: 0,
+      visibility: deck_response.visibility as "public" | "private" | "unlisted",
       created_at: new Date(deck_response.created_at),
       updated_at: new Date(deck_response.updated_at),
-      number_of_cards: 0,
     }
   }
 
@@ -93,11 +95,11 @@ export class DecksRepositoryApi implements DecksRepository {
     return {
       id: deck_response.id,
       name: deck_response.name,
-      description: "",
+      description: deck_response.description,
       front_language: deck_response.front_language,
       back_language: deck_response.back_language,
       user_id: deck_response.user_id,
-      visibility: "public",
+      visibility: deck_response.visibility as "public" | "private" | "unlisted",
       created_at: new Date(deck_response.created_at),
       updated_at: new Date(deck_response.updated_at),
       number_of_cards: 0,
@@ -146,7 +148,10 @@ export class DecksRepositoryApi implements DecksRepository {
   ): ReturnType<DecksRepository["duplicate_deck"]> {
     const deck_response = await this.api_service.post<
       paths["/decks/duplicate_deck"]["post"]["responses"]["200"]["content"]["application/json"]
-    >("/decks/duplicate_deck", params)
+    >("/decks/duplicate_deck", {
+      deck_id: params.deck_id,
+      user_id: params.user_id,
+    })
 
     return {
       id: deck_response.id,
@@ -155,7 +160,7 @@ export class DecksRepositoryApi implements DecksRepository {
       front_language: deck_response.front_language,
       back_language: deck_response.back_language,
       user_id: deck_response.user_id,
-      visibility: "public",
+      visibility: deck_response.visibility as "public" | "private" | "unlisted",
       created_at: new Date(deck_response.created_at),
       updated_at: new Date(deck_response.updated_at),
       number_of_cards: 0,
