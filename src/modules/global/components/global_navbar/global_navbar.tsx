@@ -1,9 +1,15 @@
 import { Link, NavLink } from "react-router-dom"
-import { CogIcon, PlusIcon, SearchIcon } from "lucide-react"
+import { CogIcon, PlusIcon, SearchIcon, MenuIcon } from "lucide-react"
 import { GlobalLogo } from "@/modules/global/components/global_logo/global_logo"
 import { useIntl } from "react-intl"
 import { connector, type ContainerProps } from "./global_navbar.container"
 import { StreakIcon } from "@/modules/streak/components/streak_icon/streak_icon"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/lib/shadcn/dropdown-menu"
 
 export function Wrapper(props: ContainerProps) {
   const { formatMessage } = useIntl()
@@ -16,7 +22,7 @@ export function Wrapper(props: ContainerProps) {
             <GlobalLogo className="size-10" />
 
             <span
-              className="text-lg font-semibold tracking-wider"
+              className="hidden text-lg font-semibold tracking-wider lg:inline"
               style={{
                 textDecoration: "underline",
                 textDecorationThickness: "2px",
@@ -26,6 +32,50 @@ export function Wrapper(props: ContainerProps) {
               tinycardo
             </span>
           </Link>
+
+          {/* Mobile streak + hamburger */}
+          <div className="flex items-center lg:hidden">
+            <button
+              onClick={props.on_open_streak_modal}
+              className="btn btn-accent btn-ghost gap-2 uppercase"
+            >
+              <StreakIcon className="size-5" />
+              <span>{props.current_streak}</span>
+            </button>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="btn btn-accent btn-ghost" aria-label="Menu">
+                  <MenuIcon className="size-5" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="bg-accent text-accent-content border-accent-content/20 border-2"
+              >
+                <DropdownMenuItem asChild>
+                  <Link to="/discover/" className="flex items-center gap-2">
+                    <SearchIcon className="size-4" />
+                    <span>
+                      {formatMessage({ id: "global_navbar/discover" })}
+                    </span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={props.on_create_new_deck}>
+                  <PlusIcon className="size-4" />
+                  <span>
+                    {formatMessage({ id: "global_navbar/create_deck" })}
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/params/" className="flex items-center gap-2">
+                    <CogIcon className="size-4" />
+                    <span>{formatMessage({ id: "global_navbar/params" })}</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
 
           <div className="hidden items-center font-medium lg:flex">
             <button
