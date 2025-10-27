@@ -6,5 +6,9 @@
   "dialog/create_deck/errors/languages_cannot_match": "Front and back languages must be different.",
   "dialog/create_deck/errors/title_required": "Title is required.",
   "dialog/create_deck/errors/title_too_long": "Title must be 50 characters or fewer.",
-  "dialog/create_deck/title": "You cannot create a deck"
+  "dialog/create_deck/title": "You cannot create a deck",
+  "toast/deck_created_successfully_title": "The deck has been created",
+  "toast/deck_deleted_successfully_title": "The deck has been deleted",
+  "toast/deck_duplicated_successfully_description": "Now, you can edit it as you want, it's your own deck now.",
+  "toast/deck_duplicated_successfully_title": "The deck has been duplicated"
 }

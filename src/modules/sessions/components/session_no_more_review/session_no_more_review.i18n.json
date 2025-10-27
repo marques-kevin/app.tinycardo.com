@@ -1,0 +1,15 @@
+{
+  "learned_all_cards/actions/random_session": "Start random session ?",
+  "learned_all_cards/actions/review_due_cards": "Review due cards ?",
+  "learned_all_cards/head/description": "You've learned all the cards in this deck. You should review cards to reinforce your memory!",
+  "learned_all_cards/head/title": "There is no more cards to learn",
+
+  "reviewed_all_cards/actions/learn_new_cards": "Learn new cards ?",
+  "reviewed_all_cards/actions/random_session": "Start random session ?",
+  "reviewed_all_cards/head/description": "You've reviewed all the cards in this deck today. Maybe it's time to learn new cards?",
+  "reviewed_all_cards/head/title": "There is no more cards to review today",
+
+  "reviewed_and_learned_all_cards/actions/random_session": "Start a random session ?",
+  "reviewed_and_learned_all_cards/head/description": "You've learned all the cards in this deck and there are no cards to review today. If you'd like to practice, you can start a random session. Don't worry - random sessions won't affect your review progress, so you can practice freely without consequences.",
+  "reviewed_and_learned_all_cards/head/title": "There is no more cards to review and learn"
+}

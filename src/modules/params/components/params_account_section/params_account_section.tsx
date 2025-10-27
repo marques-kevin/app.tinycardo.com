@@ -17,7 +17,10 @@ export function Wrapper(props: ContainerProps) {
       })}
     >
       <div className="w-full">
-        <button className="btn btn-outline btn-error" onClick={props.on_logout}>
+        <button
+          className="btn btn-lg btn-outline btn-error"
+          onClick={props.on_logout}
+        >
           <LogOutIcon className="size-5" />
           {formatMessage({ id: "params_account_section/logout_button" })}
         </button>

@@ -8,6 +8,10 @@ export class UsersRepositoryInMemory implements UsersRepository {
     this.authenticated_user = params?.user ?? null
   }
 
+  async set_authenticated_user(user: UserEntity | null): Promise<void> {
+    this.authenticated_user = user
+  }
+
   async get_google_authentication_url(): ReturnType<
     UsersRepository["get_google_authentication_url"]
   > {

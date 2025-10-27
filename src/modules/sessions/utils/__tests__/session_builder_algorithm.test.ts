@@ -106,7 +106,11 @@ describe("session_builder_algorithm", () => {
     const words = session_builder_algorithm({
       cards,
       mode: "review",
-      count: 5,
+      count: {
+        review: 5,
+        learn_new_words: 10,
+        randomized: 10,
+      },
       history: cards.map((card) => ({
         card_id: card.id,
         deck_id: card.deck_id,
@@ -131,7 +135,11 @@ describe("session_builder_algorithm", () => {
     const words = session_builder_algorithm({
       cards,
       mode: "learn_new_words",
-      count: 5,
+      count: {
+        review: 10,
+        learn_new_words: 5,
+        randomized: 10,
+      },
       history: [],
     })
 
@@ -149,7 +157,11 @@ describe("session_builder_algorithm", () => {
     const words = session_builder_algorithm({
       cards,
       mode: "randomized",
-      count: 5,
+      count: {
+        review: 10,
+        learn_new_words: 10,
+        randomized: 5,
+      },
       history: [],
     })
 
@@ -158,7 +170,11 @@ describe("session_builder_algorithm", () => {
     const random_words = session_builder_algorithm({
       cards,
       mode: "randomized",
-      count: 5,
+      count: {
+        review: 10,
+        learn_new_words: 10,
+        randomized: 5,
+      },
       history: cards.map((card) => ({
         card_id: card.id,
         deck_id: card.deck_id,

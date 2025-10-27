@@ -1,7 +1,6 @@
 {
-  "analytics": "Analytics",
-  "create_deck": "Create deck",
-  "history": "History",
-  "new": "New",
-  "params": "Settings"
+  "create_deck": "Create Deck",
+  "discover": "Discover",
+  "params": "Params",
+  "streak": "{streak} days streak"
 }

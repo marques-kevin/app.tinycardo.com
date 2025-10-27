@@ -27,6 +27,7 @@ describe("sessions actions", () => {
       name: "test",
       front_language: "en",
       back_language: "es",
+      description: null,
       user_id: "1",
       updated_at: new Date(),
       created_at: new Date(),

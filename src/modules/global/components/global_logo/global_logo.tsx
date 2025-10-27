@@ -12,7 +12,7 @@ export const GlobalLogo = (props: { className?: string }) => (
         x={236.236}
         y={68.474}
         className="stroke-primary-content fill-primary transition-all ease-in-out group-hover:translate-x-4"
-        strokeWidth={8}
+        strokeWidth={10}
         rx={29}
         transform="rotate(100.062 236.236 68.474)"
       />
@@ -22,7 +22,7 @@ export const GlobalLogo = (props: { className?: string }) => (
         x={199}
         className="stroke-secondary-content fill-secondary"
         y={34}
-        strokeWidth={8}
+        strokeWidth={10}
         rx={29}
         transform="rotate(90 199 34)"
       />
