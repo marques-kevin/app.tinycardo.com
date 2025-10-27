@@ -35,6 +35,6 @@ export const add_streak = createAsyncThunk<void, void, AsyncThunkConfig>(
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     })
 
-    dispatch(fetch_streaks())
+    await dispatch(fetch_streaks())
   },
 )
