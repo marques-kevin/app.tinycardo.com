@@ -84,7 +84,7 @@
   "discover_decks_action_dialog/start_using_this_deck": "开始使用这个卡组",
   "discover_decks_action_dialog/users_count": "用户",
   "global_navbar/discover": "发现",
-  "global_navbar/streak": "{streak} 天连胜",
+  "global_navbar/streak": "{streak} {streak, plural, one {天} other {天}} 连续天数",
   "session_ended_splash_screen/actions/continue_reviewing": "继续？",
   "session_ended_splash_screen/actions/random_session": "随机回合？",
   "session_no_more_review/learned_all_cards/actions/random_session": "开始随机复习吗？",

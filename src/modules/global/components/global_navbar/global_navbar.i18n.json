@@ -2,5 +2,5 @@
   "create_deck": "Create Deck",
   "discover": "Discover",
   "params": "Params",
-  "streak": "{streak} days streak"
+  "streak": "{streak} {streak, plural, one {day} other {days}} streak"
 }

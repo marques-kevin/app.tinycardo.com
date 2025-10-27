@@ -84,7 +84,7 @@
   "discover_decks_action_dialog/start_using_this_deck": "Bu desteyi kullanmaya başla",
   "discover_decks_action_dialog/users_count": "Kullanıcılar",
   "global_navbar/discover": "Keşfet",
-  "global_navbar/streak": "{streak} günlük seri",
+  "global_navbar/streak": "{streak} {streak, plural, one {gün} other {gün}} serisi",
   "session_ended_splash_screen/actions/continue_reviewing": "Devam et ?",
   "session_ended_splash_screen/actions/random_session": "Rastgele oturum mu?",
   "session_no_more_review/learned_all_cards/actions/random_session": "Rastgele oturum başlatayım mı?",

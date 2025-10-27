@@ -84,7 +84,7 @@
   "discover_decks_action_dialog/start_using_this_deck": "Начни использовать эту колоду",
   "discover_decks_action_dialog/users_count": "Пользователи",
   "global_navbar/discover": "Исследовать",
-  "global_navbar/streak": "{streak} дней подряд",
+  "global_navbar/streak": "{streak} {streak, plural, one {день} other {дней}} серий",
   "session_ended_splash_screen/actions/continue_reviewing": "Продолжить?",
   "session_ended_splash_screen/actions/random_session": "Случайная сессия?",
   "session_no_more_review/learned_all_cards/actions/random_session": "Начать случайную сессию?",

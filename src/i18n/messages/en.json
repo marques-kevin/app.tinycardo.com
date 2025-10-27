@@ -60,7 +60,7 @@
   "global_navbar/create_deck": "Create Deck",
   "global_navbar/discover": "Discover",
   "global_navbar/params": "Params",
-  "global_navbar/streak": "{streak} days streak",
+  "global_navbar/streak": "{streak} {streak, plural, one {day} other {days}} streak",
   "params_account_section/logout_button": "Logout",
   "params_account_section/section/description": "Manage your account settings and authentication.",
   "params_account_section/section/title": "Account",

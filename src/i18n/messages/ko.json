@@ -84,7 +84,7 @@
   "discover_decks_action_dialog/start_using_this_deck": "이 덱 사용 시작하기",
   "discover_decks_action_dialog/users_count": "사용자",
   "global_navbar/discover": "발견하기",
-  "global_navbar/streak": "{streak}일 연속 기록",
+  "global_navbar/streak": "{streak} {streak, plural, one {일} other {일}} 연속",
   "session_ended_splash_screen/actions/continue_reviewing": "계속할까?",
   "session_ended_splash_screen/actions/random_session": "무작위 세션?",
   "session_no_more_review/learned_all_cards/actions/random_session": "무작위 세션 시작할래?",

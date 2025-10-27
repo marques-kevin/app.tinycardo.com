@@ -46,6 +46,7 @@ export const session_ended = createAsyncThunk<void, void, AsyncThunkConfig>(
   "global/session_ended",
   async (_, { dispatch }) => {
     dispatch(decks_actions.fetch_decks())
+    dispatch(streak_actions.add_streak())
   },
 )
 
