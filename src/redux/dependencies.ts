@@ -32,6 +32,7 @@ import { seed_cards } from "./__seed__/seed_cards"
 import { seed_discover_decks } from "./__seed__/seed_discover_decks"
 import { seed_authenticated_user } from "./__seed__/seed_users"
 import { seed_streaks } from "./__seed__/seed_streaks"
+import { StreakRepositoryApi } from "@/modules/streak/repositories/streak_repository/streak_repository_api"
 
 export type Dependencies = {
   location_service: LocationService
@@ -98,6 +99,6 @@ export function build_dependencies(
     session_help_service: new SessionHelpServiceApi(),
     discover_decks_repository: new DiscoverDecksRepositoryApi(),
     toast_service: new ToastServiceSonner(),
-    streak_repository: new StreakRepositoryInMemory(),
+    streak_repository: new StreakRepositoryApi(),
   }
 }
