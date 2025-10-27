@@ -84,7 +84,7 @@
   "discover_decks_action_dialog/start_using_this_deck": "استخدم هذا السجل",
   "discover_decks_action_dialog/users_count": "المستخدمون",
   "global_navbar/discover": "اكتشف",
-  "global_navbar/streak": "{streak} يوم متتالية",
+  "global_navbar/streak": "{streak} سلسلة {streak, plural, one {يوم} other {أيام}}",
   "session_ended_splash_screen/actions/continue_reviewing": "استمر؟",
   "session_ended_splash_screen/actions/random_session": "جلسة عشوائية؟",
   "session_no_more_review/learned_all_cards/actions/random_session": "ابدأ جلسة عشوائية؟",

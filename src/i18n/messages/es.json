@@ -84,7 +84,7 @@
   "discover_decks_action_dialog/start_using_this_deck": "Usa este mazo",
   "discover_decks_action_dialog/users_count": "Usuarios",
   "global_navbar/discover": "Descubre",
-  "global_navbar/streak": "{streak} días de racha",
+  "global_navbar/streak": "{streak} racha de {streak, plural, one {día} other {días}}",
   "session_ended_splash_screen/actions/continue_reviewing": "¿Continuar?",
   "session_ended_splash_screen/actions/random_session": "¿Sesión aleatoria?",
   "session_no_more_review/learned_all_cards/actions/random_session": "¿Iniciar sesión aleatoria?",

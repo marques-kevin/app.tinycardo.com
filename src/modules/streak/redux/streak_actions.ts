@@ -20,3 +20,21 @@ export const fetch_streaks = createAsyncThunk<
     user_id: authentication.user.id,
   })
 })
+
+export const add_streak = createAsyncThunk<void, void, AsyncThunkConfig>(
+  "streak/add_streak",
+  async (_, { extra, getState, dispatch }) => {
+    const { authentication } = getState()
+
+    if (!authentication.user?.id) {
+      throw new Error("User not authenticated")
+    }
+
+    await extra.streak_repository.add_streak({
+      user_id: authentication.user.id,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    })
+
+    await dispatch(fetch_streaks())
+  },
+)

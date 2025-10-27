@@ -84,7 +84,7 @@
   "discover_decks_action_dialog/start_using_this_deck": "Commence l'utilisation de ce deck",
   "discover_decks_action_dialog/users_count": "Utilisateurs",
   "global_navbar/discover": "Découvrir",
-  "global_navbar/streak": "{streak} jours de série",
+  "global_navbar/streak": "{streak} {streak, plural, one {jour} other {jours}} de série",
   "session_ended_splash_screen/actions/continue_reviewing": "Continuer ?",
   "session_ended_splash_screen/actions/random_session": "Session aléatoire ?",
   "session_no_more_review/learned_all_cards/actions/random_session": "Démarrer une session aléatoire ?",

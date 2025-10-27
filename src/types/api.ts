@@ -234,7 +234,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Review a card (mark as known or unknown) */
+        /** Review cards (mark as known or unknown) */
         post: operations["HistoryController_review_card"];
         delete?: never;
         options?: never;
@@ -289,6 +289,40 @@ export interface paths {
         get: operations["HealthController_getHealth"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/streaks/get_user_streaks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get user streaks */
+        post: operations["StreakController_get_user_streaks"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/streaks/add_streak": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add a streak for the current day */
+        post: operations["StreakController_add_streak"];
         delete?: never;
         options?: never;
         head?: never;
@@ -414,12 +448,12 @@ export interface components {
             /** @description New back language code */
             back_language?: string;
             /** @description New description for the deck */
-            description: string;
+            description?: string;
             /**
              * @description New visibility for the deck
              * @enum {string}
              */
-            visibility: "public" | "private" | "unlisted";
+            visibility?: "public" | "private" | "unlisted";
         };
         DecksDeleteDeckDto: {
             /** @description ID of the deck to delete */
@@ -494,6 +528,18 @@ export interface components {
         HistoryGetDeckHistoryDto: {
             /** @description ID of the deck */
             deck_id: string;
+        };
+        StreakEntity: {
+            /** @description The streak id */
+            id: string;
+            /** @description The user id */
+            user_id: string;
+            /** @description The date of the streak (YYYY-MM-DD) */
+            date: string;
+        };
+        StreakAddStreakDto: {
+            /** @description User timezone (e.g., America/New_York) */
+            timezone?: string;
         };
     };
     responses: never;
@@ -662,11 +708,13 @@ export interface operations {
             };
         };
         responses: {
-            201: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["DecksEntity"][];
+                };
             };
         };
     };
@@ -733,9 +781,7 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["DecksEntity"];
-                };
+                content?: never;
             };
         };
     };
@@ -801,7 +847,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HistoryEntity"];
+                    "application/json": components["schemas"]["HistoryEntity"][];
                 };
             };
         };
@@ -884,6 +930,48 @@ export interface operations {
                          */
                         uptime?: number;
                     };
+                };
+            };
+        };
+    };
+    StreakController_get_user_streaks: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StreakEntity"][];
+                };
+            };
+        };
+    };
+    StreakController_add_streak: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StreakAddStreakDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StreakEntity"];
                 };
             };
         };

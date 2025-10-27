@@ -84,7 +84,7 @@
   "discover_decks_action_dialog/start_using_this_deck": "Inizia a usare questo mazzo",
   "discover_decks_action_dialog/users_count": "Utenti",
   "global_navbar/discover": "Scopri",
-  "global_navbar/streak": "{streak} giorni di seguito",
+  "global_navbar/streak": "{streak} {streak, plural, one {giorno} other {giorni}} di streak",
   "session_ended_splash_screen/actions/continue_reviewing": "Continua?",
   "session_ended_splash_screen/actions/random_session": "Sessione casuale?",
   "session_no_more_review/learned_all_cards/actions/random_session": "Inizia una sessione casuale?",

@@ -84,7 +84,7 @@
   "discover_decks_action_dialog/start_using_this_deck": "Deck starten",
   "discover_decks_action_dialog/users_count": "Nutzer",
   "global_navbar/discover": "Entdecken",
-  "global_navbar/streak": "{streak} Tage Streak",
+  "global_navbar/streak": "{streak} {streak, plural, one {Tag} other {Tage}} Streak",
   "session_ended_splash_screen/actions/continue_reviewing": "Weiter?",
   "session_ended_splash_screen/actions/random_session": "Zufällige Sitzung?",
   "session_no_more_review/learned_all_cards/actions/random_session": "Zufällige Sitzung starten?",
