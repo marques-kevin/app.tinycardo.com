@@ -33,7 +33,6 @@ export function Wrapper(props: ContainerProps) {
             </span>
           </Link>
 
-          {/* Mobile streak + hamburger */}
           <div className="flex items-center lg:hidden">
             <button
               onClick={props.on_open_streak_modal}
