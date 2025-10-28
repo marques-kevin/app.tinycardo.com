@@ -113,7 +113,7 @@ export const global_app_initialized = createAsyncThunk<
     ),
   ])
 
-  dispatch(store_theme({ theme: theme || "light" }))
+  dispatch(store_theme({ theme: theme || "cupcake" }))
   dispatch(
     store_how_many_words_to_review({
       how_many_words_to_review: Number(how_many_words_to_review) || 50,

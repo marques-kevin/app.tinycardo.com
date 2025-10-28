@@ -15,8 +15,8 @@ export function Wrapper(props: ContainerProps) {
   const { formatMessage } = useIntl()
 
   return (
-    <div className="mt-2 px-4">
-      <nav className="bg-accent text-accent-content border-accent-content/20 rounded-box w-full border-2 px-2 py-2 pl-4">
+    <div className="md:mt-2 md:px-4">
+      <nav className="bg-accent text-accent-content md:border-accent-content/20 md:rounded-box border-b-accent-content/20 w-full border-2 border-transparent py-2 pl-4 md:px-2">
         <div className="flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2">
             <GlobalLogo className="size-10" />
