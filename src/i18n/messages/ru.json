@@ -102,5 +102,7 @@
   "streak_modal/streak-modal/close": "Закрыть",
   "streak_modal/streak-modal/current-streak": "Текущая серия: {streak}",
   "streak_modal/streak-modal/title": "Серия",
-  "streak_modal/title": "Серия"
+  "streak_modal/title": "Серия",
+  "deck_details_loading/loading": "Мы загружаем детали колоды для вас...",
+  "decks_loading/loading": "Загружаем колоды для вас..."
 }

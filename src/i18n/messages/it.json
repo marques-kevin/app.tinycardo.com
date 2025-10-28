@@ -102,5 +102,7 @@
   "streak_modal/streak-modal/close": "Chiudi",
   "streak_modal/streak-modal/current-streak": "Streak attuale: {streak}",
   "streak_modal/streak-modal/title": "Serie",
-  "streak_modal/title": "Striscia"
+  "streak_modal/title": "Striscia",
+  "deck_details_loading/loading": "Stiamo caricando i dettagli del mazzo per te...",
+  "decks_loading/loading": "Stiamo caricando i mazzi per te..."
 }

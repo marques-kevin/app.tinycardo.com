@@ -23,6 +23,7 @@ import { dayjs } from "@/lib/date"
 
 export function Wrapper(props: ContainerProps) {
   const { formatMessage } = useIntl()
+
   return (
     <header className="space-y-4 py-8">
       <div>

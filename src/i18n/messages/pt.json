@@ -102,5 +102,7 @@
   "streak_modal/streak-modal/close": "Fechar",
   "streak_modal/streak-modal/current-streak": "Sequência atual: {streak}",
   "streak_modal/streak-modal/title": "Sequência",
-  "streak_modal/title": "Sequência"
+  "streak_modal/title": "Sequência",
+  "deck_details_loading/loading": "Estamos carregando os detalhes do baralho para você...",
+  "decks_loading/loading": "Estamos carregando os decks pra você..."
 }

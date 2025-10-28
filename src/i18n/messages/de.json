@@ -102,5 +102,7 @@
   "streak_modal/streak-modal/close": "Schließen",
   "streak_modal/streak-modal/current-streak": "Aktuelle Serie: {streak}",
   "streak_modal/streak-modal/title": "Streak",
-  "streak_modal/title": "Streak"
+  "streak_modal/title": "Streak",
+  "deck_details_loading/loading": "Wir laden die Deckdetails für dich...",
+  "decks_loading/loading": "Wir laden die Decks für dich..."
 }

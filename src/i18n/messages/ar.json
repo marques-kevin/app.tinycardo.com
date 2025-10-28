@@ -102,5 +102,7 @@
   "streak_modal/streak-modal/close": "اغلق",
   "streak_modal/streak-modal/current-streak": " streak الحالي: {streak}",
   "streak_modal/streak-modal/title": "سلسلة",
-  "streak_modal/title": "سلسلة"
+  "streak_modal/title": "سلسلة",
+  "deck_details_loading/loading": "نحن نحمل تفاصيل السلسلة لك...",
+  "decks_loading/loading": "نحن نحمل لك المجموعات..."
 }

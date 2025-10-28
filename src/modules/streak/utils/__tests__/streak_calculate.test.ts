@@ -13,12 +13,12 @@ describe("calculate streak", () => {
       {
         id: "2022-06-01",
         user_id: "1",
-        date: new Date("2022-06-01"),
+        date: "2022-06-01",
       },
       {
         id: "2022-06-02",
         user_id: "1",
-        date: new Date("2022-06-02"),
+        date: "2022-06-02",
       },
     ]
 
@@ -28,12 +28,12 @@ describe("calculate streak", () => {
       {
         id: "2022-06-02",
         user_id: "1",
-        date: new Date("2022-06-02"),
+        date: "2022-06-02",
       },
       {
         id: "2022-06-01",
         user_id: "1",
-        date: new Date("2022-06-01"),
+        date: "2022-06-01",
       },
     ])
   })
@@ -43,17 +43,17 @@ describe("calculate streak", () => {
       {
         id: "2022-06-01",
         user_id: "1",
-        date: new Date("2022-06-01"),
+        date: "2022-06-01",
       },
       {
         id: "2022-06-03",
         user_id: "1",
-        date: new Date("2022-06-03"),
+        date: "2022-06-03",
       },
       {
         id: "2022-06-04",
         user_id: "1",
-        date: new Date("2022-06-04"),
+        date: "2022-06-04",
       },
     ]
 
@@ -63,21 +63,23 @@ describe("calculate streak", () => {
   })
 
   it("if the date of last streak is today or yesterday, return the good streak", () => {
+    vi.setSystemTime(new Date("2022-06-05"))
+
     const streaks: StreakEntity[] = [
       {
         id: "2022-06-01",
         user_id: "1",
-        date: new Date("2022-06-01"),
+        date: "2022-06-01",
       },
       {
         id: "2022-06-03",
         user_id: "1",
-        date: new Date("2022-06-03"),
+        date: "2022-06-03",
       },
       {
         id: "2022-06-04",
         user_id: "1",
-        date: new Date("2022-06-04"),
+        date: "2022-06-04",
       },
     ]
 
@@ -93,17 +95,17 @@ describe("calculate streak", () => {
       {
         id: "2022-06-01",
         user_id: "1",
-        date: new Date("2022-06-01"),
+        date: "2022-06-01",
       },
       {
         id: "2022-06-03",
         user_id: "1",
-        date: new Date("2022-06-03"),
+        date: "2022-06-03",
       },
       {
         id: "2022-06-04",
         user_id: "1",
-        date: new Date("2022-06-04"),
+        date: "2022-06-04",
       },
     ]
 
