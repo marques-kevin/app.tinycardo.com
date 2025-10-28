@@ -1,4 +1,5 @@
 import { LOCAL_STORAGE_KEYS } from "@/modules/global/services/localstorage_service/localstorage_service"
+import { updateThemeColorMetaFromAccent } from "@/modules/global/utils/update_theme_color_meta"
 import type { AsyncThunkConfig } from "@/redux/store"
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit"
 
@@ -13,6 +14,17 @@ export const store_theme = createAsyncThunk<
 >("params/store_theme", async ({ theme }, { dispatch, extra }) => {
   extra.local_storage_service.set(LOCAL_STORAGE_KEYS.theme, theme)
   document.documentElement.setAttribute("data-theme", theme)
+
+  const meta = document.querySelector(
+    'meta[name="theme-color"]',
+  ) as HTMLMetaElement
+
+  const color = getComputedStyle(document.documentElement)
+    .getPropertyValue("--color-accent")
+    .trim()
+
+  meta.setAttribute("content", color)
+
   dispatch(_store_theme({ theme }))
 })
 
