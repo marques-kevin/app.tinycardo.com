@@ -1,0 +1,24 @@
+{
+  "author": "Kevin Marques",
+  "background_color": "#faf7f5",
+  "description": "A flashcard app to help you learn languages",
+  "display": "standalone",
+  "icons": [
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "/manifest/icon512_maskable.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "/manifest/icon512_rounded.png",
+      "type": "image/png"
+    }
+  ],
+  "name": "Tinycardo",
+  "short_name": "Tinycardo",
+  "start_url": "/?utm_source=pwa",
+  "theme_color": "#ffd6a7"
+}
