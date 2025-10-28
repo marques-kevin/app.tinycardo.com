@@ -1,5 +1,4 @@
 import { LOCAL_STORAGE_KEYS } from "@/modules/global/services/localstorage_service/localstorage_service"
-import { updateThemeColorMetaFromAccent } from "@/modules/global/utils/update_theme_color_meta"
 import type { AsyncThunkConfig } from "@/redux/store"
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit"
 
