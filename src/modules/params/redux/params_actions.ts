@@ -13,6 +13,17 @@ export const store_theme = createAsyncThunk<
 >("params/store_theme", async ({ theme }, { dispatch, extra }) => {
   extra.local_storage_service.set(LOCAL_STORAGE_KEYS.theme, theme)
   document.documentElement.setAttribute("data-theme", theme)
+
+  const meta = document.querySelector(
+    'meta[name="theme-color"]',
+  ) as HTMLMetaElement
+
+  const color = getComputedStyle(document.documentElement)
+    .getPropertyValue("--color-accent")
+    .trim()
+
+  meta.setAttribute("content", color)
+
   dispatch(_store_theme({ theme }))
 })
 
