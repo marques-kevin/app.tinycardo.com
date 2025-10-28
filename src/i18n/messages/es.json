@@ -102,5 +102,7 @@
   "streak_modal/streak-modal/close": "Cerrar",
   "streak_modal/streak-modal/current-streak": "Racha actual: {streak}",
   "streak_modal/streak-modal/title": "Racha",
-  "streak_modal/title": "Racha"
+  "streak_modal/title": "Racha",
+  "deck_details_loading/loading": "Estamos cargando los detalles del mazo para ti...",
+  "decks_loading/loading": "Cargando los mazos para ti..."
 }

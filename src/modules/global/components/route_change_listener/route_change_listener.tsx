@@ -8,6 +8,10 @@ export function RouteChangeListener() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+
+  useEffect(() => {
     dispatch(global_route_changed())
 
     const handle_pop_state = () => {

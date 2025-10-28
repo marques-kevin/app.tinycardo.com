@@ -102,5 +102,7 @@
   "streak_modal/streak-modal/close": "关闭",
   "streak_modal/streak-modal/current-streak": "当前连续天数：{streak}",
   "streak_modal/streak-modal/title": "连续出勤",
-  "streak_modal/title": "连胜纪录"
+  "streak_modal/title": "连胜纪录",
+  "deck_details_loading/loading": "正在为您加载卡组详情...",
+  "decks_loading/loading": "我们正在为你加载卡组..."
 }

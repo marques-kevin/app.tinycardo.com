@@ -16,3 +16,9 @@ export const Default: Story = {
     updated_at: new Date(),
   },
 }
+
+export const Loading: Story = {
+  args: {
+    is_fetching: true,
+  },
+}

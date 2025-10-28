@@ -102,5 +102,7 @@
   "streak_modal/streak-modal/close": "閉じる",
   "streak_modal/streak-modal/current-streak": "現在のストリーク: {streak}",
   "streak_modal/streak-modal/title": "連続記録",
-  "streak_modal/title": "連続記録"
+  "streak_modal/title": "連続記録",
+  "deck_details_loading/loading": "デッキの詳細を読み込んでいます...",
+  "decks_loading/loading": "デッキを読み込んでいます..."
 }

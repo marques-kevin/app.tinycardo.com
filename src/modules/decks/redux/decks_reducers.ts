@@ -16,6 +16,7 @@ export type DecksState = {
   >
   cards: Record<string, CardEntity[]>
   fetching: {
+    fetching_decks: boolean
     fetching_cards: boolean
   }
 }
@@ -25,6 +26,7 @@ const initialState: DecksState = {
   stats: {},
   cards: {},
   fetching: {
+    fetching_decks: false,
     fetching_cards: false,
   },
 }
@@ -35,6 +37,16 @@ export const decks_reducers = createReducer(initialState, (builder) => {
   })
   builder.addCase(actions._store_decks_stats, (state, action) => {
     state.stats = action.payload
+  })
+
+  builder.addCase(actions.fetch_decks.pending, (state) => {
+    state.fetching.fetching_decks = true
+  })
+  builder.addCase(actions.fetch_decks.fulfilled, (state) => {
+    state.fetching.fetching_decks = false
+  })
+  builder.addCase(actions.fetch_decks.rejected, (state) => {
+    state.fetching.fetching_decks = false
   })
 
   builder.addCase(actions.fetch_cards.pending, (state) => {

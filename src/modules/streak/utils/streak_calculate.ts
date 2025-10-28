@@ -23,12 +23,11 @@ export const calculate_streak = (streaks: StreakEntity[]) => {
   const today = dayjs().format("YYYY-MM-DD")
   const last_streak_date = dayjs(last_streak.date).format("YYYY-MM-DD")
 
-  const diff_between_last_streak_and_today = dayjs(today).diff(
-    dayjs(last_streak_date),
-    "days",
-  )
-
-  if (diff_between_last_streak_and_today > 1) {
+  // If the last streak is not from today or yesterday, return 0
+  if (
+    last_streak_date !== today &&
+    last_streak_date !== dayjs().subtract(1, "day").format("YYYY-MM-DD")
+  ) {
     return 0
   }
 

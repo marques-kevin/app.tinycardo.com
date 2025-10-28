@@ -102,5 +102,7 @@
   "streak_modal/streak-modal/close": "Kapat",
   "streak_modal/streak-modal/current-streak": "Mevcut seri: {streak}",
   "streak_modal/streak-modal/title": "Seri",
-  "streak_modal/title": "Kayıp"
+  "streak_modal/title": "Kayıp",
+  "deck_details_loading/loading": "Destek kartı ayrıntılarını yüklüyoruz...",
+  "decks_loading/loading": "Kartları yüklüyoruz..."
 }

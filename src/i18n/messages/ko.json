@@ -102,5 +102,7 @@
   "streak_modal/streak-modal/close": "닫기",
   "streak_modal/streak-modal/current-streak": "현재 연속 기록: {streak}",
   "streak_modal/streak-modal/title": "연속 기록",
-  "streak_modal/title": "연속 기록"
+  "streak_modal/title": "연속 기록",
+  "deck_details_loading/loading": "덱 세부정보를 불러오는 중입니다...",
+  "decks_loading/loading": "덱을 불러오고 있어요..."
 }
