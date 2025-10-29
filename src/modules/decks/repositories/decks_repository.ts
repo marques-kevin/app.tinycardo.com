@@ -30,7 +30,7 @@ export interface DecksRepository {
     back_language?: string
   }): Promise<DeckEntity>
 
-  delete_deck(params: { id: string }): Promise<DeckEntity>
+  delete_deck(params: { id: string }): Promise<void>
 
   fetch_cards(params: { deck_id: string }): Promise<CardEntity[]>
 

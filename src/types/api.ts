@@ -369,11 +369,46 @@ export interface components {
              */
             updated_at: string;
         };
-        DecksGetDecksDto: {
-            /** @description Number of decks to retrieve */
-            take?: number;
-            /** @description Number of decks to skip */
-            skip?: number;
+        DecksEntityWithStats: {
+            /** @description Unique identifier of the deck */
+            id: string;
+            /** @description Name of the deck */
+            name: string;
+            /** @description Description of the deck */
+            description: string;
+            /** @description User ID who owns the deck */
+            user_id: string;
+            /** @description Language of the front side of cards */
+            front_language: string;
+            /** @description Language of the back side of cards */
+            back_language: string;
+            /** @description Public visibility of the deck */
+            visibility: string;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             */
+            created_at: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp
+             */
+            updated_at: string;
+            /**
+             * Format: date-time
+             * @description Deletion timestamp (null if not deleted)
+             */
+            deleted_at: string | null;
+            /** @description Number of cards in the deck */
+            number_of_cards: number;
+            /** @description Number of cards ready to be reviewed */
+            number_of_cards_ready_to_be_reviewed: number;
+            /** @description Number of cards not ready to be reviewed */
+            number_of_cards_not_ready_to_be_reviewed: number;
+        };
+        DecksGetDeckByIdDto: {
+            /** @description ID of the deck to retrieve */
+            id: string;
         };
         DecksEntity: {
             /** @description Unique identifier of the deck */
@@ -405,10 +440,6 @@ export interface components {
              * @description Deletion timestamp (null if not deleted)
              */
             deleted_at: string | null;
-        };
-        DecksGetDeckByIdDto: {
-            /** @description ID of the deck to retrieve */
-            id: string;
         };
         DecksSearchDecksDto: {
             /** @description Number of results per page */
@@ -656,18 +687,14 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DecksGetDecksDto"];
-            };
-        };
+        requestBody?: never;
         responses: {
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DecksEntity"][];
+                    "application/json": components["schemas"]["DecksEntityWithStats"][];
                 };
             };
         };

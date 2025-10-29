@@ -85,6 +85,8 @@ export class DecksRepositoryInMemory implements DecksRepository {
       created_at: new Date(),
       updated_at: new Date(),
       number_of_cards: 0,
+      number_of_cards_ready_to_be_reviewed: 0,
+      number_of_cards_not_ready_to_be_reviewed: 0,
     }
 
     this.decks = [...this.decks, deck]
@@ -129,8 +131,6 @@ export class DecksRepositoryInMemory implements DecksRepository {
 
     this.decks = this.decks.filter((d) => d.id !== params.id)
     delete this.cards[params.id]
-
-    return deck
   }
 
   async upsert_cards(params: {

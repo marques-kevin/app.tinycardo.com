@@ -8,18 +8,14 @@ import { DecksProgressRadialChart } from "@/modules/decks/components/decks_progr
 import { cn } from "@/lib/utils"
 import { big_number_formatter } from "@/modules/global/utils/big_number_formatter"
 import { useIntl } from "react-intl"
+import type { DeckEntity } from "@/modules/decks/entities/deck_entity"
 
-export function DecksDeck(props: {
-  name: string
-  deck_id: string
-  back_language: string
-  front_language: string
-  number_of_cards: number
-  number_of_cards_ready_to_be_reviewed?: number
-  number_of_cards_not_ready_to_be_reviewed?: number
-  number_of_users_using_this_deck?: number
-  on_click: () => void
-}) {
+export function DecksDeck(
+  props: DeckEntity & {
+    on_click: () => void
+    number_of_users_using_this_deck?: number
+  },
+) {
   const { locale } = useIntl()
   const should_show_progress =
     props.number_of_cards_ready_to_be_reviewed !== undefined
@@ -52,7 +48,7 @@ export function DecksDeck(props: {
             <div>
               <DecksProgressRadialChart
                 total={props.number_of_cards}
-                mastered={props.number_of_cards_ready_to_be_reviewed ?? 0}
+                mastered={props.number_of_cards_not_ready_to_be_reviewed ?? 0}
                 size={20}
                 thickness={4}
               />

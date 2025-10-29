@@ -15,6 +15,8 @@ function build_deck(overrides: Partial<DeckEntity> = {}): DeckEntity {
     updated_at: new Date("2023-01-01T00:00:00Z"),
     visibility: "private",
     number_of_cards: 0,
+    number_of_cards_ready_to_be_reviewed: 0,
+    number_of_cards_not_ready_to_be_reviewed: 0,
   }
 
   return { ...base, ...overrides }

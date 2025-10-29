@@ -5,7 +5,6 @@ import * as decks_actions from "@/modules/decks/redux/decks_actions"
 const map_state = (state: RootState) => {
   return {
     decks: state.decks.decks,
-    stats: state.decks.stats,
   }
 }
 

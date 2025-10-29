@@ -26,6 +26,8 @@ describe("decks actions", () => {
       created_at: new Date(),
       visibility: "private",
       number_of_cards: 2,
+      number_of_cards_ready_to_be_reviewed: 1,
+      number_of_cards_not_ready_to_be_reviewed: 1,
     }
 
     const cards: CardEntity[] = [
@@ -73,13 +75,5 @@ describe("decks actions", () => {
     await store.dispatch(actions.fetch_decks())
 
     expect(store.getState().decks.decks).toEqual([deck])
-    expect(store.getState().decks.stats).toEqual({
-      [deck.id]: {
-        deck_id: deck.id,
-        number_of_cards: cards.length,
-        number_of_cards_ready_to_be_reviewed: 1,
-        number_of_cards_not_ready_to_be_reviewed: 1,
-      },
-    })
   })
 })

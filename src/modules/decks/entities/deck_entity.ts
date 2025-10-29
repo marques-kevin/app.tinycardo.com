@@ -9,4 +9,6 @@ export type DeckEntity = {
   created_at: Date
   visibility: "public" | "private" | "unlisted"
   number_of_cards: number
+  number_of_cards_ready_to_be_reviewed: number
+  number_of_cards_not_ready_to_be_reviewed: number
 }

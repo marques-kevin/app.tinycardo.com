@@ -4,20 +4,6 @@ import type { DeckEntity } from "@/modules/decks/entities/deck_entity"
 import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { UrlMatcherService } from "@/modules/global/services/url_matcher_service/url_matcher_service"
 
-export const _store_decks_stats = createAction<
-  Record<
-    string,
-    {
-      deck_id: string
-      number_of_cards: number
-      number_of_cards_ready_to_be_reviewed: number
-      number_of_cards_not_ready_to_be_reviewed: number
-    }
-  >
->("decks/_store_decks_stats")
-
-export const _store_decks = createAction<DeckEntity[]>("decks/_store_decks")
-
 export const go_on_deck_details_page = createAsyncThunk<
   void,
   { deck_id: string },
@@ -57,62 +43,13 @@ export const create_deck = createAsyncThunk<void, void, AsyncThunkConfig>(
   },
 )
 
-export const fetch_decks = createAsyncThunk<void, void, AsyncThunkConfig>(
-  "decks/fetch_decks",
-  async (params, { dispatch, extra }) => {
-    const decks_response = await extra.decks_repository.fetch_decks()
-
-    dispatch(_store_decks(decks_response))
-
-    const decks_history = await Promise.all(
-      decks_response.map(async (deck) => {
-        const [cards, history] = await Promise.all([
-          extra.decks_repository.fetch_cards({ deck_id: deck.id }),
-          extra.sessions_repository.fetch_history({
-            deck_id: deck.id,
-          }),
-        ])
-
-        const cards_ready_to_be_reviewed = history.filter(
-          (h) => h.next_due_at < new Date(),
-        )
-
-        const cards_not_ready_to_be_reviewed = history.filter(
-          (h) => h.next_due_at > new Date(),
-        )
-
-        return {
-          deck_id: deck.id,
-          number_of_cards: cards.length,
-          number_of_cards_ready_to_be_reviewed:
-            cards_ready_to_be_reviewed.length,
-          number_of_cards_not_ready_to_be_reviewed:
-            cards_not_ready_to_be_reviewed.length,
-        }
-      }),
-    )
-
-    dispatch(
-      _store_decks_stats(
-        decks_history.reduce(
-          (acc, curr) => {
-            acc[curr.deck_id] = curr
-            return acc
-          },
-          {} as Record<
-            string,
-            {
-              deck_id: string
-              number_of_cards: number
-              number_of_cards_ready_to_be_reviewed: number
-              number_of_cards_not_ready_to_be_reviewed: number
-            }
-          >,
-        ),
-      ),
-    )
-  },
-)
+export const fetch_decks = createAsyncThunk<
+  DeckEntity[],
+  void,
+  AsyncThunkConfig
+>("decks/fetch_decks", async (params, { extra }) => {
+  return extra.decks_repository.fetch_decks()
+})
 
 export const _create_deck_add_new_card = createAction<void>(
   "decks/_create_deck_add_new_card",
