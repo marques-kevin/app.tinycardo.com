@@ -8,17 +8,7 @@ export function Wrapper(props: ContainerProps) {
         {props.decks.map((deck) => (
           <DecksDeck
             key={deck.id}
-            name={deck.name}
-            deck_id={deck.id}
-            back_language={deck.back_language}
-            front_language={deck.front_language}
-            number_of_cards={props.stats[deck.id]?.number_of_cards ?? 0}
-            number_of_cards_ready_to_be_reviewed={
-              props.stats[deck.id]?.number_of_cards_ready_to_be_reviewed
-            }
-            number_of_cards_not_ready_to_be_reviewed={
-              props.stats[deck.id]?.number_of_cards_not_ready_to_be_reviewed
-            }
+            {...deck}
             on_click={() => props.on_click(deck.id)}
           />
         ))}

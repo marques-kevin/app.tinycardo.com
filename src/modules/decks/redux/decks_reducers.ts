@@ -5,15 +5,6 @@ import type { CardEntity } from "@/modules/decks/entities/card_entity"
 
 export type DecksState = {
   decks: DeckEntity[]
-  stats: Record<
-    string,
-    {
-      deck_id: string
-      number_of_cards: number
-      number_of_cards_ready_to_be_reviewed: number
-      number_of_cards_not_ready_to_be_reviewed: number
-    }
-  >
   cards: Record<string, CardEntity[]>
   fetching: {
     fetching_decks: boolean
@@ -23,7 +14,6 @@ export type DecksState = {
 
 const initialState: DecksState = {
   decks: [],
-  stats: {},
   cards: {},
   fetching: {
     fetching_decks: false,
@@ -32,18 +22,12 @@ const initialState: DecksState = {
 }
 
 export const decks_reducers = createReducer(initialState, (builder) => {
-  builder.addCase(actions._store_decks, (state, action) => {
-    state.decks = action.payload
-  })
-  builder.addCase(actions._store_decks_stats, (state, action) => {
-    state.stats = action.payload
-  })
-
   builder.addCase(actions.fetch_decks.pending, (state) => {
     state.fetching.fetching_decks = true
   })
-  builder.addCase(actions.fetch_decks.fulfilled, (state) => {
+  builder.addCase(actions.fetch_decks.fulfilled, (state, action) => {
     state.fetching.fetching_decks = false
+    state.decks = action.payload
   })
   builder.addCase(actions.fetch_decks.rejected, (state) => {
     state.fetching.fetching_decks = false

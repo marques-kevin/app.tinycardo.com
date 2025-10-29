@@ -23,8 +23,12 @@ export class DecksRepositoryApi implements DecksRepository {
       user_id: deck.user_id,
       created_at: new Date(deck.created_at),
       updated_at: new Date(deck.updated_at),
-      number_of_cards: 0,
       visibility: "public",
+      number_of_cards_ready_to_be_reviewed:
+        deck.number_of_cards_ready_to_be_reviewed,
+      number_of_cards_not_ready_to_be_reviewed:
+        deck.number_of_cards_not_ready_to_be_reviewed,
+      number_of_cards: deck.number_of_cards,
     }))
   }
 
@@ -40,6 +44,8 @@ export class DecksRepositoryApi implements DecksRepository {
     return {
       ...data,
       number_of_cards: 0,
+      number_of_cards_ready_to_be_reviewed: 0,
+      number_of_cards_not_ready_to_be_reviewed: 0,
       created_at: new Date(data.created_at),
       updated_at: new Date(data.updated_at),
       visibility: data.visibility as "public" | "private" | "unlisted",
@@ -79,6 +85,8 @@ export class DecksRepositoryApi implements DecksRepository {
     return {
       ...deck_response,
       number_of_cards: 0,
+      number_of_cards_ready_to_be_reviewed: 0,
+      number_of_cards_not_ready_to_be_reviewed: 0,
       visibility: deck_response.visibility as "public" | "private" | "unlisted",
       created_at: new Date(deck_response.created_at),
       updated_at: new Date(deck_response.updated_at),
@@ -103,28 +111,17 @@ export class DecksRepositoryApi implements DecksRepository {
       created_at: new Date(deck_response.created_at),
       updated_at: new Date(deck_response.updated_at),
       number_of_cards: 0,
+      number_of_cards_ready_to_be_reviewed: 0,
+      number_of_cards_not_ready_to_be_reviewed: 0,
     }
   }
 
   async delete_deck(
     params: Parameters<DecksRepository["delete_deck"]>[0],
   ): ReturnType<DecksRepository["delete_deck"]> {
-    const deck_response = await this.api_service.post<
-      paths["/decks/delete_deck"]["post"]["responses"]["200"]["content"]["application/json"]
+    await this.api_service.post<
+      paths["/decks/delete_deck"]["post"]["responses"]["200"]
     >("/decks/delete_deck", params)
-
-    return {
-      id: deck_response.id,
-      name: deck_response.name,
-      description: "",
-      front_language: deck_response.front_language,
-      back_language: deck_response.back_language,
-      user_id: deck_response.user_id,
-      visibility: "public",
-      created_at: new Date(deck_response.created_at),
-      updated_at: new Date(deck_response.updated_at),
-      number_of_cards: 0,
-    }
   }
 
   async upsert_cards(params: {
@@ -164,6 +161,8 @@ export class DecksRepositoryApi implements DecksRepository {
       created_at: new Date(deck_response.created_at),
       updated_at: new Date(deck_response.updated_at),
       number_of_cards: 0,
+      number_of_cards_ready_to_be_reviewed: 0,
+      number_of_cards_not_ready_to_be_reviewed: 0,
     }
   }
 }
