@@ -26,6 +26,8 @@ describe("decks actions", () => {
       created_at: new Date(),
       visibility: "private",
       number_of_cards: 2,
+      number_of_cards_ready_to_be_reviewed: 1,
+      number_of_cards_not_ready_to_be_reviewed: 1,
     }
 
     const cards: CardEntity[] = [
