@@ -33,6 +33,9 @@ import { seed_discover_decks } from "./__seed__/seed_discover_decks"
 import { seed_authenticated_user } from "./__seed__/seed_users"
 import { seed_streaks } from "./__seed__/seed_streaks"
 import { StreakRepositoryApi } from "@/modules/streak/repositories/streak_repository/streak_repository_api"
+import type { PlausibleService } from "@/modules/global/services/plausible_service/plausible_service"
+import { PlausibleServiceInMemory } from "@/modules/global/services/plausible_service/plausible_service_in_memory"
+import { PlausibleServiceWindow } from "@/modules/global/services/plausible_service/plausible_service_window"
 
 export type Dependencies = {
   location_service: LocationService
@@ -45,6 +48,7 @@ export type Dependencies = {
   discover_decks_repository: DiscoverDecksRepository
   toast_service: ToastService
   streak_repository: StreakRepository
+  plausible_service: PlausibleService
 }
 
 export function build_dependencies(
@@ -62,6 +66,7 @@ export function build_dependencies(
       discover_decks_repository: new DiscoverDecksRepositoryInMemory(),
       toast_service: new ToastServiceInMemory(),
       streak_repository: new StreakRepositoryInMemory(),
+      plausible_service: new PlausibleServiceInMemory(),
     }
   }
 
@@ -100,5 +105,6 @@ export function build_dependencies(
     discover_decks_repository: new DiscoverDecksRepositoryApi(),
     toast_service: new ToastServiceSonner(),
     streak_repository: new StreakRepositoryApi(),
+    plausible_service: new PlausibleServiceWindow(),
   }
 }
