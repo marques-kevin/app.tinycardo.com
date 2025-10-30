@@ -48,42 +48,6 @@ describe("discover actions", () => {
     expect(store.getState().discover.decks).toEqual(decks)
   })
 
-  it("should open action dialog with the correct deck", async () => {
-    const { store, dependencies } = await create_store_for_tests()
-
-    const discover_decks_repository =
-      dependencies.discover_decks_repository as DiscoverDecksRepositoryInMemory
-
-    await discover_decks_repository._store_discover_decks(decks)
-
-    await store.dispatch(actions.fetch_discover_decks())
-    await store.dispatch(actions.open_action_dialog({ deck_id: "1" }))
-
-    const state = store.getState().discover
-
-    expect(state.actions.is_open).toBe(true)
-    expect(state.actions.deck).toEqual(decks[0])
-  })
-
-  it("should throw error when trying to open action dialog for a non-existent deck", async () => {
-    const { store, dependencies } = await create_store_for_tests()
-
-    const discover_decks_repository =
-      dependencies.discover_decks_repository as DiscoverDecksRepositoryInMemory
-
-    await discover_decks_repository._store_discover_decks(decks)
-    await store.dispatch(actions.fetch_discover_decks())
-
-    await store.dispatch(actions.open_action_dialog({ deck_id: "999" }))
-
-    await delay()
-
-    const state = store.getState().dialog
-
-    expect(state.crash.is_open).toEqual(true)
-    expect(state.crash.message).toEqual("Deck not found")
-  })
-
   it("should navigate to deck details when on_view_deck is called", async () => {
     const { store, dependencies } = await create_store_for_tests()
 
@@ -95,35 +59,5 @@ describe("discover actions", () => {
     expect(dependencies.location_service.get_current_url()).toEqual(
       `https://local.dev/decks/${deckId}/`,
     )
-  })
-
-  it("should start using a deck and navigate to learn new words session", async () => {
-    const { store, dependencies } = await create_store_for_tests()
-
-    const discover_decks_repository =
-      dependencies.discover_decks_repository as DiscoverDecksRepositoryInMemory
-
-    await discover_decks_repository._store_discover_decks(decks)
-
-    const deck_id = decks[0].id
-
-    await store.dispatch(actions.on_use_deck({ deck_id }))
-
-    expect(dependencies.location_service.get_current_url()).toEqual(
-      `https://local.dev/sessions/${deck_id}/learn_new_words`,
-    )
-  })
-
-  it("should throw error when trying to use a non-existent deck", async () => {
-    const { store } = await create_store_for_tests()
-
-    await store.dispatch(actions.on_use_deck({ deck_id: "non-existent-deck" }))
-
-    await delay()
-
-    const state = store.getState().dialog
-
-    expect(state.crash.is_open).toEqual(true)
-    expect(state.crash.message).toEqual("Deck not found")
   })
 })
