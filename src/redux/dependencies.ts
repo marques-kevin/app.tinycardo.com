@@ -27,11 +27,12 @@ import { ToastServiceSonner } from "@/modules/global/services/toast_service/toas
 import type { StreakRepository } from "@/modules/streak/repositories/streak_repository/streak_repository"
 import { StreakRepositoryInMemory } from "@/modules/streak/repositories/streak_repository/streak_repository_in_memory"
 
-import { seed_decks } from "./__seed__/seed_decks"
-import { seed_cards } from "./__seed__/seed_cards"
-import { seed_discover_decks } from "./__seed__/seed_discover_decks"
-import { seed_authenticated_user } from "./__seed__/seed_users"
-import { seed_streaks } from "./__seed__/seed_streaks"
+import { seed_decks } from "@/redux/__seed__/seed_decks"
+import { seed_cards } from "@/redux/__seed__/seed_cards"
+import { seed_discover_decks } from "@/redux/__seed__/seed_discover_decks"
+import { seed_authenticated_user } from "@/redux/__seed__/seed_users"
+import { seed_streaks } from "@/redux/__seed__/seed_streaks"
+
 import { StreakRepositoryApi } from "@/modules/streak/repositories/streak_repository/streak_repository_api"
 import type { PlausibleService } from "@/modules/global/services/plausible_service/plausible_service"
 import { PlausibleServiceInMemory } from "@/modules/global/services/plausible_service/plausible_service_in_memory"
@@ -70,29 +71,30 @@ export function build_dependencies(
     }
   }
 
-  // if (mode === "development") {
-  //   return {
-  //     location_service: new LocationServiceWindow(),
-  //     local_storage_service: new LocalStorageServiceWindow(),
-  //     downloader_service: new DownloaderServiceWindow(),
-  //     decks_repository: new DecksRepositoryInMemory({
-  //       decks: seed_decks,
-  //       cards: seed_cards,
-  //     }),
-  //     sessions_repository: new SessionsRepositoryInMemory(),
-  //     users_repository: new UsersRepositoryInMemory({
-  //       user: seed_authenticated_user,
-  //     }),
-  //     session_help_service: new SessionHelpServiceInMemory(),
-  //     discover_decks_repository: new DiscoverDecksRepositoryInMemory({
-  //       decks: seed_discover_decks,
-  //     }),
-  //     toast_service: new ToastServiceSonner(),
-  //     streak_repository: new StreakRepositoryInMemory({
-  //       streaks: seed_streaks,
-  //     }),
-  //   }
-  // }
+  if (mode === "development") {
+    return {
+      location_service: new LocationServiceWindow(),
+      local_storage_service: new LocalStorageServiceWindow(),
+      downloader_service: new DownloaderServiceWindow(),
+      decks_repository: new DecksRepositoryInMemory({
+        decks: seed_decks,
+        cards: seed_cards,
+      }),
+      sessions_repository: new SessionsRepositoryInMemory(),
+      users_repository: new UsersRepositoryInMemory({
+        user: seed_authenticated_user,
+      }),
+      session_help_service: new SessionHelpServiceInMemory(),
+      discover_decks_repository: new DiscoverDecksRepositoryInMemory({
+        decks: seed_discover_decks,
+      }),
+      toast_service: new ToastServiceSonner(),
+      streak_repository: new StreakRepositoryInMemory({
+        streaks: seed_streaks,
+      }),
+      plausible_service: new PlausibleServiceInMemory(),
+    }
+  }
 
   return {
     location_service: new LocationServiceWindow(),
