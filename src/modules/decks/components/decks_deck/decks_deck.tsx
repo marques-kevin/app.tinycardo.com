@@ -13,15 +13,11 @@ import type { DeckEntity } from "@/modules/decks/entities/deck_entity"
 export function DecksDeck(
   props: DeckEntity & {
     on_click: () => void
-    number_of_users_using_this_deck?: number
+    should_show_progress: boolean
+    should_show_number_of_users_using_this_deck: boolean
   },
 ) {
   const { locale } = useIntl()
-  const should_show_progress =
-    props.number_of_cards_ready_to_be_reviewed !== undefined
-
-  const should_show_number_of_users_using_this_deck =
-    props.number_of_users_using_this_deck !== undefined
 
   return (
     <div className="stack">
@@ -44,7 +40,7 @@ export function DecksDeck(
             </div>
           </div>
 
-          {should_show_progress && (
+          {props.should_show_progress && (
             <div>
               <DecksProgressRadialChart
                 total={props.number_of_cards}
@@ -63,8 +59,8 @@ export function DecksDeck(
         <footer
           className={cn(
             "mt-auto grid grid-cols-3 px-4 font-medium",
-            should_show_progress && "grid-cols-3",
-            should_show_number_of_users_using_this_deck && "grid-cols-2",
+            props.should_show_progress && "grid-cols-3",
+            props.should_show_number_of_users_using_this_deck && "grid-cols-2",
           )}
         >
           <div className="flex items-center justify-start gap-1">
@@ -72,21 +68,21 @@ export function DecksDeck(
             <span>{props.number_of_cards}</span>
           </div>
 
-          {should_show_progress && (
+          {props.should_show_progress && (
             <div className="text-success flex items-center justify-center gap-1">
               <CheckIcon className="size-4" />
               <span>{props.number_of_cards_not_ready_to_be_reviewed}</span>
             </div>
           )}
 
-          {should_show_progress && (
+          {props.should_show_progress && (
             <div className="text-info flex items-center justify-end gap-1">
               <EyeIcon className="size-4" />
               <span>{props.number_of_cards_ready_to_be_reviewed}</span>
             </div>
           )}
 
-          {should_show_number_of_users_using_this_deck && (
+          {props.should_show_number_of_users_using_this_deck && (
             <div className="flex items-center justify-end gap-1">
               <UsersIcon className="size-4" />
               <span>

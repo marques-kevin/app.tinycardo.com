@@ -42,7 +42,7 @@ export function Wrapper(props: ContainerProps) {
           <UsersIcon className="size-4" />
           <span>
             {big_number_formatter({
-              value: 357098,
+              value: props.number_of_users_using_this_deck ?? 0,
               digits: 0,
             })}
           </span>

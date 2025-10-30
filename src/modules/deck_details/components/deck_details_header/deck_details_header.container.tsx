@@ -15,6 +15,8 @@ function mapState(state: RootState) {
     name: state.decks_details.deck?.name,
     number_of_cards: state.decks_details.deck?.number_of_cards,
     updated_at: state.decks_details.deck?.updated_at,
+    number_of_users_using_this_deck:
+      state.decks_details.deck?.number_of_users_using_this_deck,
     is_user_owner:
       state.decks_details.deck?.user_id === state.authentication.user?.id,
   }

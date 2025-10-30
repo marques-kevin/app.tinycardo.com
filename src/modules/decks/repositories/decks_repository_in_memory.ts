@@ -87,6 +87,7 @@ export class DecksRepositoryInMemory implements DecksRepository {
       number_of_cards: 0,
       number_of_cards_ready_to_be_reviewed: 0,
       number_of_cards_not_ready_to_be_reviewed: 0,
+      number_of_users_using_this_deck: 0,
     }
 
     this.decks = [...this.decks, deck]

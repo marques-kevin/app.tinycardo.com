@@ -31,13 +31,7 @@ export const on_use_deck = createAsyncThunk<
   void,
   { deck_id: string },
   AsyncThunkConfig
->("discover/on_use_deck", async (_, { extra }) => {
-  const response = await extra.discover_decks_repository.start_using_deck({
-    deck_id: _.deck_id,
-  })
-
-  extra.location_service.navigate(`/sessions/${response.id}/learn_new_words`)
-})
+>("discover/on_use_deck", async (_, { extra }) => {})
 
 export const close_action_dialog = createAsyncThunk<
   void,
