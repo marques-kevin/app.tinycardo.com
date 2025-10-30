@@ -405,10 +405,49 @@ export interface components {
             number_of_cards_ready_to_be_reviewed: number;
             /** @description Number of cards not ready to be reviewed */
             number_of_cards_not_ready_to_be_reviewed: number;
+            /** @description Number of users who have used the deck */
+            number_of_users_who_use_the_deck: number;
         };
         DecksGetDeckByIdDto: {
             /** @description ID of the deck to retrieve */
             id: string;
+        };
+        DecksGetDeckByIdOutputDto: {
+            deck: components["schemas"]["DecksEntityWithStats"];
+        };
+        DecksSearchDecksDto: {
+            /** @description Number of results per page */
+            limit?: number;
+            /** @description Page number */
+            page?: number;
+            /** @description Filter by front language */
+            front_language?: string;
+            /** @description Filter by back language */
+            back_language?: string;
+            /** @description Search by title (partial match) */
+            title?: string;
+        };
+        DecksSearchDecksOutputDto: {
+            decks: components["schemas"]["DecksEntityWithStats"][];
+            total: number;
+            page: number;
+            limit: number;
+        };
+        DecksCreateDeckDto: {
+            /** @description Name of the deck */
+            name: string;
+            /** @description Language code for the front of the cards */
+            front_language: string;
+            /** @description Language code for the back of the cards */
+            back_language: string;
+            /** @description Description of the deck */
+            description?: string;
+            /**
+             * @description Visibility of the deck
+             * @default private
+             * @enum {string}
+             */
+            visibility: "public" | "private" | "unlisted";
         };
         DecksEntity: {
             /** @description Unique identifier of the deck */
@@ -440,34 +479,6 @@ export interface components {
              * @description Deletion timestamp (null if not deleted)
              */
             deleted_at: string | null;
-        };
-        DecksSearchDecksDto: {
-            /** @description Number of results per page */
-            limit?: number;
-            /** @description Page number */
-            page?: number;
-            /** @description Filter by front language */
-            front_language?: string;
-            /** @description Filter by back language */
-            back_language?: string;
-            /** @description Search by title (partial match) */
-            title?: string;
-        };
-        DecksCreateDeckDto: {
-            /** @description Name of the deck */
-            name: string;
-            /** @description Language code for the front of the cards */
-            front_language: string;
-            /** @description Language code for the back of the cards */
-            back_language: string;
-            /** @description Description of the deck */
-            description?: string;
-            /**
-             * @description Visibility of the deck
-             * @default private
-             * @enum {string}
-             */
-            visibility: "public" | "private" | "unlisted";
         };
         DecksUpdateDeckDto: {
             /** @description ID of the deck to update */
@@ -717,7 +728,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DecksEntity"];
+                    "application/json": components["schemas"]["DecksGetDeckByIdOutputDto"];
                 };
             };
         };
@@ -740,7 +751,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DecksEntity"][];
+                    "application/json": components["schemas"]["DecksSearchDecksOutputDto"];
                 };
             };
         };

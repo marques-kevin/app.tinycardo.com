@@ -9,6 +9,8 @@ export function Wrapper(props: ContainerProps) {
           <DecksDeck
             key={deck.id}
             {...deck}
+            should_show_progress={true}
+            should_show_number_of_users_using_this_deck={false}
             on_click={() => props.on_click(deck.id)}
           />
         ))}

@@ -29,26 +29,30 @@ export class DecksRepositoryApi implements DecksRepository {
       number_of_cards_not_ready_to_be_reviewed:
         deck.number_of_cards_not_ready_to_be_reviewed,
       number_of_cards: deck.number_of_cards,
+      number_of_users_using_this_deck: deck.number_of_users_who_use_the_deck,
     }))
   }
 
   async get_deck_by_id(
     params: Parameters<DecksRepository["get_deck_by_id"]>[0],
   ): ReturnType<DecksRepository["get_deck_by_id"]> {
-    const data = await this.api_service.post<
+    const { deck } = await this.api_service.post<
       paths["/decks/get_deck_by_id"]["post"]["responses"]["200"]["content"]["application/json"]
     >("/decks/get_deck_by_id", {
       id: params.deck_id,
     })
 
     return {
-      ...data,
-      number_of_cards: 0,
-      number_of_cards_ready_to_be_reviewed: 0,
-      number_of_cards_not_ready_to_be_reviewed: 0,
-      created_at: new Date(data.created_at),
-      updated_at: new Date(data.updated_at),
-      visibility: data.visibility as "public" | "private" | "unlisted",
+      ...deck,
+      number_of_cards: deck.number_of_cards,
+      number_of_cards_ready_to_be_reviewed:
+        deck.number_of_cards_ready_to_be_reviewed,
+      number_of_cards_not_ready_to_be_reviewed:
+        deck.number_of_cards_not_ready_to_be_reviewed,
+      number_of_users_using_this_deck: deck.number_of_users_who_use_the_deck,
+      created_at: new Date(deck.created_at),
+      updated_at: new Date(deck.updated_at),
+      visibility: deck.visibility as "public" | "private" | "unlisted",
     }
   }
 
@@ -87,6 +91,7 @@ export class DecksRepositoryApi implements DecksRepository {
       number_of_cards: 0,
       number_of_cards_ready_to_be_reviewed: 0,
       number_of_cards_not_ready_to_be_reviewed: 0,
+      number_of_users_using_this_deck: 0,
       visibility: deck_response.visibility as "public" | "private" | "unlisted",
       created_at: new Date(deck_response.created_at),
       updated_at: new Date(deck_response.updated_at),
@@ -113,6 +118,7 @@ export class DecksRepositoryApi implements DecksRepository {
       number_of_cards: 0,
       number_of_cards_ready_to_be_reviewed: 0,
       number_of_cards_not_ready_to_be_reviewed: 0,
+      number_of_users_using_this_deck: 0,
     }
   }
 
@@ -163,6 +169,7 @@ export class DecksRepositoryApi implements DecksRepository {
       number_of_cards: 0,
       number_of_cards_ready_to_be_reviewed: 0,
       number_of_cards_not_ready_to_be_reviewed: 0,
+      number_of_users_using_this_deck: 0,
     }
   }
 }

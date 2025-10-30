@@ -7,12 +7,16 @@ export function Wrapper(props: ContainerProps) {
       {props.decks.map((deck) => (
         <DecksDeck
           key={deck.id}
-          name={deck.name}
-          deck_id={deck.id}
-          back_language={deck.back_language}
-          front_language={deck.front_language}
+          {...deck}
+          description={null}
+          user_id={""}
           number_of_cards={deck.number_of_cards_in_the_deck}
           number_of_users_using_this_deck={deck.number_of_users_using_this_deck}
+          visibility="public"
+          should_show_progress={false}
+          number_of_cards_ready_to_be_reviewed={0}
+          number_of_cards_not_ready_to_be_reviewed={0}
+          should_show_number_of_users_using_this_deck={true}
           on_click={() => props.on_view_deck(deck.id)}
         />
       ))}
