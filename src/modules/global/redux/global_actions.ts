@@ -23,7 +23,8 @@ export const global_app_user_authenticated = createAsyncThunk<
   void,
   void,
   AsyncThunkConfig
->("global/global_app_user_authenticated", async (_, { dispatch }) => {
+>("global/global_app_user_authenticated", async (_, { dispatch, extra }) => {
+  extra.plausible_service.init()
   dispatch(decks_actions.global_app_initialized())
   dispatch(streak_actions.fetch_streaks())
   dispatch(params_actions.global_app_initialized())
