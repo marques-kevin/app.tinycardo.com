@@ -14,9 +14,7 @@ export function RouteChangeListener() {
   useEffect(() => {
     dispatch(global_route_changed())
 
-    const handle_pop_state = () => {
-      dispatch(global_route_changed())
-    }
+    const handle_pop_state = () => {}
 
     window.addEventListener("popstate", handle_pop_state)
 
