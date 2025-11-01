@@ -235,4 +235,16 @@ export class DecksRepositoryInMemory implements DecksRepository {
 
     return updated_lesson
   }
+
+  async delete_lesson(
+    params: Parameters<DecksRepository["delete_lesson"]>[0],
+  ): ReturnType<DecksRepository["delete_lesson"]> {
+    const lesson = this.lessons.find((l) => l.id === params.lesson_id)
+
+    if (!lesson) {
+      throw new Error("Lesson not found")
+    }
+
+    this.lessons = this.lessons.filter((l) => l.id !== params.lesson_id)
+  }
 }

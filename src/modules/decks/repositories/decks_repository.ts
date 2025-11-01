@@ -63,4 +63,6 @@ export interface DecksRepository {
     lesson_id: string
     name: string
   }): Promise<LessonEntity>
+
+  delete_lesson(params: { lesson_id: string }): Promise<void>
 }

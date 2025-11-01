@@ -1,9 +1,10 @@
 import { connect, type ConnectedProps } from "react-redux"
 import { type Dispatch, type RootState } from "@/redux/store"
 import * as deck_update_actions from "@/modules/deck_update/redux/deck_update_actions"
+import { select_filtered_cards } from "@/modules/deck_update/redux/deck_update_reducers"
 
 const map_state = (state: RootState) => ({
-  cards: state.deck_update.cards,
+  cards: select_filtered_cards(state.deck_update),
   front_language: state.deck_update.front_language,
   back_language: state.deck_update.back_language,
   is_selected: state.deck_update.selected_cards.length > 0,

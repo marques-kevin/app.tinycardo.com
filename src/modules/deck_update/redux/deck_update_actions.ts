@@ -66,6 +66,10 @@ export const close_rename_lesson_modal = createAction(
   "deck_update/close_rename_lesson_modal",
 )
 
+export const set_active_lesson = createAction<{ lesson_id: string | null }>(
+  "deck_update/set_active_lesson",
+)
+
 export const load_deck_into_create_form = createAsyncThunk<
   { deck: DeckEntity; cards: CardEntity[]; lessons: LessonEntity[] } | null,
   { deck_id: string },
@@ -394,3 +398,18 @@ export const rename_lesson = createAsyncThunk<
     return lesson
   },
 )
+
+export const delete_lesson = createAsyncThunk<
+  { lesson_id: string },
+  { lesson_id: string },
+  AsyncThunkConfig
+>("deck_update/delete_lesson", async ({ lesson_id }, { extra }) => {
+  await extra.decks_repository.delete_lesson({ lesson_id })
+
+  await extra.toast_service.toast({
+    title: "deck_update_tabs/lesson_deleted",
+    type: "success",
+  })
+
+  return { lesson_id }
+})

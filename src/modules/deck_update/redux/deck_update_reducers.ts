@@ -35,6 +35,23 @@ export type DeckUpdateState = {
   is_updating: boolean
   rename_lesson_modal: string | null
   lessons: LessonEntity[]
+  active_lesson_id: string | null
+}
+
+export const select_filtered_cards = (state: DeckUpdateState) => {
+  if (state.active_lesson_id === null) {
+    return state.cards
+  }
+
+  const active_lesson = state.lessons.find(
+    (l) => l.id === state.active_lesson_id,
+  )
+
+  if (!active_lesson) {
+    return state.cards
+  }
+
+  return state.cards.filter((card_id) => active_lesson.cards.includes(card_id))
 }
 
 const initialState: DeckUpdateState = {
@@ -58,6 +75,7 @@ const initialState: DeckUpdateState = {
   is_loading: false,
   rename_lesson_modal: null,
   lessons: [],
+  active_lesson_id: null,
 }
 
 export const deck_update_reducers = createReducer(initialState, (builder) => {
@@ -299,5 +317,18 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
 
   builder.addCase(actions.create_lesson.fulfilled, (state, action) => {
     state.lessons.push(action.payload)
+  })
+
+  builder.addCase(actions.delete_lesson.fulfilled, (state, action) => {
+    state.lessons = state.lessons.filter(
+      (l) => l.id !== action.payload.lesson_id,
+    )
+    if (state.active_lesson_id === action.payload.lesson_id) {
+      state.active_lesson_id = null
+    }
+  })
+
+  builder.addCase(actions.set_active_lesson, (state, action) => {
+    state.active_lesson_id = action.payload.lesson_id
   })
 })
