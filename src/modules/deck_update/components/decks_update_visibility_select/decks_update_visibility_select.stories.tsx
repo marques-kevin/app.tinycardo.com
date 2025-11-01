@@ -2,7 +2,7 @@ import { Wrapper } from "./decks_update_visibility_select"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "decks/update/update_deck_visibility",
+  title: "decks_update_visibility_select",
   component: Wrapper,
 }
 

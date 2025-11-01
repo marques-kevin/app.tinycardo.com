@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Wrapper } from "./deck_details_lessons_list"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "deck_details/deck_details_lessons_list",
+  title: "deck_details_lessons_list",
   component: Wrapper,
 }
 

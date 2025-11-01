@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Wrapper as SessionHelpDialog } from "@/modules/sessions/components/session_help_dialog/session_help_dialog"
 
 const meta: Meta<typeof SessionHelpDialog> = {
-  title: "Sessions/SessionHelpDialog",
+  title: "session_help_dialog",
   component: SessionHelpDialog,
 }
 

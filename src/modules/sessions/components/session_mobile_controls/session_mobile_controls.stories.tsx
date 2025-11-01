@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { SessionMobileControls } from "@/modules/sessions/components/session_mobile_controls/session_mobile_controls"
 
 const meta: Meta<typeof SessionMobileControls> = {
-  title: "Sessions/SessionMobileControls",
+  title: "session_mobile_controls",
   component: SessionMobileControls,
 }
 

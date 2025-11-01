@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { seed_decks } from "@/redux/__seed__/seed_decks"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "decks/my decks",
+  title: "my_decks",
   component: Wrapper,
 }
 

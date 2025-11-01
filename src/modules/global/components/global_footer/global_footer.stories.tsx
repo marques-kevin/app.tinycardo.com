@@ -3,7 +3,7 @@ import { Wrapper } from "./global_footer"
 import { THEMES } from "@/modules/params/constants/themes"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "Global/global_footer",
+  title: "global_footer",
   component: Wrapper,
 }
 

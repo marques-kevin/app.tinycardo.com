@@ -2,7 +2,7 @@ import { Wrapper as SessionsCards } from "@/modules/sessions/components/session_
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta: Meta<typeof SessionsCards> = {
-  title: "Sessions/SessionsCards",
+  title: "sessions_cards",
   component: SessionsCards,
 }
 

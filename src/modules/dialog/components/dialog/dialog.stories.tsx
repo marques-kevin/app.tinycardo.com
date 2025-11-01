@@ -16,7 +16,7 @@ const description_options: MessageI18nKeys[] = [
 ]
 
 const meta: Meta<typeof Wrapper> = {
-  title: "Dialog/Dialog",
+  title: "dialog",
   component: Wrapper,
   parameters: {
     layout: "",

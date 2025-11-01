@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Wrapper } from "./decks_csv_mapping_dialog"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "Decks/decks_csv_mapping_dialog",
+  title: "decks_csv_mapping_dialog",
   component: Wrapper,
 }
 

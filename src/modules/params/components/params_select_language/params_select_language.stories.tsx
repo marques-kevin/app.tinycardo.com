@@ -2,7 +2,7 @@ import { Wrapper } from "./params_select_language"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "Params/params_select_language",
+  title: "params_select_language",
   component: Wrapper,
 }
 

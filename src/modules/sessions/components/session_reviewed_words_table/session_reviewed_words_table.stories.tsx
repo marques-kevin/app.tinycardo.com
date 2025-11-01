@@ -4,7 +4,7 @@ import { Wrapper } from "@/modules/sessions/components/session_reviewed_words_ta
 import type { SessionHistoryWithCardEntity } from "@/modules/sessions/entities/session_history_entity"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "Sessions/session_reviewed_words_table",
+  title: "session_reviewed_words_table",
   component: Wrapper,
 }
 
