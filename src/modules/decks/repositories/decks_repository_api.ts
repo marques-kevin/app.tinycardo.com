@@ -172,4 +172,11 @@ export class DecksRepositoryApi implements DecksRepository {
       number_of_users_using_this_deck: 0,
     }
   }
+
+  async fetch_lessons(params: {
+    deck_id: string
+    user_id: string
+  }): ReturnType<DecksRepository["fetch_lessons"]> {
+    throw new Error("Not implemented")
+  }
 }

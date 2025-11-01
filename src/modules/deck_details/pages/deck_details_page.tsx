@@ -14,7 +14,7 @@ export function DeckDetailsPage() {
           <DeckDetailsTabs>
             {(tab) => {
               if (tab === "lessons") {
-                return <DeckDetailsLessonsList lessons={[]} />
+                return <DeckDetailsLessonsList />
               }
 
               return <DeckDetailsCardsList />

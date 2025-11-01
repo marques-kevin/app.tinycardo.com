@@ -2,10 +2,12 @@ import { type DeckEntity } from "@/modules/decks/entities/deck_entity"
 import { type DecksRepository } from "@/modules/decks/repositories/decks_repository"
 import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { v4 } from "uuid"
+import type { LessonEntity } from "../entities/lesson_entity"
 
 export class DecksRepositoryInMemory implements DecksRepository {
   private decks: DeckEntity[] = []
   private cards: Record<string, CardEntity[]> = {}
+  public lessons: LessonEntity[] = []
 
   constructor(
     params: Partial<{
@@ -177,5 +179,12 @@ export class DecksRepositoryInMemory implements DecksRepository {
     })
 
     return new_deck
+  }
+
+  async fetch_lessons(params: {
+    deck_id: string
+    user_id: string
+  }): ReturnType<DecksRepository["fetch_lessons"]> {
+    return this.lessons.filter((lesson) => lesson.deck_id === params.deck_id)
   }
 }
