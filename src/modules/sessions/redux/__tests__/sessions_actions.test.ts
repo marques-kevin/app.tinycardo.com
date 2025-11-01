@@ -145,7 +145,10 @@ describe("sessions actions", () => {
       sessions_actions.set_review_word({ status: "known" }),
     )
 
-    const history = await session_repository.fetch_history({ deck_id: deck.id })
+    const history = await session_repository.fetch_history({
+      deck_id: deck.id,
+      user_id: "1",
+    })
 
     expect(history.every(({ ease_factor }) => ease_factor === 5)).toEqual(true)
   })

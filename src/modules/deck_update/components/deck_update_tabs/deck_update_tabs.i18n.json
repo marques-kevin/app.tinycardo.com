@@ -1,0 +1,10 @@
+{
+  "cards": "Cards",
+  "lessons": "Lessons",
+  "rename/title": "Rename",
+  "rename/placeholder": "Enter new name",
+  "rename/cancel": "Cancel",
+  "rename/save": "Save",
+  "lesson_created": "Lesson created successfully",
+  "lesson_renamed": "Lesson renamed successfully"
+}

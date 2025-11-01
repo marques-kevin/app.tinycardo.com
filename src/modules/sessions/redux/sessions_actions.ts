@@ -71,7 +71,7 @@ export const start_session = createAsyncThunk<
     const { params, authentication } = getState()
     const location = extra.location_service.get_current_url()
     const pathname = new URL(location).pathname
-    const user_id = authentication.user!.id
+    const user_id = authentication.user?.id ?? ""
 
     const matched = UrlMatcherService.extract({
       pattern: `/sessions/:deck_id/:mode`,

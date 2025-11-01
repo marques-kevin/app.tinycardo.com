@@ -53,4 +53,14 @@ export interface DecksRepository {
     deck_id: string
     user_id: string
   }): Promise<LessonEntity[]>
+
+  create_lesson(params: {
+    deck_id: string
+    name: string
+  }): Promise<LessonEntity>
+
+  rename_lesson(params: {
+    lesson_id: string
+    name: string
+  }): Promise<LessonEntity>
 }

@@ -7,6 +7,7 @@ import { open as open_dialog } from "@/modules/dialog/redux/dialog_actions"
 import { UrlMatcherService } from "@/modules/global/services/url_matcher_service/url_matcher_service"
 import type { MessageI18nKeys } from "@/intl"
 import type { DeckUpdateState } from "@/modules/deck_update/redux/deck_update_reducers"
+import type { LessonEntity } from "@/modules/decks/entities/lesson_entity"
 
 export const update_deck_set_visibility = createAction<{
   visibility: "public" | "private" | "unlisted"
@@ -57,8 +58,16 @@ export const _create_deck_set_cards = createAction<CardEntity[]>(
 
 export const reset_create_deck = createAction("deck_update/reset_create_deck")
 
+export const open_rename_lesson_modal = createAction<{ lesson_id: string }>(
+  "deck_update/open_rename_lesson_modal",
+)
+
+export const close_rename_lesson_modal = createAction(
+  "deck_update/close_rename_lesson_modal",
+)
+
 export const load_deck_into_create_form = createAsyncThunk<
-  { deck: DeckEntity; cards: CardEntity[] } | null,
+  { deck: DeckEntity; cards: CardEntity[]; lessons: LessonEntity[] } | null,
   { deck_id: string },
   AsyncThunkConfig
 >(
@@ -73,12 +82,17 @@ export const load_deck_into_create_form = createAsyncThunk<
       user_id: authentication.user.id,
     })
     const cards = await extra.decks_repository.fetch_cards({ deck_id })
+    const lessons = await extra.decks_repository.fetch_lessons({
+      deck_id,
+      user_id: authentication.user.id,
+    })
 
     if (!deck) throw new Error(`Deck not found`)
 
     return {
       deck,
       cards,
+      lessons,
     }
   },
 )
@@ -303,3 +317,80 @@ export const global_route_changed = createAsyncThunk<
 >("deck_update/global_route_changed", async (_, { dispatch }) => {
   dispatch(when_user_is_on_update_deck_page())
 })
+
+/**
+ * ------------------------------------------------------------
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * LESSON ACTIONS
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * ------------------------------------------------------------
+ */
+
+export const create_lesson = createAsyncThunk<
+  LessonEntity,
+  void,
+  AsyncThunkConfig
+>("deck_update/create_lesson", async (_, { getState, extra }) => {
+  const { deck_update, authentication } = getState()
+
+  if (!authentication.user) {
+    throw new Error("User not authenticated")
+  }
+
+  const pathname = new URL(extra.location_service.get_current_url()).pathname
+  const extracted = UrlMatcherService.extract({
+    pattern: "/decks/:deck_id/update",
+    url: pathname,
+  })
+
+  if (!extracted.deck_id) {
+    throw new Error("Deck ID not found")
+  }
+
+  const lesson = await extra.decks_repository.create_lesson({
+    deck_id: extracted.deck_id,
+    name: "Untitled",
+  })
+
+  await extra.toast_service.toast({
+    title: "deck_update_tabs/lesson_created",
+    type: "success",
+  })
+
+  return lesson
+})
+
+export const rename_lesson = createAsyncThunk<
+  LessonEntity,
+  { lesson_id: string; name: string },
+  AsyncThunkConfig
+>(
+  "deck_update/rename_lesson",
+  async ({ lesson_id, name }, { extra, dispatch }) => {
+    const lesson = await extra.decks_repository.rename_lesson({
+      lesson_id,
+      name,
+    })
+
+    await extra.toast_service.toast({
+      title: "deck_update_tabs/lesson_renamed",
+      type: "success",
+    })
+
+    dispatch(close_rename_lesson_modal())
+
+    return lesson
+  },
+)

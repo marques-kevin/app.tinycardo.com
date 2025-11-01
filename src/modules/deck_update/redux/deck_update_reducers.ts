@@ -3,6 +3,7 @@ import * as actions from "@/modules/deck_update/redux/deck_update_actions"
 import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { create_uuid_for_cards } from "@/modules/decks/utils/create_uuid_for_cards"
 import { v4 } from "uuid"
+import type { LessonEntity } from "@/modules/decks/entities/lesson_entity"
 
 const create_card = (): CardEntity => {
   return {
@@ -32,6 +33,8 @@ export type DeckUpdateState = {
   back_language: string
   is_loading: boolean
   is_updating: boolean
+  rename_lesson_modal: string | null
+  lessons: LessonEntity[]
 }
 
 const initialState: DeckUpdateState = {
@@ -53,6 +56,8 @@ const initialState: DeckUpdateState = {
   front_language: "en",
   back_language: "fr",
   is_loading: false,
+  rename_lesson_modal: null,
+  lessons: [],
 }
 
 export const deck_update_reducers = createReducer(initialState, (builder) => {
@@ -272,6 +277,27 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
         },
         {} as Record<string, CardEntity>,
       )
+      state.lessons = action.payload.lessons
     },
   )
+
+  builder.addCase(actions.open_rename_lesson_modal, (state, action) => {
+    state.rename_lesson_modal = action.payload.lesson_id
+  })
+
+  builder.addCase(actions.close_rename_lesson_modal, (state) => {
+    state.rename_lesson_modal = null
+  })
+
+  builder.addCase(actions.rename_lesson.fulfilled, (state, action) => {
+    state.rename_lesson_modal = null
+    const index = state.lessons.findIndex((l) => l.id === action.payload.id)
+    if (index !== -1) {
+      state.lessons[index] = action.payload
+    }
+  })
+
+  builder.addCase(actions.create_lesson.fulfilled, (state, action) => {
+    state.lessons.push(action.payload)
+  })
 })

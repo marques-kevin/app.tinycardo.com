@@ -187,4 +187,52 @@ export class DecksRepositoryInMemory implements DecksRepository {
   }): ReturnType<DecksRepository["fetch_lessons"]> {
     return this.lessons.filter((lesson) => lesson.deck_id === params.deck_id)
   }
+
+  async create_lesson(
+    params: Parameters<DecksRepository["create_lesson"]>[0],
+  ): ReturnType<DecksRepository["create_lesson"]> {
+    const existing_lessons = this.lessons.filter(
+      (lesson) => lesson.deck_id === params.deck_id,
+    )
+    const max_position =
+      existing_lessons.reduce(
+        (max, lesson) => Math.max(max, lesson.position),
+        -1,
+      ) + 1
+
+    const lesson: LessonEntity = {
+      id: v4(),
+      deck_id: params.deck_id,
+      name: params.name,
+      cards: [],
+      position: max_position,
+      created_at: new Date(),
+      updated_at: new Date(),
+    }
+
+    this.lessons = [...this.lessons, lesson]
+    return lesson
+  }
+
+  async rename_lesson(
+    params: Parameters<DecksRepository["rename_lesson"]>[0],
+  ): ReturnType<DecksRepository["rename_lesson"]> {
+    const lesson = this.lessons.find((l) => l.id === params.lesson_id)
+
+    if (!lesson) {
+      throw new Error("Lesson not found")
+    }
+
+    const updated_lesson: LessonEntity = {
+      ...lesson,
+      name: params.name,
+      updated_at: new Date(),
+    }
+
+    this.lessons = this.lessons.map((l) =>
+      l.id === params.lesson_id ? updated_lesson : l,
+    )
+
+    return updated_lesson
+  }
 }
