@@ -35,6 +35,8 @@ export type DeckUpdateState = {
   is_loading: boolean
   is_updating: boolean
   rename_lesson_modal: string | null
+  add_cards_to_lesson_modal: boolean
+  add_cards_to_lesson_selected_lesson_id: string | null
   lessons: LessonEntity[]
   active_lesson_id: string | null
 }
@@ -78,6 +80,8 @@ const initialState: DeckUpdateState = {
   back_language: "fr",
   is_loading: false,
   rename_lesson_modal: null,
+  add_cards_to_lesson_modal: false,
+  add_cards_to_lesson_selected_lesson_id: null,
   lessons: [],
   active_lesson_id: null,
 }
@@ -335,6 +339,34 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
   builder.addCase(actions.set_active_lesson, (state, action) => {
     state.active_lesson_id = action.payload.lesson_id
   })
+
+  builder.addCase(actions.open_add_cards_to_lesson_modal, (state) => {
+    state.add_cards_to_lesson_modal = true
+    state.add_cards_to_lesson_selected_lesson_id = null
+  })
+
+  builder.addCase(actions.close_add_cards_to_lesson_modal, (state) => {
+    state.add_cards_to_lesson_modal = false
+    state.add_cards_to_lesson_selected_lesson_id = null
+  })
+
+  builder.addCase(
+    actions.add_selected_cards_to_lesson.fulfilled,
+    (state, action) => {
+      const lesson = state.lessons.find(
+        (l) => l.id === action.payload.lesson_id,
+      )
+      if (!lesson) return
+
+      // Add selected cards to lesson, avoiding duplicates
+      const new_card_ids = [
+        ...new Set([...lesson.cards, ...state.selected_cards]),
+      ]
+      lesson.cards = new_card_ids
+      state.selected_cards = []
+      state.add_cards_to_lesson_modal = false
+    },
+  )
 
   // Recompute filtered cards after any action that might affect them
   builder.addMatcher(

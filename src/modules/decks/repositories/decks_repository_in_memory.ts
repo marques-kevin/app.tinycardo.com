@@ -247,4 +247,18 @@ export class DecksRepositoryInMemory implements DecksRepository {
 
     this.lessons = this.lessons.filter((l) => l.id !== params.lesson_id)
   }
+
+  async update_lesson_cards_list(
+    params: Parameters<DecksRepository["update_lesson_cards_list"]>[0],
+  ): ReturnType<DecksRepository["update_lesson_cards_list"]> {
+    const lesson = this.lessons.find((l) => l.id === params.lesson_id)
+
+    if (!lesson) {
+      throw new Error("Lesson not found")
+    }
+
+    lesson.cards = params.card_ids
+
+    return lesson
+  }
 }

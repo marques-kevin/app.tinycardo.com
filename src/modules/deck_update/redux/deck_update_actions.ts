@@ -58,18 +58,6 @@ export const _create_deck_set_cards = createAction<CardEntity[]>(
 
 export const reset_create_deck = createAction("deck_update/reset_create_deck")
 
-export const open_rename_lesson_modal = createAction<{ lesson_id: string }>(
-  "deck_update/open_rename_lesson_modal",
-)
-
-export const close_rename_lesson_modal = createAction(
-  "deck_update/close_rename_lesson_modal",
-)
-
-export const set_active_lesson = createAction<{ lesson_id: string | null }>(
-  "deck_update/set_active_lesson",
-)
-
 export const load_deck_into_create_form = createAsyncThunk<
   { deck: DeckEntity; cards: CardEntity[]; lessons: LessonEntity[] } | null,
   { deck_id: string },
@@ -176,6 +164,14 @@ export const update_deck = createAsyncThunk<void, void, AsyncThunkConfig>(
       deck_id: extracted.deck_id!,
       cards,
     })
+
+    // Update lesson cards
+    for (const lesson of deck_update.lessons) {
+      await extra.decks_repository.update_lesson_cards_list({
+        lesson_id: lesson.id,
+        card_ids: lesson.cards,
+      })
+    }
 
     await extra.toast_service.toast({
       title: "deck_update_actions/toast/deck_updated",
@@ -341,6 +337,43 @@ export const global_route_changed = createAsyncThunk<
  *
  * ------------------------------------------------------------
  */
+
+export const open_rename_lesson_modal = createAction<{ lesson_id: string }>(
+  "deck_update/open_rename_lesson_modal",
+)
+
+export const close_rename_lesson_modal = createAction(
+  "deck_update/close_rename_lesson_modal",
+)
+
+export const set_active_lesson = createAction<{ lesson_id: string | null }>(
+  "deck_update/set_active_lesson",
+)
+
+export const open_add_cards_to_lesson_modal = createAction(
+  "deck_update/open_add_cards_to_lesson_modal",
+)
+
+export const close_add_cards_to_lesson_modal = createAction(
+  "deck_update/close_add_cards_to_lesson_modal",
+)
+
+export const add_selected_cards_to_lesson = createAsyncThunk<
+  { lesson_id: string },
+  { lesson_id: string },
+  AsyncThunkConfig
+>(
+  "deck_update/set_add_cards_to_lesson_selected_lesson",
+  async ({ lesson_id }, { extra }) => {
+    await extra.toast_service.toast({
+      title:
+        "deck_update_actions/toast/set_add_cards_to_lesson_selected_lesson",
+      type: "success",
+    })
+
+    return { lesson_id }
+  },
+)
 
 export const create_lesson = createAsyncThunk<
   LessonEntity,

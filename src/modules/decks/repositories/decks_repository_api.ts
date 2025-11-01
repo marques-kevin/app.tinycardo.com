@@ -231,4 +231,25 @@ export class DecksRepositoryApi implements DecksRepository {
       any
     >("/lessons/delete_lesson", params)
   }
+
+  async update_lesson_cards_list(
+    params: Parameters<DecksRepository["update_lesson_cards_list"]>[0],
+  ): ReturnType<DecksRepository["update_lesson_cards_list"]> {
+    // TODO: Add /lessons/update_lesson_cards_list endpoint to API and update types
+    // @ts-expect-error - API endpoint not yet implemented
+    const lesson_response = await this.api_service.post<
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      any
+    >("/lessons/update_lesson_cards_list", params)
+
+    return {
+      id: lesson_response.id,
+      deck_id: lesson_response.deck_id,
+      name: lesson_response.name,
+      cards: lesson_response.cards,
+      position: lesson_response.position,
+      created_at: new Date(lesson_response.created_at),
+      updated_at: new Date(lesson_response.updated_at),
+    }
+  }
 }

@@ -6,6 +6,7 @@ import { DecksUpdateTitle } from "@/modules/deck_update/components/decks_update_
 import { GlobalNavbar } from "@/modules/global/components/global_navbar/global_navbar"
 import { DeckUpdateTabs } from "@/modules/deck_update/components/deck_update_tabs/deck_update_tabs"
 import { DeckUpdateTabsRenameModal } from "@/modules/deck_update/components/deck_update_tabs_rename_modal/deck_update_tabs_rename_modal"
+import { DeckUpdateAddCardsToLessonModal } from "@/modules/deck_update/components/deck_update_add_cards_to_lesson_modal/deck_update_add_cards_to_lesson_modal"
 
 export function DecksUpdatePage() {
   return (
@@ -26,6 +27,7 @@ export function DecksUpdatePage() {
         </div>
       </div>
       <DeckUpdateTabsRenameModal />
+      <DeckUpdateAddCardsToLessonModal />
     </>
   )
 }

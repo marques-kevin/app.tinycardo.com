@@ -5,6 +5,7 @@ import * as deck_update_actions from "@/modules/deck_update/redux/deck_update_ac
 const map_state = (state: RootState) => ({
   selected_cards_length: state.deck_update.selected_cards.length,
   is_updating: state.deck_update.is_updating,
+  lessons: state.deck_update.lessons,
 })
 
 const map_dispatch = (dispatch: Dispatch) => ({
@@ -19,6 +20,9 @@ const map_dispatch = (dispatch: Dispatch) => ({
   },
   on_delete_selected_cards() {
     dispatch(deck_update_actions.update_deck_delete_selected_cards())
+  },
+  on_open_add_to_lesson_modal() {
+    dispatch(deck_update_actions.open_add_cards_to_lesson_modal())
   },
 })
 
