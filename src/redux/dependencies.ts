@@ -32,6 +32,7 @@ import { seed_cards } from "@/redux/__seed__/seed_cards"
 import { seed_discover_decks } from "@/redux/__seed__/seed_discover_decks"
 import { seed_authenticated_user } from "@/redux/__seed__/seed_users"
 import { seed_streaks } from "@/redux/__seed__/seed_streaks"
+import { seed_lessons } from "@/redux/__seed__/seed_lessons"
 
 import { StreakRepositoryApi } from "@/modules/streak/repositories/streak_repository/streak_repository_api"
 import type { PlausibleService } from "@/modules/global/services/plausible_service/plausible_service"
@@ -79,6 +80,7 @@ export function build_dependencies(
       decks_repository: new DecksRepositoryInMemory({
         decks: seed_decks,
         cards: seed_cards,
+        lessons: seed_lessons,
       }),
       sessions_repository: new SessionsRepositoryInMemory(),
       users_repository: new UsersRepositoryInMemory({

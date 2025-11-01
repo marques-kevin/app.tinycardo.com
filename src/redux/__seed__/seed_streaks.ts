@@ -7,7 +7,7 @@ export const seed_streaks: StreakEntity[] = Array.from(
   (_, i) => ({
     id: `${i + 1}`,
     user_id: seed_authenticated_user.id,
-    date: dayjs().subtract(i, "day").toDate(),
+    date: dayjs().subtract(i, "day").format("YYYY-MM-DD"),
   }),
 ).concat(
   Array.from({ length: 10 }, (_, i) => ({
@@ -15,6 +15,6 @@ export const seed_streaks: StreakEntity[] = Array.from(
     user_id: seed_authenticated_user.id,
     date: dayjs()
       .subtract(i + 15, "day")
-      .toDate(),
+      .format("YYYY-MM-DD"),
   })),
 )

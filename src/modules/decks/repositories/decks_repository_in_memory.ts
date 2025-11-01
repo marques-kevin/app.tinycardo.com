@@ -13,10 +13,12 @@ export class DecksRepositoryInMemory implements DecksRepository {
     params: Partial<{
       decks?: DeckEntity[]
       cards?: CardEntity[]
+      lessons?: LessonEntity[]
     }> = {},
   ) {
     this.decks = params.decks ?? []
     this.store_cards(params.cards ?? [])
+    this.lessons = params.lessons ?? []
   }
 
   private store_cards(cards: CardEntity[]): void {
@@ -257,7 +259,9 @@ export class DecksRepositoryInMemory implements DecksRepository {
       throw new Error("Lesson not found")
     }
 
-    lesson.cards = params.card_ids
+    this.lessons = this.lessons.map((l) =>
+      l.id === params.lesson_id ? { ...l, cards: params.card_ids } : l,
+    )
 
     return lesson
   }
