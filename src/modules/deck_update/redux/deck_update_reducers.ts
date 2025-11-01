@@ -24,6 +24,7 @@ export type DeckUpdateState = {
     selected_back: number
   }
   cards: CardEntity["id"][]
+  cards_filtered_by_lesson_tab: CardEntity["id"][]
   cards_map: Record<string, CardEntity>
   title: string
   description: string
@@ -38,7 +39,7 @@ export type DeckUpdateState = {
   active_lesson_id: string | null
 }
 
-export const select_filtered_cards = (state: DeckUpdateState) => {
+const compute_filtered_cards = (state: DeckUpdateState) => {
   if (state.active_lesson_id === null) {
     return state.cards
   }
@@ -54,6 +55,8 @@ export const select_filtered_cards = (state: DeckUpdateState) => {
   return state.cards.filter((card_id) => active_lesson.cards.includes(card_id))
 }
 
+export const select_filtered_cards = compute_filtered_cards
+
 const initialState: DeckUpdateState = {
   deck_id: null,
   csv_import_dialog: {
@@ -66,6 +69,7 @@ const initialState: DeckUpdateState = {
   is_updating: false,
   selected_cards: [],
   cards: [],
+  cards_filtered_by_lesson_tab: [],
   cards_map: {},
   title: "",
   description: "",
@@ -331,4 +335,12 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
   builder.addCase(actions.set_active_lesson, (state, action) => {
     state.active_lesson_id = action.payload.lesson_id
   })
+
+  // Recompute filtered cards after any action that might affect them
+  builder.addMatcher(
+    () => true,
+    (state) => {
+      state.cards_filtered_by_lesson_tab = compute_filtered_cards(state)
+    },
+  )
 })
