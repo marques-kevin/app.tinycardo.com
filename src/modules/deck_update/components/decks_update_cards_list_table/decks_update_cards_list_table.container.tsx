@@ -11,7 +11,7 @@ const map_state = (state: RootState) => ({
 
 const map_dispatch = (dispatch: Dispatch) => ({
   on_toggle_select_all_cards() {
-    dispatch(deck_update_actions.update_deck_toggle_select_all_cards())
+    dispatch(deck_update_actions.toggle_select_all_cards())
   },
   on_update_front_language(language: string) {
     dispatch(

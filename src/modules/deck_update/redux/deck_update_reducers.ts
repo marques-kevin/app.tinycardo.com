@@ -4,6 +4,7 @@ import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { create_uuid_for_cards } from "@/modules/decks/utils/create_uuid_for_cards"
 import { v4 } from "uuid"
 import type { LessonEntity } from "@/modules/decks/entities/lesson_entity"
+import type { DeckEntity } from "@/modules/decks/entities/deck_entity"
 
 const create_card = (): CardEntity => {
   return {
@@ -15,9 +16,9 @@ const create_card = (): CardEntity => {
 }
 
 export type DeckUpdateState = {
-  deck_id: string | null
+  deck: DeckEntity | null
   csv_import_dialog: {
-    open: boolean
+    is_open: boolean
     headers: string[]
     rows: string[][]
     selected_front: number
@@ -26,12 +27,7 @@ export type DeckUpdateState = {
   cards: CardEntity["id"][]
   cards_filtered_by_lesson_tab: CardEntity["id"][]
   cards_map: Record<string, CardEntity>
-  title: string
-  description: string
-  visibility: "public" | "private" | "unlisted"
-  front_language: string
   selected_cards: CardEntity["id"][]
-  back_language: string
   is_loading: boolean
   is_updating: boolean
   rename_lesson_modal: string | null
@@ -57,12 +53,26 @@ const compute_filtered_cards = (state: DeckUpdateState) => {
   return state.cards.filter((card_id) => active_lesson.cards.includes(card_id))
 }
 
+const add_empty_card_if_needed = (cards: CardEntity[]): CardEntity[] => {
+  if (cards.length === 0) {
+    return [create_card()]
+  }
+
+  const last_card = cards[cards.length - 1]
+
+  if (last_card.front !== "" || last_card.back !== "") {
+    return [...cards, create_card()]
+  }
+
+  return cards
+}
+
 export const select_filtered_cards = compute_filtered_cards
 
 const initialState: DeckUpdateState = {
-  deck_id: null,
+  deck: null,
   csv_import_dialog: {
-    open: false,
+    is_open: false,
     headers: [],
     rows: [],
     selected_front: 0,
@@ -73,11 +83,6 @@ const initialState: DeckUpdateState = {
   cards: [],
   cards_filtered_by_lesson_tab: [],
   cards_map: {},
-  title: "",
-  description: "",
-  visibility: "public",
-  front_language: "en",
-  back_language: "fr",
   is_loading: false,
   rename_lesson_modal: null,
   add_cards_to_lesson_modal: false,
@@ -89,7 +94,7 @@ const initialState: DeckUpdateState = {
 export const deck_update_reducers = createReducer(initialState, (builder) => {
   builder.addCase(actions._open_csv_import_dialog, (state, action) => {
     state.csv_import_dialog = {
-      open: true,
+      is_open: true,
       headers: action.payload.headers,
       rows: action.payload.rows,
       selected_front: action.payload.selected_front,
@@ -107,7 +112,7 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
 
   builder.addCase(actions._close_csv_import_dialog, (state) => {
     state.csv_import_dialog = {
-      open: false,
+      is_open: false,
       headers: [],
       rows: [],
       selected_front: 0,
@@ -171,11 +176,7 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
     state.cards = []
     state.cards_map = {}
     state.selected_cards = []
-    state.title = ""
-    state.description = ""
-    state.visibility = "public"
-    state.front_language = "en"
-    state.back_language = "fr"
+    state.deck = null
   })
 
   builder.addCase(actions._draft_update_card, (state, action) => {
@@ -194,18 +195,13 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
     }
   })
 
-  builder.addCase(actions._draft_remove_card, (state, action) => {
-    state.cards = state.cards.filter((c) => c !== action.payload.id)
-    delete state.cards_map[action.payload.id]
-  })
-
-  builder.addCase(actions.update_deck_toggle_select_card, (state, action) => {
+  builder.addCase(actions.toggle_select_card, (state, action) => {
     state.selected_cards = state.selected_cards.includes(action.payload.card_id)
       ? state.selected_cards.filter((c) => c !== action.payload.card_id)
       : [...state.selected_cards, action.payload.card_id]
   })
 
-  builder.addCase(actions.update_deck_delete_selected_cards, (state) => {
+  builder.addCase(actions.delete_selected_cards.fulfilled, (state, action) => {
     state.cards = state.cards.filter((c) => !state.selected_cards.includes(c))
     state.cards_map = Object.fromEntries(
       Object.entries(state.cards_map).filter(
@@ -228,7 +224,7 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
     }
   })
 
-  builder.addCase(actions.update_deck_toggle_select_all_cards, (state) => {
+  builder.addCase(actions.toggle_select_all_cards, (state) => {
     if (state.selected_cards.length === state.cards.length) {
       state.selected_cards = []
     } else {
@@ -236,27 +232,11 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
     }
   })
 
-  builder.addCase(actions.update_deck_set_title, (state, action) => {
-    state.title = action.payload.title
-  })
-
-  builder.addCase(actions.update_deck_set_description, (state, action) => {
-    state.description = action.payload.description
-  })
-
-  builder.addCase(actions.update_deck_set_visibility, (state, action) => {
-    state.visibility = action.payload.visibility
-  })
-
-  builder.addCase(
-    actions.create_deck_update_front_language,
-    (state, action) => {
-      state.front_language = action.payload.language
-    },
-  )
-
-  builder.addCase(actions.create_deck_update_back_language, (state, action) => {
-    state.back_language = action.payload.language
+  builder.addCase(actions.update_field, (state, action) => {
+    state.deck = {
+      ...state.deck,
+      ...action.payload,
+    } as DeckEntity
   })
 
   builder.addCase(actions.update_deck.pending, (state) => {
@@ -286,15 +266,9 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
 
       if (!action.payload) return
 
-      const cards =
-        action.payload.cards.length > 0 ? action.payload.cards : [create_card()]
+      const cards = add_empty_card_if_needed(action.payload.cards)
 
-      state.deck_id = action.payload.deck.id
-      state.title = action.payload.deck.name
-      state.visibility = action.payload.deck.visibility
-      state.description = action.payload.deck.description || ""
-      state.front_language = action.payload.deck.front_language
-      state.back_language = action.payload.deck.back_language
+      state.deck = action.payload.deck
       state.cards = cards.map((c) => c.id)
       state.cards_map = cards.reduce(
         (acc, c) => {

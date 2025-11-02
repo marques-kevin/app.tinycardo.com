@@ -29,7 +29,7 @@ const mapDispatch = (dispatch: Dispatch, props: { card_id: string }) => ({
   },
   on_toggle_select() {
     dispatch(
-      deck_update_actions.update_deck_toggle_select_card({
+      deck_update_actions.toggle_select_card({
         card_id: props.card_id,
       }),
     )

@@ -13,7 +13,7 @@ type Story = StoryObj<typeof Wrapper>
 export const Open: Story = {
   args: {
     headers: ["french", "korean", "actions"],
-    open: true,
+    is_open: true,
     rows: [],
     selected_back: 0,
     selected_front: 1,
@@ -23,7 +23,7 @@ export const Open: Story = {
 export const Close: Story = {
   args: {
     headers: ["french", "korean", "actions"],
-    open: false,
+    is_open: false,
     rows: [],
     selected_back: 0,
     selected_front: 1,

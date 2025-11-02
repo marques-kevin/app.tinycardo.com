@@ -12,6 +12,8 @@
   "deck_details_loading/loading": "We are loading the deck details for you...",
   "deck_details_tabs/cards": "Cards",
   "deck_details_tabs/lessons": "Lessons",
+  "deck_update_actions/toast/cards_deleted": "Cards deleted successfully",
+  "deck_update_actions/toast/cards_deleted/description": "The cards have been deleted successfully",
   "deck_update_actions/toast/deck_updated": "Deck updated successfully",
   "deck_update_actions/toast/deck_updated/description": "Your deck has been updated successfully",
   "deck_update_actions/toast/set_add_cards_to_lesson_selected_lesson": "Cards added to lesson successfully",

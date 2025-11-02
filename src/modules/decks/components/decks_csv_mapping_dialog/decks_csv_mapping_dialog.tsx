@@ -22,7 +22,7 @@ export function Wrapper(props: ContainerProps) {
   }
 
   return (
-    <dialog open={props.open} className="modal">
+    <dialog open={props.is_open} className="modal">
       <div className="modal-box w-full max-w-2xl">
         <h3 className="text-accent flex items-center gap-2 text-2xl font-bold">
           <ScanTextIcon className={`size-6`} />

@@ -19,7 +19,7 @@ const map_dispatch = (dispatch: Dispatch) => ({
     dispatch(deck_update_actions.import_cards_from_csv({ content }))
   },
   on_delete_selected_cards() {
-    dispatch(deck_update_actions.update_deck_delete_selected_cards())
+    dispatch(deck_update_actions.delete_selected_cards())
   },
   on_open_add_to_lesson_modal() {
     dispatch(deck_update_actions.open_add_cards_to_lesson_modal())

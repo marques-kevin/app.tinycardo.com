@@ -99,13 +99,20 @@ export class DecksRepositoryInMemory implements DecksRepository {
     return deck
   }
 
-  async update_deck(params: {
-    id: string
-    name?: string
-    description?: string
-    front_language?: string
-    back_language?: string
-  }): ReturnType<DecksRepository["update_deck"]> {
+  async update_deck(
+    params: Partial<
+      Pick<
+        DeckEntity,
+        | "id"
+        | "user_id"
+        | "name"
+        | "description"
+        | "visibility"
+        | "front_language"
+        | "back_language"
+      >
+    >,
+  ): ReturnType<DecksRepository["update_deck"]> {
     const deck = this.decks.find((d) => d.id === params.id)
 
     if (!deck) {
@@ -114,9 +121,7 @@ export class DecksRepositoryInMemory implements DecksRepository {
 
     const updated_deck: DeckEntity = {
       ...deck,
-      name: params.name ?? deck.name,
-      front_language: params.front_language ?? deck.front_language,
-      back_language: params.back_language ?? deck.back_language,
+      ...params,
       updated_at: new Date(),
     }
 
