@@ -1,7 +1,7 @@
 {
-  "title": "Rename",
-  "placeholder": "Enter new name",
   "cancel": "Cancel",
-  "save": "Save"
+  "description": "Please use small and concise names for your lessons. Remember other users will use your deck.",
+  "placeholder": "Enter new name",
+  "save": "Save changes",
+  "title": "Rename the lesson ?"
 }
-

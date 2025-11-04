@@ -51,7 +51,9 @@ function Wrapper(props: ContainerProps) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="mt-1">
                   <DropdownMenuItem
-                    onClick={() => props.on_open_rename_modal(lesson.id)}
+                    onClick={() => {
+                      props.on_open_rename_modal(lesson.id)
+                    }}
                   >
                     <PencilIcon className="size-4" />
                     <span>

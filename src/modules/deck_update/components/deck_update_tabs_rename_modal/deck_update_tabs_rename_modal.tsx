@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useIntl } from "react-intl"
 import {
   connector,
   type ContainerProps,
 } from "./deck_update_tabs_rename_modal.container"
+import { GlobalModal } from "@/modules/global/components/global_modal/global_modal"
+import { PencilIcon } from "lucide-react"
 
 function Wrapper(props: ContainerProps) {
   const [rename_value, set_rename_value] = useState<string>("")
   const { formatMessage } = useIntl()
+  const input_ref = useRef<HTMLInputElement>(null)
 
   const handle_rename_save = () => {
     if (props.lesson_id && rename_value.trim()) {
@@ -26,52 +29,38 @@ function Wrapper(props: ContainerProps) {
   }, [props.is_open])
 
   return (
-    <dialog
-      className="modal"
-      open={props.is_open}
-      onClose={handle_rename_cancel}
-    >
-      <div className="modal-box">
-        <h3 id="dialog-title" className="text-lg font-bold">
-          {formatMessage({ id: "deck_update_tabs_rename_modal/title" })}
-        </h3>
-
-        <div className="mt-4">
-          <fieldset className="fieldset">
-            <input
-              className="input input-lg w-full"
-              placeholder={formatMessage({
-                id: "deck_update_tabs_rename_modal/placeholder",
-              })}
-              value={rename_value}
-              onChange={(e) => set_rename_value(e.target.value)}
-              autoFocus
-            />
-          </fieldset>
-        </div>
-
-        <div className="modal-action">
-          <button className="btn btn-ghost" onClick={handle_rename_cancel}>
-            {formatMessage({ id: "deck_update_tabs_rename_modal/cancel" })}
-          </button>
+    <GlobalModal
+      title={formatMessage({ id: "deck_update_tabs_rename_modal/title" })}
+      description={formatMessage({
+        id: "deck_update_tabs_rename_modal/description",
+      })}
+      icon={PencilIcon}
+      is_open={props.is_open}
+      on_close={handle_rename_cancel}
+      actions={
+        <>
           <button
-            className="btn btn-primary"
+            className="btn btn-lg btn-primary"
             onClick={handle_rename_save}
-            disabled={!rename_value.trim()}
           >
             {formatMessage({ id: "deck_update_tabs_rename_modal/save" })}
           </button>
-        </div>
-      </div>
-
-      <form
-        method="dialog"
-        className="modal-backdrop"
-        onClick={handle_rename_cancel}
-      >
-        <button>close</button>
-      </form>
-    </dialog>
+        </>
+      }
+    >
+      <fieldset className="fieldset">
+        <input
+          ref={input_ref}
+          className="input input-lg w-full"
+          placeholder={formatMessage({
+            id: "deck_update_tabs_rename_modal/placeholder",
+          })}
+          value={rename_value}
+          onChange={(e) => set_rename_value(e.target.value)}
+          autoFocus
+        />
+      </fieldset>
+    </GlobalModal>
   )
 }
 
