@@ -79,7 +79,7 @@ export function Wrapper(props: ContainerProps) {
         <div className="flex items-center justify-center gap-2">
           {props.selected_cards_length > 0 ? (
             <>
-              {props.lessons.length > 0 && (
+              {props.lessons_length > 0 && (
                 <button
                   className="btn btn-primary gap-2 uppercase"
                   onClick={props.on_open_add_to_lesson_modal}

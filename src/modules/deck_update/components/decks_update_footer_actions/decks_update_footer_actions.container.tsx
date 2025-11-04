@@ -5,7 +5,7 @@ import * as deck_update_actions from "@/modules/deck_update/redux/deck_update_ac
 const map_state = (state: RootState) => ({
   selected_cards_length: state.deck_update.selected_cards.length,
   is_updating: state.deck_update.is_updating,
-  lessons: state.deck_update.lessons,
+  lessons_length: state.deck_update.lessons.length,
 })
 
 const map_dispatch = (dispatch: Dispatch) => ({

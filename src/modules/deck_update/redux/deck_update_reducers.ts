@@ -337,11 +337,19 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
     )
     if (state.active_lesson_id === action.payload.lesson_id) {
       state.active_lesson_id = null
+      state.cards_filtered_by_lesson_tab = deck_update_filter_cards_by_lesson({
+        cards: state.cards,
+        lessons: state.lessons,
+        lesson_id: state.active_lesson_id,
+      })
     }
   })
 
   builder.addCase(actions.set_active_lesson, (state, action) => {
     const lesson_id = action.payload.lesson_id
+
+    if (lesson_id === state.active_lesson_id) return
+
     state.active_lesson_id = lesson_id
 
     if (lesson_id) {

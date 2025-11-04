@@ -2,11 +2,17 @@ import { type Dispatch, type RootState } from "@/redux/store"
 import { connect, type ConnectedProps } from "react-redux"
 import * as deck_update_actions from "@/modules/deck_update/redux/deck_update_actions"
 
-const map_state = (state: RootState) => ({
-  is_open: state.deck_update.add_cards_to_lesson_modal,
-  lessons: state.deck_update.lessons,
-  number_of_selected_cards: state.deck_update.selected_cards.length,
-})
+const map_state = (state: RootState) => {
+  const is_open = state.deck_update.add_cards_to_lesson_modal
+  const lessons = state.deck_update.lessons
+  const number_of_selected_cards = state.deck_update.selected_cards.length
+
+  return {
+    is_open,
+    lessons,
+    number_of_selected_cards,
+  }
+}
 
 const map_dispatch = (dispatch: Dispatch) => ({
   on_close_modal: () => {
