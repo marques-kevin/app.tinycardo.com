@@ -17,7 +17,7 @@ const mapState = (state: RootState, props: { card_id: string }) => {
 const mapDispatch = (dispatch: Dispatch, props: { card_id: string }) => ({
   on_update(field: "front" | "back", value: string) {
     dispatch(
-      deck_update_actions._draft_update_card({
+      deck_update_actions.update_card({
         id: props.card_id,
         field,
         value,

@@ -102,7 +102,7 @@ describe("Feature: Deck Update", () => {
         }),
       )
 
-      await store.dispatch(deck_update_actions.update_deck())
+      await store.dispatch(deck_update_actions.save())
 
       const decks = await dependencies.decks_repository.fetch_decks()
 
@@ -197,7 +197,7 @@ describe("Feature: Deck Update", () => {
       expect(store.getState().deck_update.selected_cards).toEqual([])
       expect(store.getState().deck_update.cards).not.toContain(card.id)
 
-      await store.dispatch(deck_update_actions.update_deck())
+      await store.dispatch(deck_update_actions.save())
 
       const decks_in_database =
         await dependencies.decks_repository.fetch_decks()
@@ -237,7 +237,7 @@ describe("Feature: Deck Update", () => {
       expect(last_card.back).toEqual("")
 
       store.dispatch(
-        deck_update_actions._draft_update_card({
+        deck_update_actions.update_card({
           id: last_card_id,
           field: "front",
           value: "Updated Front",
@@ -245,7 +245,7 @@ describe("Feature: Deck Update", () => {
       )
 
       store.dispatch(
-        deck_update_actions._draft_update_card({
+        deck_update_actions.update_card({
           id: last_card_id,
           field: "back",
           value: "Updated Back",
@@ -384,7 +384,7 @@ describe("Feature: Deck Update", () => {
       expect(lessons_in_database).toHaveLength(1)
       expect(lessons_in_database[0].cards).toHaveLength(0)
 
-      await store.dispatch(deck_update_actions.update_deck())
+      await store.dispatch(deck_update_actions.save())
 
       lessons_in_database = await decks_repository.fetch_lessons({
         deck_id: deck.id,
@@ -437,11 +437,11 @@ describe("Feature: Deck Update", () => {
       /**
        *
        *
-       * The lesson does not have any cards yet, so no cards should be displayed
+       * The lesson should have an empty card when created
        *
        *
        */
-      expect(state.deck_update.cards_filtered_by_lesson_tab).toEqual([])
+      expect(state.deck_update.cards_filtered_by_lesson_tab).toHaveLength(1)
 
       /**
        *
@@ -450,9 +450,11 @@ describe("Feature: Deck Update", () => {
        *
        *
        */
-      await store.dispatch(
+      const card_to_add = cards[0]
+
+      store.dispatch(
         deck_update_actions.toggle_select_card({
-          card_id: state.deck_update.cards[0],
+          card_id: card_to_add.id,
         }),
       )
 
@@ -461,9 +463,11 @@ describe("Feature: Deck Update", () => {
       )
 
       state = store.getState()
-      const card_id = state.deck_update.cards[0]
 
-      expect(state.deck_update.cards_filtered_by_lesson_tab).toEqual([card_id])
+      expect(state.deck_update.cards_filtered_by_lesson_tab).toHaveLength(2)
+      expect(state.deck_update.cards_filtered_by_lesson_tab).toContain(
+        card_to_add.id,
+      )
 
       /**
        *
@@ -478,13 +482,13 @@ describe("Feature: Deck Update", () => {
 
       await store.dispatch(
         deck_update_actions.toggle_select_card({
-          card_id,
+          card_id: card_to_add.id,
         }),
       )
 
       state = store.getState()
 
-      expect(state.deck_update.selected_cards).toEqual([card_id])
+      expect(state.deck_update.selected_cards).toEqual([card_to_add.id])
 
       await store.dispatch(deck_update_actions.delete_selected_cards())
 
@@ -492,8 +496,8 @@ describe("Feature: Deck Update", () => {
 
       expect(state.deck_update.selected_cards).toEqual([])
       expect(state.deck_update.active_lesson_id).toEqual(lesson_id)
-      expect(state.deck_update.cards_filtered_by_lesson_tab).toEqual([])
-      expect(state.deck_update.cards.includes(card_id)).toEqual(true)
+      expect(state.deck_update.cards_filtered_by_lesson_tab).toHaveLength(1)
+      expect(state.deck_update.cards).toContain(card_to_add.id)
     })
 
     it(`
@@ -525,7 +529,7 @@ describe("Feature: Deck Update", () => {
 
       state = store.getState()
 
-      const lesson_id = state.deck_update.lessons[0].id
+      const lesson_id = last(state.deck_update.lessons)!.id
 
       store.dispatch(deck_update_actions.set_active_lesson({ lesson_id }))
 
@@ -540,7 +544,7 @@ describe("Feature: Deck Update", () => {
        *
        *
        */
-      const card_id = cards[0].id
+      const card_id = last(state.deck_update.cards)!
 
       await store.dispatch(deck_update_actions.toggle_select_card({ card_id }))
       await store.dispatch(
@@ -566,6 +570,45 @@ describe("Feature: Deck Update", () => {
       expect(
         state.deck_update.cards_filtered_by_lesson_tab.includes(card_id),
       ).toEqual(false)
+    })
+
+    it(`
+      When a user change card value, should add a new empty card at the end of the list
+      And if the lesson is selected, the new empty card should be added to the lesson
+      `, async () => {
+      const { store } = await prepare_store_for_tests()
+
+      await store.dispatch(deck_update_actions.create_lesson())
+
+      let state = store.getState()
+
+      const lesson_id = last(state.deck_update.lessons)!.id
+
+      store.dispatch(deck_update_actions.set_active_lesson({ lesson_id }))
+
+      state = store.getState()
+
+      let lesson = state.deck_update.lessons.find((l) => l.id === lesson_id)!
+      const card_id = last(lesson.cards)!
+
+      store.dispatch(
+        deck_update_actions.update_card({
+          id: card_id,
+          field: "front",
+          value: "Updated Front",
+        }),
+      )
+
+      state = store.getState()
+
+      expect(state.deck_update.cards_map[card_id].front).toEqual(
+        "Updated Front",
+      )
+
+      lesson = state.deck_update.lessons.find((l) => l.id === lesson_id)!
+
+      expect(lesson.cards[0]).toEqual(card_id)
+      expect(lesson.cards).toHaveLength(2)
     })
   })
 })

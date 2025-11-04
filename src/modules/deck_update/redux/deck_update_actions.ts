@@ -35,19 +35,11 @@ export const toggle_select_all_cards = createAction<void>(
   "decks/toggle_select_all_cards",
 )
 
-export const _draft_add_card = createAction<CardEntity>(
-  "deck_update/_draft_add_card",
-)
-export const _draft_update_card = createAction<{
+export const update_card = createAction<{
   id: string
   field: "front" | "back"
   value: string
-}>("deck_update/_draft_update_card")
-
-export const _draft_add_cards_bulk = createAction<CardEntity[]>(
-  "decks/_draft_add_cards_bulk",
-)
-export const _draft_clear = createAction("deck_update/_draft_clear")
+}>("deck_update/update_card")
 
 export const update_field = createAction<
   Partial<
@@ -64,10 +56,6 @@ export const update_field = createAction<
     >
   >
 >("deck_update/update_field")
-
-export const _create_deck_set_cards = createAction<CardEntity[]>(
-  "decks/_create_deck_set_cards",
-)
 
 export const reset_create_deck = createAction("deck_update/reset_create_deck")
 
@@ -130,8 +118,8 @@ const validate_update_deck = (params: {
   return errors
 }
 
-export const update_deck = createAsyncThunk<void, void, AsyncThunkConfig>(
-  "decks/update_deck",
+export const save = createAsyncThunk<void, void, AsyncThunkConfig>(
+  "deck_update/save",
   async (_, { getState, dispatch, extra }) => {
     const { deck_update } = getState()
 
@@ -177,7 +165,6 @@ export const update_deck = createAsyncThunk<void, void, AsyncThunkConfig>(
       cards,
     })
 
-    // Update lesson cards
     for (const lesson of deck_update.lessons) {
       await extra.decks_repository.update_lesson_cards_list({
         lesson_id: lesson.id,
@@ -429,24 +416,19 @@ export const rename_lesson = createAsyncThunk<
   LessonEntity,
   { lesson_id: string; name: string },
   AsyncThunkConfig
->(
-  "deck_update/rename_lesson",
-  async ({ lesson_id, name }, { extra, dispatch }) => {
-    const lesson = await extra.decks_repository.rename_lesson({
-      lesson_id,
-      name,
-    })
+>("deck_update/rename_lesson", async ({ lesson_id, name }, { extra }) => {
+  const lesson = await extra.decks_repository.rename_lesson({
+    lesson_id,
+    name,
+  })
 
-    await extra.toast_service.toast({
-      title: "deck_update_tabs/lesson_renamed",
-      type: "success",
-    })
+  await extra.toast_service.toast({
+    title: "deck_update_tabs/lesson_renamed",
+    type: "success",
+  })
 
-    dispatch(close_rename_lesson_modal())
-
-    return lesson
-  },
-)
+  return lesson
+})
 
 export const delete_lesson = createAsyncThunk<
   { lesson_id: string },

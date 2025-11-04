@@ -65,10 +65,10 @@ export class DecksRepositoryInMemory implements DecksRepository {
     return this.cards[params.deck_id] || []
   }
 
-  async get_cards_by_deck_id(params: {
-    deck_id: string
-  }): ReturnType<DecksRepository["get_cards_by_deck_id"]> {
-    return this.fetch_cards(params)
+  async get_cards_by_deck_id(
+    params: Parameters<DecksRepository["get_cards_by_deck_id"]>[0],
+  ): ReturnType<DecksRepository["get_cards_by_deck_id"]> {
+    return this.fetch_cards({ deck_id: params.deck_id })
   }
 
   async create_deck(params: {
@@ -230,17 +230,15 @@ export class DecksRepositoryInMemory implements DecksRepository {
       throw new Error("Lesson not found")
     }
 
-    const updated_lesson: LessonEntity = {
-      ...lesson,
-      name: params.name,
-      updated_at: new Date(),
-    }
+    this.lessons = this.lessons.map((lesson) => {
+      if (lesson.id === params.lesson_id) {
+        return { ...lesson, name: params.name, updated_at: new Date() }
+      }
 
-    this.lessons = this.lessons.map((l) =>
-      l.id === params.lesson_id ? updated_lesson : l,
-    )
+      return lesson
+    })
 
-    return updated_lesson
+    return this.lessons.find((lesson) => lesson.id === params.lesson_id)!
   }
 
   async delete_lesson(
@@ -264,10 +262,12 @@ export class DecksRepositoryInMemory implements DecksRepository {
       throw new Error("Lesson not found")
     }
 
-    this.lessons = this.lessons.map((l) =>
-      l.id === params.lesson_id ? { ...l, cards: params.card_ids } : l,
+    this.lessons = this.lessons.map((lesson) =>
+      lesson.id === params.lesson_id
+        ? { ...lesson, cards: params.card_ids }
+        : lesson,
     )
 
-    return lesson
+    return this.lessons.find((lesson) => lesson.id === params.lesson_id)!
   }
 }

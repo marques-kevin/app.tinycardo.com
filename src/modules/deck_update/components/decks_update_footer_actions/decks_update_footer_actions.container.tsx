@@ -10,7 +10,7 @@ const map_state = (state: RootState) => ({
 
 const map_dispatch = (dispatch: Dispatch) => ({
   on_save: () => {
-    dispatch(deck_update_actions.update_deck())
+    dispatch(deck_update_actions.save())
   },
   on_back: () => {
     dispatch(deck_update_actions.exit_update_deck_page())

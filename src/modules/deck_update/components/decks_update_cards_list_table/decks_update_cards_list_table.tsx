@@ -64,4 +64,6 @@ export function Wrapper(props: ContainerProps) {
   )
 }
 
+Wrapper.displayName = "DecksUpdateCardsListTable"
+
 export const DecksUpdateCardsListTable = connector(Wrapper)
