@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { GlobalModal } from "./global_modal"
-import { AlertCircleIcon, InfoIcon, CheckCircle2Icon } from "lucide-react"
+import { AlertCircleIcon } from "lucide-react"
 
 const meta: Meta<typeof GlobalModal> = {
   title: "global_modal",

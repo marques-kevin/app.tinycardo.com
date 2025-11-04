@@ -6,7 +6,6 @@ import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { open as open_dialog } from "@/modules/dialog/redux/dialog_actions"
 import { UrlMatcherService } from "@/modules/global/services/url_matcher_service/url_matcher_service"
 import type { MessageI18nKeys } from "@/intl"
-import type { DeckUpdateState } from "@/modules/deck_update/redux/deck_update_reducers"
 import type { LessonEntity } from "@/modules/decks/entities/lesson_entity"
 
 /**
@@ -409,18 +408,12 @@ export const create_lesson = createAsyncThunk<
     throw new Error("User not authenticated")
   }
 
-  const pathname = new URL(extra.location_service.get_current_url()).pathname
-  const extracted = UrlMatcherService.extract({
-    pattern: "/decks/:deck_id/update",
-    url: pathname,
-  })
-
-  if (!extracted.deck_id) {
-    throw new Error("Deck ID not found")
+  if (!deck_update.deck) {
+    throw new Error("Deck not found")
   }
 
   const lesson = await extra.decks_repository.create_lesson({
-    deck_id: extracted.deck_id,
+    deck_id: deck_update.deck.id,
     name: "Untitled",
   })
 

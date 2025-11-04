@@ -1,6 +1,6 @@
 import { useIntl } from "react-intl"
 import { useState } from "react"
-import { FolderIcon, PlusIcon } from "lucide-react"
+import { FolderIcon } from "lucide-react"
 import {
   connector,
   type ContainerProps,

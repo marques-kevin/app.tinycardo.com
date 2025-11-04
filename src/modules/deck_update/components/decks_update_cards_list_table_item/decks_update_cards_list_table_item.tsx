@@ -22,7 +22,6 @@ export function Wrapper(props: ContainerProps) {
         className="input input-lg w-1/2"
         value={props.front}
         onChange={(e) => props.on_update("front", e.target.value)}
-        autoFocus={props.autofocus}
       />
 
       <input

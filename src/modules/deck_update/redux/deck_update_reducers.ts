@@ -5,6 +5,7 @@ import { create_uuid_for_cards } from "@/modules/decks/utils/create_uuid_for_car
 import { v4 } from "uuid"
 import type { LessonEntity } from "@/modules/decks/entities/lesson_entity"
 import type { DeckEntity } from "@/modules/decks/entities/deck_entity"
+import { deck_update_filter_cards_by_lesson } from "../utils/deck_update_filter_cards_by_lesson"
 
 const create_card = (): CardEntity => {
   return {
@@ -37,22 +38,6 @@ export type DeckUpdateState = {
   active_lesson_id: string | null
 }
 
-const compute_filtered_cards = (state: DeckUpdateState) => {
-  if (state.active_lesson_id === null) {
-    return state.cards
-  }
-
-  const active_lesson = state.lessons.find(
-    (l) => l.id === state.active_lesson_id,
-  )
-
-  if (!active_lesson) {
-    return state.cards
-  }
-
-  return state.cards.filter((card_id) => active_lesson.cards.includes(card_id))
-}
-
 const add_empty_card_if_needed = (cards: CardEntity[]): CardEntity[] => {
   if (cards.length === 0) {
     return [create_card()]
@@ -66,8 +51,6 @@ const add_empty_card_if_needed = (cards: CardEntity[]): CardEntity[] => {
 
   return cards
 }
-
-export const select_filtered_cards = compute_filtered_cards
 
 const initialState: DeckUpdateState = {
   deck: null,
@@ -202,25 +185,36 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
   })
 
   builder.addCase(actions.delete_selected_cards.fulfilled, (state, action) => {
-    state.cards = state.cards.filter((c) => !state.selected_cards.includes(c))
-    state.cards_map = Object.fromEntries(
-      Object.entries(state.cards_map).filter(
-        ([key]) => !state.selected_cards.includes(key),
-      ),
-    )
-    state.selected_cards = []
+    if (state.active_lesson_id) {
+      const lesson = state.lessons.find((l) => l.id === state.active_lesson_id)
+      if (!lesson) return
 
-    const last_card_id = state.cards[state.cards.length - 1]
-    const last_card = state.cards_map[last_card_id]
+      lesson.cards = lesson.cards.filter(
+        (c) => !state.selected_cards.includes(c),
+      )
+      state.selected_cards = []
+      state.add_cards_to_lesson_modal = false
+    } else {
+      state.cards = state.cards.filter((c) => !state.selected_cards.includes(c))
+      state.cards_map = Object.fromEntries(
+        Object.entries(state.cards_map).filter(
+          ([key]) => !state.selected_cards.includes(key),
+        ),
+      )
+      state.selected_cards = []
 
-    if (
-      state.cards.length === 0 ||
-      last_card.front !== "" ||
-      last_card.back !== ""
-    ) {
-      const card = create_card()
-      state.cards.push(card.id)
-      state.cards_map[card.id] = card
+      const last_card_id = state.cards[state.cards.length - 1]
+      const last_card = state.cards_map[last_card_id]
+
+      if (
+        state.cards.length === 0 ||
+        last_card.front !== "" ||
+        last_card.back !== ""
+      ) {
+        const card = create_card()
+        state.cards.push(card.id)
+        state.cards_map[card.id] = card
+      }
     }
   })
 
@@ -346,7 +340,11 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
   builder.addMatcher(
     () => true,
     (state) => {
-      state.cards_filtered_by_lesson_tab = compute_filtered_cards(state)
+      state.cards_filtered_by_lesson_tab = deck_update_filter_cards_by_lesson({
+        cards: state.cards,
+        lessons: state.lessons,
+        lesson_id: state.active_lesson_id,
+      })
     },
   )
 })

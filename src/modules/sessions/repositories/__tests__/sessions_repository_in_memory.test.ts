@@ -21,14 +21,20 @@ describe("SessionsRepositoryInMemory", () => {
 
   describe("fetch_history", () => {
     it("should return empty array when no history exists", async () => {
-      const result = await repository.fetch_history({ deck_id: "deck-1" })
+      const result = await repository.fetch_history({
+        deck_id: "deck-1",
+        user_id: "user-1",
+      })
 
       expect(result).toEqual([])
     })
 
     it("should return history for specific deck", async () => {
       await repository.update_card_status(mock_history)
-      const result = await repository.fetch_history({ deck_id: "deck-1" })
+      const result = await repository.fetch_history({
+        deck_id: "deck-1",
+        user_id: "user-1",
+      })
 
       expect(result).toEqual([mock_history])
     })
@@ -41,7 +47,10 @@ describe("SessionsRepositoryInMemory", () => {
       expect(result).toEqual(mock_history)
 
       expect(
-        await repository.fetch_history({ deck_id: mock_history.deck_id }),
+        await repository.fetch_history({
+          deck_id: mock_history.deck_id,
+          user_id: "user-1",
+        }),
       ).toMatchObject([mock_history])
     })
   })

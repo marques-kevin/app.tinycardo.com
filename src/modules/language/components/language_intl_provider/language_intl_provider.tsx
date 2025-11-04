@@ -73,7 +73,9 @@ export const Wrapper: React.FC<ContainerProps> = (props) => {
   return (
     <IntlProvider
       locale={lang}
-      messages={messages[lang as keyof typeof messages]}
+      messages={
+        messages[lang as keyof typeof messages] as Record<string, string>
+      }
     >
       {props.children}
     </IntlProvider>

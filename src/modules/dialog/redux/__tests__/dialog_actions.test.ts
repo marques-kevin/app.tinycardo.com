@@ -16,16 +16,17 @@ describe("dialog actions", () => {
     await store.dispatch(
       open({
         type: "error",
-        title: "Error",
-        description: "Something went wrong",
+        title: "deck_details_header/delete",
+        description:
+          "decks_actions/dialog/create_deck/errors/dialog/description",
       }),
     )
 
     expect(store.getState().dialog.is_open).toBe(true)
     expect(store.getState().dialog.content).toEqual({
       type: "error",
-      title: "Error",
-      description: "Something went wrong",
+      title: "deck_details_header/delete",
+      description: "decks_actions/dialog/create_deck/errors/dialog/description",
     })
 
     await store.dispatch(close())

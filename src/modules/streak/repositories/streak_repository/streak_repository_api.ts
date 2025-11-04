@@ -20,7 +20,7 @@ export class StreakRepositoryApi implements StreakRepository {
     const streaks: StreakEntity[] = data.map((streak) => ({
       id: streak.id,
       user_id: streak.user_id,
-      date: new Date(streak.date),
+      date: streak.date,
     }))
 
     return streaks
@@ -38,7 +38,7 @@ export class StreakRepositoryApi implements StreakRepository {
     const streak: StreakEntity = {
       id: data.id,
       user_id: data.user_id,
-      date: new Date(data.date),
+      date: new Date(data.date).toISOString(),
     }
 
     return streak

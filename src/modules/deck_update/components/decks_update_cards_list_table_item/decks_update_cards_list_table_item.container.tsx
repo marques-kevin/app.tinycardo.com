@@ -15,9 +15,6 @@ const mapState = (state: RootState, props: { card_id: string }) => {
 }
 
 const mapDispatch = (dispatch: Dispatch, props: { card_id: string }) => ({
-  on_remove() {
-    dispatch(deck_update_actions._draft_remove_card({ id: props.card_id }))
-  },
   on_update(field: "front" | "back", value: string) {
     dispatch(
       deck_update_actions._draft_update_card({

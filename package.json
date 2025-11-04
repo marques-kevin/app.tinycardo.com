@@ -7,7 +7,7 @@
     "start": "concurrently 'yarn vite --host' 'yarn i18n:merge:watch'",
     "build": "vite build --mode production",
     "lint": "eslint .",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc --build --force",
     "preview": "vite preview",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",

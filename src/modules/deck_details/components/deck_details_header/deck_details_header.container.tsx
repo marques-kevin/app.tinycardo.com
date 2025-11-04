@@ -8,7 +8,7 @@ import {
 } from "@/modules/decks/redux/decks_actions"
 import type { SessionsState } from "@/modules/sessions/redux/sessions_reducers"
 
-function mapState(state: RootState) {
+function map_state(state: RootState) {
   return {
     deck_id: state.decks_details.deck?.id,
     description: state.decks_details.deck?.description,
@@ -22,7 +22,7 @@ function mapState(state: RootState) {
   }
 }
 
-function mapDispatch(dispatch: Dispatch) {
+function map_dispatch(dispatch: Dispatch) {
   return {
     on_start_session: (params: {
       deck_id: string
@@ -42,5 +42,5 @@ function mapDispatch(dispatch: Dispatch) {
   }
 }
 
-export const connector = connect(mapState, mapDispatch)
+export const connector = connect(map_state, map_dispatch)
 export type ContainerProps = ConnectedProps<typeof connector>

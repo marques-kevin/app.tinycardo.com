@@ -28,6 +28,7 @@ describe("decks actions", () => {
       number_of_cards: 2,
       number_of_cards_ready_to_be_reviewed: 1,
       number_of_cards_not_ready_to_be_reviewed: 1,
+      number_of_users_using_this_deck: 0,
     }
 
     const cards: CardEntity[] = [

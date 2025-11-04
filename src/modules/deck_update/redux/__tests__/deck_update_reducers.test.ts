@@ -65,6 +65,7 @@ const prepare_store_for_tests = async () => {
     cards,
     user,
     toast_service,
+    decks_repository,
     dependencies,
   }
 }
@@ -217,6 +218,7 @@ describe("Feature: Deck Update", () => {
 
     it(`
       An user should be able to add cards
+      So when the user updates the last card, a new empty card should be added
       `, async () => {
       const { store } = await prepare_store_for_tests()
 
@@ -269,7 +271,9 @@ describe("Feature: Deck Update", () => {
     })
 
     it(`
-      When removing the last card, a new empty card should be added
+      When a user removes the last card
+      Then the last card should be removed
+      And a new empty card should be added
       `, async () => {
       const { store } = await prepare_store_for_tests()
 
@@ -294,6 +298,274 @@ describe("Feature: Deck Update", () => {
       expect(new_last_card_id).not.toBe(last_card_id)
       expect(new_last_card.front).toEqual("")
       expect(new_last_card.back).toEqual("")
+    })
+
+    it(`
+      A user should be able to create a lesson
+      Then rename the lesson
+      And delete the lesson
+      `, async () => {
+      const { store, toast_service } = await prepare_store_for_tests()
+
+      let state = store.getState()
+
+      expect(state.deck_update.lessons).toEqual([])
+
+      await store.dispatch(deck_update_actions.create_lesson())
+
+      expect(toast_service.history).toHaveLength(1)
+
+      state = store.getState()
+
+      expect(state.deck_update.lessons).toHaveLength(1)
+      expect(state.deck_update.lessons[0].name).toEqual("Untitled")
+
+      const lesson_id = state.deck_update.lessons[0].id
+
+      await store.dispatch(
+        deck_update_actions.rename_lesson({
+          lesson_id,
+          name: "Updated Lesson",
+        }),
+      )
+
+      state = store.getState()
+      expect(toast_service.history).toHaveLength(2)
+      expect(state.deck_update.lessons[0].name).toEqual("Updated Lesson")
+
+      await store.dispatch(deck_update_actions.delete_lesson({ lesson_id }))
+
+      state = store.getState()
+      expect(toast_service.history).toHaveLength(3)
+      expect(state.deck_update.lessons).toEqual([])
+    })
+
+    it(`
+      A user should be able to add cards to a lesson
+      But the user needs to save the deck to be applied on the database
+      `, async () => {
+      const { store, decks_repository, deck, user } =
+        await prepare_store_for_tests()
+
+      /**
+       *
+       * First, let's add a card to the lesson
+       *
+       */
+      await store.dispatch(deck_update_actions.create_lesson())
+
+      let state = store.getState()
+
+      const lesson_id = state.deck_update.lessons[0].id
+
+      state = store.getState()
+
+      await store.dispatch(
+        deck_update_actions.toggle_select_card({
+          card_id: state.deck_update.cards[0],
+        }),
+      )
+
+      await store.dispatch(
+        deck_update_actions.add_selected_cards_to_lesson({ lesson_id }),
+      )
+
+      state = store.getState()
+
+      expect(state.deck_update.lessons[0].cards).toEqual([
+        state.deck_update.cards[0],
+      ])
+
+      let lessons_in_database = await decks_repository.fetch_lessons({
+        deck_id: deck.id,
+        user_id: user.id,
+      })
+
+      expect(lessons_in_database).toHaveLength(1)
+      expect(lessons_in_database[0].cards).toHaveLength(0)
+
+      await store.dispatch(deck_update_actions.update_deck())
+
+      lessons_in_database = await decks_repository.fetch_lessons({
+        deck_id: deck.id,
+        user_id: user.id,
+      })
+
+      expect(lessons_in_database).toHaveLength(1)
+      expect(lessons_in_database[0].cards).toEqual([state.deck_update.cards[0]])
+    })
+
+    it(`
+      When a user selects a lesson
+      Then, the cards should be filtered by the lesson
+
+      And when the user deletes a card from the lesson
+      Then the card should not be removed from the deck, but only from the lesson
+      `, async () => {
+      const { store, cards } = await prepare_store_for_tests()
+
+      let state = store.getState()
+
+      /**
+       *
+       * Start, all cards should be displayed
+       *
+       */
+      const does_all_cards_are_displayed = cards.every((card) =>
+        state.deck_update.cards_filtered_by_lesson_tab.includes(card.id),
+      )
+      expect(does_all_cards_are_displayed).toEqual(true)
+      expect(state.deck_update.active_lesson_id).toEqual(null)
+
+      /**
+       *
+       * Now, let's create a lesson and select it
+       *
+       */
+      await store.dispatch(deck_update_actions.create_lesson())
+
+      state = store.getState()
+
+      const lesson_id = state.deck_update.lessons[0]!.id
+
+      store.dispatch(deck_update_actions.set_active_lesson({ lesson_id }))
+
+      state = store.getState()
+
+      expect(state.deck_update.active_lesson_id).toEqual(lesson_id)
+
+      /**
+       *
+       *
+       * The lesson does not have any cards yet, so no cards should be displayed
+       *
+       *
+       */
+      expect(state.deck_update.cards_filtered_by_lesson_tab).toEqual([])
+
+      /**
+       *
+       *
+       * Now, let's add a card to the lesson
+       *
+       *
+       */
+      await store.dispatch(
+        deck_update_actions.toggle_select_card({
+          card_id: state.deck_update.cards[0],
+        }),
+      )
+
+      await store.dispatch(
+        deck_update_actions.add_selected_cards_to_lesson({ lesson_id }),
+      )
+
+      state = store.getState()
+      const card_id = state.deck_update.cards[0]
+
+      expect(state.deck_update.cards_filtered_by_lesson_tab).toEqual([card_id])
+
+      /**
+       *
+       * Let's select the card and delete it from the lesson
+       * When removing a card from a lesson, the card should not be removed from the deck
+       *
+       */
+      state = store.getState()
+
+      expect(state.deck_update.selected_cards).toEqual([])
+      expect(state.deck_update.active_lesson_id).toEqual(lesson_id)
+
+      await store.dispatch(
+        deck_update_actions.toggle_select_card({
+          card_id,
+        }),
+      )
+
+      state = store.getState()
+
+      expect(state.deck_update.selected_cards).toEqual([card_id])
+
+      await store.dispatch(deck_update_actions.delete_selected_cards())
+
+      state = store.getState()
+
+      expect(state.deck_update.selected_cards).toEqual([])
+      expect(state.deck_update.active_lesson_id).toEqual(lesson_id)
+      expect(state.deck_update.cards_filtered_by_lesson_tab).toEqual([])
+      expect(state.deck_update.cards.includes(card_id)).toEqual(true)
+    })
+
+    it(`
+      When a card is added to a lesson, 
+      The card should not be displayed when no active lesson is selected
+      `, async () => {
+      const { store, cards } = await prepare_store_for_tests()
+
+      let state = store.getState()
+
+      /**
+       *
+       * Start, all cards should be displayed
+       *
+       *
+       */
+      const does_all_cards_are_displayed = cards.every((card) =>
+        state.deck_update.cards_filtered_by_lesson_tab.includes(card.id),
+      )
+      expect(does_all_cards_are_displayed).toEqual(true)
+
+      /**
+       *
+       * Now, let's create a lesson and select it
+       *
+       *
+       */
+      await store.dispatch(deck_update_actions.create_lesson())
+
+      state = store.getState()
+
+      const lesson_id = state.deck_update.lessons[0].id
+
+      store.dispatch(deck_update_actions.set_active_lesson({ lesson_id }))
+
+      state = store.getState()
+
+      expect(state.deck_update.active_lesson_id).toEqual(lesson_id)
+
+      /**
+       *
+       *
+       * Now, let's add a card to the lesson
+       *
+       *
+       */
+      const card_id = cards[0].id
+
+      await store.dispatch(deck_update_actions.toggle_select_card({ card_id }))
+      await store.dispatch(
+        deck_update_actions.add_selected_cards_to_lesson({ lesson_id }),
+      )
+
+      state = store.getState()
+
+      expect(state.deck_update.cards_filtered_by_lesson_tab).toEqual([card_id])
+
+      /**
+       *
+       *
+       * Now, let's go on the tab "all cards"
+       * The card added to the lesson should not be displayed
+       *
+       */
+      store.dispatch(deck_update_actions.set_active_lesson({ lesson_id: null }))
+
+      state = store.getState()
+
+      expect(state.deck_update.active_lesson_id).toEqual(null)
+      expect(
+        state.deck_update.cards_filtered_by_lesson_tab.includes(card_id),
+      ).toEqual(false)
     })
   })
 })

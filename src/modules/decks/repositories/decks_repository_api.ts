@@ -183,73 +183,24 @@ export class DecksRepositoryApi implements DecksRepository {
   async create_lesson(
     params: Parameters<DecksRepository["create_lesson"]>[0],
   ): ReturnType<DecksRepository["create_lesson"]> {
-    // TODO: Add /lessons/create_lesson endpoint to API and update types
-    // @ts-expect-error - API endpoint not yet implemented
-    const lesson_response = await this.api_service.post<
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      any
-    >("/lessons/create_lesson", params)
-
-    return {
-      id: lesson_response.id,
-      deck_id: lesson_response.deck_id,
-      name: lesson_response.name,
-      cards: lesson_response.cards,
-      position: lesson_response.position,
-      created_at: new Date(lesson_response.created_at),
-      updated_at: new Date(lesson_response.updated_at),
-    }
+    throw new Error("Not implemented")
   }
 
   async rename_lesson(
     params: Parameters<DecksRepository["rename_lesson"]>[0],
   ): ReturnType<DecksRepository["rename_lesson"]> {
-    // TODO: Add /lessons/rename_lesson endpoint to API and update types
-    // @ts-expect-error - API endpoint not yet implemented
-    const lesson_response = await this.api_service.post<
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      any
-    >("/lessons/rename_lesson", params)
-
-    return {
-      id: lesson_response.id,
-      deck_id: lesson_response.deck_id,
-      name: lesson_response.name,
-      cards: lesson_response.cards,
-      position: lesson_response.position,
-      created_at: new Date(lesson_response.created_at),
-      updated_at: new Date(lesson_response.updated_at),
-    }
+    throw new Error("Not implemented")
   }
 
   async delete_lesson(
     params: Parameters<DecksRepository["delete_lesson"]>[0],
   ): ReturnType<DecksRepository["delete_lesson"]> {
-    // TODO: Add /lessons/delete_lesson endpoint to API and update types
-    await this.api_service.post<
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      any
-    >("/lessons/delete_lesson", params)
+    throw new Error("Not implemented")
   }
 
   async update_lesson_cards_list(
     params: Parameters<DecksRepository["update_lesson_cards_list"]>[0],
   ): ReturnType<DecksRepository["update_lesson_cards_list"]> {
-    // TODO: Add /lessons/update_lesson_cards_list endpoint to API and update types
-    // @ts-expect-error - API endpoint not yet implemented
-    const lesson_response = await this.api_service.post<
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      any
-    >("/lessons/update_lesson_cards_list", params)
-
-    return {
-      id: lesson_response.id,
-      deck_id: lesson_response.deck_id,
-      name: lesson_response.name,
-      cards: lesson_response.cards,
-      position: lesson_response.position,
-      created_at: new Date(lesson_response.created_at),
-      updated_at: new Date(lesson_response.updated_at),
-    }
+    throw new Error("Not implemented")
   }
 }
