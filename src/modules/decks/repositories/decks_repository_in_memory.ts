@@ -270,4 +270,35 @@ export class DecksRepositoryInMemory implements DecksRepository {
 
     return this.lessons.find((lesson) => lesson.id === params.lesson_id)!
   }
+
+  async reorder_lessons(
+    params: Parameters<DecksRepository["reorder_lessons"]>[0],
+  ): ReturnType<DecksRepository["reorder_lessons"]> {
+    const deck_lessons = this.lessons.filter(
+      (lesson) => lesson.deck_id === params.deck_id,
+    )
+
+    for (const reorder_item of params.reorder_data) {
+      const lesson = deck_lessons.find((l) => l.id === reorder_item.lesson_id)
+      if (!lesson) {
+        throw new Error(`Lesson ${reorder_item.lesson_id} not found`)
+      }
+    }
+
+    this.lessons = this.lessons.map((lesson) => {
+      if (lesson.deck_id === params.deck_id) {
+        const reorder_item = params.reorder_data.find(
+          (r) => r.lesson_id === lesson.id,
+        )
+        if (reorder_item) {
+          return {
+            ...lesson,
+            position: reorder_item.position,
+            updated_at: new Date(),
+          }
+        }
+      }
+      return lesson
+    })
+  }
 }

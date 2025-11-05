@@ -70,4 +70,9 @@ export interface DecksRepository {
     lesson_id: string
     card_ids: string[]
   }): Promise<LessonEntity>
+
+  reorder_lessons(params: {
+    deck_id: string
+    reorder_data: Array<{ lesson_id: string; position: number }>
+  }): Promise<void>
 }

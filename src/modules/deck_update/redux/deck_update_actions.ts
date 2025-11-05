@@ -367,6 +367,14 @@ export const close_add_cards_to_lesson_modal = createAction(
   "deck_update/close_add_cards_to_lesson_modal",
 )
 
+export const open_reorder_lessons_modal = createAction(
+  "deck_update/open_reorder_lessons_modal",
+)
+
+export const close_reorder_lessons_modal = createAction(
+  "deck_update/close_reorder_lessons_modal",
+)
+
 export const add_selected_cards_to_lesson = createAsyncThunk<
   { lesson_id: string },
   { lesson_id: string },
@@ -444,3 +452,32 @@ export const delete_lesson = createAsyncThunk<
 
   return { lesson_id }
 })
+
+export const reorder_lessons = createAsyncThunk<
+  void,
+  { reorder_data: Array<{ lesson_id: string; position: number }> },
+  AsyncThunkConfig
+>(
+  "deck_update/reorder_lessons",
+  async ({ reorder_data }, { getState, extra }) => {
+    const { deck_update, authentication } = getState()
+
+    if (!authentication.user) {
+      throw new Error("User not authenticated")
+    }
+
+    if (!deck_update.deck) {
+      throw new Error("Deck not found")
+    }
+
+    await extra.decks_repository.reorder_lessons({
+      deck_id: deck_update.deck.id,
+      reorder_data,
+    })
+
+    await extra.toast_service.toast({
+      title: "deck_update_reorder_lessons_modal/lessons_reordered",
+      type: "success",
+    })
+  },
+)

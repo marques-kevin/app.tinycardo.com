@@ -203,4 +203,10 @@ export class DecksRepositoryApi implements DecksRepository {
   ): ReturnType<DecksRepository["update_lesson_cards_list"]> {
     throw new Error("Not implemented")
   }
+
+  async reorder_lessons(
+    params: Parameters<DecksRepository["reorder_lessons"]>[0],
+  ): ReturnType<DecksRepository["reorder_lessons"]> {
+    throw new Error("Not implemented")
+  }
 }

@@ -20,6 +20,9 @@ const map_dispatch = (dispatch: Dispatch) => ({
   on_set_active_lesson: (lesson_id: string | null) => {
     dispatch(deck_update_actions.set_active_lesson({ lesson_id }))
   },
+  on_open_reorder_modal: () => {
+    dispatch(deck_update_actions.open_reorder_lessons_modal())
+  },
 })
 
 export const connector = connect(map_state, map_dispatch)

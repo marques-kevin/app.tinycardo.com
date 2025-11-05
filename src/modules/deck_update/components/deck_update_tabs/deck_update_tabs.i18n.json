@@ -2,6 +2,7 @@
   "all_cards": "All cards",
   "rename": "Rename",
   "delete": "Delete",
+  "reorder_lessons": "Reorder lessons",
   "lesson_created": "Lesson created successfully",
   "lesson_renamed": "Lesson renamed successfully",
   "lesson_deleted": "Lesson deleted successfully"

@@ -35,6 +35,7 @@ export type DeckUpdateState = {
   rename_lesson_modal: string | null
   add_cards_to_lesson_modal: boolean
   add_cards_to_lesson_selected_lesson_id: string | null
+  reorder_lessons_modal: boolean
   lessons: LessonEntity[]
   active_lesson_id: string | null
 }
@@ -79,6 +80,7 @@ const initialState: DeckUpdateState = {
   rename_lesson_modal: null,
   add_cards_to_lesson_modal: false,
   add_cards_to_lesson_selected_lesson_id: null,
+  reorder_lessons_modal: false,
   lessons: [],
   active_lesson_id: null,
 }
@@ -293,7 +295,9 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
         },
         {} as Record<string, CardEntity>,
       )
-      state.lessons = action.payload.lessons
+      state.lessons = [...action.payload.lessons].sort(
+        (a, b) => a.position - b.position,
+      )
       state.active_lesson_id = null
       state.cards_filtered_by_lesson_tab = deck_update_filter_cards_by_lesson({
         cards: state.cards,
@@ -329,6 +333,7 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
 
   builder.addCase(actions.create_lesson.fulfilled, (state, action) => {
     state.lessons.push(action.payload)
+    state.lessons.sort((a, b) => a.position - b.position)
   })
 
   builder.addCase(actions.delete_lesson.fulfilled, (state, action) => {
@@ -408,4 +413,36 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
       })
     },
   )
+
+  builder.addCase(actions.open_reorder_lessons_modal, (state) => {
+    state.reorder_lessons_modal = true
+  })
+
+  builder.addCase(actions.close_reorder_lessons_modal, (state) => {
+    state.reorder_lessons_modal = false
+  })
+
+  builder.addCase(actions.reorder_lessons.pending, (state) => {
+    // Keep modal open while reordering
+  })
+
+  builder.addCase(actions.reorder_lessons.fulfilled, (state, action) => {
+    state.reorder_lessons_modal = false
+
+    // Update lesson positions in state
+    for (const reorder_item of action.meta.arg.reorder_data) {
+      const lesson = state.lessons.find((l) => l.id === reorder_item.lesson_id)
+      if (lesson) {
+        lesson.position = reorder_item.position
+        lesson.updated_at = new Date()
+      }
+    }
+
+    // Sort lessons by position
+    state.lessons.sort((a, b) => a.position - b.position)
+  })
+
+  builder.addCase(actions.reorder_lessons.rejected, (state) => {
+    // Keep modal open on error so user can retry
+  })
 })

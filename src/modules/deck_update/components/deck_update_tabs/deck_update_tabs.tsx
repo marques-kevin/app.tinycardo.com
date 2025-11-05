@@ -5,6 +5,7 @@ import {
   PencilIcon,
   PlusIcon,
   TrashIcon,
+  ArrowUpDownIcon,
 } from "lucide-react"
 import {
   DropdownMenu,
@@ -60,6 +61,16 @@ function Wrapper(props: ContainerProps) {
                       {formatMessage({ id: "deck_update_tabs/rename" })}
                     </span>
                   </DropdownMenuItem>
+                  {props.lessons.length > 1 && (
+                    <DropdownMenuItem onClick={props.on_open_reorder_modal}>
+                      <ArrowUpDownIcon className="size-4" />
+                      <span>
+                        {formatMessage({
+                          id: "deck_update_tabs/reorder_lessons",
+                        })}
+                      </span>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem
                     className="text-error"
                     onClick={() => props.on_delete_lesson(lesson.id)}

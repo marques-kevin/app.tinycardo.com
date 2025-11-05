@@ -1,0 +1,11 @@
+{
+  "cancel": "Cancel",
+  "description": "Reorder lessons by moving them up or down using the arrows.",
+  "lessons_reordered": "Lessons reordered successfully",
+  "move_down": "Move down",
+  "move_up": "Move up",
+  "no_lessons": "No lessons available",
+  "save": "Save order",
+  "title": "Reorder lessons"
+}
+
