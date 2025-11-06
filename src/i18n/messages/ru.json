@@ -104,5 +104,6 @@
   "streak_modal/streak-modal/title": "Серия",
   "streak_modal/title": "Серия",
   "deck_details_loading/loading": "Мы загружаем детали колоды для вас...",
-  "decks_loading/loading": "Загружаем колоды для вас..."
+  "decks_loading/loading": "Загружаем колоды для вас...",
+  "deck_details_header/audio_session": "Аудиосессия"
 }

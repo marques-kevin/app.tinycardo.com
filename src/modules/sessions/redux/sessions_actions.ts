@@ -35,6 +35,9 @@ export const _start_session = createAction<{
   words_to_review: SessionsState["words_to_review"]
   deck_id: SessionsState["deck_id"]
   mode: SessionsState["mode"]
+  review_mode?: SessionsState["review_mode"]
+  front_language: string
+  back_language: string
 }>("sessions/_start_session")
 
 export const _reset_session = createAction("sessions/_reset_session")
@@ -48,10 +51,16 @@ export const _update_session = createAction<
 
 export const go_on_session_page = createAsyncThunk<
   void,
-  { deck_id: string; mode: SessionsState["mode"] },
+  {
+    deck_id: string
+    mode: SessionsState["mode"]
+    review_mode?: SessionsState["review_mode"]
+  },
   AsyncThunkConfig
 >("sessions/go_on_session_page", async (params, { extra }) => {
-  extra.location_service.navigate(`/sessions/${params.deck_id}/${params.mode}`)
+  extra.location_service.navigate(
+    `/sessions/${params.deck_id}/${params.mode}${params.review_mode ? `?review_mode=${params.review_mode}` : ""}`,
+  )
 })
 
 export const no_cards_to_review = createAsyncThunk<
@@ -64,7 +73,11 @@ export const no_cards_to_review = createAsyncThunk<
 
 export const start_session = createAsyncThunk<
   void,
-  { deck_id?: string; mode?: SessionsState["mode"] },
+  {
+    deck_id?: string
+    mode?: SessionsState["mode"]
+    review_mode?: SessionsState["review_mode"]
+  },
   AsyncThunkConfig
 >("sessions/start_session", async (_, { dispatch, extra, getState }) => {
   try {
@@ -87,11 +100,15 @@ export const start_session = createAsyncThunk<
 
     dispatch(_set_is_loading({ is_loading: true }))
 
-    const [cards, history] = await Promise.all([
+    const [cards, history, deck] = await Promise.all([
       extra.decks_repository.fetch_cards({
         deck_id,
       }),
       extra.sessions_repository.fetch_history({ deck_id, user_id }),
+      extra.decks_repository.get_deck_by_id({
+        deck_id,
+        user_id,
+      }),
     ])
 
     dispatch(_set_is_loading({ is_loading: false }))
@@ -124,8 +141,22 @@ export const start_session = createAsyncThunk<
         words_to_review: cards_to_review,
         mode,
         deck_id,
+        front_language: deck.front_language,
+        back_language: deck.back_language,
+        review_mode: _.review_mode,
       }),
     )
+
+    if (_.review_mode === "audio") {
+      const { sessions } = getState()
+
+      dispatch(
+        tts({
+          language: sessions.back_language,
+          value: sessions.current_word?.back,
+        }),
+      )
+    }
   } catch (e) {
     dispatch(_reset_session())
 
@@ -203,37 +234,38 @@ const get_tts_voice = (lang: string) => {
   return lang
 }
 
-export const tts = createAsyncThunk<void, void, AsyncThunkConfig>(
-  "sessions/tts",
-  async (_, { getState }) => {
-    const { sessions, decks } = getState()
+export const tts = createAsyncThunk<
+  void,
+  { language?: string; value?: string },
+  AsyncThunkConfig
+>("sessions/tts", async (params, { getState }) => {
+  const { sessions } = getState()
 
-    const word = sessions.is_card_flipped
+  const word =
+    params.value || sessions.is_card_flipped
       ? sessions.current_word?.back
       : sessions.current_word?.front
 
-    const deck = decks.decks.find((deck) => deck.id === sessions.deck_id)
+  if (!word) throw new Error(`no word found`)
 
-    if (!word || !deck) return
+  const language =
+    params.language || sessions.is_card_flipped
+      ? sessions.back_language
+      : sessions.front_language
 
-    const language = sessions.is_card_flipped
-      ? deck.back_language
-      : deck.front_language
+  const utterance = new SpeechSynthesisUtterance(word)
 
-    const utterance = new SpeechSynthesisUtterance(word)
+  utterance.lang = get_tts_voice(language)
+  utterance.rate = 1
+  utterance.pitch = 1
+  utterance.volume = 1
+  utterance.voice =
+    speechSynthesis
+      .getVoices()
+      .find((voice) => voice.lang.includes(get_tts_voice(language))) || null
 
-    utterance.lang = get_tts_voice(language)
-    utterance.rate = 0.8
-    utterance.pitch = 1
-    utterance.volume = 1
-    utterance.voice =
-      speechSynthesis
-        .getVoices()
-        .find((voice) => voice.lang.includes(get_tts_voice(language))) || null
-
-    speechSynthesis.speak(utterance)
-  },
-)
+  speechSynthesis.speak(utterance)
+})
 
 export const on_session_ended = createAsyncThunk<void, void, AsyncThunkConfig>(
   "sessions/on_session_ended",
@@ -302,7 +334,18 @@ export const set_review_word = createAsyncThunk<
       }),
     )
 
-    if (is_ended) dispatch(global_actions.session_ended())
+    if (is_ended) {
+      dispatch(global_actions.session_ended())
+    } else {
+      if (sessions.review_mode === "audio") {
+        dispatch(
+          tts({
+            language: sessions.back_language,
+            value: sessions.current_word?.back,
+          }),
+        )
+      }
+    }
   },
 )
 
@@ -414,17 +457,22 @@ export const global_route_changed = createAsyncThunk<
   AsyncThunkConfig
 >("sessions/global_route_changed", async (params, { dispatch, extra }) => {
   const location = extra.location_service.get_current_url()
-  const pathname = new URL(location).pathname
+  const url = new URL(location)
   const { deck_id, mode } = UrlMatcherService.extract({
     pattern: "/sessions/:deck_id/:mode",
-    url: pathname,
+    url: url.pathname,
   })
+
+  const review_mode =
+    (url.searchParams.get("review_mode") as SessionsState["review_mode"]) ||
+    "text"
 
   if (deck_id && mode) {
     await dispatch(
       start_session({
         deck_id,
         mode: mode as SessionsState["mode"],
+        review_mode,
       }),
     )
   }

@@ -104,5 +104,6 @@
   "streak_modal/streak-modal/title": "連続記録",
   "streak_modal/title": "連続記録",
   "deck_details_loading/loading": "デッキの詳細を読み込んでいます...",
-  "decks_loading/loading": "デッキを読み込んでいます..."
+  "decks_loading/loading": "デッキを読み込んでいます...",
+  "deck_details_header/audio_session": "オーディオセッション"
 }

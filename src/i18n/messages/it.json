@@ -104,5 +104,6 @@
   "streak_modal/streak-modal/title": "Serie",
   "streak_modal/title": "Striscia",
   "deck_details_loading/loading": "Stiamo caricando i dettagli del mazzo per te...",
-  "decks_loading/loading": "Stiamo caricando i mazzi per te..."
+  "decks_loading/loading": "Stiamo caricando i mazzi per te...",
+  "deck_details_header/audio_session": "Session audio"
 }

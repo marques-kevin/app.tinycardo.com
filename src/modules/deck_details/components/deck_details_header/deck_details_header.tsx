@@ -11,6 +11,7 @@ import {
   ShuffleIcon,
   PencilIcon,
   CopyIcon,
+  Volume2Icon,
 } from "lucide-react"
 import {
   DropdownMenu,
@@ -111,6 +112,22 @@ export function Wrapper(props: ContainerProps) {
                 {formatMessage({ id: "deck_details_header/random_session" })}
               </span>
             </DropdownMenuItem>
+            <DropdownMenuItem
+              className="text-lg"
+              onClick={() => {
+                props.on_start_session({
+                  deck_id: props.deck_id!,
+                  mode: "randomized",
+                  review_mode: "audio",
+                })
+              }}
+            >
+              <Volume2Icon />
+              <span>
+                {formatMessage({ id: "deck_details_header/audio_session" })}
+              </span>
+            </DropdownMenuItem>
+
             <hr className="border-base-300 my-2" />
 
             <DropdownMenuItem
