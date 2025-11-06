@@ -37,6 +37,7 @@ import { StreakRepositoryApi } from "@/modules/streak/repositories/streak_reposi
 import type { PlausibleService } from "@/modules/global/services/plausible_service/plausible_service"
 import { PlausibleServiceInMemory } from "@/modules/global/services/plausible_service/plausible_service_in_memory"
 import { PlausibleServiceWindow } from "@/modules/global/services/plausible_service/plausible_service_window"
+import { seed_history } from "./__seed__/seed_history"
 
 export type Dependencies = {
   location_service: LocationService
@@ -80,7 +81,9 @@ export function build_dependencies(
         decks: seed_decks,
         cards: seed_cards,
       }),
-      sessions_repository: new SessionsRepositoryInMemory(),
+      sessions_repository: new SessionsRepositoryInMemory({
+        history: seed_history,
+      }),
       users_repository: new UsersRepositoryInMemory({
         user: seed_authenticated_user,
       }),

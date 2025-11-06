@@ -1,13 +1,13 @@
-import { Wrapper as SessionsCards } from "@/modules/sessions/components/session_cards/sessions_cards"
+import { Wrapper } from "./session_cards_text_mode"
 import type { Meta, StoryObj } from "@storybook/react"
 
-const meta: Meta<typeof SessionsCards> = {
-  title: "Sessions/SessionsCards",
-  component: SessionsCards,
+const meta: Meta<typeof Wrapper> = {
+  title: "session_cards_text_mode",
+  component: Wrapper,
 }
 
 export default meta
-type Story = StoryObj<typeof SessionsCards>
+type Story = StoryObj<typeof Wrapper>
 
 export const Default: Story = {
   args: {

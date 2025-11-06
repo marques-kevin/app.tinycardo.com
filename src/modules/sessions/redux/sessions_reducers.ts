@@ -6,9 +6,12 @@ import { build_help_history_id } from "../utils/build_help_history_id"
 
 export interface SessionsState {
   deck_id: string
+  front_language: string
+  back_language: string
   is_card_flipped: boolean
   is_loading: boolean
   mode: "review" | "learn_new_words" | "randomized" | "auto"
+  review_mode: "audio" | "text"
   current_word: SessionHistoryWithCardEntity | null
   words_to_review: SessionHistoryWithCardEntity[]
   known_words: SessionHistoryWithCardEntity[]
@@ -30,9 +33,12 @@ export interface SessionsState {
 
 const initial_state: SessionsState = {
   deck_id: "",
+  front_language: "",
+  back_language: "",
   is_loading: false,
   is_card_flipped: false,
   mode: "review",
+  review_mode: "text",
   current_word: null,
   words_to_review: [],
   known_words: [],
@@ -58,6 +64,8 @@ export const sessions_reducers = createReducer(initial_state, (builder) => {
       return {
         ...state,
         deck_id: action.payload.deck_id,
+        front_language: action.payload.front_language,
+        back_language: action.payload.back_language,
         words_to_review: action.payload.words_to_review,
         known_words: [],
         unknown_words: [],
@@ -66,6 +74,7 @@ export const sessions_reducers = createReducer(initial_state, (builder) => {
         is_ended: false,
         no_cards_to_review: null,
         mode: action.payload.mode,
+        review_mode: action.payload.review_mode || "text",
         help_cards_explained: {},
       }
     })

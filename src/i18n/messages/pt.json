@@ -104,5 +104,6 @@
   "streak_modal/streak-modal/title": "Sequência",
   "streak_modal/title": "Sequência",
   "deck_details_loading/loading": "Estamos carregando os detalhes do baralho para você...",
-  "decks_loading/loading": "Estamos carregando os decks pra você..."
+  "decks_loading/loading": "Estamos carregando os decks pra você...",
+  "deck_details_header/audio_session": "Sessão de áudio"
 }

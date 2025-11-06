@@ -13,6 +13,9 @@ export const seed_decks: DeckEntity[] = [
     created_at: new Date("2025-01-01"),
     visibility: "private",
     number_of_cards: 20,
+    number_of_cards_not_ready_to_be_reviewed: 10,
+    number_of_cards_ready_to_be_reviewed: 10,
+    number_of_users_using_this_deck: 4,
   },
   {
     id: "2",
@@ -26,5 +29,8 @@ export const seed_decks: DeckEntity[] = [
     created_at: new Date("2025-01-01"),
     visibility: "private",
     number_of_cards: 10,
+    number_of_cards_not_ready_to_be_reviewed: 5,
+    number_of_cards_ready_to_be_reviewed: 5,
+    number_of_users_using_this_deck: 4,
   },
 ]

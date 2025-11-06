@@ -104,5 +104,6 @@
   "streak_modal/streak-modal/title": "연속 기록",
   "streak_modal/title": "연속 기록",
   "deck_details_loading/loading": "덱 세부정보를 불러오는 중입니다...",
-  "decks_loading/loading": "덱을 불러오고 있어요..."
+  "decks_loading/loading": "덱을 불러오고 있어요...",
+  "deck_details_header/audio_session": "오디오 세션"
 }

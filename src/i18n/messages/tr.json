@@ -104,5 +104,6 @@
   "streak_modal/streak-modal/title": "Seri",
   "streak_modal/title": "Kayıp",
   "deck_details_loading/loading": "Destek kartı ayrıntılarını yüklüyoruz...",
-  "decks_loading/loading": "Kartları yüklüyoruz..."
+  "decks_loading/loading": "Kartları yüklüyoruz...",
+  "deck_details_header/audio_session": "Ses kaydı"
 }
