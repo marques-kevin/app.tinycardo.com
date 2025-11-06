@@ -153,8 +153,8 @@ describe("decks_details_actions", () => {
         number_of_cards_not_ready_to_be_reviewed: 0,
       },
       {
-        id: "other",
-        name: "other",
+        id: "__other__",
+        name: "__other__",
         deck_id: deck.id,
         cards: ["card-2"],
         position: 2,

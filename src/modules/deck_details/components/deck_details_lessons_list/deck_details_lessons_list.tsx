@@ -2,8 +2,11 @@ import { CheckIcon, EyeIcon, GalleryHorizontalEndIcon } from "lucide-react"
 import { DecksProgressRadialChart } from "@/modules/decks/components/decks_progress_radial_chart/decks_progress_radial_chart"
 import type { ContainerProps } from "./deck_details_lessons_list.container"
 import { connector } from "./deck_details_lessons_list.container"
+import { useIntl } from "react-intl"
 
 export function Wrapper(props: ContainerProps) {
+  const { formatMessage } = useIntl()
+
   return (
     <div className="grid grid-cols-1 gap-2 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {props.lessons.map((lesson) => (
@@ -19,7 +22,11 @@ export function Wrapper(props: ContainerProps) {
             </div>
 
             <h3 className="flex h-full w-full items-center justify-center text-center text-lg font-medium tracking-wider">
-              {lesson.name}
+              {lesson.name === "__other__"
+                ? formatMessage({
+                    id: "deck_details_lessons_list/other_lesson",
+                  })
+                : lesson.name}
             </h3>
 
             <footer className="mt-auto flex items-center justify-between gap-2 text-sm font-medium">

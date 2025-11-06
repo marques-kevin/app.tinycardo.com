@@ -72,8 +72,8 @@ export const decks_details_reducers = createReducer(
         state.lessons = [
           ...state.lessons,
           {
-            id: "other",
-            name: "other",
+            id: "__other__",
+            name: "__other__",
             deck_id: action.payload.deck.id,
             cards: cards_not_in_lessons.map((card) => card.id),
             position: state.lessons.length + 1,

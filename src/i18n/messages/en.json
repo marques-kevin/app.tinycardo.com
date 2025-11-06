@@ -10,6 +10,7 @@
   "deck_details_header/random_session": "Random session",
   "deck_details_header/start_session": "Start session",
   "deck_details_header/updated_at": "Updated {updated_at}",
+  "deck_details_lessons_list/other_lesson": "Other",
   "deck_details_loading/loading": "We are loading the deck details for you...",
   "deck_details_tabs/cards": "Cards",
   "deck_details_tabs/lessons": "Lessons",
