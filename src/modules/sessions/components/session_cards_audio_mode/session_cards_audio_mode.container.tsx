@@ -1,26 +1,21 @@
-import {
-  flip_card,
-  help_open,
-  set_review_word,
-  tts,
-} from "@/modules/sessions/redux/sessions_actions"
+import { flip_card, tts } from "@/modules/sessions/redux/sessions_actions"
 import { type Dispatch, type RootState } from "@/redux/store"
 import { connect, type ConnectedProps } from "react-redux"
 
 const mapState = (state: RootState) => {
   return {
-    review_mode: state.sessions.review_mode,
+    back: state.sessions.current_word?.back || "",
+    front: state.sessions.current_word?.front || "",
+    back_language: state.sessions.back_language,
+    is_flipped: state.sessions.is_card_flipped,
   }
 }
 
 const mapDispatch = (dispatch: Dispatch) => ({
-  set_review_word: (status: "known" | "unknown") => {
-    dispatch(set_review_word({ status }))
+  on_tts(params: { language: string; value: string }) {
+    dispatch(tts(params))
   },
-  on_tts() {
-    dispatch(tts({}))
-  },
-  on_flip: () => {
+  on_flip() {
     dispatch(flip_card())
   },
 })

@@ -4,6 +4,14 @@ import type { SessionsRepository } from "@/modules/sessions/repositories/session
 export class SessionsRepositoryInMemory implements SessionsRepository {
   history: Map<string, SessionHistoryEntity> = new Map()
 
+  constructor(params?: { history: SessionHistoryEntity[] }) {
+    if (params) {
+      this.history = new Map(
+        params.history.map((history) => [history.card_id, history]),
+      )
+    }
+  }
+
   async fetch_history(params: {
     deck_id: string
   }): ReturnType<SessionsRepository["fetch_history"]> {
@@ -23,14 +31,17 @@ export class SessionsRepositoryInMemory implements SessionsRepository {
     deck_id: string
     history: SessionHistoryEntity[]
   }): ReturnType<SessionsRepository["save_history"]> {
-    // Remove existing entries for this deck
+    /**
+     *
+     * Remove history from the deck
+     *
+     */
     for (const [cardId, entry] of this.history.entries()) {
       if (entry.deck_id === params.deck_id) {
         this.history.delete(cardId)
       }
     }
 
-    // Add new entries
     for (const entry of params.history) {
       this.history.set(entry.card_id, entry)
     }

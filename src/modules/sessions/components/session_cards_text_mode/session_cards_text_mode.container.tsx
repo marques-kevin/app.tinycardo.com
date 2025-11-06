@@ -9,7 +9,9 @@ import { connect, type ConnectedProps } from "react-redux"
 
 const mapState = (state: RootState) => {
   return {
-    review_mode: state.sessions.review_mode,
+    back: state.sessions.current_word?.back || "",
+    front: state.sessions.current_word?.front || "",
+    is_flipped: state.sessions.is_card_flipped,
   }
 }
 
@@ -22,6 +24,9 @@ const mapDispatch = (dispatch: Dispatch) => ({
   },
   on_flip: () => {
     dispatch(flip_card())
+  },
+  on_help() {
+    dispatch(help_open())
   },
 })
 

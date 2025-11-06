@@ -27,6 +27,7 @@ function mapDispatch(dispatch: Dispatch) {
     on_start_session: (params: {
       deck_id: string
       mode: SessionsState["mode"]
+      review_mode?: SessionsState["review_mode"]
     }) => {
       dispatch(go_on_session_page(params))
     },
