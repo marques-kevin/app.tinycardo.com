@@ -104,5 +104,6 @@
   "streak_modal/streak-modal/title": "Streak",
   "streak_modal/title": "Streak",
   "deck_details_loading/loading": "Wir laden die Deckdetails für dich...",
-  "decks_loading/loading": "Wir laden die Decks für dich..."
+  "decks_loading/loading": "Wir laden die Decks für dich...",
+  "deck_details_header/audio_session": "Audio-Sitzung"
 }

@@ -33,6 +33,9 @@ describe("sessions actions", () => {
       created_at: new Date(),
       visibility: "private",
       number_of_cards: 2,
+      number_of_cards_not_ready_to_be_reviewed: 0,
+      number_of_cards_ready_to_be_reviewed: 0,
+      number_of_users_using_this_deck: 0,
     }
 
     cards = Array.from({ length: 2 }, (_, i) => ({

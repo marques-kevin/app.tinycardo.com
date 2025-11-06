@@ -106,7 +106,8 @@ export const start_session = createAsyncThunk<
       extra.sessions_repository.fetch_history({ deck_id }),
       extra.decks_repository.get_deck_by_id({
         deck_id,
-        user_id: authentication.user!.id,
+        // @todo
+        user_id: authentication.user?.id || "",
       }),
     ])
 

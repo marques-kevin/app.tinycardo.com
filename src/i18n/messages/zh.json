@@ -104,5 +104,6 @@
   "streak_modal/streak-modal/title": "连续出勤",
   "streak_modal/title": "连胜纪录",
   "deck_details_loading/loading": "正在为您加载卡组详情...",
-  "decks_loading/loading": "我们正在为你加载卡组..."
+  "decks_loading/loading": "我们正在为你加载卡组...",
+  "deck_details_header/audio_session": "音频会话"
 }
