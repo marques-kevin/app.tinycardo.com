@@ -329,6 +329,108 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/lessons/create_lesson": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a new lesson */
+        post: operations["LessonsController_create_lesson"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lessons/update_lesson": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Update a lesson */
+        post: operations["LessonsController_update_lesson"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lessons/delete_lesson": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Delete a lesson */
+        post: operations["LessonsController_delete_lesson"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lessons/get_lesson": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get a lesson by ID */
+        post: operations["LessonsController_get_lesson"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lessons/get_lessons": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Get all lessons in a deck */
+        post: operations["LessonsController_get_lessons"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lessons/reorder_lessons": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reorder lessons in a deck */
+        post: operations["LessonsController_reorder_lessons"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -582,6 +684,86 @@ export interface components {
         StreakAddStreakDto: {
             /** @description User timezone (e.g., America/New_York) */
             timezone?: string;
+        };
+        LessonsCreateLessonDto: {
+            /** @description Name of the lesson */
+            name: string;
+            /** @description ID of the deck this lesson belongs to */
+            deck_id: string;
+            /** @description Position of the lesson for ordering */
+            position: number;
+            /**
+             * @description Array of card IDs in the lesson
+             * @default []
+             */
+            cards: string[];
+        };
+        LessonEntity: {
+            /** @description Unique identifier of the lesson */
+            id: string;
+            /** @description Name of the lesson */
+            name: string;
+            /** @description ID of the deck this lesson belongs to */
+            deck_id: string;
+            /**
+             * @description Position of the lesson for ordering
+             * @example 0
+             */
+            position: number;
+            /** @description Array of card IDs in the lesson */
+            cards: string[];
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             */
+            created_at: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp
+             */
+            updated_at: string;
+        };
+        LessonsUpdateLessonDto: {
+            /** @description ID of the lesson to update */
+            id: string;
+            /** @description New name for the lesson */
+            name?: string;
+            /** @description New position for the lesson */
+            position?: number;
+            /** @description New array of card IDs */
+            cards?: string[];
+        };
+        LessonsDeleteLessonDto: {
+            /** @description ID of the lesson to delete */
+            id: string;
+        };
+        LessonsGetLessonDto: {
+            /** @description ID of the lesson to retrieve */
+            id: string;
+        };
+        LessonsGetLessonOutputDto: {
+            lesson: components["schemas"]["LessonEntity"];
+        };
+        LessonsGetLessonsDto: {
+            /** @description ID of the deck to retrieve lessons from */
+            deck_id: string;
+        };
+        LessonsGetLessonsOutputDto: {
+            lessons: components["schemas"]["LessonEntity"][];
+        };
+        LessonsReorderLessonsDto: {
+            /** @description ID of the deck containing the lessons */
+            deck_id: string;
+            /** @description Array of lesson IDs with their new positions */
+            reorder_data: {
+                /** @description ID of the lesson */
+                lesson_id: string;
+                /** @description New position for the lesson */
+                position: number;
+            }[];
+        };
+        LessonsReorderLessonsOutputDto: {
+            lessons: components["schemas"]["LessonEntity"][];
         };
     };
     responses: never;
@@ -1010,6 +1192,142 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StreakEntity"];
+                };
+            };
+        };
+    };
+    LessonsController_create_lesson: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LessonsCreateLessonDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonEntity"];
+                };
+            };
+        };
+    };
+    LessonsController_update_lesson: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LessonsUpdateLessonDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonEntity"];
+                };
+            };
+        };
+    };
+    LessonsController_delete_lesson: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LessonsDeleteLessonDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    LessonsController_get_lesson: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LessonsGetLessonDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonsGetLessonOutputDto"];
+                };
+            };
+        };
+    };
+    LessonsController_get_lessons: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LessonsGetLessonsDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonsGetLessonsOutputDto"];
+                };
+            };
+        };
+    };
+    LessonsController_reorder_lessons: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LessonsReorderLessonsDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonsReorderLessonsOutputDto"];
                 };
             };
         };

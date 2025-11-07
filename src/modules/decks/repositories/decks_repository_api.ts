@@ -1,12 +1,35 @@
+import type { LessonEntity } from "@/modules/decks/entities/lesson_entity"
 import { type DecksRepository } from "@/modules/decks/repositories/decks_repository"
 import { ApiService } from "@/modules/global/services/api_service/api_service"
 import type { paths } from "@/types/api"
+
+type ApiLesson = {
+  id: string
+  name: string
+  deck_id: string
+  cards: string[]
+  position: number
+  created_at: string
+  updated_at: string
+}
 
 export class DecksRepositoryApi implements DecksRepository {
   private readonly api_service: ApiService
 
   constructor() {
     this.api_service = new ApiService()
+  }
+
+  private map_lesson(api_lesson: ApiLesson): LessonEntity {
+    return {
+      id: api_lesson.id,
+      name: api_lesson.name,
+      deck_id: api_lesson.deck_id,
+      cards: [...api_lesson.cards],
+      position: api_lesson.position,
+      created_at: new Date(api_lesson.created_at),
+      updated_at: new Date(api_lesson.updated_at),
+    }
   }
 
   async fetch_decks(): ReturnType<DecksRepository["fetch_decks"]> {
@@ -177,36 +200,76 @@ export class DecksRepositoryApi implements DecksRepository {
     deck_id: string
     user_id: string
   }): ReturnType<DecksRepository["fetch_lessons"]> {
-    throw new Error("Not implemented")
+    const response = await this.api_service.post<
+      paths["/lessons/get_lessons"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/lessons/get_lessons", {
+      deck_id: params.deck_id,
+    })
+
+    return response.lessons.map((lesson) => this.map_lesson(lesson))
   }
 
   async create_lesson(
     params: Parameters<DecksRepository["create_lesson"]>[0],
   ): ReturnType<DecksRepository["create_lesson"]> {
-    throw new Error("Not implemented")
+    const lesson_response = await this.api_service.post<
+      paths["/lessons/create_lesson"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/lessons/create_lesson", {
+      name: params.name,
+      deck_id: params.deck_id,
+      position: 0, // Default position, can be reordered later
+      cards: [],
+    })
+
+    return this.map_lesson(lesson_response)
   }
 
   async rename_lesson(
     params: Parameters<DecksRepository["rename_lesson"]>[0],
   ): ReturnType<DecksRepository["rename_lesson"]> {
-    throw new Error("Not implemented")
+    const lesson_response = await this.api_service.post<
+      paths["/lessons/update_lesson"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/lessons/update_lesson", {
+      id: params.lesson_id,
+      name: params.name,
+    })
+
+    return this.map_lesson(lesson_response)
   }
 
   async delete_lesson(
     params: Parameters<DecksRepository["delete_lesson"]>[0],
   ): ReturnType<DecksRepository["delete_lesson"]> {
-    throw new Error("Not implemented")
+    await this.api_service.post<
+      paths["/lessons/delete_lesson"]["post"]["responses"]["200"]
+    >("/lessons/delete_lesson", {
+      id: params.lesson_id,
+    })
   }
 
   async update_lesson_cards_list(
     params: Parameters<DecksRepository["update_lesson_cards_list"]>[0],
   ): ReturnType<DecksRepository["update_lesson_cards_list"]> {
-    throw new Error("Not implemented")
+    const lesson_response = await this.api_service.post<
+      paths["/lessons/update_lesson"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/lessons/update_lesson", {
+      id: params.lesson_id,
+      cards: params.card_ids,
+    })
+
+    return this.map_lesson(lesson_response)
   }
 
   async reorder_lessons(
     params: Parameters<DecksRepository["reorder_lessons"]>[0],
   ): ReturnType<DecksRepository["reorder_lessons"]> {
-    throw new Error("Not implemented")
+    const response = await this.api_service.post<
+      paths["/lessons/reorder_lessons"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/lessons/reorder_lessons", {
+      deck_id: params.deck_id,
+      reorder_data: params.reorder_data,
+    })
+
+    return response.lessons.map((lesson) => this.map_lesson(lesson))
   }
 }

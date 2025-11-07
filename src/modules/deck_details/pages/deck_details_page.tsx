@@ -4,6 +4,7 @@ import { DeckDetailsLessonsList } from "@/modules/deck_details/components/deck_d
 import { DeckDetailsTabs } from "@/modules/deck_details/components/deck_details_tabs/deck_details_tabs"
 import { DeckDetailsCardsList } from "@/modules/deck_details/components/deck_details_cards_list/deck_details_cards_list"
 import { DeckDetailsLoading } from "@/modules/deck_details/components/deck_details_loading/deck_details_loading"
+import { DeckDetailsLessonCardsModal } from "@/modules/deck_details/components/deck_details_lesson_cards_modal/deck_details_lesson_cards_modal"
 
 export function DeckDetailsPage() {
   return (
@@ -22,6 +23,7 @@ export function DeckDetailsPage() {
           </DeckDetailsTabs>
         </div>
       </DeckDetailsLoading>
+      <DeckDetailsLessonCardsModal />
     </GlobalLayout>
   )
 }

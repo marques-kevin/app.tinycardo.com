@@ -11,7 +11,10 @@ export function Wrapper(props: ContainerProps) {
     <div className="grid grid-cols-1 gap-2 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {props.lessons.map((lesson) => (
         <div key={lesson.id} className="stack relative">
-          <div className="deck flex aspect-[3/4] cursor-pointer flex-col p-4">
+          <div
+            className="deck flex aspect-[3/4] cursor-pointer flex-col p-4"
+            onClick={() => props.on_lesson_click(lesson.id)}
+          >
             <div className="flex items-end justify-end">
               <DecksProgressRadialChart
                 total={lesson.cards.length}

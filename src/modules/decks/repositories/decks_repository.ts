@@ -49,6 +49,17 @@ export interface DecksRepository {
     }>
   }): Promise<void>
 
+  /**
+   * ===============================
+   *
+   *
+   *
+   * Lessons
+   *
+   *
+   * ===============================
+   */
+
   fetch_lessons(params: {
     deck_id: string
     user_id: string
@@ -74,5 +85,5 @@ export interface DecksRepository {
   reorder_lessons(params: {
     deck_id: string
     reorder_data: Array<{ lesson_id: string; position: number }>
-  }): Promise<void>
+  }): Promise<LessonEntity[]>
 }

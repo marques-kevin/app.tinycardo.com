@@ -63,3 +63,17 @@ export const global_route_changed = createAsyncThunk<
     await dispatch(fetch_deck_details({ deck_id }))
   }
 })
+
+export const open_lesson_cards_modal = createAsyncThunk<
+  { lesson_id: string },
+  { lesson_id: string },
+  AsyncThunkConfig
+>("decks_details/open_lesson_cards_modal", async ({ lesson_id }) => {
+  return { lesson_id }
+})
+
+export const close_lesson_cards_modal = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("decks_details/close_lesson_cards_modal", async () => {})

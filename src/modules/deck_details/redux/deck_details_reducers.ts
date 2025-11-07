@@ -11,6 +11,12 @@ export interface DecksDetailsState {
   lessons: LessonEntityWithStats[]
   history: SessionHistoryEntity[]
   is_fetching: boolean
+  lesson_cards_modal: {
+    is_open: boolean
+    lesson_id: string | null
+    lesson_name: string | null
+    cards: CardEntity[]
+  }
 }
 
 const initial_state: DecksDetailsState = {
@@ -19,6 +25,12 @@ const initial_state: DecksDetailsState = {
   lessons: [],
   history: [],
   is_fetching: false,
+  lesson_cards_modal: {
+    is_open: false,
+    lesson_id: null,
+    lesson_name: null,
+    cards: [],
+  },
 }
 
 export const decks_details_reducers = createReducer(
@@ -94,6 +106,27 @@ export const decks_details_reducers = createReducer(
 
     builder.addCase(actions.fetch_deck_details.rejected, (state) => {
       state.is_fetching = false
+    })
+
+    builder.addCase(
+      actions.open_lesson_cards_modal.fulfilled,
+      (state, action) => {
+        const lesson = state.lessons.find(
+          (l) => l.id === action.payload.lesson_id,
+        )
+        const cards = lesson
+          ? state.cards.filter((card) => lesson.cards.includes(card.id))
+          : []
+
+        state.lesson_cards_modal.is_open = true
+        state.lesson_cards_modal.lesson_id = action.payload.lesson_id
+        state.lesson_cards_modal.lesson_name = lesson?.name || null
+        state.lesson_cards_modal.cards = cards
+      },
+    )
+
+    builder.addCase(actions.close_lesson_cards_modal.fulfilled, (state) => {
+      state.lesson_cards_modal.is_open = false
     })
   },
 )
