@@ -38,12 +38,6 @@
   "session_reviewed_words_table/mastered_cards_title": "Şu an için ustalaştığın kartlar...",
   "session_reviewed_words_table/next_due_tooltip": "Bu kart bir kez daha {date} tarihinde tekrar gözden geçirilecek.",
   "session_reviewed_words_table/streak_tooltip": "Bu kartı {count} kez hatasız incelediniz.",
-  "decks_csv_mapping_dialog/apply": "Kaydet ve İçeri Aktar",
-  "decks_csv_mapping_dialog/back_column": "Arka sütun nedir?",
-  "decks_csv_mapping_dialog/cancel": "İptal et",
-  "decks_csv_mapping_dialog/description": "Dosyanızı başarıyla yükledik, ancak ön ve arka sütunları bulamadık. Lütfen bunları eşleştirmemize yardımcı olmak için uygun sütunları seçin.",
-  "decks_csv_mapping_dialog/front_column": "Ön sütun nedir?",
-  "decks_csv_mapping_dialog/title": "Lütfen karşılık gelen sütunları seçin",
   "session_footer_help/message": "{space} tuşlayın veya kartı çevirerek tıklayın. Kelimeyi biliyorsanız {right} tuşuna basın. Kelimeyi bilmiyorsanız {left} tuşuna basın.",
   "session_reviewed_words_table/cards_to_review_empty": "Harika! Bu sefer tüm kartları doğru yaptın.",
   "session_reviewed_words_table/mastered_cards_empty": "Hmm, anımsaman yok gibi görünüyor, ama hey, en azından deniyorsun!",
@@ -120,5 +114,11 @@
   "deck_update_tabs/delete": "Sil artık!",
   "deck_update_tabs/rename": "Yeniden adlandır ",
   "deck_update_tabs/reorder_lessons": "Dersleri yeniden sırala",
-  "decks_update_footer_actions/add_to_lesson": "Derse ekle"
+  "decks_update_footer_actions/add_to_lesson": "Derse ekle",
+  "deck_update_import_csv_modal/apply": "Kaydet & İçeri Aktar",
+  "deck_update_import_csv_modal/back_column": "Arka sütun nedir?",
+  "deck_update_import_csv_modal/cancel": "İptal et",
+  "deck_update_import_csv_modal/description": "Dosyanız başarıyla yüklendi, ama ön ve arka sütunları bulamadık. Lütfen bunları eşleştirmemize yardımcı olmak için uygun sütunları seçin.",
+  "deck_update_import_csv_modal/front_column": "Ön yüz sütunu nedir?",
+  "deck_update_import_csv_modal/title": "Lütfen karşılık gelen sütunları seçin"
 }

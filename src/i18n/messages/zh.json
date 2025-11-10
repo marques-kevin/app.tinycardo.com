@@ -38,12 +38,6 @@
   "session_reviewed_words_table/mastered_cards_title": "你掌握的卡片…暂时还行！",
   "session_reviewed_words_table/next_due_tooltip": "此卡将在 {date} 重新复习。",
   "session_reviewed_words_table/streak_tooltip": "您已无错误地复习此卡片 {count} 次。",
-  "decks_csv_mapping_dialog/apply": "保存并导入",
-  "decks_csv_mapping_dialog/back_column": "背面列是什么？",
-  "decks_csv_mapping_dialog/cancel": "取消",
-  "decks_csv_mapping_dialog/description": "成功加载了您的文件，但未找到正面和背面列。请选择相应的列以帮助我们进行映射。",
-  "decks_csv_mapping_dialog/front_column": "前面列是什么？",
-  "decks_csv_mapping_dialog/title": "请选择相应的列",
   "session_footer_help/message": "按下 {space} 或单击卡片以翻转卡片。如果你知道这个词，请按 {right}。如果你不知道这个词，请按 {left}。",
   "session_reviewed_words_table/cards_to_review_empty": "干得好！这次你所有的卡片都答对了。",
   "session_reviewed_words_table/mastered_cards_empty": "好的，看来你还没有掌握任何闪卡，但嘿，至少你在努力！",
@@ -120,5 +114,11 @@
   "deck_update_tabs/delete": "删除",
   "deck_update_tabs/rename": "重命名",
   "deck_update_tabs/reorder_lessons": "重新排序课程",
-  "decks_update_footer_actions/add_to_lesson": "加入课程"
+  "decks_update_footer_actions/add_to_lesson": "加入课程",
+  "deck_update_import_csv_modal/apply": "保存并导入",
+  "deck_update_import_csv_modal/back_column": "背面列是什么？",
+  "deck_update_import_csv_modal/cancel": "取消",
+  "deck_update_import_csv_modal/description": "我们成功加载了你的文件，但没有找到正面和背面列。请选对应的列来帮助我们映射它们。",
+  "deck_update_import_csv_modal/front_column": "前面的列是什么？",
+  "deck_update_import_csv_modal/title": "请选择相应的列"
 }

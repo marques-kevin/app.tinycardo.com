@@ -38,12 +38,6 @@
   "session_reviewed_words_table/mastered_cards_title": "Flashcard masterizzati… per ora!",
   "session_reviewed_words_table/next_due_tooltip": "Questa scheda sarà nuovamente rivedibile il {date}.",
   "session_reviewed_words_table/streak_tooltip": "Hai esaminato questa scheda {count} volte senza errori.",
-  "decks_csv_mapping_dialog/apply": "Salva e importa",
-  "decks_csv_mapping_dialog/back_column": "Che cos'è la colonna posteriore?",
-  "decks_csv_mapping_dialog/cancel": "Annulla",
-  "decks_csv_mapping_dialog/description": "Abbiamo caricato con successo il tuo file, ma non abbiamo trovato le colonne frontale e posteriore. Seleziona le colonne corrispondenti per aiutarci a mappare.",
-  "decks_csv_mapping_dialog/front_column": "Qual è la colonna frontale?",
-  "decks_csv_mapping_dialog/title": "Seleziona le colonne corrispondenti",
   "session_footer_help/message": "Premi {space} o clicca sulla scheda per girarla. Premi {right} se conosci la parola. Premi {left} se non conosci la parola.",
   "session_reviewed_words_table/cards_to_review_empty": "Ottimo lavoro! Hai azzeccato tutte le flashcard questa volta.",
   "session_reviewed_words_table/mastered_cards_empty": "Ehi, ehi... sembra che non abbia ancora padroneggiato alcuna flashcard, ma ehi, almeno ci stai provando!",
@@ -120,5 +114,11 @@
   "deck_update_tabs/delete": "Elimina",
   "deck_update_tabs/rename": "Rinomina",
   "deck_update_tabs/reorder_lessons": "Riordina lezioni",
-  "decks_update_footer_actions/add_to_lesson": "Aggiungi alla lezione"
+  "decks_update_footer_actions/add_to_lesson": "Aggiungi alla lezione",
+  "deck_update_import_csv_modal/apply": "Applica e importa",
+  "deck_update_import_csv_modal/back_column": "Che cos'è la colonna retro?",
+  "deck_update_import_csv_modal/cancel": "Annulla",
+  "deck_update_import_csv_modal/description": "Abbiamo caricato il tuo file con successo, ma non abbiamo trovato le colonne front e back. Seleziona le colonne corrispondenti per aiutarci a mappare.",
+  "deck_update_import_csv_modal/front_column": "Qual è la colonna frontale?",
+  "deck_update_import_csv_modal/title": "Seleziona le colonne corrispondenti"
 }
