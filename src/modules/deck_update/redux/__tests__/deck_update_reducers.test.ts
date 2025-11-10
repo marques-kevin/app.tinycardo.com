@@ -179,7 +179,7 @@ describe("Feature: Deck Update", () => {
       Then the deck should be updated
       And cards removed
       `, async () => {
-      const { store, deck, cards, dependencies, toast_service } =
+      const { store, deck, cards, dependencies } =
         await prepare_store_for_tests()
 
       const card = cards[0]
@@ -206,14 +206,6 @@ describe("Feature: Deck Update", () => {
       expect(decks_in_database[0].number_of_cards).toEqual(
         deck.number_of_cards - 1,
       )
-
-      const find_success_toast = toast_service.history.find(
-        (toast) =>
-          toast.type === "success" &&
-          toast.title === "deck_update_actions/toast/cards_deleted",
-      )
-
-      expect(find_success_toast).toBeDefined()
     })
 
     it(`

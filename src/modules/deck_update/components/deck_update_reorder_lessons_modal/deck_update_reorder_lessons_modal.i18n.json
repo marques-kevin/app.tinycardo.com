@@ -1,5 +1,4 @@
 {
-  "cancel": "Cancel",
   "description": "Reorder lessons by moving them up or down using the arrows.",
   "lessons_reordered": "Lessons reordered successfully",
   "move_down": "Move down",
@@ -8,4 +7,3 @@
   "save": "Save order",
   "title": "Reorder lessons"
 }
-

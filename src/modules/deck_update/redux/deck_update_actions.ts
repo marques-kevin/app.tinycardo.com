@@ -395,7 +395,7 @@ export const create_lesson = createAsyncThunk<
   void,
   AsyncThunkConfig
 >("deck_update/create_lesson", async (_, { getState, extra }) => {
-  const { deck_update, authentication } = getState()
+  const { deck_update } = getState()
 
   const lesson: LessonEntity = {
     id: v4(),

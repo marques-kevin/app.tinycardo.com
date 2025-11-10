@@ -1,6 +1,4 @@
 {
-  "toast/cards_deleted": "Cards deleted successfully",
-  "toast/cards_deleted/description": "The cards have been deleted successfully",
   "toast/deck_updated": "Deck updated successfully",
   "toast/deck_updated/description": "Your deck has been updated successfully",
   "toast/lesson_deleted": "Lesson deleted successfully",

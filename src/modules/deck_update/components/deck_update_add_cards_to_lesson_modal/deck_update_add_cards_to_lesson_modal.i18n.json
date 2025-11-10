@@ -1,8 +1,5 @@
 {
   "apply": "Add {length} cards ?",
-  "cancel": "Close",
-  "create_lesson": "Create new lesson",
   "description": "This cards will be added in the selected lesson. This cards will not be removed from the current lesson.",
-  "no_lessons": "No lessons available",
   "title": "Select where to add {length} cards?"
 }
