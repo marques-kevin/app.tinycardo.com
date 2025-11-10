@@ -2,19 +2,23 @@ import { type DeckEntity } from "@/modules/decks/entities/deck_entity"
 import { type DecksRepository } from "@/modules/decks/repositories/decks_repository"
 import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { v4 } from "uuid"
+import type { LessonEntity } from "../entities/lesson_entity"
 
 export class DecksRepositoryInMemory implements DecksRepository {
   private decks: DeckEntity[] = []
   private cards: Record<string, CardEntity[]> = {}
+  public lessons: LessonEntity[] = []
 
   constructor(
     params: Partial<{
       decks?: DeckEntity[]
       cards?: CardEntity[]
+      lessons?: LessonEntity[]
     }> = {},
   ) {
     this.decks = params.decks ?? []
     this.store_cards(params.cards ?? [])
+    this.lessons = params.lessons ?? []
   }
 
   private store_cards(cards: CardEntity[]): void {
@@ -61,10 +65,10 @@ export class DecksRepositoryInMemory implements DecksRepository {
     return this.cards[params.deck_id] || []
   }
 
-  async get_cards_by_deck_id(params: {
-    deck_id: string
-  }): ReturnType<DecksRepository["get_cards_by_deck_id"]> {
-    return this.fetch_cards(params)
+  async get_cards_by_deck_id(
+    params: Parameters<DecksRepository["get_cards_by_deck_id"]>[0],
+  ): ReturnType<DecksRepository["get_cards_by_deck_id"]> {
+    return this.fetch_cards({ deck_id: params.deck_id })
   }
 
   async create_deck(params: {
@@ -95,13 +99,20 @@ export class DecksRepositoryInMemory implements DecksRepository {
     return deck
   }
 
-  async update_deck(params: {
-    id: string
-    name?: string
-    description?: string
-    front_language?: string
-    back_language?: string
-  }): ReturnType<DecksRepository["update_deck"]> {
+  async update_deck(
+    params: Partial<
+      Pick<
+        DeckEntity,
+        | "id"
+        | "user_id"
+        | "name"
+        | "description"
+        | "visibility"
+        | "front_language"
+        | "back_language"
+      >
+    >,
+  ): ReturnType<DecksRepository["update_deck"]> {
     const deck = this.decks.find((d) => d.id === params.id)
 
     if (!deck) {
@@ -110,9 +121,7 @@ export class DecksRepositoryInMemory implements DecksRepository {
 
     const updated_deck: DeckEntity = {
       ...deck,
-      name: params.name ?? deck.name,
-      front_language: params.front_language ?? deck.front_language,
-      back_language: params.back_language ?? deck.back_language,
+      ...params,
       updated_at: new Date(),
     }
 
@@ -177,5 +186,47 @@ export class DecksRepositoryInMemory implements DecksRepository {
     })
 
     return new_deck
+  }
+
+  /**
+   *
+   * ===============================
+   *
+   *
+   *
+   *
+   *
+   * Lessons
+   *
+   *
+   *
+   *
+   *
+   * ===============================
+   */
+
+  async fetch_lessons(params: {
+    deck_id: string
+    user_id: string
+  }): ReturnType<DecksRepository["fetch_lessons"]> {
+    return this.lessons.filter((lesson) => lesson.deck_id === params.deck_id)
+  }
+
+  async upsert_lessons(
+    params: Parameters<DecksRepository["upsert_lessons"]>[0],
+  ): ReturnType<DecksRepository["upsert_lessons"]> {
+    this.lessons = this.lessons.filter(
+      (lesson) => lesson.deck_id !== params.deck_id,
+    )
+
+    this.lessons = [
+      ...this.lessons,
+      ...params.lessons.map((lesson) => ({
+        ...lesson,
+        deck_id: params.deck_id,
+      })),
+    ]
+
+    return params.lessons
   }
 }

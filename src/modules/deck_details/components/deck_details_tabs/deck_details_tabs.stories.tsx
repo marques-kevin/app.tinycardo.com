@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { DeckDetailsTabs } from "./deck_details_tabs"
 
 const meta: Meta<typeof DeckDetailsTabs> = {
-  title: "deck_details/deck_details_tabs",
+  title: "deck_details_tabs",
   component: DeckDetailsTabs,
 }
 

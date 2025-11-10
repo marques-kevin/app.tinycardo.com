@@ -1,7 +1,6 @@
 {
   "dialog/create_deck/errors/at_least_one_card": "Add at least one card.",
   "dialog/create_deck/errors/dialog/description": "Please correct the following:",
-  "dialog/create_deck/errors/dialog/title": "Fix issues before saving",
   "dialog/create_deck/errors/front_back_required": "Each card must have front and back text.",
   "dialog/create_deck/errors/languages_cannot_match": "Front and back languages must be different.",
   "dialog/create_deck/errors/title_required": "Title is required.",

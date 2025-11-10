@@ -1,4 +1,9 @@
 {
   "toast/deck_updated": "Deck updated successfully",
-  "toast/deck_updated/description": "Your deck has been updated successfully"
+  "toast/deck_updated/description": "Your deck has been updated successfully",
+  "toast/lesson_deleted": "Lesson deleted successfully",
+  "toast/lesson_deleted/description": "You will have to save the deck to apply the changes.",
+  "toast/lesson_renamed": "Lesson renamed successfully",
+  "toast/lesson_renamed/description": "You will have to save the deck to apply the changes.",
+  "toast/set_add_cards_to_lesson_selected_lesson": "Cards added to lesson successfully"
 }

@@ -131,12 +131,12 @@ function Actions(props: ContainerProps) {
     <div className="flex w-full flex-wrap items-center justify-center gap-4">
       <button className="btn btn-lg btn-primary" onClick={() => {}}>
         {formatMessage({
-          id: "session_ended_splash_screen/session_ended_actions/continue_reviewing",
+          id: "session_no_more_review/reviewed_all_cards/actions/random_session",
         })}
       </button>
       <button className="btn btn-lg btn-ghost" onClick={() => {}}>
         {formatMessage({
-          id: "session_ended_splash_screen/session_ended_actions/learn_new_words",
+          id: "session_no_more_review/reviewed_all_cards/actions/learn_new_cards",
         })}
       </button>
     </div>

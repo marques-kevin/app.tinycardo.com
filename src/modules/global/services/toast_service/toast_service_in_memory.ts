@@ -1,7 +1,7 @@
 import type { ToastService } from "@/modules/global/services/toast_service/toast_service"
 
 export class ToastServiceInMemory implements ToastService {
-  private history: {
+  public history: {
     title: string
     description?: string
     type?: "success" | "error" | "warning" | "info" | "loading"

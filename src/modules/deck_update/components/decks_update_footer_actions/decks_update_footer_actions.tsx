@@ -6,10 +6,12 @@ import { useIntl } from "react-intl"
 import { SaveIcon, TrashIcon, XIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useRef } from "react"
-import { DownloadIcon } from "lucide-react"
+import { DownloadIcon, PlusCircleIcon } from "lucide-react"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/lib/shadcn/tooltip"
 
 function CsvImportButton(props: { on_import_csv: (content: string) => void }) {
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const { formatMessage } = useIntl()
 
   const handle_file_change = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -33,13 +35,19 @@ function CsvImportButton(props: { on_import_csv: (content: string) => void }) {
 
   return (
     <>
-      <button
-        className="btn text-base-content btn-ghost tooltip tooltip-left"
-        data-tip="Import from csv file"
-        onClick={handle_click}
-      >
-        <DownloadIcon className="size-5" />
-      </button>
+      <Tooltip>
+        <TooltipTrigger
+          onClick={handle_click}
+          className="btn text-base-content btn-ghost"
+        >
+          <DownloadIcon className="size-5" />
+        </TooltipTrigger>
+
+        <TooltipContent>
+          {formatMessage({ id: "decks_update_footer_actions/import_csv" })}
+        </TooltipContent>
+      </Tooltip>
+
       <input
         ref={fileInputRef}
         type="file"
@@ -68,22 +76,37 @@ export function Wrapper(props: ContainerProps) {
           </button>
         </div>
 
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center gap-2">
           {props.selected_cards_length > 0 ? (
-            <button
-              className="btn btn-error gap-2 uppercase"
-              onClick={props.on_delete_selected_cards}
-            >
-              <TrashIcon className="size-5" />
-              <span>
-                {formatMessage(
-                  {
-                    id: "decks_update_footer_actions/delete_selected_cards",
-                  },
-                  { length: props.selected_cards_length },
-                )}
-              </span>
-            </button>
+            <>
+              {props.lessons_length > 0 && (
+                <button
+                  className="btn btn-primary gap-2 uppercase"
+                  onClick={props.on_open_add_to_lesson_modal}
+                >
+                  <PlusCircleIcon className="size-5" />
+                  <span>
+                    {formatMessage({
+                      id: "decks_update_footer_actions/add_to_lesson",
+                    })}
+                  </span>
+                </button>
+              )}
+              <button
+                className="btn btn-error gap-2 uppercase"
+                onClick={props.on_delete_selected_cards}
+              >
+                <TrashIcon className="size-5" />
+                <span>
+                  {formatMessage(
+                    {
+                      id: "decks_update_footer_actions/delete_selected_cards",
+                    },
+                    { length: props.selected_cards_length },
+                  )}
+                </span>
+              </button>
+            </>
           ) : (
             <></>
           )}

@@ -1,9 +1,5 @@
 {
-  "back_language": "Back language",
   "close": "Close",
-  "front_language": "Front language",
-  "number_of_cards": "Number of cards",
   "show_deck": "Show deck",
-  "start_using_this_deck": "Start using this deck",
-  "users_count": "Users"
+  "start_using_this_deck": "Start using this deck"
 }

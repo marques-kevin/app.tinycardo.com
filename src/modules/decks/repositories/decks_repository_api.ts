@@ -1,12 +1,35 @@
+import type { LessonEntity } from "@/modules/decks/entities/lesson_entity"
 import { type DecksRepository } from "@/modules/decks/repositories/decks_repository"
 import { ApiService } from "@/modules/global/services/api_service/api_service"
 import type { paths } from "@/types/api"
+
+type ApiLesson = {
+  id: string
+  name: string
+  deck_id: string
+  cards: string[]
+  position: number
+  created_at: string
+  updated_at: string
+}
 
 export class DecksRepositoryApi implements DecksRepository {
   private readonly api_service: ApiService
 
   constructor() {
     this.api_service = new ApiService()
+  }
+
+  private map_lesson(api_lesson: ApiLesson): LessonEntity {
+    return {
+      id: api_lesson.id,
+      name: api_lesson.name,
+      deck_id: api_lesson.deck_id,
+      cards: [...api_lesson.cards],
+      position: api_lesson.position,
+      created_at: new Date(api_lesson.created_at),
+      updated_at: new Date(api_lesson.updated_at),
+    }
   }
 
   async fetch_decks(): ReturnType<DecksRepository["fetch_decks"]> {
@@ -171,5 +194,54 @@ export class DecksRepositoryApi implements DecksRepository {
       number_of_cards_not_ready_to_be_reviewed: 0,
       number_of_users_using_this_deck: 0,
     }
+  }
+
+  /**
+   * ===============================
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   * Lessons
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   * ===============================
+   */
+
+  async fetch_lessons(params: {
+    deck_id: string
+    user_id: string
+  }): ReturnType<DecksRepository["fetch_lessons"]> {
+    const response = await this.api_service.post<
+      paths["/lessons/get_lessons"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/lessons/get_lessons", {
+      deck_id: params.deck_id,
+    })
+
+    return response.lessons.map((lesson) => this.map_lesson(lesson))
+  }
+
+  async upsert_lessons(
+    params: Parameters<DecksRepository["upsert_lessons"]>[0],
+  ): ReturnType<DecksRepository["upsert_lessons"]> {
+    const body: paths["/lessons/upsert_lessons"]["post"]["requestBody"]["content"]["application/json"] =
+      {
+        deck_id: params.deck_id,
+        lessons: params.lessons,
+      }
+
+    const response = await this.api_service.post<
+      paths["/lessons/upsert_lessons"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/lessons/upsert_lessons", body)
+
+    return response.lessons.map((lesson) => this.map_lesson(lesson))
   }
 }

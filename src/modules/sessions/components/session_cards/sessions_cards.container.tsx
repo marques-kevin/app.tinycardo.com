@@ -1,6 +1,5 @@
 import {
   flip_card,
-  help_open,
   set_review_word,
   tts,
 } from "@/modules/sessions/redux/sessions_actions"

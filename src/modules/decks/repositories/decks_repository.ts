@@ -1,5 +1,6 @@
 import { type DeckEntity } from "@/modules/decks/entities/deck_entity"
 import type { CardEntity } from "@/modules/decks/entities/card_entity"
+import type { LessonEntity } from "../entities/lesson_entity"
 
 export interface DecksRepository {
   fetch_decks(): Promise<DeckEntity[]>
@@ -34,7 +35,10 @@ export interface DecksRepository {
 
   fetch_cards(params: { deck_id: string }): Promise<CardEntity[]>
 
-  get_cards_by_deck_id(params: { deck_id: string }): Promise<CardEntity[]>
+  get_cards_by_deck_id(params: {
+    deck_id: string
+    user_id: string
+  }): Promise<CardEntity[]>
 
   upsert_cards(params: {
     deck_id: string
@@ -44,4 +48,26 @@ export interface DecksRepository {
       back: string
     }>
   }): Promise<void>
+
+  /**
+   * ===============================
+   *
+   *
+   *
+   * Lessons
+   *
+   *
+   * ===============================
+   */
+
+  fetch_lessons(params: {
+    deck_id: string
+    user_id: string
+  }): Promise<LessonEntity[]>
+
+  upsert_lessons(params: {
+    user_id: string
+    deck_id: string
+    lessons: LessonEntity[]
+  }): Promise<LessonEntity[]>
 }

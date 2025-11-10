@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { DecksProgressRadialChart } from "./decks_progress_radial_chart"
 
 const meta: Meta<typeof DecksProgressRadialChart> = {
-  title: "decks/decks_progress_radial_chart",
+  title: "decks_progress_radial_chart",
   component: DecksProgressRadialChart,
 }
 

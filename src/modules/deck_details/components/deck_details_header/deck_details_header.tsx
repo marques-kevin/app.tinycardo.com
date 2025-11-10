@@ -89,20 +89,6 @@ export function Wrapper(props: ContainerProps) {
               onClick={() => {
                 props.on_start_session({
                   deck_id: props.deck_id!,
-                  mode: "learn_new_words",
-                })
-              }}
-            >
-              <PlayIcon />
-              <span>
-                {formatMessage({ id: "deck_details_header/learn_new_cards" })}
-              </span>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="text-lg"
-              onClick={() => {
-                props.on_start_session({
-                  deck_id: props.deck_id!,
                   mode: "randomized",
                 })
               }}

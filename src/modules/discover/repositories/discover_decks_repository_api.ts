@@ -1,4 +1,3 @@
-import type { DeckEntity } from "@/modules/decks/entities/deck_entity"
 import type { DiscoverDeckEntity } from "@/modules/discover/entities/discover_deck_entity"
 import type { DiscoverDecksRepository } from "@/modules/discover/repositories/discover_decks_repository"
 import { ApiService } from "@/modules/global/services/api_service/api_service"

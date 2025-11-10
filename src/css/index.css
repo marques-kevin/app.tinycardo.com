@@ -21,3 +21,14 @@
   @apply bg-base-100 rounded-box border-base-300 cursor-pointer border-2 transition-all duration-300 hover:rotate-[1deg];
   transform-origin: bottom right;
 }
+
+* {
+  scrollbar-width: auto;
+  scrollbar-color: var(--color-accent) var(--color-base-100) !important;
+}
+
+.btn {
+  &:active {
+    scale: 0.9;
+  }
+}

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Wrapper } from "./decks_csv_mapping_dialog"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "Decks/decks_csv_mapping_dialog",
+  title: "decks_csv_mapping_dialog",
   component: Wrapper,
 }
 
@@ -13,7 +13,7 @@ type Story = StoryObj<typeof Wrapper>
 export const Open: Story = {
   args: {
     headers: ["french", "korean", "actions"],
-    open: true,
+    is_open: true,
     rows: [],
     selected_back: 0,
     selected_front: 1,
@@ -23,7 +23,7 @@ export const Open: Story = {
 export const Close: Story = {
   args: {
     headers: ["french", "korean", "actions"],
-    open: false,
+    is_open: false,
     rows: [],
     selected_back: 0,
     selected_front: 1,

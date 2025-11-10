@@ -1,0 +1,5 @@
+{
+  "apply": "Add {length} cards ?",
+  "description": "This cards will be added in the selected lesson. This cards will not be removed from the current lesson.",
+  "title": "Select where to add {length} cards?"
+}

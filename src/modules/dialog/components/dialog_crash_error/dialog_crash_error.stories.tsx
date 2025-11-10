@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Wrapper } from "./dialog_crash_error"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "Dialog/DialogCrashError",
+  title: "dialog_crash_error",
   component: Wrapper,
   parameters: {
     layout: "",

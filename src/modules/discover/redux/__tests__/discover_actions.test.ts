@@ -3,7 +3,6 @@ import { create_store_for_tests } from "@/tests/create_store_for_tests"
 import * as actions from "@/modules/discover/redux/discover_actions"
 import type { DiscoverDecksRepositoryInMemory } from "@/modules/discover/repositories/discover_decks_repository_in_memory"
 import type { DiscoverDeckEntity } from "@/modules/discover/entities/discover_deck_entity"
-import { delay } from "@/modules/global/utils/delay"
 
 describe("discover actions", () => {
   const decks: DiscoverDeckEntity[] = [

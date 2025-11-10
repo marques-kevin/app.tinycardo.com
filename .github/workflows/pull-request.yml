@@ -102,7 +102,7 @@ jobs:
           key: ${{ runner.os }}-yarn-
 
       - name: Type check
-        run: echo "todo"
+        run: yarn type-check
 
   lint:
     needs: install
@@ -147,6 +147,9 @@ jobs:
 
       - name: Check i18n sync
         run: yarn i18n:sync:check
+
+      - name: Check i18n usage
+        run: yarn check-i18n-usage
 
   build:
     needs: install

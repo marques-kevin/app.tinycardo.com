@@ -21,7 +21,7 @@ export class StreakRepositoryInMemory implements StreakRepository {
     const streak: StreakEntity = {
       id: v4(),
       user_id: params.user_id,
-      date: new Date(),
+      date: new Date().toISOString(),
     }
 
     this.streaks.push(streak)

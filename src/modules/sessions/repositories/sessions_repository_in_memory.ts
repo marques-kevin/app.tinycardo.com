@@ -14,6 +14,7 @@ export class SessionsRepositoryInMemory implements SessionsRepository {
 
   async fetch_history(params: {
     deck_id: string
+    user_id: string
   }): ReturnType<SessionsRepository["fetch_history"]> {
     return Array.from(this.history.values()).filter(
       (entry) => entry.deck_id === params.deck_id,

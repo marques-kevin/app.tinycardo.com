@@ -6,7 +6,7 @@ import { DiscoverIndexPage } from "@/modules/discover/pages/discover_index_page"
 import { ParamsPage } from "@/modules/params/pages/params_page"
 import { SessionPage } from "@/modules/sessions/pages/session_page"
 import { DeckDetailsPage } from "./modules/deck_details/pages/deck_details_page"
-import { DecksUpdatePage } from "./modules/decks/pages/decks_update_page"
+import { DecksUpdatePage } from "./modules/deck_update/pages/decks_update_page"
 
 export function Routes() {
   return (

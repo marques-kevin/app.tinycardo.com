@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Wrapper } from "./deck_details_header"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "deck_details/deck_details_header",
+  title: "deck_details_header",
   component: Wrapper,
 }
 
@@ -14,11 +14,5 @@ export const Default: Story = {
     name: "Apprendre les bases du coréen",
     number_of_cards: 320,
     updated_at: new Date(),
-  },
-}
-
-export const Loading: Story = {
-  args: {
-    is_fetching: true,
   },
 }

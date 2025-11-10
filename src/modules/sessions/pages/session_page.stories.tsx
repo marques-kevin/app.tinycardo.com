@@ -5,7 +5,7 @@ import { useAppDispatch } from "@/redux/store"
 import * as actions from "@/modules/sessions/redux/sessions_actions"
 
 const meta: Meta<typeof SessionPage> = {
-  title: "Sessions/SessionPage",
+  title: "session_page",
   component: SessionPage,
   parameters: {
     layout: "",

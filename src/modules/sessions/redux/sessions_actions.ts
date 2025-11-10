@@ -84,6 +84,7 @@ export const start_session = createAsyncThunk<
     const { params, authentication } = getState()
     const location = extra.location_service.get_current_url()
     const pathname = new URL(location).pathname
+    const user_id = authentication.user?.id ?? ""
 
     const matched = UrlMatcherService.extract({
       pattern: `/sessions/:deck_id/:mode`,
@@ -103,11 +104,10 @@ export const start_session = createAsyncThunk<
       extra.decks_repository.fetch_cards({
         deck_id,
       }),
-      extra.sessions_repository.fetch_history({ deck_id }),
+      extra.sessions_repository.fetch_history({ deck_id, user_id }),
       extra.decks_repository.get_deck_by_id({
         deck_id,
-        // @todo
-        user_id: authentication.user?.id || "",
+        user_id,
       }),
     ])
 

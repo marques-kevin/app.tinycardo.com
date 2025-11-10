@@ -5,11 +5,12 @@ import * as deck_update_actions from "@/modules/deck_update/redux/deck_update_ac
 const map_state = (state: RootState) => ({
   selected_cards_length: state.deck_update.selected_cards.length,
   is_updating: state.deck_update.is_updating,
+  lessons_length: state.deck_update.lessons.length,
 })
 
 const map_dispatch = (dispatch: Dispatch) => ({
   on_save: () => {
-    dispatch(deck_update_actions.update_deck())
+    dispatch(deck_update_actions.save())
   },
   on_back: () => {
     dispatch(deck_update_actions.exit_update_deck_page())
@@ -18,7 +19,10 @@ const map_dispatch = (dispatch: Dispatch) => ({
     dispatch(deck_update_actions.import_cards_from_csv({ content }))
   },
   on_delete_selected_cards() {
-    dispatch(deck_update_actions.update_deck_delete_selected_cards())
+    dispatch(deck_update_actions.delete_selected_cards())
+  },
+  on_open_add_to_lesson_modal() {
+    dispatch(deck_update_actions.open_add_cards_to_lesson_modal())
   },
 })
 

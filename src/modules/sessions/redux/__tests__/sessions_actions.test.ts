@@ -33,9 +33,9 @@ describe("sessions actions", () => {
       created_at: new Date(),
       visibility: "private",
       number_of_cards: 2,
-      number_of_cards_not_ready_to_be_reviewed: 0,
-      number_of_cards_ready_to_be_reviewed: 0,
-      number_of_users_using_this_deck: 0,
+      number_of_cards_ready_to_be_reviewed: 1,
+      number_of_cards_not_ready_to_be_reviewed: 1,
+      number_of_users_using_this_deck: 1,
     }
 
     cards = Array.from({ length: 2 }, (_, i) => ({
@@ -90,7 +90,7 @@ describe("sessions actions", () => {
     await delay()
 
     expect(
-      await session_repository.fetch_history({ deck_id: "1" }),
+      await session_repository.fetch_history({ deck_id: "1", user_id: "1" }),
     ).toHaveLength(1)
 
     await redux.store.dispatch(
@@ -145,7 +145,10 @@ describe("sessions actions", () => {
       sessions_actions.set_review_word({ status: "known" }),
     )
 
-    const history = await session_repository.fetch_history({ deck_id: deck.id })
+    const history = await session_repository.fetch_history({
+      deck_id: deck.id,
+      user_id: "1",
+    })
 
     expect(history.every(({ ease_factor }) => ease_factor === 5)).toEqual(true)
   })

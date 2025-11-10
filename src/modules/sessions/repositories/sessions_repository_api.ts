@@ -53,7 +53,7 @@ export class SessionsRepositoryApi implements SessionsRepository {
       })
 
       updated_history.push({
-        deck_id: response.deck_id,
+        deck_id: response.card_id,
         card_id: response.card_id,
         repetition_count: response.repetition_count,
         ease_factor: response.ease_factor,
