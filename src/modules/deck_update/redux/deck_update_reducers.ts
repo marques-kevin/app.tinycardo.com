@@ -117,21 +117,24 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
   builder.addCase(
     actions.apply_csv_import_mapping.fulfilled,
     (state, action) => {
-      state.cards = action.payload.map((c) =>
-        create_uuid_for_cards({ front: c.front, back: c.back }),
-      )
-      state.cards_map = action.payload.reduce(
-        (acc, c) => {
-          acc[create_uuid_for_cards({ front: c.front, back: c.back })] = {
-            id: create_uuid_for_cards({ front: c.front, back: c.back }),
-            front: c.front,
-            back: c.back,
-            deck_id: "local",
-          }
-          return acc
-        },
-        {} as Record<string, CardEntity>,
-      )
+      const cards = action.payload.map((c) => ({
+        id: create_uuid_for_cards({ front: c.front, back: c.back }),
+        front: c.front,
+        back: c.back,
+        deck_id: state.deck!.id,
+      }))
+
+      cards.forEach((c) => {
+        state.cards_map[c.id] = c
+      })
+
+      state.cards = [...state.cards, ...cards.map((c) => c.id)]
+
+      state.cards_filtered_by_lesson_tab = deck_update_filter_cards_by_lesson({
+        cards: state.cards,
+        lessons: state.lessons,
+        lesson_id: state.active_lesson_id,
+      })
     },
   )
 
@@ -146,7 +149,7 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
             id: create_uuid_for_cards({ front: c.front, back: c.back }),
             front: c.front,
             back: c.back,
-            deck_id: "local",
+            deck_id: state.deck!.id,
           }
           return acc
         },

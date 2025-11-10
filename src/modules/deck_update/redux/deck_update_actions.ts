@@ -239,6 +239,7 @@ export const import_cards_from_csv = createAsyncThunk<
         back: row.back ?? "",
       }))
       .filter((r) => r.front || r.back)
+
     return mapped
   }
 
