@@ -65,25 +65,9 @@ export interface DecksRepository {
     user_id: string
   }): Promise<LessonEntity[]>
 
-  create_lesson(params: {
+  upsert_lessons(params: {
+    user_id: string
     deck_id: string
-    name: string
-  }): Promise<LessonEntity>
-
-  rename_lesson(params: {
-    lesson_id: string
-    name: string
-  }): Promise<LessonEntity>
-
-  delete_lesson(params: { lesson_id: string }): Promise<void>
-
-  update_lesson_cards_list(params: {
-    lesson_id: string
-    card_ids: string[]
-  }): Promise<LessonEntity>
-
-  reorder_lessons(params: {
-    deck_id: string
-    reorder_data: Array<{ lesson_id: string; position: number }>
+    lessons: LessonEntity[]
   }): Promise<LessonEntity[]>
 }

@@ -422,10 +422,6 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
     state.reorder_lessons_modal = false
   })
 
-  builder.addCase(actions.reorder_lessons.pending, (state) => {
-    // Keep modal open while reordering
-  })
-
   builder.addCase(actions.reorder_lessons.fulfilled, (state, action) => {
     state.reorder_lessons_modal = false
 
@@ -440,9 +436,5 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
 
     // Sort lessons by position
     state.lessons.sort((a, b) => a.position - b.position)
-  })
-
-  builder.addCase(actions.reorder_lessons.rejected, (state) => {
-    // Keep modal open on error so user can retry
   })
 })

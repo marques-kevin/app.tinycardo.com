@@ -7,6 +7,7 @@ import { open as open_dialog } from "@/modules/dialog/redux/dialog_actions"
 import { UrlMatcherService } from "@/modules/global/services/url_matcher_service/url_matcher_service"
 import type { MessageI18nKeys } from "@/intl"
 import type { LessonEntity } from "@/modules/decks/entities/lesson_entity"
+import { v4 } from "uuid"
 
 /**
  *
@@ -121,8 +122,9 @@ const validate_update_deck = (params: {
 export const save = createAsyncThunk<void, void, AsyncThunkConfig>(
   "deck_update/save",
   async (_, { getState, dispatch, extra }) => {
-    const { deck_update } = getState()
+    const { deck_update, authentication } = getState()
 
+    if (!authentication.user) throw new Error("user cannot be null")
     if (!deck_update.deck) throw new Error("deck cannot be null")
 
     const errors = validate_update_deck({
@@ -165,20 +167,22 @@ export const save = createAsyncThunk<void, void, AsyncThunkConfig>(
       cards,
     })
 
-    for (const lesson of deck_update.lessons) {
-      await extra.decks_repository.update_lesson_cards_list({
-        lesson_id: lesson.id,
-        card_ids: lesson.cards,
-      })
-    }
+    await extra.decks_repository.upsert_lessons({
+      user_id: authentication.user!.id,
+      deck_id: deck_update.deck.id,
+      lessons: deck_update.lessons.map((lesson) => ({
+        ...lesson,
+        cards: lesson.cards.filter((card_id) =>
+          cards.some((c) => c.id === card_id),
+        ),
+      })),
+    })
 
     await extra.toast_service.toast({
       title: "deck_update_actions/toast/deck_updated",
       description: "deck_update_actions/toast/deck_updated/description",
       type: "success",
     })
-
-    await dispatch(load_deck_into_create_form({ deck_id: deck_update.deck.id }))
   },
 )
 
@@ -186,13 +190,7 @@ export const delete_selected_cards = createAsyncThunk<
   void,
   void,
   AsyncThunkConfig
->("deck_update/delete_selected_cards", async (_, { extra }) => {
-  extra.toast_service.toast({
-    title: "deck_update_actions/toast/cards_deleted",
-    description: "deck_update_actions/toast/cards_deleted/description",
-    type: "success",
-  })
-})
+>("deck_update/delete_selected_cards", async (_, { extra }) => {})
 
 export const exit_update_deck_page = createAsyncThunk<
   void,
@@ -399,23 +397,15 @@ export const create_lesson = createAsyncThunk<
 >("deck_update/create_lesson", async (_, { getState, extra }) => {
   const { deck_update, authentication } = getState()
 
-  if (!authentication.user) {
-    throw new Error("User not authenticated")
-  }
-
-  if (!deck_update.deck) {
-    throw new Error("Deck not found")
-  }
-
-  const lesson = await extra.decks_repository.create_lesson({
-    deck_id: deck_update.deck.id,
+  const lesson: LessonEntity = {
+    id: v4(),
+    deck_id: deck_update.deck!.id,
     name: "Untitled",
-  })
-
-  await extra.toast_service.toast({
-    title: "deck_update_tabs/lesson_created",
-    type: "success",
-  })
+    cards: [],
+    position: deck_update.lessons.length,
+    created_at: new Date(),
+    updated_at: new Date(),
+  }
 
   return lesson
 })
@@ -424,18 +414,29 @@ export const rename_lesson = createAsyncThunk<
   LessonEntity,
   { lesson_id: string; name: string },
   AsyncThunkConfig
->("deck_update/rename_lesson", async ({ lesson_id, name }, { extra }) => {
-  const lesson = await extra.decks_repository.rename_lesson({
-    lesson_id,
-    name,
-  })
+>("deck_update/rename_lesson", async (_, { getState, extra }) => {
+  const { deck_update } = getState()
 
-  await extra.toast_service.toast({
-    title: "deck_update_tabs/lesson_renamed",
+  if (!deck_update.deck) {
+    throw new Error("Deck not found")
+  }
+
+  const lesson = deck_update.lessons.find((l) => l.id === _.lesson_id)
+
+  if (!lesson) {
+    throw new Error("Lesson not found")
+  }
+
+  extra.toast_service.toast({
+    title: "deck_update_actions/toast/lesson_renamed",
+    description: "deck_update_actions/toast/lesson_renamed/description",
     type: "success",
   })
 
-  return lesson
+  return {
+    ...lesson,
+    name: _.name,
+  }
 })
 
 export const delete_lesson = createAsyncThunk<
@@ -443,10 +444,9 @@ export const delete_lesson = createAsyncThunk<
   { lesson_id: string },
   AsyncThunkConfig
 >("deck_update/delete_lesson", async ({ lesson_id }, { extra }) => {
-  await extra.decks_repository.delete_lesson({ lesson_id })
-
   await extra.toast_service.toast({
-    title: "deck_update_tabs/lesson_deleted",
+    title: "deck_update_actions/toast/lesson_deleted",
+    description: "deck_update_actions/toast/lesson_deleted/description",
     type: "success",
   })
 
@@ -469,11 +469,6 @@ export const reorder_lessons = createAsyncThunk<
     if (!deck_update.deck) {
       throw new Error("Deck not found")
     }
-
-    await extra.decks_repository.reorder_lessons({
-      deck_id: deck_update.deck.id,
-      reorder_data,
-    })
 
     await extra.toast_service.toast({
       title: "deck_update_reorder_lessons_modal/lessons_reordered",

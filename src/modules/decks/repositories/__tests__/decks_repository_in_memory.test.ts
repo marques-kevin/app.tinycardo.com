@@ -379,6 +379,119 @@ describe("DecksRepositoryInMemory", () => {
     })
   })
 
+  describe("fetch_lessons", () => {
+    it("returns empty array when deck has no lessons", async () => {
+      const lessons = await decks_repository.fetch_lessons({
+        deck_id: "deck-1",
+        user_id: "user-1",
+      })
+
+      expect(lessons).toEqual([])
+    })
+
+    it("returns only lessons for the requested deck", async () => {
+      const lesson_for_deck_1 = build_lesson({
+        id: "lesson-deck-1",
+        deck_id: "deck-1",
+        position: 1,
+      })
+      const lesson_for_deck_2 = build_lesson({
+        id: "lesson-deck-2",
+        deck_id: "deck-2",
+        position: 2,
+      })
+
+      decks_repository = new DecksRepositoryInMemory({
+        lessons: [lesson_for_deck_1, lesson_for_deck_2],
+      })
+
+      const lessons = await decks_repository.fetch_lessons({
+        deck_id: "deck-1",
+        user_id: "user-1",
+      })
+
+      expect(lessons).toEqual([lesson_for_deck_1])
+    })
+  })
+
+  describe("upsert_lessons", () => {
+    it("replaces existing lessons for the same deck while keeping others", async () => {
+      const existing_deck_1_lesson = build_lesson({
+        id: "existing-deck-1",
+        deck_id: "deck-1",
+      })
+      const existing_deck_2_lesson = build_lesson({
+        id: "existing-deck-2",
+        deck_id: "deck-2",
+      })
+
+      decks_repository = new DecksRepositoryInMemory({
+        lessons: [existing_deck_1_lesson, existing_deck_2_lesson],
+      })
+
+      const new_lessons_for_deck_1 = [
+        build_lesson({ id: "new-lesson-1", deck_id: "ignored" }),
+        build_lesson({ id: "new-lesson-2", deck_id: "ignored" }),
+      ]
+
+      const returned_lessons = await decks_repository.upsert_lessons({
+        deck_id: "deck-1",
+        user_id: "user-1",
+        lessons: new_lessons_for_deck_1,
+      })
+
+      expect(returned_lessons).toEqual(new_lessons_for_deck_1)
+
+      const stored_lessons_deck_1 = await decks_repository.fetch_lessons({
+        deck_id: "deck-1",
+        user_id: "user-1",
+      })
+
+      expect(stored_lessons_deck_1).toHaveLength(2)
+      expect(stored_lessons_deck_1.map((lesson) => lesson.id)).toEqual([
+        "new-lesson-1",
+        "new-lesson-2",
+      ])
+      expect(
+        stored_lessons_deck_1.every((lesson) => lesson.deck_id === "deck-1"),
+      ).toBe(true)
+
+      const stored_lessons_deck_2 = await decks_repository.fetch_lessons({
+        deck_id: "deck-2",
+        user_id: "user-1",
+      })
+
+      expect(stored_lessons_deck_2).toEqual([existing_deck_2_lesson])
+    })
+
+    it("persists lessons with enforced deck id", async () => {
+      const upserted_lessons = await decks_repository.upsert_lessons({
+        deck_id: "deck-3",
+        user_id: "user-3",
+        lessons: [
+          build_lesson({ id: "deck-3-lesson-1", deck_id: "ignored" }),
+          build_lesson({ id: "deck-3-lesson-2", deck_id: "ignored" }),
+        ],
+      })
+
+      expect(upserted_lessons).toHaveLength(2)
+
+      const stored_lessons = await decks_repository.fetch_lessons({
+        deck_id: "deck-3",
+        user_id: "user-1",
+      })
+
+      expect(stored_lessons).toHaveLength(2)
+      expect(
+        stored_lessons.every((lesson) => lesson.deck_id === "deck-3"),
+      ).toBe(true)
+      expect(stored_lessons.map((lesson) => lesson.id)).toEqual([
+        "deck-3-lesson-1",
+        "deck-3-lesson-2",
+      ])
+    })
+  })
+
   describe("duplicate_deck", () => {
     it("creates a copy of deck with cards", async () => {
       const deck = build_deck({ name: "Original Deck" })
@@ -409,269 +522,6 @@ describe("DecksRepositoryInMemory", () => {
           user_id: "user-1",
         }),
       ).rejects.toThrow("Deck not found")
-    })
-  })
-
-  describe("fetch_lessons", () => {
-    it("returns empty array when no lessons exist", async () => {
-      const lessons = await decks_repository.fetch_lessons({
-        deck_id: "deck-1",
-        user_id: "user-1",
-      })
-      expect(lessons).toEqual([])
-    })
-
-    it("returns lessons for a specific deck", async () => {
-      const deck1 = build_deck({ id: "deck-1" })
-      const deck2 = build_deck({ id: "deck-2" })
-      await decks_repository.sync_deck({ deck: deck1, cards: [] })
-      await decks_repository.sync_deck({ deck: deck2, cards: [] })
-
-      const lesson1 = await decks_repository.create_lesson({
-        deck_id: deck1.id,
-        name: "Lesson 1",
-      })
-      const lesson2 = await decks_repository.create_lesson({
-        deck_id: deck1.id,
-        name: "Lesson 2",
-      })
-      await decks_repository.create_lesson({
-        deck_id: deck2.id,
-        name: "Lesson 3",
-      })
-
-      const lessons = await decks_repository.fetch_lessons({
-        deck_id: deck1.id,
-        user_id: "user-1",
-      })
-
-      expect(lessons).toHaveLength(2)
-      expect(lessons.map((l) => l.id)).toContain(lesson1.id)
-      expect(lessons.map((l) => l.id)).toContain(lesson2.id)
-    })
-  })
-
-  describe("create_lesson", () => {
-    it("creates a lesson with correct properties", async () => {
-      const deck = build_deck()
-      await decks_repository.sync_deck({ deck, cards: [] })
-
-      const lesson = await decks_repository.create_lesson({
-        deck_id: deck.id,
-        name: "New Lesson",
-      })
-
-      expect(lesson.name).toBe("New Lesson")
-      expect(lesson.deck_id).toBe(deck.id)
-      expect(lesson.cards).toEqual([])
-      expect(lesson.position).toBe(0)
-      expect(lesson.id).toBeDefined()
-      expect(lesson.created_at).toBeInstanceOf(Date)
-      expect(lesson.updated_at).toBeInstanceOf(Date)
-    })
-
-    it("assigns position 0 for first lesson", async () => {
-      const deck = build_deck()
-      await decks_repository.sync_deck({ deck, cards: [] })
-
-      const lesson = await decks_repository.create_lesson({
-        deck_id: deck.id,
-        name: "First Lesson",
-      })
-
-      expect(lesson.position).toBe(0)
-    })
-
-    it("assigns incremental positions for multiple lessons", async () => {
-      const deck = build_deck()
-      await decks_repository.sync_deck({ deck, cards: [] })
-
-      const lesson1 = await decks_repository.create_lesson({
-        deck_id: deck.id,
-        name: "Lesson 1",
-      })
-      const lesson2 = await decks_repository.create_lesson({
-        deck_id: deck.id,
-        name: "Lesson 2",
-      })
-      const lesson3 = await decks_repository.create_lesson({
-        deck_id: deck.id,
-        name: "Lesson 3",
-      })
-
-      expect(lesson1.position).toBe(0)
-      expect(lesson2.position).toBe(1)
-      expect(lesson3.position).toBe(2)
-    })
-
-    it("assigns positions independently per deck", async () => {
-      const deck1 = build_deck({ id: "deck-1" })
-      const deck2 = build_deck({ id: "deck-2" })
-      await decks_repository.sync_deck({ deck: deck1, cards: [] })
-      await decks_repository.sync_deck({ deck: deck2, cards: [] })
-
-      const lesson1_deck1 = await decks_repository.create_lesson({
-        deck_id: deck1.id,
-        name: "Deck 1 Lesson 1",
-      })
-      const lesson1_deck2 = await decks_repository.create_lesson({
-        deck_id: deck2.id,
-        name: "Deck 2 Lesson 1",
-      })
-
-      expect(lesson1_deck1.position).toBe(0)
-      expect(lesson1_deck2.position).toBe(0)
-    })
-  })
-
-  describe("rename_lesson", () => {
-    it("updates lesson name", async () => {
-      const deck = build_deck()
-      await decks_repository.sync_deck({ deck, cards: [] })
-      const lesson = await decks_repository.create_lesson({
-        deck_id: deck.id,
-        name: "Original Name",
-      })
-
-      const updated = await decks_repository.rename_lesson({
-        lesson_id: lesson.id,
-        name: "New Name",
-      })
-
-      expect(updated.name).toBe("New Name")
-      expect(updated.updated_at).toBeInstanceOf(Date)
-    })
-
-    it("throws error when lesson does not exist", async () => {
-      await expect(
-        decks_repository.rename_lesson({
-          lesson_id: "non-existent",
-          name: "New Name",
-        }),
-      ).rejects.toThrow("Lesson not found")
-    })
-  })
-
-  describe("delete_lesson", () => {
-    it("deletes lesson from repository", async () => {
-      const deck = build_deck()
-      await decks_repository.sync_deck({ deck, cards: [] })
-      const lesson = await decks_repository.create_lesson({
-        deck_id: deck.id,
-        name: "Lesson to Delete",
-      })
-
-      await decks_repository.delete_lesson({ lesson_id: lesson.id })
-
-      const lessons = await decks_repository.fetch_lessons({
-        deck_id: deck.id,
-        user_id: "user-1",
-      })
-      expect(lessons).toHaveLength(0)
-    })
-
-    it("throws error when lesson does not exist", async () => {
-      await expect(
-        decks_repository.delete_lesson({ lesson_id: "non-existent" }),
-      ).rejects.toThrow("Lesson not found")
-    })
-  })
-
-  describe("update_lesson_cards_list", () => {
-    it("updates cards list for a lesson", async () => {
-      const deck = build_deck()
-      await decks_repository.sync_deck({ deck, cards: [] })
-      const lesson = await decks_repository.create_lesson({
-        deck_id: deck.id,
-        name: "Lesson",
-      })
-
-      const updated = await decks_repository.update_lesson_cards_list({
-        lesson_id: lesson.id,
-        card_ids: ["card-1", "card-2", "card-3"],
-      })
-
-      expect(updated.cards).toEqual(["card-1", "card-2", "card-3"])
-
-      const lessons = await decks_repository.fetch_lessons({
-        deck_id: deck.id,
-        user_id: "user-1",
-      })
-      expect(lessons[0].cards).toEqual(["card-1", "card-2", "card-3"])
-    })
-
-    it("replaces existing cards list", async () => {
-      const deck = build_deck()
-      await decks_repository.sync_deck({ deck, cards: [] })
-      const lesson = await decks_repository.create_lesson({
-        deck_id: deck.id,
-        name: "Lesson",
-      })
-
-      await decks_repository.update_lesson_cards_list({
-        lesson_id: lesson.id,
-        card_ids: ["card-1", "card-2"],
-      })
-
-      const updated = await decks_repository.update_lesson_cards_list({
-        lesson_id: lesson.id,
-        card_ids: ["card-3"],
-      })
-
-      expect(updated.cards).toEqual(["card-3"])
-    })
-
-    it("throws error when lesson does not exist", async () => {
-      await expect(
-        decks_repository.update_lesson_cards_list({
-          lesson_id: "non-existent",
-          card_ids: ["card-1"],
-        }),
-      ).rejects.toThrow("Lesson not found")
-    })
-  })
-
-  describe("constructor", () => {
-    it("initializes with empty arrays when no params provided", () => {
-      const repo = new DecksRepositoryInMemory()
-      expect(repo).toBeDefined()
-    })
-
-    it("initializes with provided decks", async () => {
-      const deck = build_deck()
-      const repo = new DecksRepositoryInMemory({ decks: [deck] })
-
-      const decks = await repo.fetch_decks()
-      expect(decks).toHaveLength(1)
-      expect(decks[0].id).toBe(deck.id)
-    })
-
-    it("initializes with provided cards", async () => {
-      const deck = build_deck()
-      const cards = build_cards({ deck_id: deck.id, count: 2 })
-      const repo = new DecksRepositoryInMemory({
-        decks: [deck],
-        cards,
-      })
-
-      const fetched_cards = await repo.fetch_cards({ deck_id: deck.id })
-      expect(fetched_cards).toHaveLength(2)
-    })
-
-    it("initializes with provided lessons", async () => {
-      const deck = build_deck()
-      const lesson = build_lesson({ deck_id: deck.id })
-      const repo = new DecksRepositoryInMemory({
-        decks: [deck],
-        lessons: [lesson],
-      })
-
-      const lessons = await repo.fetch_lessons({
-        deck_id: deck.id,
-        user_id: "user-1",
-      })
-      expect(lessons).toHaveLength(1)
-      expect(lessons[0].id).toBe(lesson.id)
     })
   })
 })

@@ -301,11 +301,10 @@ describe("Feature: Deck Update", () => {
     })
 
     it(`
-      A user should be able to create a lesson
-      Then rename the lesson
-      And delete the lesson
+      When a user creates a lesson
+      The user needs to save the deck to be applied on the database
       `, async () => {
-      const { store, toast_service } = await prepare_store_for_tests()
+      const { store, decks_repository } = await prepare_store_for_tests()
 
       let state = store.getState()
 
@@ -313,7 +312,101 @@ describe("Feature: Deck Update", () => {
 
       await store.dispatch(deck_update_actions.create_lesson())
 
-      expect(toast_service.history).toHaveLength(1)
+      state = store.getState()
+
+      expect(state.deck_update.lessons).toHaveLength(1)
+      expect(state.deck_update.lessons[0].name).toEqual("Untitled")
+
+      let lessons_in_database = await decks_repository.fetch_lessons({
+        deck_id: state.deck_update.deck!.id,
+        user_id: state.authentication.user!.id,
+      })
+
+      expect(lessons_in_database).toHaveLength(0)
+
+      await store.dispatch(deck_update_actions.save())
+
+      lessons_in_database = await decks_repository.fetch_lessons({
+        deck_id: state.deck_update.deck!.id,
+        user_id: state.authentication.user!.id,
+      })
+
+      expect(lessons_in_database).toHaveLength(1)
+      expect(lessons_in_database[0].name).toEqual("Untitled")
+    })
+
+    it(`
+      When a user creates a lesson
+      And set this lesson as active
+      And updates the lesson card
+      And saves the deck
+      Then the lesson card should be saved into the database
+      `, async () => {
+      const { store, decks_repository, deck, user } =
+        await prepare_store_for_tests()
+
+      await store.dispatch(deck_update_actions.create_lesson())
+
+      let state = store.getState()
+      const lesson_id = state.deck_update.lessons[0]!.id
+
+      store.dispatch(deck_update_actions.set_active_lesson({ lesson_id }))
+
+      state = store.getState()
+      const lesson = state.deck_update.lessons.find((l) => l.id === lesson_id)!
+      const lesson_card_id = lesson.cards[0]!
+
+      store.dispatch(
+        deck_update_actions.update_card({
+          id: lesson_card_id,
+          field: "front",
+          value: "Lesson card front",
+        }),
+      )
+
+      store.dispatch(
+        deck_update_actions.update_card({
+          id: lesson_card_id,
+          field: "back",
+          value: "Lesson card back",
+        }),
+      )
+
+      await store.dispatch(deck_update_actions.save())
+
+      const cards_in_database = await decks_repository.fetch_cards({
+        deck_id: deck.id,
+      })
+
+      const saved_card = cards_in_database.find(
+        (card) => card.id === lesson_card_id,
+      )
+
+      expect(saved_card).toBeDefined()
+      expect(saved_card!.front).toEqual("Lesson card front")
+      expect(saved_card!.back).toEqual("Lesson card back")
+
+      const lessons_in_database = await decks_repository.fetch_lessons({
+        deck_id: deck.id,
+        user_id: user.id,
+      })
+
+      expect(lessons_in_database).toHaveLength(1)
+      expect(lessons_in_database[0].cards).toEqual([lesson_card_id])
+    })
+
+    it(`
+      A user should be able to create a lesson
+      Then rename the lesson
+      And delete the lesson
+      `, async () => {
+      const { store } = await prepare_store_for_tests()
+
+      let state = store.getState()
+
+      expect(state.deck_update.lessons).toEqual([])
+
+      await store.dispatch(deck_update_actions.create_lesson())
 
       state = store.getState()
 
@@ -330,13 +423,11 @@ describe("Feature: Deck Update", () => {
       )
 
       state = store.getState()
-      expect(toast_service.history).toHaveLength(2)
       expect(state.deck_update.lessons[0].name).toEqual("Updated Lesson")
 
       await store.dispatch(deck_update_actions.delete_lesson({ lesson_id }))
 
       state = store.getState()
-      expect(toast_service.history).toHaveLength(3)
       expect(state.deck_update.lessons).toEqual([])
     })
 
@@ -381,8 +472,7 @@ describe("Feature: Deck Update", () => {
         user_id: user.id,
       })
 
-      expect(lessons_in_database).toHaveLength(1)
-      expect(lessons_in_database[0].cards).toHaveLength(0)
+      expect(lessons_in_database).toHaveLength(0)
 
       await store.dispatch(deck_update_actions.save())
 

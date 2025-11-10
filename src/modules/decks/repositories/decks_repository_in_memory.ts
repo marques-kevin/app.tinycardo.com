@@ -188,6 +188,23 @@ export class DecksRepositoryInMemory implements DecksRepository {
     return new_deck
   }
 
+  /**
+   *
+   * ===============================
+   *
+   *
+   *
+   *
+   *
+   * Lessons
+   *
+   *
+   *
+   *
+   *
+   * ===============================
+   */
+
   async fetch_lessons(params: {
     deck_id: string
     user_id: string
@@ -195,110 +212,21 @@ export class DecksRepositoryInMemory implements DecksRepository {
     return this.lessons.filter((lesson) => lesson.deck_id === params.deck_id)
   }
 
-  async create_lesson(
-    params: Parameters<DecksRepository["create_lesson"]>[0],
-  ): ReturnType<DecksRepository["create_lesson"]> {
-    const existing_lessons = this.lessons.filter(
-      (lesson) => lesson.deck_id === params.deck_id,
-    )
-    const max_position =
-      existing_lessons.reduce(
-        (max, lesson) => Math.max(max, lesson.position),
-        -1,
-      ) + 1
-
-    const lesson: LessonEntity = {
-      id: v4(),
-      deck_id: params.deck_id,
-      name: params.name,
-      cards: [],
-      position: max_position,
-      created_at: new Date(),
-      updated_at: new Date(),
-    }
-
-    this.lessons = [...this.lessons, lesson]
-    return lesson
-  }
-
-  async rename_lesson(
-    params: Parameters<DecksRepository["rename_lesson"]>[0],
-  ): ReturnType<DecksRepository["rename_lesson"]> {
-    const lesson = this.lessons.find((l) => l.id === params.lesson_id)
-
-    if (!lesson) {
-      throw new Error("Lesson not found")
-    }
-
-    this.lessons = this.lessons.map((lesson) => {
-      if (lesson.id === params.lesson_id) {
-        return { ...lesson, name: params.name, updated_at: new Date() }
-      }
-
-      return lesson
-    })
-
-    return this.lessons.find((lesson) => lesson.id === params.lesson_id)!
-  }
-
-  async delete_lesson(
-    params: Parameters<DecksRepository["delete_lesson"]>[0],
-  ): ReturnType<DecksRepository["delete_lesson"]> {
-    const lesson = this.lessons.find((l) => l.id === params.lesson_id)
-
-    if (!lesson) {
-      throw new Error("Lesson not found")
-    }
-
-    this.lessons = this.lessons.filter((l) => l.id !== params.lesson_id)
-  }
-
-  async update_lesson_cards_list(
-    params: Parameters<DecksRepository["update_lesson_cards_list"]>[0],
-  ): ReturnType<DecksRepository["update_lesson_cards_list"]> {
-    const lesson = this.lessons.find((l) => l.id === params.lesson_id)
-
-    if (!lesson) {
-      throw new Error("Lesson not found")
-    }
-
-    this.lessons = this.lessons.map((lesson) =>
-      lesson.id === params.lesson_id
-        ? { ...lesson, cards: params.card_ids }
-        : lesson,
+  async upsert_lessons(
+    params: Parameters<DecksRepository["upsert_lessons"]>[0],
+  ): ReturnType<DecksRepository["upsert_lessons"]> {
+    this.lessons = this.lessons.filter(
+      (lesson) => lesson.deck_id !== params.deck_id,
     )
 
-    return this.lessons.find((lesson) => lesson.id === params.lesson_id)!
-  }
+    this.lessons = [
+      ...this.lessons,
+      ...params.lessons.map((lesson) => ({
+        ...lesson,
+        deck_id: params.deck_id,
+      })),
+    ]
 
-  async reorder_lessons(
-    params: Parameters<DecksRepository["reorder_lessons"]>[0],
-  ): ReturnType<DecksRepository["reorder_lessons"]> {
-    const deck_lessons = this.lessons.filter(
-      (lesson) => lesson.deck_id === params.deck_id,
-    )
-
-    for (const reorder_item of params.reorder_data) {
-      const lesson = deck_lessons.find((l) => l.id === reorder_item.lesson_id)
-      if (!lesson) {
-        throw new Error(`Lesson ${reorder_item.lesson_id} not found`)
-      }
-    }
-
-    this.lessons = this.lessons.map((lesson) => {
-      if (lesson.deck_id === params.deck_id) {
-        const reorder_item = params.reorder_data.find(
-          (r) => r.lesson_id === lesson.id,
-        )
-        if (reorder_item) {
-          return {
-            ...lesson,
-            position: reorder_item.position,
-            updated_at: new Date(),
-          }
-        }
-      }
-      return lesson
-    })
+    return params.lessons
   }
 }

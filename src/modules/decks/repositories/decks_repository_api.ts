@@ -196,6 +196,26 @@ export class DecksRepositoryApi implements DecksRepository {
     }
   }
 
+  /**
+   * ===============================
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   * Lessons
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   * ===============================
+   */
+
   async fetch_lessons(params: {
     deck_id: string
     user_id: string
@@ -209,66 +229,18 @@ export class DecksRepositoryApi implements DecksRepository {
     return response.lessons.map((lesson) => this.map_lesson(lesson))
   }
 
-  async create_lesson(
-    params: Parameters<DecksRepository["create_lesson"]>[0],
-  ): ReturnType<DecksRepository["create_lesson"]> {
-    const lesson_response = await this.api_service.post<
-      paths["/lessons/create_lesson"]["post"]["responses"]["200"]["content"]["application/json"]
-    >("/lessons/create_lesson", {
-      name: params.name,
-      deck_id: params.deck_id,
-      position: 0, // Default position, can be reordered later
-      cards: [],
-    })
+  async upsert_lessons(
+    params: Parameters<DecksRepository["upsert_lessons"]>[0],
+  ): ReturnType<DecksRepository["upsert_lessons"]> {
+    const body: paths["/lessons/upsert_lessons"]["post"]["requestBody"]["content"]["application/json"] =
+      {
+        deck_id: params.deck_id,
+        lessons: params.lessons,
+      }
 
-    return this.map_lesson(lesson_response)
-  }
-
-  async rename_lesson(
-    params: Parameters<DecksRepository["rename_lesson"]>[0],
-  ): ReturnType<DecksRepository["rename_lesson"]> {
-    const lesson_response = await this.api_service.post<
-      paths["/lessons/update_lesson"]["post"]["responses"]["200"]["content"]["application/json"]
-    >("/lessons/update_lesson", {
-      id: params.lesson_id,
-      name: params.name,
-    })
-
-    return this.map_lesson(lesson_response)
-  }
-
-  async delete_lesson(
-    params: Parameters<DecksRepository["delete_lesson"]>[0],
-  ): ReturnType<DecksRepository["delete_lesson"]> {
-    await this.api_service.post<
-      paths["/lessons/delete_lesson"]["post"]["responses"]["200"]
-    >("/lessons/delete_lesson", {
-      id: params.lesson_id,
-    })
-  }
-
-  async update_lesson_cards_list(
-    params: Parameters<DecksRepository["update_lesson_cards_list"]>[0],
-  ): ReturnType<DecksRepository["update_lesson_cards_list"]> {
-    const lesson_response = await this.api_service.post<
-      paths["/lessons/update_lesson"]["post"]["responses"]["200"]["content"]["application/json"]
-    >("/lessons/update_lesson", {
-      id: params.lesson_id,
-      cards: params.card_ids,
-    })
-
-    return this.map_lesson(lesson_response)
-  }
-
-  async reorder_lessons(
-    params: Parameters<DecksRepository["reorder_lessons"]>[0],
-  ): ReturnType<DecksRepository["reorder_lessons"]> {
     const response = await this.api_service.post<
-      paths["/lessons/reorder_lessons"]["post"]["responses"]["200"]["content"]["application/json"]
-    >("/lessons/reorder_lessons", {
-      deck_id: params.deck_id,
-      reorder_data: params.reorder_data,
-    })
+      paths["/lessons/upsert_lessons"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/lessons/upsert_lessons", body)
 
     return response.lessons.map((lesson) => this.map_lesson(lesson))
   }

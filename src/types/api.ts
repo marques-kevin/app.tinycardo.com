@@ -346,7 +346,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/lessons/update_lesson": {
+    "/lessons/upsert_lessons": {
         parameters: {
             query?: never;
             header?: never;
@@ -355,8 +355,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Update a lesson */
-        post: operations["LessonsController_update_lesson"];
+        /** Upsert lessons in a deck */
+        post: operations["LessonsController_upsert_lessons"];
         delete?: never;
         options?: never;
         head?: never;
@@ -723,15 +723,50 @@ export interface components {
              */
             updated_at: string;
         };
-        LessonsUpdateLessonDto: {
-            /** @description ID of the lesson to update */
+        LessonsUpsertLessonsDto: {
+            /** @description ID of the deck the lessons belong to */
+            deck_id: string;
+            /** @description Array of lessons to upsert */
+            lessons: {
+                /** @description ID of the existing lesson (for update) */
+                id: string;
+                /** @description Name of the lesson */
+                name: string;
+                /** @description Position of the lesson in the deck */
+                position: number;
+                /** @description Array of card IDs associated with the lesson */
+                cards: string[];
+            }[];
+        };
+        LessonsUpsertLessonsOutputLessonDto: {
+            /** @description ID of the lesson */
             id: string;
-            /** @description New name for the lesson */
-            name?: string;
-            /** @description New position for the lesson */
-            position?: number;
-            /** @description New array of card IDs */
-            cards?: string[];
+            /** @description ID of the deck the lesson belongs to */
+            deck_id: string;
+            /** @description Name of the lesson */
+            name: string;
+            /** @description Position of the lesson */
+            position: number;
+            /** @description Array of card IDs in the lesson */
+            cards: string[];
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             */
+            created_at: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp
+             */
+            updated_at: string;
+        };
+        LessonsUpsertLessonsOutputDto: {
+            /** @description Number of lessons saved */
+            lessons_saved: number;
+            /** @description Number of lessons removed */
+            lessons_removed: number;
+            /** @description List of lessons that were saved or updated */
+            lessons: components["schemas"]["LessonsUpsertLessonsOutputLessonDto"][];
         };
         LessonsDeleteLessonDto: {
             /** @description ID of the lesson to delete */
@@ -1219,7 +1254,7 @@ export interface operations {
             };
         };
     };
-    LessonsController_update_lesson: {
+    LessonsController_upsert_lessons: {
         parameters: {
             query?: never;
             header?: never;
@@ -1228,7 +1263,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["LessonsUpdateLessonDto"];
+                "application/json": components["schemas"]["LessonsUpsertLessonsDto"];
             };
         };
         responses: {
@@ -1237,7 +1272,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["LessonEntity"];
+                    "application/json": components["schemas"]["LessonsUpsertLessonsOutputDto"];
                 };
             };
         };
