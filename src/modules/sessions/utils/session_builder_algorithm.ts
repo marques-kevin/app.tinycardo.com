@@ -72,9 +72,7 @@ export const session_builder_algorithm = (params: {
       (card) => !history_to_card_entity.some((h) => h.card_id === card.id),
     )
 
-    const shuffled_never_reviewed_words = shuffle(never_reviewed_words)
-
-    return shuffled_never_reviewed_words
+    return never_reviewed_words
       .map(
         (card): SessionHistoryWithCardEntity => ({
           card_id: card.id,
