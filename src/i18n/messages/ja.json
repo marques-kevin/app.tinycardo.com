@@ -38,12 +38,6 @@
   "session_reviewed_words_table/mastered_cards_title": "習得したフラッシュカード…今のところ！",
   "session_reviewed_words_table/next_due_tooltip": "このカードは{date}に再度レビュー可能です。",
   "session_reviewed_words_table/streak_tooltip": "このカードを{count}回間違えずに復習しました",
-  "decks_csv_mapping_dialog/apply": "インポートして保存",
-  "decks_csv_mapping_dialog/back_column": "裏面の列とは何ですか？",
-  "decks_csv_mapping_dialog/cancel": "キャンセル",
-  "decks_csv_mapping_dialog/description": "ファイルを正常に読み込みましたが、表の前面と背面の列が見つかりませんでした。対応する列を選択して、マッピングを手伝ってください。",
-  "decks_csv_mapping_dialog/front_column": "フロントカラムとは何ですか？",
-  "decks_csv_mapping_dialog/title": "対応する列を選択してください",
   "session_footer_help/message": "{space}を押すかカードをクリックしてカードを裏返します。単語がわかれば{right}を押してください。わからなければ{left}を押してください。",
   "session_reviewed_words_table/cards_to_review_empty": "素晴らしい！今回はすべてのカードが正解でした。",
   "session_reviewed_words_table/mastered_cards_empty": "さてさて… カードをマスターしていないようだけど、まあ、試みているだけマシだね！",
@@ -120,5 +114,11 @@
   "deck_update_tabs/delete": "削除",
   "deck_update_tabs/rename": "名前を変更",
   "deck_update_tabs/reorder_lessons": "レッスンを並べ替え",
-  "decks_update_footer_actions/add_to_lesson": "レッスンに追加"
+  "decks_update_footer_actions/add_to_lesson": "レッスンに追加",
+  "deck_update_import_csv_modal/apply": "保存してインポート",
+  "deck_update_import_csv_modal/back_column": "裏面のカラムって何？",
+  "deck_update_import_csv_modal/cancel": "キャンセル",
+  "deck_update_import_csv_modal/description": "ファイルを無事に読み込みましたが、表面と裏面の列が見つかりませんでした。対応する列を選んで、マッピングを手伝ってください。",
+  "deck_update_import_csv_modal/front_column": "フロントカラムって何？",
+  "deck_update_import_csv_modal/title": "対応する列を選択してください"
 }

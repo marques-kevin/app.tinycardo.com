@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Wrapper } from "./decks_csv_mapping_dialog"
+import { Wrapper } from "./deck_update_import_csv_modal"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "decks_csv_mapping_dialog",
+  title: "deck_update_import_csv_modal",
   component: Wrapper,
 }
 

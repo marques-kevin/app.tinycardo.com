@@ -8,6 +8,7 @@ import { DeckUpdateTabs } from "@/modules/deck_update/components/deck_update_tab
 import { DeckUpdateTabsRenameModal } from "@/modules/deck_update/components/deck_update_tabs_rename_modal/deck_update_tabs_rename_modal"
 import { DeckUpdateAddCardsToLessonModal } from "@/modules/deck_update/components/deck_update_add_cards_to_lesson_modal/deck_update_add_cards_to_lesson_modal"
 import { DeckUpdateReorderLessonsModal } from "@/modules/deck_update/components/deck_update_reorder_lessons_modal/deck_update_reorder_lessons_modal"
+import { DeckUpdateImportCsvModal } from "@/modules/deck_update/components/deck_update_import_csv_modal/deck_update_import_csv_modal"
 
 export function DecksUpdatePage() {
   return (
@@ -30,6 +31,7 @@ export function DecksUpdatePage() {
       <DeckUpdateTabsRenameModal />
       <DeckUpdateAddCardsToLessonModal />
       <DeckUpdateReorderLessonsModal />
+      <DeckUpdateImportCsvModal />
     </>
   )
 }

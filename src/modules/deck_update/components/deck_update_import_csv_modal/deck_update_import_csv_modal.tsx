@@ -1,6 +1,9 @@
 import { useIntl } from "react-intl"
-import type { ContainerProps } from "./decks_csv_mapping_dialog.container"
 import { ScanTextIcon } from "lucide-react"
+import {
+  connector,
+  type ContainerProps,
+} from "./deck_update_import_csv_modal.container"
 
 export function Wrapper(props: ContainerProps) {
   const { formatMessage } = useIntl()
@@ -26,18 +29,18 @@ export function Wrapper(props: ContainerProps) {
       <div className="modal-box w-full max-w-2xl">
         <h3 className="text-accent flex items-center gap-2 text-2xl font-bold">
           <ScanTextIcon className={`size-6`} />
-          {formatMessage({ id: "decks_csv_mapping_dialog/title" })}
+          {formatMessage({ id: "deck_update_import_csv_modal/title" })}
         </h3>
 
         <p className="text-base-content/50 mt-2">
-          {formatMessage({ id: "decks_csv_mapping_dialog/description" })}
+          {formatMessage({ id: "deck_update_import_csv_modal/description" })}
         </p>
 
         <div className="mt-8 space-y-4">
           <fieldset className="fieldset">
             <label className="label">
               {formatMessage({
-                id: "decks_csv_mapping_dialog/front_column",
+                id: "deck_update_import_csv_modal/front_column",
               })}
             </label>
             <select
@@ -56,7 +59,7 @@ export function Wrapper(props: ContainerProps) {
           <fieldset className="fieldset">
             <label className="label">
               {formatMessage({
-                id: "decks_csv_mapping_dialog/back_column",
+                id: "deck_update_import_csv_modal/back_column",
               })}
             </label>
             <select
@@ -75,14 +78,14 @@ export function Wrapper(props: ContainerProps) {
 
         <div className="modal-action justify-between">
           <button className="btn btn-ghost" onClick={on_close}>
-            {formatMessage({ id: "decks_csv_mapping_dialog/cancel" })}
+            {formatMessage({ id: "deck_update_import_csv_modal/cancel" })}
           </button>
           <button
             className="btn btn-primary"
             disabled={props.selected_front === props.selected_back}
             onClick={on_apply}
           >
-            {formatMessage({ id: "decks_csv_mapping_dialog/apply" })}
+            {formatMessage({ id: "deck_update_import_csv_modal/apply" })}
           </button>
         </div>
       </div>
@@ -93,3 +96,5 @@ export function Wrapper(props: ContainerProps) {
     </dialog>
   )
 }
+
+export const DeckUpdateImportCsvModal = connector(Wrapper)

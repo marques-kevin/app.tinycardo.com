@@ -38,12 +38,6 @@
   "session_reviewed_words_table/mastered_cards_title": "어렵지만 마스터한 카드... 지금은!",
   "session_reviewed_words_table/next_due_tooltip": "이 카드는 {date}에 다시 복습할 수 있습니다.",
   "session_reviewed_words_table/streak_tooltip": "이 카드를 {count}번 실수 없이 복습했습니다.",
-  "decks_csv_mapping_dialog/apply": "저장 및 가져오기",
-  "decks_csv_mapping_dialog/back_column": "뒷면 열이란 무엇인가요?",
-  "decks_csv_mapping_dialog/cancel": "취소",
-  "decks_csv_mapping_dialog/description": "파일을 성공적으로 불러왔지만, 앞면과 뒷면 열을 찾을 수 없습니다. 해당 열을 선택하여 매핑에 도움을 주시기 바랍니다.",
-  "decks_csv_mapping_dialog/front_column": "앞면 열이란 무엇인가요?",
-  "decks_csv_mapping_dialog/title": "해당 열을 선택해주세요",
   "session_footer_help/message": "카드를 뒤집으려면 {space}를 누르거나 카드를 클릭하세요. 단어를 알면 {right}를 누르고, 모르면 {left}를 누르세요.",
   "session_reviewed_words_table/cards_to_review_empty": "잘했어요! 이번에는 모든 카드를 맞췄어요.",
   "session_reviewed_words_table/mastered_cards_empty": "음, 음… 아직 마스터한 카드가 없군요, 하지만 잘하고 있어요!",
@@ -120,5 +114,11 @@
   "deck_update_tabs/delete": "삭제",
   "deck_update_tabs/rename": "이름 바꾸기",
   "deck_update_tabs/reorder_lessons": "수업 재정렬",
-  "decks_update_footer_actions/add_to_lesson": "강의 추가"
+  "decks_update_footer_actions/add_to_lesson": "강의 추가",
+  "deck_update_import_csv_modal/apply": "저장하고 가져오기",
+  "deck_update_import_csv_modal/back_column": "뒷면 열은 뭐죠?",
+  "deck_update_import_csv_modal/cancel": "취소",
+  "deck_update_import_csv_modal/description": "파일을 성공적으로 불러왔지만 앞면과 뒷면 열을 찾을 수 없었어요. 해당 열을 선택해 주세요, 그래야 매핑할 수 있어요.",
+  "deck_update_import_csv_modal/front_column": "앞 면의 열이 뭐죠?",
+  "deck_update_import_csv_modal/title": "해당 열을 선택하세요"
 }

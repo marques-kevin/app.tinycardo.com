@@ -38,12 +38,6 @@
   "session_reviewed_words_table/mastered_cards_title": "Cartas que has dominado... por ahora!",
   "session_reviewed_words_table/next_due_tooltip": "Esta tarjeta se podrá revisar nuevamente el {date}",
   "session_reviewed_words_table/streak_tooltip": "Has revisado esta tarjeta {count} veces sin errores.",
-  "decks_csv_mapping_dialog/apply": "Guardar e importar",
-  "decks_csv_mapping_dialog/back_column": "¿Qué es la columna posterior?",
-  "decks_csv_mapping_dialog/cancel": "Cancelar",
-  "decks_csv_mapping_dialog/description": "Hemos cargado tu archivo con éxito, pero no encontramos las columnas del frente y el reverso. Por favor, selecciona las columnas correspondientes para ayudarnos a asignarlas.",
-  "decks_csv_mapping_dialog/front_column": "¿Cuál es la columna frontal?",
-  "decks_csv_mapping_dialog/title": "Por favor, selecciona las columnas correspondientes",
   "session_footer_help/message": "Presiona {space} o haz clic en la tarjeta para voltearla. Presiona {right} si conoces la palabra. Presiona {left} si no conoces la palabra.",
   "session_reviewed_words_table/cards_to_review_empty": "¡Buen trabajo! Acertaste todas las tarjetas esta vez.",
   "session_reviewed_words_table/mastered_cards_empty": "Bueno, bueno... parece que aún no has dominado ninguna carta, pero oye, ¡al menos lo estás intentando!",
@@ -120,5 +114,11 @@
   "deck_update_tabs/delete": "Eliminar",
   "deck_update_tabs/rename": "Renombrar",
   "deck_update_tabs/reorder_lessons": "Reordenar lecciones",
-  "decks_update_footer_actions/add_to_lesson": "Añadir a lección"
+  "decks_update_footer_actions/add_to_lesson": "Añadir a lección",
+  "deck_update_import_csv_modal/apply": "Guardar e Importar",
+  "deck_update_import_csv_modal/back_column": "¿Qué es la columna de atrás?",
+  "deck_update_import_csv_modal/cancel": "Cancelar",
+  "deck_update_import_csv_modal/description": "Cargamos tu archivo con éxito, pero no encontramos las columnas del frente y del reverso. Selecciona las columnas correspondientes para ayudarnos a mapearlas.",
+  "deck_update_import_csv_modal/front_column": "¿Cuál es la columna del frente?",
+  "deck_update_import_csv_modal/title": "Por favor, selecciona las columnas correspondientes"
 }

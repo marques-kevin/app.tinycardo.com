@@ -51,7 +51,7 @@ function CsvImportButton(props: { on_import_csv: (content: string) => void }) {
       <input
         ref={fileInputRef}
         type="file"
-        accept=".csv,text/csv"
+        accept=".csv,text/csv,.tsv,text/tab-separated-values"
         className="hidden"
         onChange={handle_file_change}
       />

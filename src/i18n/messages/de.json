@@ -38,12 +38,6 @@
   "session_reviewed_words_table/mastered_cards_title": "Karten, die du gemeistert hast... vorerst!",
   "session_reviewed_words_table/next_due_tooltip": "Diese Karte wird am {date} erneut überprüfbar sein.",
   "session_reviewed_words_table/streak_tooltip": "Du hast diese Karte {count} Mal ohne Fehler überprüft.",
-  "decks_csv_mapping_dialog/apply": "Speichern & Importieren",
-  "decks_csv_mapping_dialog/back_column": "Was ist die Rückenspalte?",
-  "decks_csv_mapping_dialog/cancel": "Abbrechen",
-  "decks_csv_mapping_dialog/description": "Wir haben Ihre Datei erfolgreich geladen, aber die Spalten für Vorder- und Rückseite wurden nicht gefunden. Bitte wählen Sie die entsprechenden Spalten aus, um uns beim Zuordnen zu helfen.",
-  "decks_csv_mapping_dialog/front_column": "Was ist die Vorderseite?",
-  "decks_csv_mapping_dialog/title": "Bitte wählen Sie die entsprechenden Spalten aus.",
   "session_footer_help/message": "Drücke {space} oder klicke auf die Karte, um sie umzudrehen. Drücke {right}, wenn du das Wort kennst. Drücke {left}, wenn du das Wort nicht kennst.",
   "session_reviewed_words_table/cards_to_review_empty": "Super! Du hast diesmal alle Karten richtig.",
   "session_reviewed_words_table/mastered_cards_empty": "Tja, tja… sieht so aus, als hättest du noch keine Karten gemeistert, aber hey, du versuchst es zumindest!",
@@ -120,5 +114,11 @@
   "deck_update_tabs/delete": "Löschen",
   "deck_update_tabs/rename": "Umbenennen",
   "deck_update_tabs/reorder_lessons": "Lektionen neu anordnen",
-  "decks_update_footer_actions/add_to_lesson": "Zum Unterricht hinzufügen"
+  "decks_update_footer_actions/add_to_lesson": "Zum Unterricht hinzufügen",
+  "deck_update_import_csv_modal/apply": "Übernehmen & Importieren",
+  "deck_update_import_csv_modal/back_column": "Was ist die Rückseite?",
+  "deck_update_import_csv_modal/cancel": "Abbrechen",
+  "deck_update_import_csv_modal/description": "Wir haben deine Datei erfolgreich geladen, aber die Vorder- und Rückseiten-Spalten fehlen. Bitte wähle die entsprechenden Spalten aus, damit wir sie zuordnen können.",
+  "deck_update_import_csv_modal/front_column": "Was ist die Vorderseite?",
+  "deck_update_import_csv_modal/title": "Bitte wählen Sie die entsprechenden Spalten aus."
 }

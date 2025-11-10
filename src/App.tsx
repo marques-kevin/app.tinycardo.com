@@ -5,6 +5,7 @@ import { DialogCrashError } from "@/modules/dialog/components/dialog_crash_error
 import { Routes } from "@/routes"
 import { Toaster } from "sonner"
 import { StreakModal } from "@/modules/streak/components/streak-modal/streak_modal"
+import { GlobalReactScan } from "@/modules/global/components/global_react_scan/global_react_scan"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <DialogCrashError />
         <Toaster position="top-center" duration={3000} />
         <StreakModal />
+        <GlobalReactScan />
       </AuthenticationProtection>
     </LanguageIntlProvider>
   )
