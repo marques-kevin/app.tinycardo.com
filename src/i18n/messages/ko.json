@@ -114,7 +114,6 @@
   "decks_update_footer_actions/add_to_lesson": "강의 추가",
   "deck_update_import_csv_modal/apply": "저장하고 가져오기",
   "deck_update_import_csv_modal/back_column": "뒷면 열은 뭐죠?",
-  "deck_update_import_csv_modal/cancel": "취소",
   "deck_update_import_csv_modal/description": "파일을 성공적으로 불러왔지만 앞면과 뒷면 열을 찾을 수 없었어요. 해당 열을 선택해 주세요, 그래야 매핑할 수 있어요.",
   "deck_update_import_csv_modal/front_column": "앞 면의 열이 뭐죠?",
   "deck_update_import_csv_modal/title": "해당 열을 선택하세요",

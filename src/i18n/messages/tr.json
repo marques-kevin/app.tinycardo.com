@@ -114,7 +114,6 @@
   "decks_update_footer_actions/add_to_lesson": "Derse ekle",
   "deck_update_import_csv_modal/apply": "Kaydet & İçeri Aktar",
   "deck_update_import_csv_modal/back_column": "Arka sütun nedir?",
-  "deck_update_import_csv_modal/cancel": "İptal et",
   "deck_update_import_csv_modal/description": "Dosyanız başarıyla yüklendi, ama ön ve arka sütunları bulamadık. Lütfen bunları eşleştirmemize yardımcı olmak için uygun sütunları seçin.",
   "deck_update_import_csv_modal/front_column": "Ön yüz sütunu nedir?",
   "deck_update_import_csv_modal/title": "Lütfen karşılık gelen sütunları seçin",

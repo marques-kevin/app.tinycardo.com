@@ -114,7 +114,6 @@
   "decks_update_footer_actions/add_to_lesson": "Añadir a lección",
   "deck_update_import_csv_modal/apply": "Guardar e Importar",
   "deck_update_import_csv_modal/back_column": "¿Qué es la columna de atrás?",
-  "deck_update_import_csv_modal/cancel": "Cancelar",
   "deck_update_import_csv_modal/description": "Cargamos tu archivo con éxito, pero no encontramos las columnas del frente y del reverso. Selecciona las columnas correspondientes para ayudarnos a mapearlas.",
   "deck_update_import_csv_modal/front_column": "¿Cuál es la columna del frente?",
   "deck_update_import_csv_modal/title": "Por favor, selecciona las columnas correspondientes",

@@ -114,7 +114,6 @@
   "decks_update_footer_actions/add_to_lesson": "أضف إلى الدرس",
   "deck_update_import_csv_modal/apply": "حفظ واستيراد",
   "deck_update_import_csv_modal/back_column": "ما هي عمود الخلفية؟",
-  "deck_update_import_csv_modal/cancel": "إلغاء",
   "deck_update_import_csv_modal/description": "لقد قمنا بتحميل ملفك بنجاح، لكننا لم نجد أعمدة الواجهة والخلفية. يرجى اختيار الأعمدة المناسبة لمساعدتنا في توصيلها.",
   "deck_update_import_csv_modal/front_column": "ما هو العمود الأمامي؟",
   "deck_update_import_csv_modal/title": "اختر الأعمدة المطابقة",
