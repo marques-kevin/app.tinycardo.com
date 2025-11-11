@@ -114,7 +114,6 @@
   "decks_update_footer_actions/add_to_lesson": "Zum Unterricht hinzufügen",
   "deck_update_import_csv_modal/apply": "Übernehmen & Importieren",
   "deck_update_import_csv_modal/back_column": "Was ist die Rückseite?",
-  "deck_update_import_csv_modal/cancel": "Abbrechen",
   "deck_update_import_csv_modal/description": "Wir haben deine Datei erfolgreich geladen, aber die Vorder- und Rückseiten-Spalten fehlen. Bitte wähle die entsprechenden Spalten aus, damit wir sie zuordnen können.",
   "deck_update_import_csv_modal/front_column": "Was ist die Vorderseite?",
   "deck_update_import_csv_modal/title": "Bitte wählen Sie die entsprechenden Spalten aus.",

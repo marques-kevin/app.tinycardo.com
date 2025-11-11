@@ -114,7 +114,6 @@
   "decks_update_footer_actions/add_to_lesson": "加入课程",
   "deck_update_import_csv_modal/apply": "保存并导入",
   "deck_update_import_csv_modal/back_column": "背面列是什么？",
-  "deck_update_import_csv_modal/cancel": "取消",
   "deck_update_import_csv_modal/description": "我们成功加载了你的文件，但没有找到正面和背面列。请选对应的列来帮助我们映射它们。",
   "deck_update_import_csv_modal/front_column": "前面的列是什么？",
   "deck_update_import_csv_modal/title": "请选择相应的列",

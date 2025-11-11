@@ -114,7 +114,6 @@
   "decks_update_footer_actions/add_to_lesson": "Добавить в урок",
   "deck_update_import_csv_modal/apply": "Сохранить и импортировать",
   "deck_update_import_csv_modal/back_column": "Что такое колонка с ответами?",
-  "deck_update_import_csv_modal/cancel": "Отмена",
   "deck_update_import_csv_modal/description": "Мы успешно загрузили ваш файл, но не нашли колонки с лицевой и обратной стороной. Пожалуйста, выберите соответствующие колонки, чтобы помочь нам их сопоставить.",
   "deck_update_import_csv_modal/front_column": "Что такое передний столбец?",
   "deck_update_import_csv_modal/title": "Пожалуйста, выберите соответствующие колонки",

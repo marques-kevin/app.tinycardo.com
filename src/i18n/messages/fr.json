@@ -114,7 +114,6 @@
   "decks_update_footer_actions/add_to_lesson": "Ajouter à la leçon",
   "deck_update_import_csv_modal/apply": "Enregistrer & Importer",
   "deck_update_import_csv_modal/back_column": "C'est quoi la colonne de dos ?",
-  "deck_update_import_csv_modal/cancel": "Annuler",
   "deck_update_import_csv_modal/description": "On a réussi à charger votre fichier, mais on n'a pas trouvé les colonnes de front et de dos. Sélectionnez les colonnes correspondantes pour nous aider à les mapper.",
   "deck_update_import_csv_modal/front_column": "Quelle est la colonne de devant ?",
   "deck_update_import_csv_modal/title": "Veuillez sélectionner les colonnes correspondantes.",
