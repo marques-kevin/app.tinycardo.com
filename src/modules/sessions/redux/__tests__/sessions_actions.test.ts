@@ -8,7 +8,6 @@ import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { delay } from "@/modules/global/utils/delay"
 import type { DeckEntity } from "@/modules/decks/entities/deck_entity"
 import type { UserEntity } from "@/modules/authentication/entities/user_entity"
-import * as authentication_actions from "@/modules/authentication/redux/authentication_actions"
 import * as global_actions from "@/modules/global/redux/global_actions"
 import type { UsersRepositoryInMemory } from "@/modules/authentication/repositories/users_repository_in_memory"
 

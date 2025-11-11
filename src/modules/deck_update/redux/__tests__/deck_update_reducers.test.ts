@@ -181,7 +181,7 @@ describe("Feature: Deck Update", () => {
       Then the deck should be updated
       And cards removed
       `, async () => {
-      const { store, user, deck, cards, dependencies } =
+      const { store, deck, cards, dependencies } =
         await prepare_store_for_tests()
 
       const card = cards[0]

@@ -77,7 +77,6 @@
   "dialog/close": "Close",
   "discover_decks_filters/message": "I speak  <spoken_language></spoken_language> and I want to learn <learning_language></learning_language>",
   "discover_decks_search_modal/modal_description": "Enter a deck title to filter the results.",
-  "discover_decks_search_modal/modal_input_label": "Deck title",
   "discover_decks_search_modal/modal_input_placeholder": "Type a deck title",
   "discover_decks_search_modal/modal_submit": "Search",
   "discover_decks_search_modal/modal_title": "Search decks by title",
