@@ -1,0 +1,9 @@
+{
+  "open_button": "Search decks",
+  "modal_title": "Search decks by title",
+  "modal_description": "Enter a deck title to filter the results.",
+  "modal_input_label": "Deck title",
+  "modal_input_placeholder": "Type a deck title",
+  "modal_submit": "Search"
+}
+

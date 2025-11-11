@@ -47,8 +47,14 @@ export const fetch_decks = createAsyncThunk<
   DeckEntity[],
   void,
   AsyncThunkConfig
->("decks/fetch_decks", async (params, { extra }) => {
-  return extra.decks_repository.fetch_decks()
+>("decks/fetch_decks", async (params, { extra, getState }) => {
+  const { authentication } = getState()
+
+  if (!authentication.user) return []
+
+  return extra.decks_repository.fetch_decks({
+    user_id: authentication.user.id,
+  })
 })
 
 export const _create_deck_add_new_card = createAction<void>(

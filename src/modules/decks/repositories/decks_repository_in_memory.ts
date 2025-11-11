@@ -2,7 +2,7 @@ import { type DeckEntity } from "@/modules/decks/entities/deck_entity"
 import { type DecksRepository } from "@/modules/decks/repositories/decks_repository"
 import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { v4 } from "uuid"
-import type { LessonEntity } from "../entities/lesson_entity"
+import type { LessonEntity } from "@/modules/decks/entities/lesson_entity"
 
 export class DecksRepositoryInMemory implements DecksRepository {
   private decks: DeckEntity[] = []
@@ -38,19 +38,23 @@ export class DecksRepositoryInMemory implements DecksRepository {
     return params.deck
   }
 
-  async fetch_decks(): ReturnType<DecksRepository["fetch_decks"]> {
-    return this.decks.map((deck) => ({
-      ...deck,
-      number_of_cards: this.cards[deck.id]?.length ?? 0,
-    }))
+  async fetch_decks(
+    params: Parameters<DecksRepository["fetch_decks"]>[0],
+  ): ReturnType<DecksRepository["fetch_decks"]> {
+    return this.decks
+      .filter((deck) => {
+        return params.user_id === deck.user_id
+      })
+      .map((deck) => ({
+        ...deck,
+        number_of_cards: this.cards[deck.id]?.length ?? 0,
+      }))
   }
 
   async get_deck_by_id(
     params: Parameters<DecksRepository["get_deck_by_id"]>[0],
   ): ReturnType<DecksRepository["get_deck_by_id"]> {
-    const decks = await this.fetch_decks()
-
-    const deck = decks.find((d) => d.id === params.deck_id)
+    const deck = this.decks.find((d) => d.id === params.deck_id)
 
     if (!deck) {
       throw new Error("Deck not found")

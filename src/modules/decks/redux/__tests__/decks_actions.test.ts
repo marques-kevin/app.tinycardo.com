@@ -5,10 +5,19 @@ import type { DecksRepositoryInMemory } from "@/modules/decks/repositories/decks
 import type { DeckEntity } from "@/modules/decks/entities/deck_entity"
 import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import type { SessionsRepositoryInMemory } from "@/modules/sessions/repositories/sessions_repository_in_memory"
+import * as authentication_actions from "@/modules/authentication/redux/authentication_actions"
+import type { UserEntity } from "@/modules/authentication/entities/user_entity"
 
 describe("decks actions", () => {
   it("should fetch decks and stats", async () => {
     const { store, dependencies } = await create_store_for_tests()
+
+    const user: UserEntity = {
+      id: "1",
+      email: "test@example.com",
+    }
+
+    await store.dispatch(authentication_actions._store_user({ user: user }))
 
     const decks_repository =
       dependencies.decks_repository as DecksRepositoryInMemory
