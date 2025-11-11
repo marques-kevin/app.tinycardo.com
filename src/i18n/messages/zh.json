@@ -66,9 +66,6 @@
   "decks_update_visibility_select/private": "私有",
   "decks_update_visibility_select/public": "公开",
   "decks_update_visibility_select/unlisted": "不公开",
-  "discover_decks_action_dialog/close": "关闭",
-  "discover_decks_action_dialog/show_deck": "显示卡组",
-  "discover_decks_action_dialog/start_using_this_deck": "开始使用这个卡组",
   "global_navbar/discover": "发现",
   "global_navbar/streak": "{streak} {streak, plural, one {天} other {天}} 连续天数",
   "session_ended_splash_screen/actions/continue_reviewing": "继续？",
@@ -120,5 +117,11 @@
   "deck_update_import_csv_modal/cancel": "取消",
   "deck_update_import_csv_modal/description": "我们成功加载了你的文件，但没有找到正面和背面列。请选对应的列来帮助我们映射它们。",
   "deck_update_import_csv_modal/front_column": "前面的列是什么？",
-  "deck_update_import_csv_modal/title": "请选择相应的列"
+  "deck_update_import_csv_modal/title": "请选择相应的列",
+  "discover_decks_filters/message": "我会说<spoken_language></spoken_language>，想学<learning_language></learning_language>。",
+  "discover_decks_search_modal/modal_description": "输入卡组标题以过滤结果。",
+  "discover_decks_search_modal/modal_input_label": "卡片组标题",
+  "discover_decks_search_modal/modal_input_placeholder": "输入卡组标题",
+  "discover_decks_search_modal/modal_submit": "搜索",
+  "discover_decks_search_modal/modal_title": "按标题搜索卡组"
 }

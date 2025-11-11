@@ -66,9 +66,6 @@
   "decks_update_visibility_select/private": "プライベート",
   "decks_update_visibility_select/public": "公開",
   "decks_update_visibility_select/unlisted": "公開しない",
-  "discover_decks_action_dialog/close": "閉じる",
-  "discover_decks_action_dialog/show_deck": "デッキを表示",
-  "discover_decks_action_dialog/start_using_this_deck": "このデッキを使い始める",
   "global_navbar/discover": "発見する",
   "global_navbar/streak": "{streak} {streak, plural, one {日} other {日}} ストリーク",
   "session_ended_splash_screen/actions/continue_reviewing": "続ける?",
@@ -120,5 +117,11 @@
   "deck_update_import_csv_modal/cancel": "キャンセル",
   "deck_update_import_csv_modal/description": "ファイルを無事に読み込みましたが、表面と裏面の列が見つかりませんでした。対応する列を選んで、マッピングを手伝ってください。",
   "deck_update_import_csv_modal/front_column": "フロントカラムって何？",
-  "deck_update_import_csv_modal/title": "対応する列を選択してください"
+  "deck_update_import_csv_modal/title": "対応する列を選択してください",
+  "discover_decks_filters/message": "私は<spoken_language></spoken_language>を話し、<learning_language></learning_language>を学びたいです。",
+  "discover_decks_search_modal/modal_description": "デッキタイトルを入力して結果を絞り込んでください。",
+  "discover_decks_search_modal/modal_input_label": "デッキタイトル",
+  "discover_decks_search_modal/modal_input_placeholder": "デッキタイトルを入力",
+  "discover_decks_search_modal/modal_submit": "検索",
+  "discover_decks_search_modal/modal_title": "デッキをタイトルで検索"
 }

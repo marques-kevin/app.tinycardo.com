@@ -66,9 +66,6 @@
   "decks_update_visibility_select/private": "Özel",
   "decks_update_visibility_select/public": "Açık",
   "decks_update_visibility_select/unlisted": "Liste dışı",
-  "discover_decks_action_dialog/close": "Kapat",
-  "discover_decks_action_dialog/show_deck": "Desteyi göster",
-  "discover_decks_action_dialog/start_using_this_deck": "Bu desteyi kullanmaya başla",
   "global_navbar/discover": "Keşfet",
   "global_navbar/streak": "{streak} {streak, plural, one {gün} other {gün}} serisi",
   "session_ended_splash_screen/actions/continue_reviewing": "Devam et ?",
@@ -120,5 +117,11 @@
   "deck_update_import_csv_modal/cancel": "İptal et",
   "deck_update_import_csv_modal/description": "Dosyanız başarıyla yüklendi, ama ön ve arka sütunları bulamadık. Lütfen bunları eşleştirmemize yardımcı olmak için uygun sütunları seçin.",
   "deck_update_import_csv_modal/front_column": "Ön yüz sütunu nedir?",
-  "deck_update_import_csv_modal/title": "Lütfen karşılık gelen sütunları seçin"
+  "deck_update_import_csv_modal/title": "Lütfen karşılık gelen sütunları seçin",
+  "discover_decks_filters/message": "Ben <spoken_language></spoken_language> konuşuyorum ve <learning_language></learning_language> öğrenmek istiyorum.",
+  "discover_decks_search_modal/modal_description": "Sonuçları filtrelemek için bir destanın başlığını girin.",
+  "discover_decks_search_modal/modal_input_label": "Dek başlığı",
+  "discover_decks_search_modal/modal_input_placeholder": "Küçük bir başlık yazın",
+  "discover_decks_search_modal/modal_submit": "Araştır",
+  "discover_decks_search_modal/modal_title": "Başlıkla desteleri ara"
 }

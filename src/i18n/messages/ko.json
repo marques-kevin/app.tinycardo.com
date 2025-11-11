@@ -66,9 +66,6 @@
   "decks_update_visibility_select/private": "비공개",
   "decks_update_visibility_select/public": "공개 ",
   "decks_update_visibility_select/unlisted": "비공개",
-  "discover_decks_action_dialog/close": "닫기",
-  "discover_decks_action_dialog/show_deck": "덱 보기",
-  "discover_decks_action_dialog/start_using_this_deck": "이 덱 사용 시작하기",
   "global_navbar/discover": "발견하기",
   "global_navbar/streak": "{streak} {streak, plural, one {일} other {일}} 연속",
   "session_ended_splash_screen/actions/continue_reviewing": "계속할까?",
@@ -120,5 +117,11 @@
   "deck_update_import_csv_modal/cancel": "취소",
   "deck_update_import_csv_modal/description": "파일을 성공적으로 불러왔지만 앞면과 뒷면 열을 찾을 수 없었어요. 해당 열을 선택해 주세요, 그래야 매핑할 수 있어요.",
   "deck_update_import_csv_modal/front_column": "앞 면의 열이 뭐죠?",
-  "deck_update_import_csv_modal/title": "해당 열을 선택하세요"
+  "deck_update_import_csv_modal/title": "해당 열을 선택하세요",
+  "discover_decks_filters/message": "나는 <spoken_language></spoken_language>를 말하고 <learning_language></learning_language>를 배우고 싶어.",
+  "discover_decks_search_modal/modal_description": "덱 제목을 입력해 결과를 필터하세요.",
+  "discover_decks_search_modal/modal_input_label": "덱 제목",
+  "discover_decks_search_modal/modal_input_placeholder": "덱 제목 입력하기",
+  "discover_decks_search_modal/modal_submit": "검색",
+  "discover_decks_search_modal/modal_title": "덱 제목으로 검색하기"
 }

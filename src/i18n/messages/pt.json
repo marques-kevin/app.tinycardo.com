@@ -66,9 +66,6 @@
   "decks_update_visibility_select/private": "Privado",
   "decks_update_visibility_select/public": "Público",
   "decks_update_visibility_select/unlisted": "Não listado",
-  "discover_decks_action_dialog/close": "Fechar",
-  "discover_decks_action_dialog/show_deck": "Mostrar baralho",
-  "discover_decks_action_dialog/start_using_this_deck": "Comece a usar este deck",
   "global_navbar/discover": "Descubra",
   "global_navbar/streak": "{streak} {streak, plural, one {dia} other {dias}} de sequência",
   "session_ended_splash_screen/actions/continue_reviewing": "Continuar?",
@@ -120,5 +117,11 @@
   "deck_update_import_csv_modal/cancel": "Cancelar",
   "deck_update_import_csv_modal/description": "Carregamos seu arquivo com sucesso, mas não encontramos as colunas da frente e do verso. Selecione as colunas correspondentes para nos ajudar a mapeá-las.",
   "deck_update_import_csv_modal/front_column": "Qual é a coluna da frente?",
-  "deck_update_import_csv_modal/title": "Selecione as colunas correspondentes"
+  "deck_update_import_csv_modal/title": "Selecione as colunas correspondentes",
+  "discover_decks_filters/message": "Falo <spoken_language></spoken_language> e quero aprender <learning_language></learning_language>",
+  "discover_decks_search_modal/modal_description": "Digite um título de deck para filtrar os resultados.",
+  "discover_decks_search_modal/modal_input_label": "Título do deck",
+  "discover_decks_search_modal/modal_input_placeholder": "Digite um título de deck",
+  "discover_decks_search_modal/modal_submit": "Buscar",
+  "discover_decks_search_modal/modal_title": "Pesquise decks pelo título"
 }
