@@ -447,7 +447,7 @@ export interface components {
             /** @description User preferred language */
             language?: string;
         };
-        CardsGetCardsDto: {
+        CardsGetCardsDtoInput: {
             /** @description ID of the deck */
             deck_id: string;
         };
@@ -470,6 +470,9 @@ export interface components {
              * @description Last update timestamp
              */
             updated_at: string;
+        };
+        CardsGetCardsDtoOutput: {
+            cards: components["schemas"]["CardsEntity"][];
         };
         DecksEntityWithStats: {
             /** @description Unique identifier of the deck */
@@ -613,7 +616,7 @@ export interface components {
             /** @description Array of cards to upsert */
             cards: {
                 /** @description ID of existing card (for update) */
-                id?: string;
+                id: string;
                 /** @description Front content of the card */
                 front: string;
                 /** @description Back content of the card */
@@ -894,7 +897,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CardsGetCardsDto"];
+                "application/json": components["schemas"]["CardsGetCardsDtoInput"];
             };
         };
         responses: {
@@ -903,7 +906,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CardsEntity"][];
+                    "application/json": components["schemas"]["CardsGetCardsDtoOutput"];
                 };
             };
         };

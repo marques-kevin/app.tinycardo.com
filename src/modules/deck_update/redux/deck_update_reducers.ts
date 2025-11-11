@@ -246,10 +246,14 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
   })
 
   builder.addCase(actions.toggle_select_all_cards, (state) => {
-    if (state.selected_cards.length === state.cards.length) {
+    if (
+      state.selected_cards.length === state.cards_filtered_by_lesson_tab.length
+    ) {
       state.selected_cards = []
     } else {
-      state.selected_cards = state.cards.map((card_id) => card_id)
+      state.selected_cards = state.cards_filtered_by_lesson_tab.map(
+        (card_id) => card_id,
+      )
     }
   })
 
@@ -382,6 +386,8 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
       lessons: state.lessons,
       lesson_id: state.active_lesson_id,
     })
+
+    state.selected_cards = []
   })
 
   builder.addCase(actions.open_add_cards_to_lesson_modal, (state) => {

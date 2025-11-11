@@ -33,7 +33,7 @@ export const toggle_select_card = createAction<{
 }>("deck_update/toggle_select_card")
 
 export const toggle_select_all_cards = createAction<void>(
-  "decks/toggle_select_all_cards",
+  "deck_update/toggle_select_all_cards",
 )
 
 export const update_card = createAction<{
