@@ -120,7 +120,6 @@
   "deck_update_import_csv_modal/title": "Por favor, selecciona las columnas correspondientes",
   "discover_decks_filters/message": "Hablo <spoken_language></spoken_language> y quiero aprender <learning_language></learning_language>",
   "discover_decks_search_modal/modal_description": "Introduce un título de mazo para filtrar los resultados.",
-  "discover_decks_search_modal/modal_input_label": "Título del mazo",
   "discover_decks_search_modal/modal_input_placeholder": "Escribe un título de mazo",
   "discover_decks_search_modal/modal_submit": "Buscar",
   "discover_decks_search_modal/modal_title": "Buscar mazos por título"

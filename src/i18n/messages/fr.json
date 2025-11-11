@@ -120,7 +120,6 @@
   "deck_update_import_csv_modal/title": "Veuillez sélectionner les colonnes correspondantes.",
   "discover_decks_filters/message": "Je parle <spoken_language></spoken_language> et je veux apprendre <learning_language></learning_language>.",
   "discover_decks_search_modal/modal_description": "Entrez un titre de deck pour filtrer les résultats.",
-  "discover_decks_search_modal/modal_input_label": "Titre du deck",
   "discover_decks_search_modal/modal_input_placeholder": "Tapez un titre de deck",
   "discover_decks_search_modal/modal_submit": "Rechercher",
   "discover_decks_search_modal/modal_title": "Rechercher des decks par titre"

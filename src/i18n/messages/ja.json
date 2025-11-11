@@ -120,7 +120,6 @@
   "deck_update_import_csv_modal/title": "対応する列を選択してください",
   "discover_decks_filters/message": "私は<spoken_language></spoken_language>を話し、<learning_language></learning_language>を学びたいです。",
   "discover_decks_search_modal/modal_description": "デッキタイトルを入力して結果を絞り込んでください。",
-  "discover_decks_search_modal/modal_input_label": "デッキタイトル",
   "discover_decks_search_modal/modal_input_placeholder": "デッキタイトルを入力",
   "discover_decks_search_modal/modal_submit": "検索",
   "discover_decks_search_modal/modal_title": "デッキをタイトルで検索"

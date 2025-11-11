@@ -120,7 +120,6 @@
   "deck_update_import_csv_modal/title": "Seleziona le colonne corrispondenti",
   "discover_decks_filters/message": "Parlo <spoken_language></spoken_language> e voglio imparare <learning_language></learning_language>",
   "discover_decks_search_modal/modal_description": "Inserisci un titolo del mazzo per filtrare i risultati.",
-  "discover_decks_search_modal/modal_input_label": "Titolo del mazzo",
   "discover_decks_search_modal/modal_input_placeholder": "Digita un titolo di mazzo",
   "discover_decks_search_modal/modal_submit": "Cerca",
   "discover_decks_search_modal/modal_title": "Cerca mazzi per titolo"

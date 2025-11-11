@@ -120,7 +120,6 @@
   "deck_update_import_csv_modal/title": "请选择相应的列",
   "discover_decks_filters/message": "我会说<spoken_language></spoken_language>，想学<learning_language></learning_language>。",
   "discover_decks_search_modal/modal_description": "输入卡组标题以过滤结果。",
-  "discover_decks_search_modal/modal_input_label": "卡片组标题",
   "discover_decks_search_modal/modal_input_placeholder": "输入卡组标题",
   "discover_decks_search_modal/modal_submit": "搜索",
   "discover_decks_search_modal/modal_title": "按标题搜索卡组"

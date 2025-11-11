@@ -120,7 +120,6 @@
   "deck_update_import_csv_modal/title": "Пожалуйста, выберите соответствующие колонки",
   "discover_decks_filters/message": "Я говорю на <spoken_language></spoken_language>, и я хочу учить <learning_language></learning_language>.",
   "discover_decks_search_modal/modal_description": "Введи название колоды, чтобы отфильтровать результаты.",
-  "discover_decks_search_modal/modal_input_label": "Название колоды",
   "discover_decks_search_modal/modal_input_placeholder": "Введите название колоды",
   "discover_decks_search_modal/modal_submit": "Искать",
   "discover_decks_search_modal/modal_title": "Искать колоды по названию"

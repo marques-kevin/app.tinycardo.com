@@ -120,7 +120,6 @@
   "deck_update_import_csv_modal/title": "Lütfen karşılık gelen sütunları seçin",
   "discover_decks_filters/message": "Ben <spoken_language></spoken_language> konuşuyorum ve <learning_language></learning_language> öğrenmek istiyorum.",
   "discover_decks_search_modal/modal_description": "Sonuçları filtrelemek için bir destanın başlığını girin.",
-  "discover_decks_search_modal/modal_input_label": "Dek başlığı",
   "discover_decks_search_modal/modal_input_placeholder": "Küçük bir başlık yazın",
   "discover_decks_search_modal/modal_submit": "Araştır",
   "discover_decks_search_modal/modal_title": "Başlıkla desteleri ara"

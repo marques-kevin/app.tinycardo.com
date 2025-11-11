@@ -120,7 +120,6 @@
   "deck_update_import_csv_modal/title": "اختر الأعمدة المطابقة",
   "discover_decks_filters/message": "أنا أتكلم <spoken_language></spoken_language> وأريد أن أتعلم <learning_language></learning_language>",
   "discover_decks_search_modal/modal_description": "أدخل عنوان المجموعة لتصفية النتائج.",
-  "discover_decks_search_modal/modal_input_label": "عنوان المجموعة",
   "discover_decks_search_modal/modal_input_placeholder": "أدخل عنوان المجموعة",
   "discover_decks_search_modal/modal_submit": "بحث",
   "discover_decks_search_modal/modal_title": "ابحث عن المجموعات حسب العنوان"
