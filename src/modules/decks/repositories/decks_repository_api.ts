@@ -88,7 +88,7 @@ export class DecksRepositoryApi implements DecksRepository {
       deck_id: params.deck_id,
     })
 
-    return data.map((card) => ({
+    return data.cards.map((card) => ({
       id: card.id,
       deck_id: card.deck_id,
       front: card.front,
