@@ -1,7 +1,6 @@
 {
   "apply": "Save & Import",
   "back_column": "What is the back column?",
-  "cancel": "Cancel",
   "description": "We successfully loaded your file, but we did not find the front and back columns. Please select the corresponding columns to help us map them.",
   "front_column": "What is the front column?",
   "title": "Please select the corresponding columns"

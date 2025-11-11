@@ -26,7 +26,6 @@
   "deck_update_add_cards_to_lesson_modal/title": "Select where to add {length} cards?",
   "deck_update_import_csv_modal/apply": "Save & Import",
   "deck_update_import_csv_modal/back_column": "What is the back column?",
-  "deck_update_import_csv_modal/cancel": "Cancel",
   "deck_update_import_csv_modal/description": "We successfully loaded your file, but we did not find the front and back columns. Please select the corresponding columns to help us map them.",
   "deck_update_import_csv_modal/front_column": "What is the front column?",
   "deck_update_import_csv_modal/title": "Please select the corresponding columns",
