@@ -10,10 +10,22 @@ export class DiscoverDecksRepositoryApi implements DiscoverDecksRepository {
     this.api_service = new ApiService()
   }
 
-  async fetch_discover_decks(): Promise<DiscoverDeckEntity[]> {
+  async fetch_discover_decks(params: {
+    spoken_language: string
+    learning_language: string
+    title?: string
+  }): Promise<DiscoverDeckEntity[]> {
+    const body: paths["/decks/search_decks"]["post"]["requestBody"]["content"]["application/json"] =
+      {
+        front_language: params.spoken_language,
+        back_language: params.learning_language,
+        title: params.title,
+      }
     const { decks } = await this.api_service.post<
       paths["/decks/search_decks"]["post"]["responses"]["200"]["content"]["application/json"]
-    >("/decks/search_decks", {})
+    >("/decks/search_decks", {
+      body,
+    })
 
     return decks.map((deck) => ({
       ...deck,

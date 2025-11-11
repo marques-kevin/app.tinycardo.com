@@ -18,7 +18,27 @@ export class DiscoverDecksRepositoryInMemory
     this.decks = decks
   }
 
-  async fetch_discover_decks(): Promise<DiscoverDeckEntity[]> {
-    return this.decks
+  async fetch_discover_decks(params: {
+    spoken_language: string
+    learning_language: string
+    title?: string
+  }): Promise<DiscoverDeckEntity[]> {
+    const normalized_title = params.title?.toLowerCase().trim()
+
+    return this.decks.filter((deck) => {
+      const matches_languages =
+        deck.front_language === params.spoken_language &&
+        deck.back_language === params.learning_language
+
+      if (!matches_languages) {
+        return false
+      }
+
+      if (!normalized_title) {
+        return true
+      }
+
+      return deck.name.toLowerCase().includes(normalized_title)
+    })
   }
 }

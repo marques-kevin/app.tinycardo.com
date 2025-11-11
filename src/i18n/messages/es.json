@@ -66,9 +66,6 @@
   "decks_update_visibility_select/private": "Privado",
   "decks_update_visibility_select/public": "Público",
   "decks_update_visibility_select/unlisted": "No listado",
-  "discover_decks_action_dialog/close": "Cerrar",
-  "discover_decks_action_dialog/show_deck": "Mostrar mazo",
-  "discover_decks_action_dialog/start_using_this_deck": "Usa este mazo",
   "global_navbar/discover": "Descubre",
   "global_navbar/streak": "{streak} racha de {streak, plural, one {día} other {días}}",
   "session_ended_splash_screen/actions/continue_reviewing": "¿Continuar?",
@@ -120,5 +117,10 @@
   "deck_update_import_csv_modal/cancel": "Cancelar",
   "deck_update_import_csv_modal/description": "Cargamos tu archivo con éxito, pero no encontramos las columnas del frente y del reverso. Selecciona las columnas correspondientes para ayudarnos a mapearlas.",
   "deck_update_import_csv_modal/front_column": "¿Cuál es la columna del frente?",
-  "deck_update_import_csv_modal/title": "Por favor, selecciona las columnas correspondientes"
+  "deck_update_import_csv_modal/title": "Por favor, selecciona las columnas correspondientes",
+  "discover_decks_filters/message": "Hablo <spoken_language></spoken_language> y quiero aprender <learning_language></learning_language>",
+  "discover_decks_search_modal/modal_description": "Introduce un título de mazo para filtrar los resultados.",
+  "discover_decks_search_modal/modal_input_placeholder": "Escribe un título de mazo",
+  "discover_decks_search_modal/modal_submit": "Buscar",
+  "discover_decks_search_modal/modal_title": "Buscar mazos por título"
 }

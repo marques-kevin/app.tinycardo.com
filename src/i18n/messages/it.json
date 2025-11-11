@@ -66,9 +66,6 @@
   "decks_update_visibility_select/private": "Privato",
   "decks_update_visibility_select/public": "Pubblico",
   "decks_update_visibility_select/unlisted": "Non elencato",
-  "discover_decks_action_dialog/close": "Chiudi",
-  "discover_decks_action_dialog/show_deck": "Mostra mazzo",
-  "discover_decks_action_dialog/start_using_this_deck": "Inizia a usare questo mazzo",
   "global_navbar/discover": "Scopri",
   "global_navbar/streak": "{streak} {streak, plural, one {giorno} other {giorni}} di streak",
   "session_ended_splash_screen/actions/continue_reviewing": "Continua?",
@@ -120,5 +117,10 @@
   "deck_update_import_csv_modal/cancel": "Annulla",
   "deck_update_import_csv_modal/description": "Abbiamo caricato il tuo file con successo, ma non abbiamo trovato le colonne front e back. Seleziona le colonne corrispondenti per aiutarci a mappare.",
   "deck_update_import_csv_modal/front_column": "Qual è la colonna frontale?",
-  "deck_update_import_csv_modal/title": "Seleziona le colonne corrispondenti"
+  "deck_update_import_csv_modal/title": "Seleziona le colonne corrispondenti",
+  "discover_decks_filters/message": "Parlo <spoken_language></spoken_language> e voglio imparare <learning_language></learning_language>",
+  "discover_decks_search_modal/modal_description": "Inserisci un titolo del mazzo per filtrare i risultati.",
+  "discover_decks_search_modal/modal_input_placeholder": "Digita un titolo di mazzo",
+  "discover_decks_search_modal/modal_submit": "Cerca",
+  "discover_decks_search_modal/modal_title": "Cerca mazzi per titolo"
 }

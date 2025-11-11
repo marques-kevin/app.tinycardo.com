@@ -7,13 +7,18 @@ import { describe, expect, it, beforeEach } from "vitest"
 import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { delay } from "@/modules/global/utils/delay"
 import type { DeckEntity } from "@/modules/decks/entities/deck_entity"
+import type { UserEntity } from "@/modules/authentication/entities/user_entity"
+import * as global_actions from "@/modules/global/redux/global_actions"
+import type { UsersRepositoryInMemory } from "@/modules/authentication/repositories/users_repository_in_memory"
 
 describe("sessions actions", () => {
   let session_repository: SessionsRepositoryInMemory
   let decks_repository: DecksRepositoryInMemory
+  let users_repository: UsersRepositoryInMemory
   let redux: Awaited<ReturnType<typeof create_store_for_tests>>
   let deck: DeckEntity
   let cards: CardEntity[]
+  let user: UserEntity
 
   beforeEach(async () => {
     redux = await create_store_for_tests()
@@ -21,6 +26,15 @@ describe("sessions actions", () => {
       .sessions_repository as SessionsRepositoryInMemory
     decks_repository = redux.dependencies
       .decks_repository as DecksRepositoryInMemory
+    users_repository = redux.dependencies
+      .users_repository as UsersRepositoryInMemory
+
+    user = {
+      id: "1",
+      email: "test@example.com",
+    }
+
+    await users_repository.set_authenticated_user(user)
 
     deck = {
       id: "1",
@@ -28,10 +42,10 @@ describe("sessions actions", () => {
       front_language: "en",
       back_language: "es",
       description: null,
-      user_id: "1",
+      user_id: user.id,
       updated_at: new Date(),
       created_at: new Date(),
-      visibility: "private",
+      visibility: "public",
       number_of_cards: 2,
       number_of_cards_ready_to_be_reviewed: 1,
       number_of_cards_not_ready_to_be_reviewed: 1,
@@ -49,6 +63,8 @@ describe("sessions actions", () => {
       deck,
       cards,
     })
+
+    await redux.store.dispatch(global_actions.global_app_initialized())
 
     await redux.store.dispatch(decks_actions.fetch_decks())
   })
@@ -170,35 +186,35 @@ describe("sessions actions", () => {
       }),
     )
 
-    let state = redux.store.getState().sessions
+    let state = redux.store.getState()
 
-    expect(state.help.is_open).toEqual(false)
+    expect(state.sessions.help.is_open).toEqual(false)
 
     await redux.store.dispatch(sessions_actions.help_open())
 
-    state = redux.store.getState().sessions
+    state = redux.store.getState()
 
-    expect(state.help.is_open).toEqual(true)
-    expect(state.help.content).toBeTruthy()
-    expect(state.help.is_loading).toEqual(false)
+    expect(state.sessions.help.is_open).toEqual(true)
+    expect(state.sessions.help.content).toBeTruthy()
+    expect(state.sessions.help.is_loading).toEqual(false)
 
-    const history_id = `front-${state.current_word!.card_id}`
-    const response_from_api = state.help.history[history_id]
+    const history_id = `front-${state.sessions.current_word!.card_id}`
+    const response_from_api = state.sessions.help.history[history_id]
 
     expect(response_from_api).toBeDefined()
 
     await redux.store.dispatch(sessions_actions.help_close())
 
-    state = redux.store.getState().sessions
+    state = redux.store.getState()
 
-    expect(state.help.is_open).toEqual(false)
+    expect(state.sessions.help.is_open).toEqual(false)
 
     await redux.store.dispatch(sessions_actions.help_open())
 
-    state = redux.store.getState().sessions
+    state = redux.store.getState()
 
-    expect(state.help.is_open).toEqual(true)
-    expect(state.help.history[history_id]).toEqual(response_from_api)
+    expect(state.sessions.help.is_open).toEqual(true)
+    expect(state.sessions.help.history[history_id]).toEqual(response_from_api)
   })
 
   it(`

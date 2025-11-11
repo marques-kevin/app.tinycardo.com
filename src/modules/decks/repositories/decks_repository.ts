@@ -3,7 +3,7 @@ import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import type { LessonEntity } from "../entities/lesson_entity"
 
 export interface DecksRepository {
-  fetch_decks(): Promise<DeckEntity[]>
+  fetch_decks(params: { user_id: string }): Promise<DeckEntity[]>
 
   get_deck_by_id(params: {
     deck_id: string

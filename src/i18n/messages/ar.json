@@ -66,9 +66,6 @@
   "decks_update_visibility_select/private": "خاص",
   "decks_update_visibility_select/public": "عام",
   "decks_update_visibility_select/unlisted": "غير مدرج",
-  "discover_decks_action_dialog/close": "اغلق",
-  "discover_decks_action_dialog/show_deck": "عرض السلة",
-  "discover_decks_action_dialog/start_using_this_deck": "استخدم هذا السجل",
   "global_navbar/discover": "اكتشف",
   "global_navbar/streak": "{streak} سلسلة {streak, plural, one {يوم} other {أيام}}",
   "session_ended_splash_screen/actions/continue_reviewing": "استمر؟",
@@ -120,5 +117,10 @@
   "deck_update_import_csv_modal/cancel": "إلغاء",
   "deck_update_import_csv_modal/description": "لقد قمنا بتحميل ملفك بنجاح، لكننا لم نجد أعمدة الواجهة والخلفية. يرجى اختيار الأعمدة المناسبة لمساعدتنا في توصيلها.",
   "deck_update_import_csv_modal/front_column": "ما هو العمود الأمامي؟",
-  "deck_update_import_csv_modal/title": "اختر الأعمدة المطابقة"
+  "deck_update_import_csv_modal/title": "اختر الأعمدة المطابقة",
+  "discover_decks_filters/message": "أنا أتكلم <spoken_language></spoken_language> وأريد أن أتعلم <learning_language></learning_language>",
+  "discover_decks_search_modal/modal_description": "أدخل عنوان المجموعة لتصفية النتائج.",
+  "discover_decks_search_modal/modal_input_placeholder": "أدخل عنوان المجموعة",
+  "discover_decks_search_modal/modal_submit": "بحث",
+  "discover_decks_search_modal/modal_title": "ابحث عن المجموعات حسب العنوان"
 }

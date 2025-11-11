@@ -10,6 +10,11 @@ export type DiscoverState = {
     deck: DiscoverDeckEntity | null
     is_duplicating_deck: boolean
   }
+  filters: {
+    spoken_language: string
+    learning_language: string
+    title_query: string
+  }
 }
 
 const initialState: DiscoverState = {
@@ -19,6 +24,11 @@ const initialState: DiscoverState = {
     is_open: false,
     deck: null,
     is_duplicating_deck: false,
+  },
+  filters: {
+    spoken_language: "en",
+    learning_language: "fr",
+    title_query: "",
   },
 }
 
@@ -61,5 +71,17 @@ export const discover_reducers = createReducer(initialState, (builder) => {
 
   builder.addCase(actions.on_use_deck.rejected, (state) => {
     state.actions.is_duplicating_deck = false
+  })
+
+  builder.addCase(actions._set_spoken_language_filter, (state, action) => {
+    state.filters.spoken_language = action.payload.spoken_language
+  })
+
+  builder.addCase(actions._set_learning_language_filter, (state, action) => {
+    state.filters.learning_language = action.payload.learning_language
+  })
+
+  builder.addCase(actions._set_title_query_filter, (state, action) => {
+    state.filters.title_query = action.payload.title_query
   })
 })

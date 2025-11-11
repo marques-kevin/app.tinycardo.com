@@ -67,7 +67,9 @@ describe("DecksRepositoryInMemory", () => {
       expect(saved.id).toBe(deck.id)
       expect(saved.name).toBe(deck.name)
 
-      const decks = await decks_repository.fetch_decks()
+      const decks = await decks_repository.fetch_decks({
+        user_id: deck.user_id,
+      })
       expect(decks).toHaveLength(1)
       expect(decks[0].id).toBe(deck.id)
 
@@ -101,7 +103,9 @@ describe("DecksRepositoryInMemory", () => {
 
   describe("fetch_decks", () => {
     it("returns empty array when no decks exist", async () => {
-      const decks = await decks_repository.fetch_decks()
+      const decks = await decks_repository.fetch_decks({
+        user_id: "user-1",
+      })
       expect(decks).toEqual([])
     })
 
@@ -119,7 +123,9 @@ describe("DecksRepositoryInMemory", () => {
       await decks_repository.upsert_cards({ deck_id: deck1.id, cards: cards1 })
       await decks_repository.upsert_cards({ deck_id: deck2.id, cards: cards2 })
 
-      const decks = await decks_repository.fetch_decks()
+      const decks = await decks_repository.fetch_decks({
+        user_id: "user-1",
+      })
       expect(decks).toHaveLength(2)
       expect(decks.find((d) => d.id === deck1.id)?.number_of_cards).toBe(2)
       expect(decks.find((d) => d.id === deck2.id)?.number_of_cards).toBe(5)
@@ -129,7 +135,9 @@ describe("DecksRepositoryInMemory", () => {
       const deck = build_deck()
       await decks_repository.sync_deck({ deck, cards: [] })
 
-      const decks = await decks_repository.fetch_decks()
+      const decks = await decks_repository.fetch_decks({
+        user_id: "user-1",
+      })
       expect(decks[0].number_of_cards).toBe(0)
     })
   })
@@ -233,7 +241,9 @@ describe("DecksRepositoryInMemory", () => {
         user_id: "user-1",
       })
 
-      const decks = await decks_repository.fetch_decks()
+      const decks = await decks_repository.fetch_decks({
+        user_id: "user-1",
+      })
       expect(decks).toHaveLength(1)
       expect(decks[0].name).toBe("New Deck")
     })
@@ -295,7 +305,9 @@ describe("DecksRepositoryInMemory", () => {
 
       await decks_repository.delete_deck({ id: deck.id })
 
-      const decks = await decks_repository.fetch_decks()
+      const decks = await decks_repository.fetch_decks({
+        user_id: deck.user_id,
+      })
       expect(decks).toHaveLength(0)
 
       const fetched_cards = await decks_repository.fetch_cards({

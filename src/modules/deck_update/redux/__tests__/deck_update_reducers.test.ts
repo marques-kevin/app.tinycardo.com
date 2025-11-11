@@ -89,7 +89,7 @@ describe("Feature: Deck Update", () => {
       Then the deck should be updated
       And a notification should be shown
       `, async () => {
-      const { store, dependencies, toast_service } =
+      const { store, user, dependencies, toast_service } =
         await prepare_store_for_tests()
 
       await store.dispatch(
@@ -104,7 +104,9 @@ describe("Feature: Deck Update", () => {
 
       await store.dispatch(deck_update_actions.save())
 
-      const decks = await dependencies.decks_repository.fetch_decks()
+      const decks = await dependencies.decks_repository.fetch_decks({
+        user_id: user.id,
+      })
 
       expect(decks).toHaveLength(1)
 
@@ -199,8 +201,11 @@ describe("Feature: Deck Update", () => {
 
       await store.dispatch(deck_update_actions.save())
 
-      const decks_in_database =
-        await dependencies.decks_repository.fetch_decks()
+      const decks_in_database = await dependencies.decks_repository.fetch_decks(
+        {
+          user_id: deck.user_id,
+        },
+      )
 
       expect(decks_in_database).toHaveLength(1)
       expect(decks_in_database[0].number_of_cards).toEqual(
