@@ -240,7 +240,9 @@ export const import_cards_from_csv = createAsyncThunk<
       }))
       .filter((r) => r.front || r.back)
 
-    return mapped
+    dispatch(_add_cards_from_import({ cards: mapped }))
+
+    return
   }
 
   dispatch(
@@ -253,14 +255,18 @@ export const import_cards_from_csv = createAsyncThunk<
   )
 })
 
+export const _add_cards_from_import = createAction<{
+  cards: { front: string; back: string }[]
+}>("deck_update/_add_cards_from_import")
+
 export const apply_csv_import_mapping = createAsyncThunk<
-  { front: string; back: string }[],
+  void,
   void,
   AsyncThunkConfig
->("deck_update/apply_csv_import_mapping", async (_, { getState, dispatch }) => {
+>("deck_update/apply_csv_import_mapping", async (_, { dispatch, getState }) => {
   const { deck_update } = getState()
 
-  if (!deck_update.csv_import_dialog.is_open) return []
+  if (!deck_update.csv_import_dialog.is_open) return
 
   const data_rows = deck_update.csv_import_dialog.rows
 
@@ -273,7 +279,7 @@ export const apply_csv_import_mapping = createAsyncThunk<
 
   dispatch(_close_csv_import_dialog())
 
-  return mapped
+  dispatch(_add_cards_from_import({ cards: mapped }))
 })
 
 export const when_user_is_on_update_deck_page = createAsyncThunk<

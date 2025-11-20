@@ -86,7 +86,10 @@ function Wrapper(props: ContainerProps) {
           </a>
         ))}
 
-        <button className="btn btn-ghost" onClick={props.on_create_lesson}>
+        <button
+          className="btn btn-ghost btn-circle"
+          onClick={props.on_create_lesson}
+        >
           <PlusIcon className="size-5" />
         </button>
       </div>

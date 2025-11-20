@@ -12,4 +12,6 @@ export interface SessionHistoryEntity {
 export type SessionHistoryWithCardEntity = SessionHistoryEntity & {
   front: CardEntity["front"]
   back: CardEntity["back"]
+  front_audio_url: CardEntity["front_audio_url"]
+  back_audio_url: CardEntity["back_audio_url"]
 }

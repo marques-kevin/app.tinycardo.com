@@ -1,5 +1,6 @@
 import { connect, type ConnectedProps } from "react-redux"
-import type { RootState } from "@/redux/store"
+import type { RootState, Dispatch } from "@/redux/store"
+import { tts } from "@/modules/sessions/redux/sessions_actions"
 
 function mapState(state: RootState) {
   return {
@@ -9,8 +10,18 @@ function mapState(state: RootState) {
   }
 }
 
-function map_dispatch() {
-  return {}
+function map_dispatch(dispatch: Dispatch) {
+  return {
+    on_tts(params: { value: string; audio_url: string; language: string }) {
+      dispatch(
+        tts({
+          language: params.language,
+          value: params.value,
+          audio_url: params.audio_url,
+        }),
+      )
+    },
+  }
 }
 
 export const connector = connect(mapState, map_dispatch)

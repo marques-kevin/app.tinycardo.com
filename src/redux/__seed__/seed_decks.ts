@@ -19,7 +19,7 @@ export const seed_decks: DeckEntity[] = [
     number_of_users_using_this_deck: 1,
   },
   {
-    id: "2",
+    id: "french-to-korean",
     name: "Apprendre le coréen en s'amusant",
     description:
       "Ce paquet de cartes contient du vocabulaire coréen pour débutants. Il couvre les mots et expressions essentiels dont vous aurez besoin pour commencer à parler coréen. Parfait pour construire une base solide dans l'apprentissage de la langue coréenne.",
@@ -29,7 +29,7 @@ export const seed_decks: DeckEntity[] = [
     updated_at: new Date("2025-06-01"),
     created_at: new Date("2025-01-01"),
     visibility: "private",
-    number_of_cards: 10,
+    number_of_cards: 0,
     number_of_cards_ready_to_be_reviewed: 5,
     number_of_cards_not_ready_to_be_reviewed: 5,
     number_of_users_using_this_deck: 1,

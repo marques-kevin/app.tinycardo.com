@@ -149,18 +149,9 @@ export class DecksRepositoryInMemory implements DecksRepository {
 
   async upsert_cards(params: {
     deck_id: string
-    cards: Array<{
-      id?: string
-      front: string
-      back: string
-    }>
+    cards: Array<CardEntity & { id?: string }>
   }): ReturnType<DecksRepository["upsert_cards"]> {
-    this.cards[params.deck_id] = params.cards.map((card) => ({
-      id: card.id || v4(),
-      deck_id: params.deck_id,
-      front: card.front,
-      back: card.back,
-    }))
+    this.cards[params.deck_id] = params.cards
   }
 
   async duplicate_deck(

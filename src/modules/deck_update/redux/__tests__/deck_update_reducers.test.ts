@@ -697,5 +697,65 @@ describe("Feature: Deck Update", () => {
       expect(lesson.cards[0]).toEqual(card_id)
       expect(lesson.cards).toHaveLength(2)
     })
+
+    it(`
+      When the user imports cards from a CSV containing front and back headers
+      Then the imported cards should be added to the deck
+      `, async () => {
+      const { store } = await prepare_store_for_tests()
+
+      const initial_state = store.getState().deck_update
+
+      const csv = [
+        "front,back",
+        "Front 1,Back 1",
+        "Front Only,",
+        ",Back Only",
+      ].join("\n")
+
+      await store.dispatch(
+        deck_update_actions.import_cards_from_csv({ content: csv }),
+      )
+
+      const state = store.getState().deck_update
+
+      const new_cards_count = state.cards.length - initial_state.cards.length
+      expect(new_cards_count).toEqual(3)
+
+      const imported_cards = state.cards.slice(-3).map((card_id) => {
+        const card = state.cards_map[card_id]
+        if (!card) {
+          throw new Error(`Card ${card_id} not found in cards_map`)
+        }
+        return card
+      })
+
+      expect(imported_cards).toEqual([
+        expect.objectContaining({ front: "Front 1", back: "Back 1" }),
+        expect.objectContaining({ front: "Front Only", back: "" }),
+        expect.objectContaining({ front: "", back: "Back Only" }),
+      ])
+    })
+
+    it(`
+      When the user imports cards from a CSV without front and back headers
+      Then the CSV import dialog should open with the parsed data
+      `, async () => {
+      const { store } = await prepare_store_for_tests()
+
+      const csv = ["term,definition", "Bonjour,Hello"].join("\n")
+
+      await store.dispatch(
+        deck_update_actions.import_cards_from_csv({ content: csv }),
+      )
+
+      const state = store.getState().deck_update.csv_import_dialog
+
+      expect(state.is_open).toEqual(true)
+      expect(state.headers).toEqual(["term", "definition"])
+      expect(state.rows).toEqual([["Bonjour", "Hello"]])
+      expect(state.selected_front).toEqual(0)
+      expect(state.selected_back).toEqual(1)
+    })
   })
 })

@@ -21,7 +21,7 @@
     "i18n:merge": "tsx src/scripts/merge_local_i18n_to_global.ts",
     "i18n:merge:watch": "tsx src/scripts/merge_local_i18n_to_global.ts --watch",
     "generate:sentence-deck": "tsx src/scripts/generate_sentence_deck.ts",
-    "openapi:generate": "npx openapi-typescript http://localhost:3000/api-json -o ./src/types/api.ts"
+    "openapi:generate": "npx openapi-typescript http://localhost:3001/api-json -o ./src/types/api.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.36",
