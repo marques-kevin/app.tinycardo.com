@@ -71,45 +71,19 @@ export const no_cards_to_review = createAsyncThunk<
   return _
 })
 
-export const preload_all_audio_files = createAsyncThunk<
-  void,
-  void,
-  AsyncThunkConfig
->("sessions/preload_all_audio_files", async (_, { extra, getState }) => {
-  const { sessions } = getState()
-
-  const back_language = sessions.back_language
-  const back_words = sessions.words_to_review.map((word) =>
-    hash_string(word.back),
-  )
-
-  const all_words = [...back_words]
-
-  for (const word of all_words) {
-    await extra.http_service.get({
-      url: `https://pub-6a966d8a3d1b47e5baeef1683d144d01.r2.dev/tts/${back_language}/${word}.wav`,
-      headers: {
-        cache: "force-cache",
-        "content-type": "audio/wav",
-      },
-    })
-  }
-})
-
 export const preload_next_audio_file = createAsyncThunk<
   void,
   void,
   AsyncThunkConfig
->("sessions/preload_all_audio_files", async (_, { extra, getState }) => {
+>("sessions/preload_next_audio_file", async (_, { extra, getState }) => {
   const { sessions } = getState()
 
   const next_word = sessions.words_to_review[sessions.current_index + 1]
 
-  if (!next_word || !next_word.back_audio_url) return
+  if (!next_word) return
 
-  await extra.http_service.get({
-    url: next_word.back_audio_url,
-  })
+  await extra.audio_service.preload({ url: next_word.back_audio_url })
+  await extra.audio_service.preload({ url: next_word.front_audio_url })
 })
 
 export const start_session = createAsyncThunk<
@@ -189,11 +163,10 @@ export const start_session = createAsyncThunk<
     )
 
     if (_.review_mode === "audio") {
-      const { sessions } = getState()
-
+      dispatch(preload_next_audio_file())
       dispatch(
         tts({
-          card_id: sessions.current_word!.card_id,
+          side: "back",
         }),
       )
     }
@@ -218,108 +191,33 @@ export const restart_session = createAsyncThunk<void, void, AsyncThunkConfig>(
   },
 )
 
-const get_tts_voice = (lang: string) => {
-  if (lang === "ko") {
-    return "ko-KR"
-  }
-  if (lang === "fr") {
-    return "fr-FR"
-  }
-  if (lang === "en") {
-    return "en-US"
-  }
-  if (lang === "es") {
-    return "es-ES"
-  }
-  if (lang === "de") {
-    return "de-DE"
-  }
-  if (lang === "it") {
-    return "it-IT"
-  }
-  if (lang === "pt") {
-    return "pt-PT"
-  }
-  if (lang === "ru") {
-    return "ru-RU"
-  }
-  if (lang === "ja") {
-    return "ja-JP"
-  }
-  if (lang === "zh") {
-    return "zh-CN"
-  }
-  if (lang === "ar") {
-    return "ar-SA"
-  }
-  if (lang === "hi") {
-    return "hi-IN"
-  }
-  if (lang === "bn") {
-    return "bn-IN"
-  }
-  if (lang === "pa") {
-    return "pa-IN"
-  }
-  if (lang === "mr") {
-    return "mr-IN"
-  }
-  if (lang === "ta") {
-    return "ta-IN"
-  }
-  if (lang === "te") {
-    return "te-IN"
-  }
-
-  return lang
-}
-
-const hash_string = (str: string) => {
-  let hash = 0
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i)
-    hash = (hash << 5) - hash + char
-    hash = hash & hash // Convert to 32-bit integer
-  }
-  return Math.abs(hash).toString(16)
-}
-
 export const tts = createAsyncThunk<
   void,
-  { card_id: string },
+  {
+    side?: "front" | "back"
+  },
   AsyncThunkConfig
->("sessions/tts", async (params, { getState, extra }) => {
+>("sessions/tts", async (_, { getState, extra }) => {
   const { sessions } = getState()
 
-  const card = sessions.words_to_review.find(
-    (c) => c.card_id === params.card_id,
-  )
+  const current_word = sessions.current_word
 
-  if (!card) throw new Error(`no card found`)
+  if (!current_word) throw new Error(`no current word found`)
 
-  const is_flipped = sessions.is_card_flipped
-  const audio_url = is_flipped ? card.back_audio_url : card.front_audio_url
-  const language = is_flipped ? sessions.back_language : sessions.front_language
-  const word = is_flipped ? card.back : card.front
+  const side = _.side ? _.side : sessions.is_card_flipped ? "back" : "front"
+  const text = side === "front" ? current_word.front : current_word.back
+  const audio_url =
+    side === "front"
+      ? current_word.front_audio_url
+      : current_word.back_audio_url
+  const language =
+    side === "front" ? sessions.front_language : sessions.back_language
 
-  const response = await extra.audio_service.play({
-    url: audio_url,
-  })
+  const response = await extra.audio_service.play({ url: audio_url })
 
   if (response.success) return
 
-  const utterance = new SpeechSynthesisUtterance(word)
-
-  utterance.lang = get_tts_voice(language)
-  utterance.rate = 1
-  utterance.pitch = 1
-  utterance.volume = 1
-  utterance.voice =
-    speechSynthesis
-      .getVoices()
-      .find((voice) => voice.lang.includes(get_tts_voice(language))) || null
-
-  speechSynthesis.speak(utterance)
+  extra.audio_service.text_to_speech({ text, language })
 })
 
 export const on_session_ended = createAsyncThunk<void, void, AsyncThunkConfig>(
@@ -393,9 +291,10 @@ export const set_review_word = createAsyncThunk<
       dispatch(global_actions.session_ended())
     } else {
       if (sessions.review_mode === "audio") {
+        dispatch(preload_next_audio_file())
         dispatch(
           tts({
-            card_id: sessions.current_word!.card_id,
+            side: "back",
           }),
         )
       }

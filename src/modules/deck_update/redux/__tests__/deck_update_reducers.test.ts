@@ -49,6 +49,8 @@ const prepare_store_for_tests = async () => {
       deck_id: deck.id,
       front: `Front ${index}`,
       back: `Back ${index}`,
+      front_audio_url: `https://example.com/front-${index}.mp3`,
+      back_audio_url: `https://example.com/back-${index}.mp3`,
     }),
   )
 

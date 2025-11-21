@@ -14,6 +14,8 @@ const create_card = (): CardEntity => {
     front: "",
     back: "",
     deck_id: "local",
+    front_audio_url: "",
+    back_audio_url: "",
   }
 }
 
@@ -120,6 +122,8 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
       front: c.front,
       back: c.back,
       deck_id: state.deck!.id,
+      front_audio_url: "",
+      back_audio_url: "",
     }))
 
     cards.forEach((c) => {

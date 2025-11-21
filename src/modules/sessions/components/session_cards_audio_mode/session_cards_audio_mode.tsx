@@ -14,10 +14,7 @@ const Front: React.FC<ContainerProps> = (props) => {
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
-            props.on_tts({
-              value: props.back,
-              language: props.back_language,
-            })
+            props.on_tts()
           }}
         >
           <Volume2Icon className="size-10" />

@@ -25,6 +25,8 @@ const make_word = (
   last_reviewed_at: overrides.last_reviewed_at ?? now,
   front: overrides.front ?? "안녕하세요",
   back: overrides.back ?? "Hello",
+  front_audio_url: overrides.front_audio_url ?? "https://example.com/front.mp3",
+  back_audio_url: overrides.back_audio_url ?? "https://example.com/back.mp3",
 })
 
 export const Populated: Story = {

@@ -1,6 +1,6 @@
 import { connect, type ConnectedProps } from "react-redux"
 import type { RootState, Dispatch } from "@/redux/store"
-import { tts } from "@/modules/sessions/redux/sessions_actions"
+import { tts } from "@/modules/deck_details/redux/deck_details_actions"
 
 function mapState(state: RootState) {
   return {

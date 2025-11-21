@@ -57,6 +57,8 @@ describe("sessions actions", () => {
       deck_id: deck.id,
       front: `front-${i}`,
       back: `back-${i}`,
+      front_audio_url: `https://example.com/front-${i}.mp3`,
+      back_audio_url: `https://example.com/back-${i}.mp3`,
     }))
 
     await decks_repository.sync_deck({
