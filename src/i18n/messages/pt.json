@@ -114,7 +114,6 @@
   "decks_update_footer_actions/add_to_lesson": "Adicionar à lição",
   "deck_update_import_csv_modal/apply": "Salvar e importar",
   "deck_update_import_csv_modal/back_column": "Qual é a coluna de trás?",
-  "deck_update_import_csv_modal/cancel": "Cancelar",
   "deck_update_import_csv_modal/description": "Carregamos seu arquivo com sucesso, mas não encontramos as colunas da frente e do verso. Selecione as colunas correspondentes para nos ajudar a mapeá-las.",
   "deck_update_import_csv_modal/front_column": "Qual é a coluna da frente?",
   "deck_update_import_csv_modal/title": "Selecione as colunas correspondentes",

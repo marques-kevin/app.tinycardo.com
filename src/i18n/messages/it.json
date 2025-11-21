@@ -114,7 +114,6 @@
   "decks_update_footer_actions/add_to_lesson": "Aggiungi alla lezione",
   "deck_update_import_csv_modal/apply": "Applica e importa",
   "deck_update_import_csv_modal/back_column": "Che cos'è la colonna retro?",
-  "deck_update_import_csv_modal/cancel": "Annulla",
   "deck_update_import_csv_modal/description": "Abbiamo caricato il tuo file con successo, ma non abbiamo trovato le colonne front e back. Seleziona le colonne corrispondenti per aiutarci a mappare.",
   "deck_update_import_csv_modal/front_column": "Qual è la colonna frontale?",
   "deck_update_import_csv_modal/title": "Seleziona le colonne corrispondenti",
