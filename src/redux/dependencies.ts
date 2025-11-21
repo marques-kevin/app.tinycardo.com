@@ -39,6 +39,12 @@ import type { PlausibleService } from "@/modules/global/services/plausible_servi
 import { PlausibleServiceInMemory } from "@/modules/global/services/plausible_service/plausible_service_in_memory"
 import { PlausibleServiceWindow } from "@/modules/global/services/plausible_service/plausible_service_window"
 import { seed_history } from "./__seed__/seed_history"
+import type { AudioService } from "@/modules/global/services/audio_service/audio_service"
+import type { HttpService } from "@/modules/global/services/http_service/http_service"
+import { AudioServiceInMemory } from "@/modules/global/services/audio_service/audio_service_in_memory"
+import { HttpServiceInMemory } from "@/modules/global/services/http_service/http_service_in_memory"
+import { AudioServiceWindow } from "@/modules/global/services/audio_service/audio_service_window"
+import { HttpServiceWindow } from "@/modules/global/services/http_service/http_service_window"
 
 export type Dependencies = {
   location_service: LocationService
@@ -52,6 +58,8 @@ export type Dependencies = {
   toast_service: ToastService
   streak_repository: StreakRepository
   plausible_service: PlausibleService
+  audio_service: AudioService
+  http_service: HttpService
 }
 
 export function build_dependencies(
@@ -70,6 +78,8 @@ export function build_dependencies(
       toast_service: new ToastServiceInMemory(),
       streak_repository: new StreakRepositoryInMemory(),
       plausible_service: new PlausibleServiceInMemory(),
+      audio_service: new AudioServiceInMemory(),
+      http_service: new HttpServiceInMemory(),
     }
   }
 
@@ -98,6 +108,8 @@ export function build_dependencies(
         streaks: seed_streaks,
       }),
       plausible_service: new PlausibleServiceInMemory(),
+      audio_service: new AudioServiceWindow(),
+      http_service: new HttpServiceWindow(),
     }
   }
 
@@ -113,5 +125,7 @@ export function build_dependencies(
     toast_service: new ToastServiceSonner(),
     streak_repository: new StreakRepositoryApi(),
     plausible_service: new PlausibleServiceWindow(),
+    audio_service: new AudioServiceWindow(),
+    http_service: new HttpServiceWindow(),
   }
 }

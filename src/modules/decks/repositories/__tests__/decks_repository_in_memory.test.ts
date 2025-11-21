@@ -34,6 +34,8 @@ const build_cards = (params: {
     deck_id: params.deck_id,
     front: `front-${i + 1}`,
     back: `back-${i + 1}`,
+    front_audio_url: `https://example.com/front-${i + 1}.mp3`,
+    back_audio_url: `https://example.com/back-${i + 1}.mp3`,
   }))
 }
 
@@ -331,8 +333,22 @@ describe("DecksRepositoryInMemory", () => {
       await decks_repository.upsert_cards({
         deck_id: deck.id,
         cards: [
-          { front: "Front 1", back: "Back 1" },
-          { front: "Front 2", back: "Back 2" },
+          {
+            id: "card-1",
+            deck_id: deck.id,
+            front: "Front 1",
+            back: "Back 1",
+            front_audio_url: "https://example.com/front-1.mp3",
+            back_audio_url: "https://example.com/back-1.mp3",
+          },
+          {
+            id: "card-2",
+            deck_id: deck.id,
+            front: "Front 2",
+            back: "Back 2",
+            front_audio_url: "https://example.com/front-2.mp3",
+            back_audio_url: "https://example.com/back-2.mp3",
+          },
         ],
       })
 
@@ -352,8 +368,22 @@ describe("DecksRepositoryInMemory", () => {
       await decks_repository.upsert_cards({
         deck_id: deck.id,
         cards: [
-          { id: "card-1", front: "New Front 1", back: "New Back 1" },
-          { id: "card-2", front: "New Front 2", back: "New Back 2" },
+          {
+            id: "card-1",
+            deck_id: deck.id,
+            front: "New Front 1",
+            back: "New Back 1",
+            front_audio_url: "https://example.com/front-1.mp3",
+            back_audio_url: "https://example.com/back-1.mp3",
+          },
+          {
+            id: "card-2",
+            deck_id: deck.id,
+            front: "New Front 2",
+            back: "New Back 2",
+            front_audio_url: "https://example.com/front-2.mp3",
+            back_audio_url: "https://example.com/back-2.mp3",
+          },
         ],
       })
 
@@ -369,7 +399,16 @@ describe("DecksRepositoryInMemory", () => {
 
       await decks_repository.upsert_cards({
         deck_id: deck.id,
-        cards: [{ id: "custom-id", front: "Front", back: "Back" }],
+        cards: [
+          {
+            id: "custom-id",
+            deck_id: deck.id,
+            front: "Front",
+            back: "Back",
+            front_audio_url: "https://example.com/front.mp3",
+            back_audio_url: "https://example.com/back.mp3",
+          },
+        ],
       })
 
       const cards = await decks_repository.fetch_cards({ deck_id: deck.id })
@@ -382,7 +421,16 @@ describe("DecksRepositoryInMemory", () => {
 
       await decks_repository.upsert_cards({
         deck_id: deck.id,
-        cards: [{ front: "Front", back: "Back" }],
+        cards: [
+          {
+            id: "card-1",
+            deck_id: deck.id,
+            front: "Front",
+            back: "Back",
+            front_audio_url: "https://example.com/front.mp3",
+            back_audio_url: "https://example.com/back.mp3",
+          },
+        ],
       })
 
       const cards = await decks_repository.fetch_cards({ deck_id: deck.id })

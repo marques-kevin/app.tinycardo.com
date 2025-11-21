@@ -48,6 +48,10 @@ export const session_builder_algorithm = (params: {
       ...history,
       front: cards.find((card) => card.id === history.card_id)!.front,
       back: cards.find((card) => card.id === history.card_id)!.back,
+      front_audio_url: cards.find((card) => card.id === history.card_id)!
+        .front_audio_url,
+      back_audio_url: cards.find((card) => card.id === history.card_id)!
+        .back_audio_url,
     }),
   )
 
@@ -83,6 +87,8 @@ export const session_builder_algorithm = (params: {
           next_due_at: new Date(),
           front: card.front,
           back: card.back,
+          front_audio_url: card.front_audio_url,
+          back_audio_url: card.back_audio_url,
         }),
       )
       .slice(0, count.learn_new_words)

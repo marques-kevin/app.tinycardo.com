@@ -77,3 +77,19 @@ export const close_lesson_cards_modal = createAsyncThunk<
   void,
   AsyncThunkConfig
 >("decks_details/close_lesson_cards_modal", async () => {})
+
+export const tts = createAsyncThunk<
+  void,
+  {
+    language: string
+    value: string
+    audio_url: string
+  },
+  AsyncThunkConfig
+>("deck_details/tts", async (_, { getState, extra }) => {
+  const response = await extra.audio_service.play({ url: _.audio_url })
+
+  if (response.success) return
+
+  extra.audio_service.text_to_speech({ text: _.value, language: _.language })
+})

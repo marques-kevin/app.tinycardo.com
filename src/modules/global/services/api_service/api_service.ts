@@ -6,7 +6,7 @@ export class ApiService {
   private endpoint: string =
     import.meta.env.MODE === "production"
       ? "https://api.tinycardo.com"
-      : "http://localhost:3000"
+      : "http://localhost:3001"
 
   async post<T>(url: string, data: unknown): Promise<T> {
     const localStorage = new LocalStorageServiceWindow()

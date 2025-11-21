@@ -19,6 +19,8 @@ describe("session_builder_algorithm", () => {
           deck_id: "1",
           front: "front",
           back: "back",
+          front_audio_url: "https://example.com/front.mp3",
+          back_audio_url: "https://example.com/back.mp3",
         },
       ],
       mode: "review",
@@ -45,6 +47,8 @@ describe("session_builder_algorithm", () => {
           deck_id: "1",
           front: "front",
           back: "back",
+          front_audio_url: "https://example.com/front.mp3",
+          back_audio_url: "https://example.com/back.mp3",
         },
       ],
       mode: "review",
@@ -71,12 +75,16 @@ describe("session_builder_algorithm", () => {
           deck_id: "1",
           front: "front",
           back: "back",
+          front_audio_url: "https://example.com/front.mp3",
+          back_audio_url: "https://example.com/back.mp3",
         },
         {
           id: "new_word",
           deck_id: "1",
           front: "front",
           back: "back",
+          front_audio_url: "https://example.com/front.mp3",
+          back_audio_url: "https://example.com/back.mp3",
         },
       ],
       mode: "learn_new_words",
@@ -102,6 +110,8 @@ describe("session_builder_algorithm", () => {
       deck_id: "1",
       front: `front-${i + 1}`,
       back: `back-${i + 1}`,
+      front_audio_url: "https://example.com/front.mp3",
+      back_audio_url: "https://example.com/back.mp3",
     }))
     const words = session_builder_algorithm({
       cards,
@@ -130,6 +140,8 @@ describe("session_builder_algorithm", () => {
       deck_id: "1",
       front: `front-${i + 1}`,
       back: `back-${i + 1}`,
+      front_audio_url: "https://example.com/front.mp3",
+      back_audio_url: "https://example.com/back.mp3",
     }))
 
     const words = session_builder_algorithm({
@@ -152,6 +164,8 @@ describe("session_builder_algorithm", () => {
       deck_id: "1",
       front: `front-${i + 1}`,
       back: `back-${i + 1}`,
+      front_audio_url: "https://example.com/front.mp3",
+      back_audio_url: "https://example.com/back.mp3",
     }))
 
     const words = session_builder_algorithm({

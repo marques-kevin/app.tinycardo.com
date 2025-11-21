@@ -14,6 +14,8 @@ const create_card = (): CardEntity => {
     front: "",
     back: "",
     deck_id: "local",
+    front_audio_url: "",
+    back_audio_url: "",
   }
 }
 
@@ -114,48 +116,40 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
     }
   })
 
-  builder.addCase(
-    actions.apply_csv_import_mapping.fulfilled,
-    (state, action) => {
-      const cards = action.payload.map((c) => ({
-        id: create_uuid_for_cards({ front: c.front, back: c.back }),
-        front: c.front,
-        back: c.back,
-        deck_id: state.deck!.id,
-      }))
+  builder.addCase(actions._add_cards_from_import, (state, action) => {
+    const cards = action.payload.cards.map((c) => ({
+      id: create_uuid_for_cards({ front: c.front, back: c.back }),
+      front: c.front,
+      back: c.back,
+      deck_id: state.deck!.id,
+      front_audio_url: "",
+      back_audio_url: "",
+    }))
 
-      cards.forEach((c) => {
-        state.cards_map[c.id] = c
-      })
+    cards.forEach((c) => {
+      state.cards_map[c.id] = c
+    })
 
-      state.cards = [...state.cards, ...cards.map((c) => c.id)]
+    state.cards = [...state.cards, ...cards.map((c) => c.id)]
 
-      state.cards_filtered_by_lesson_tab = deck_update_filter_cards_by_lesson({
-        cards: state.cards,
-        lessons: state.lessons,
-        lesson_id: state.active_lesson_id,
-      })
-    },
-  )
-
-  builder.addCase(actions.import_cards_from_csv.fulfilled, (state, action) => {
-    if (action.payload && action.payload.length > 0) {
-      state.cards = action.payload.map((c) =>
-        create_uuid_for_cards({ front: c.front, back: c.back }),
-      )
-      state.cards_map = action.payload.reduce(
-        (acc, c) => {
-          acc[create_uuid_for_cards({ front: c.front, back: c.back })] = {
-            id: create_uuid_for_cards({ front: c.front, back: c.back }),
-            front: c.front,
-            back: c.back,
-            deck_id: state.deck!.id,
+    if (state.active_lesson_id) {
+      state.lessons = state.lessons.map((lesson) => {
+        if (lesson.id === state.active_lesson_id) {
+          return {
+            ...lesson,
+            cards: [...lesson.cards, ...cards.map((c) => c.id)],
           }
-          return acc
-        },
-        {} as Record<string, CardEntity>,
-      )
+        }
+
+        return lesson
+      })
     }
+
+    state.cards_filtered_by_lesson_tab = deck_update_filter_cards_by_lesson({
+      cards: state.cards,
+      lessons: state.lessons,
+      lesson_id: state.active_lesson_id,
+    })
   })
 
   builder.addCase(actions.reset_create_deck, (state) => {

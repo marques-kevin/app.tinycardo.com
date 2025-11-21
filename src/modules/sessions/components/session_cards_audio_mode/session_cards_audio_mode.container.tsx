@@ -12,8 +12,12 @@ const mapState = (state: RootState) => {
 }
 
 const mapDispatch = (dispatch: Dispatch) => ({
-  on_tts(params: { language: string; value: string }) {
-    dispatch(tts(params))
+  on_tts() {
+    dispatch(
+      tts({
+        side: "back",
+      }),
+    )
   },
   on_flip() {
     dispatch(flip_card())

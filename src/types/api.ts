@@ -89,6 +89,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cards/test_text_to_speech": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Test: Generate TTS for a card */
+        post: operations["CardsController_test_text_to_speech"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/decks/get_decks": {
         parameters: {
             query?: never;
@@ -451,7 +468,7 @@ export interface components {
             /** @description ID of the deck */
             deck_id: string;
         };
-        CardsEntity: {
+        CardWithAudioUrls: {
             /** @description Unique identifier of the card */
             id: string;
             /** @description ID of the deck this card belongs to */
@@ -470,9 +487,23 @@ export interface components {
              * @description Last update timestamp
              */
             updated_at: string;
+            /** @description URL of the front audio file */
+            front_audio_url: string;
+            /** @description URL of the back audio file */
+            back_audio_url: string;
         };
         CardsGetCardsDtoOutput: {
-            cards: components["schemas"]["CardsEntity"][];
+            cards: components["schemas"]["CardWithAudioUrls"][];
+        };
+        CardsTextToSpeechDtoInput: {
+            /** @description ID of the card to convert to speech */
+            card_id: string;
+        };
+        CardsTextToSpeechDtoOutput: {
+            /** @description URL of the uploaded front audio file */
+            front_url: string;
+            /** @description URL of the uploaded back audio file */
+            back_url: string;
         };
         DecksEntityWithStats: {
             /** @description Unique identifier of the deck */
@@ -907,6 +938,29 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CardsGetCardsDtoOutput"];
+                };
+            };
+        };
+    };
+    CardsController_test_text_to_speech: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CardsTextToSpeechDtoInput"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CardsTextToSpeechDtoOutput"];
                 };
             };
         };

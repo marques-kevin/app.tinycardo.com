@@ -31,12 +31,16 @@ describe("decks_details_actions", () => {
       deck_id: "deck-1",
       front: "Hello",
       back: "Hola",
+      front_audio_url: "https://example.com/front.mp3",
+      back_audio_url: "https://example.com/back.mp3",
     },
     {
       id: "card-2",
       deck_id: "deck-1",
       front: "Goodbye",
       back: "Adiós",
+      front_audio_url: "https://example.com/front.mp3",
+      back_audio_url: "https://example.com/back.mp3",
     },
   ]
 

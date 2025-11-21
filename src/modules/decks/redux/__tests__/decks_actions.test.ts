@@ -46,12 +46,16 @@ describe("decks actions", () => {
         deck_id: deck.id,
         front: "test",
         back: "test",
+        front_audio_url: "https://example.com/front.mp3",
+        back_audio_url: "https://example.com/back.mp3",
       },
       {
         id: "2",
         deck_id: deck.id,
         front: "test",
         back: "test",
+        front_audio_url: "https://example.com/front.mp3",
+        back_audio_url: "https://example.com/back.mp3",
       },
     ]
 

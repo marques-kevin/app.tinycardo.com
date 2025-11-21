@@ -93,6 +93,8 @@ export class DecksRepositoryApi implements DecksRepository {
       deck_id: card.deck_id,
       front: card.front,
       back: card.back,
+      front_audio_url: card.front_audio_url,
+      back_audio_url: card.back_audio_url,
     }))
   }
 

@@ -5,6 +5,7 @@ import {
 } from "./deck_details_cards_list.container"
 import { emoji_flags } from "@/modules/decks/utils/emoji_flags"
 import { useWindowVirtualizer } from "@tanstack/react-virtual"
+import { Volume2Icon } from "lucide-react"
 
 export function Wrapper(props: ContainerProps) {
   const row_virtualizer = useWindowVirtualizer({
@@ -47,8 +48,36 @@ export function Wrapper(props: ContainerProps) {
               virtual_item.index % 2 === 0 ? "bg-base-100" : "bg-base-200",
             )}
           >
-            <div className="p-4">{props.cards[virtual_item.index].front}</div>
-            <div className="p-4">{props.cards[virtual_item.index].back}</div>
+            <div className="flex items-center justify-between p-4">
+              {props.cards[virtual_item.index].front}
+              <button
+                className="btn btn-ghost btn-circle"
+                onClick={() =>
+                  props.on_tts({
+                    value: props.cards[virtual_item.index].front,
+                    audio_url: props.cards[virtual_item.index].front_audio_url,
+                    language: props.front_language,
+                  })
+                }
+              >
+                <Volume2Icon className="size-5" />
+              </button>
+            </div>
+            <div className="flex items-center justify-between p-4">
+              {props.cards[virtual_item.index].back}
+              <button
+                className="btn btn-ghost btn-circle"
+                onClick={() =>
+                  props.on_tts({
+                    value: props.cards[virtual_item.index].back,
+                    audio_url: props.cards[virtual_item.index].back_audio_url,
+                    language: props.back_language,
+                  })
+                }
+              >
+                <Volume2Icon className="size-5" />
+              </button>
+            </div>
           </div>
         ))}
       </div>
