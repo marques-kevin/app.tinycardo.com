@@ -224,4 +224,34 @@ export class DecksRepositoryInMemory implements DecksRepository {
 
     return params.lessons
   }
+
+  async send_to_ai(
+    params: Parameters<DecksRepository["send_to_ai"]>[0],
+  ): ReturnType<DecksRepository["send_to_ai"]> {
+    const deck_id = params.deck.id
+
+    const card_create_by_ai: CardEntity = {
+      id: v4(),
+      deck_id,
+      front: "Created by AI",
+      back: "Created by AI",
+      front_audio_url: "",
+      back_audio_url: "",
+    }
+
+    const lesson_created_by_ai: LessonEntity = {
+      id: v4(),
+      deck_id,
+      name: "Lesson 1",
+      cards: [card_create_by_ai.id],
+      position: 1,
+      created_at: new Date(),
+      updated_at: new Date(),
+    }
+
+    return {
+      cards: params.cards.concat(card_create_by_ai),
+      lessons: params.lessons.concat(lesson_created_by_ai),
+    }
+  }
 }

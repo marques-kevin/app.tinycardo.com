@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 import { useRef } from "react"
 import { DownloadIcon, PlusCircleIcon } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/lib/shadcn/tooltip"
-
+import { DecksUpdateOpenAiModalButton } from "@/modules/deck_update/components/decks_update_open_ai_modal_button/decks_update_open_ai_modal_button"
 function CsvImportButton(props: { on_import_csv: (content: string) => void }) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { formatMessage } = useIntl()
@@ -113,6 +113,8 @@ export function Wrapper(props: ContainerProps) {
         </div>
 
         <div className="flex items-center justify-end gap-2">
+          <DecksUpdateOpenAiModalButton />
+
           <CsvImportButton on_import_csv={props.on_import_csv} />
 
           <button

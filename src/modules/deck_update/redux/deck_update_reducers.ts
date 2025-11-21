@@ -38,6 +38,8 @@ export type DeckUpdateState = {
   add_cards_to_lesson_modal: boolean
   add_cards_to_lesson_selected_lesson_id: string | null
   reorder_lessons_modal: boolean
+  ai_modal: boolean
+  ai_modal_is_sending: boolean
   lessons: LessonEntity[]
   active_lesson_id: string | null
 }
@@ -83,6 +85,8 @@ const initialState: DeckUpdateState = {
   add_cards_to_lesson_modal: false,
   add_cards_to_lesson_selected_lesson_id: null,
   reorder_lessons_modal: false,
+  ai_modal: false,
+  ai_modal_is_sending: false,
   lessons: [],
   active_lesson_id: null,
 }
@@ -423,6 +427,55 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
 
   builder.addCase(actions.close_reorder_lessons_modal, (state) => {
     state.reorder_lessons_modal = false
+  })
+
+  builder.addCase(actions.open_ai_modal, (state) => {
+    state.ai_modal = true
+  })
+
+  builder.addCase(actions.close_ai_modal, (state) => {
+    state.ai_modal = false
+    state.ai_modal_is_sending = false
+  })
+
+  builder.addCase(actions.send_ai_prompt.pending, (state) => {
+    state.ai_modal_is_sending = true
+  })
+
+  builder.addCase(actions.send_ai_prompt.fulfilled, (state, action) => {
+    state.ai_modal_is_sending = false
+
+    const updated_cards = action.payload.cards
+
+    // Replace cards_map with new cards
+    state.cards_map = updated_cards.reduce(
+      (acc, c) => {
+        acc[c.id] = c
+        return acc
+      },
+      {} as Record<string, CardEntity>,
+    )
+
+    // Replace cards array with new card IDs
+    state.cards = updated_cards.map((c) => c.id)
+
+    // Replace lessons with new lessons
+    state.lessons = [...action.payload.lessons].sort(
+      (a, b) => a.position - b.position,
+    )
+
+    // Update cards_filtered_by_lesson_tab based on active lesson
+    state.cards_filtered_by_lesson_tab = deck_update_filter_cards_by_lesson({
+      cards: state.cards,
+      lessons: state.lessons,
+      lesson_id: state.active_lesson_id,
+    })
+
+    state.ai_modal = false
+  })
+
+  builder.addCase(actions.send_ai_prompt.rejected, (state) => {
+    state.ai_modal_is_sending = false
   })
 
   builder.addCase(actions.reorder_lessons.fulfilled, (state, action) => {

@@ -70,4 +70,25 @@ export interface DecksRepository {
     deck_id: string
     lessons: LessonEntity[]
   }): Promise<LessonEntity[]>
+
+  /**
+   * ===============================
+   *
+   *
+   *
+   * AI
+   *
+   *
+   * ===============================
+   */
+
+  send_to_ai(params: {
+    deck: DeckEntity
+    cards: CardEntity[]
+    lessons: LessonEntity[]
+    prompt: string
+  }): Promise<{
+    cards: CardEntity[]
+    lessons: LessonEntity[]
+  }>
 }

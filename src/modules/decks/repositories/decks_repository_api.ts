@@ -246,4 +246,31 @@ export class DecksRepositoryApi implements DecksRepository {
 
     return response.lessons.map((lesson) => this.map_lesson(lesson))
   }
+
+  /**
+   * ===============================
+   *
+   *
+   *
+   * AI
+   *
+   *
+   * ===============================
+   */
+
+  async send_to_ai(
+    params: Parameters<DecksRepository["send_to_ai"]>[0],
+  ): ReturnType<DecksRepository["send_to_ai"]> {
+    // TODO: Implement API endpoint for AI communication
+    // This should call an API endpoint that processes the prompt
+    // and returns updated cards and lessons
+    
+    // For now, return the same cards and lessons as a placeholder
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    
+    return {
+      cards: params.cards,
+      lessons: params.lessons,
+    }
+  }
 }
