@@ -225,43 +225,21 @@ export class DecksRepositoryInMemory implements DecksRepository {
     return params.lessons
   }
 
-  async send_to_ai(
-    params: Parameters<DecksRepository["send_to_ai"]>[0],
-  ): ReturnType<DecksRepository["send_to_ai"]> {
-    const deck_id = params.deck.id
-
-    const card_create_by_ai: CardEntity = {
-      id: v4(),
-      deck_id,
-      front: "Created by AI",
-      back: "Created by AI",
-      front_audio_url: "",
-      back_audio_url: "",
-    }
-
-    const lesson_created_by_ai: LessonEntity = {
-      id: v4(),
-      deck_id,
-      name: "Lesson 1",
-      cards: [card_create_by_ai.id],
-      position: 1,
-      created_at: new Date(),
-      updated_at: new Date(),
-    }
-
-    return {
-      cards: params.cards.concat(card_create_by_ai),
-      lessons: params.lessons.concat(lesson_created_by_ai),
-    }
-  }
-
   async generate_description(
     params: Parameters<DecksRepository["generate_description"]>[0],
   ): ReturnType<DecksRepository["generate_description"]> {
-    // TODO: Implement actual AI communication for description generation
-    // For now, return a placeholder description
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    
-    return `A comprehensive deck for learning ${params.deck.name}. Master essential vocabulary and concepts with ${params.cards.length} carefully crafted flashcards organized into ${params.lessons.length} lessons.`
+    return `description by ai`
+  }
+
+  async translate_card(params: {
+    front: string
+    back: string
+    front_language: string
+    back_language: string
+  }): ReturnType<DecksRepository["translate_card"]> {
+    return {
+      front: params.front + " - Translated by AI",
+      back: params.back + " - Translated by AI",
+    }
   }
 }

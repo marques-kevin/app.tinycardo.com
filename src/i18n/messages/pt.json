@@ -121,5 +121,7 @@
   "discover_decks_search_modal/modal_description": "Digite um título de deck para filtrar os resultados.",
   "discover_decks_search_modal/modal_input_placeholder": "Digite um título de deck",
   "discover_decks_search_modal/modal_submit": "Buscar",
-  "discover_decks_search_modal/modal_title": "Pesquise decks pelo título"
+  "discover_decks_search_modal/modal_title": "Pesquise decks pelo título",
+  "decks_update_cards_list_table_item/tooltip/translate": "Traduzir com IA",
+  "decks_update_description/update_with_ai": "Atualizar descrição com IA"
 }

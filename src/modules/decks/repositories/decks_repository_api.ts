@@ -258,142 +258,49 @@ export class DecksRepositoryApi implements DecksRepository {
    * ===============================
    */
 
-  async send_to_ai(
-    params: Parameters<DecksRepository["send_to_ai"]>[0],
-  ): ReturnType<DecksRepository["send_to_ai"]> {
-    const body: paths["/decks/builder"]["post"]["requestBody"]["content"]["application/json"] =
-      {
-        deck: {
-          name: params.deck.name,
-          description: params.deck.description ?? "",
-          front_language: params.deck.front_language,
-          back_language: params.deck.back_language,
-        },
-        cards: params.cards.map((card) => ({
-          id: card.id,
-          front: card.front,
-          back: card.back,
-        })),
-        lessons: params.lessons.map((lesson) => ({
-          id: lesson.id,
-          name: lesson.name,
-          position: lesson.position,
-          cards: lesson.cards,
-        })),
-        prompt: params.prompt,
-      }
-
-    const response = await this.api_service.post<
-      paths["/decks/builder"]["post"]["responses"]["200"]["content"]["application/json"]
-    >("/decks/builder", body)
-
-    // Map API response to CardEntity and LessonEntity format
-    // Note: The API types show Record<string, never> but the actual response should contain the data
-    // We need to cast and map the response accordingly
-    const response_data = response as unknown as {
-      deck: {
-        id: string
-        name: string
-        description: string
-        front_language: string
-        back_language: string
-      }
-      cards: Array<{
-        id: string
-        deck_id: string
-        front: string
-        back: string
-      }>
-      lessons: Array<{
-        id: string
-        name: string
-        cards: string[]
-        position: number
-      }>
-    }
-
-    return {
-      deck: {
-        id: params.deck.id,
-        name: response_data.deck.name,
-        description: response_data.deck.description,
-        front_language: response_data.deck.front_language,
-        back_language: response_data.deck.back_language,
-        user_id: params.deck.user_id,
-        created_at: params.deck.created_at,
-        updated_at: params.deck.updated_at,
-        visibility: params.deck.visibility,
-        number_of_cards: response_data.cards.length,
-        number_of_cards_ready_to_be_reviewed:
-          params.deck.number_of_cards_ready_to_be_reviewed,
-        number_of_cards_not_ready_to_be_reviewed:
-          params.deck.number_of_cards_not_ready_to_be_reviewed,
-        number_of_users_using_this_deck:
-          params.deck.number_of_users_using_this_deck,
-      },
-      cards: response_data.cards.map((card) => ({
-        id: card.id,
-        deck_id: card.deck_id,
-        front: card.front,
-        back: card.back,
-        front_audio_url: "",
-        back_audio_url: "",
-      })),
-      lessons: response_data.lessons.map((lesson) =>
-        this.map_lesson({
-          id: lesson.id,
-          name: lesson.name,
-          deck_id: params.deck.id,
-          cards: lesson.cards,
-          position: lesson.position,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        }),
-      ),
-    }
-  }
-
   async generate_description(
     params: Parameters<DecksRepository["generate_description"]>[0],
   ): ReturnType<DecksRepository["generate_description"]> {
-    // Use the builder endpoint with a description-focused prompt
-    const body: paths["/decks/builder"]["post"]["requestBody"]["content"]["application/json"] =
+    const body: paths["/decks/generate_description"]["post"]["requestBody"]["content"]["application/json"] =
       {
-        deck: {
-          name: params.deck.name,
-          description: params.deck.description ?? "",
-          front_language: params.deck.front_language,
-          back_language: params.deck.back_language,
-        },
-        cards: params.cards.map((card) => ({
-          id: card.id,
+        deck_id: params.deck.id,
+        name: params.deck.name,
+        cards: params.cards.slice(0, 10).map((card) => ({
           front: card.front,
           back: card.back,
         })),
-        lessons: params.lessons.map((lesson) => ({
-          id: lesson.id,
-          name: lesson.name,
-          position: lesson.position,
-          cards: lesson.cards,
-        })),
-        prompt: `Generate a better, more engaging description for this deck: "${params.deck.name}". Current description: "${params.deck.description || ""}". The deck has ${params.cards.length} cards organized into ${params.lessons.length} lesson(s). Create a concise, appealing description that summarizes what users will learn.`,
+        front_language: params.deck.front_language,
+        back_language: params.deck.back_language,
       }
 
     const response = await this.api_service.post<
-      paths["/decks/builder"]["post"]["responses"]["200"]["content"]["application/json"]
-    >("/decks/builder", body)
+      paths["/decks/generate_description"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/decks/generate_description", body)
 
-    // Map API response to get the description
-    const response_data = response as unknown as {
-      deck: {
-        id: string
-        name: string
-        description: string
-        front_language: string
-        back_language: string
+    return response.description
+  }
+
+  async translate_card(params: {
+    front: string
+    back: string
+    front_language: string
+    back_language: string
+  }): Promise<{ front: string; back: string }> {
+    const body: paths["/decks/translate_card_with_ai"]["post"]["requestBody"]["content"]["application/json"] =
+      {
+        front: params.front,
+        back: params.back,
+        front_language: params.front_language,
+        back_language: params.back_language,
       }
-    }
 
-    return response_data.deck.description || ""
+    const response = await this.api_service.post<
+      paths["/decks/translate_card_with_ai"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/decks/translate_card_with_ai", body)
+
+    return {
+      front: response.front,
+      back: response.back,
+    }
   }
 }

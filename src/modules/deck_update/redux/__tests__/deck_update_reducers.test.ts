@@ -760,4 +760,57 @@ describe("Feature: Deck Update", () => {
       expect(state.selected_back).toEqual(1)
     })
   })
+
+  it(`
+    When the user updates the description with AI
+    Then the service should be called
+    And the description should be in loading state
+    Then the description should be updated
+    `, async () => {
+    const { store } = await prepare_store_for_tests()
+
+    store.dispatch(deck_update_actions.update_description_with_ai())
+
+    let state = store.getState()
+
+    expect(state.deck_update.is_updating_description_with_ai).toEqual(true)
+
+    await delay()
+
+    state = store.getState()
+
+    expect(state.deck_update.is_updating_description_with_ai).toEqual(false)
+    expect(state.deck_update.deck?.description).toEqual("description by ai")
+  })
+
+  it(`
+    When the user wants to translate a card with AI
+    Then the service should be called
+    And the card should be in loading state
+    Then the card should be translated
+    `, async () => {
+    const { store, cards } = await prepare_store_for_tests()
+
+    const card = last(cards)!
+
+    store.dispatch(
+      deck_update_actions.translate_card_with_ai({ card_id: card.id }),
+    )
+
+    let state = store.getState()
+
+    expect(state.deck_update.ai.cards_that_are_being_generated_by_ai).toEqual([
+      card.id,
+    ])
+
+    await delay()
+
+    state = store.getState()
+    expect(state.deck_update.ai.cards_that_are_being_generated_by_ai).toEqual(
+      [],
+    )
+    expect(state.deck_update.cards_map[card.id].back).toContain(
+      "Translated by AI",
+    )
+  })
 })

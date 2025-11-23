@@ -121,5 +121,7 @@
   "discover_decks_search_modal/modal_description": "덱 제목을 입력해 결과를 필터하세요.",
   "discover_decks_search_modal/modal_input_placeholder": "덱 제목 입력하기",
   "discover_decks_search_modal/modal_submit": "검색",
-  "discover_decks_search_modal/modal_title": "덱 제목으로 검색하기"
+  "discover_decks_search_modal/modal_title": "덱 제목으로 검색하기",
+  "decks_update_cards_list_table_item/tooltip/translate": "AI로 번역하기",
+  "decks_update_description/update_with_ai": "AI로 설명 업데이트"
 }

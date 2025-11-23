@@ -380,65 +380,6 @@ export const close_reorder_lessons_modal = createAction(
   "deck_update/close_reorder_lessons_modal",
 )
 
-export const open_ai_modal = createAction("deck_update/open_ai_modal")
-
-export const close_ai_modal = createAction("deck_update/close_ai_modal")
-
-export const send_ai_prompt = createAsyncThunk<
-  { deck: DeckEntity; cards: CardEntity[]; lessons: LessonEntity[] },
-  { prompt: string },
-  AsyncThunkConfig
->("deck_update/send_ai_prompt", async ({ prompt }, { getState, extra }) => {
-  const { deck_update } = getState()
-
-  if (!deck_update.deck) {
-    throw new Error("Deck not found")
-  }
-
-  const cards = deck_update.cards.map(
-    (card_id) => deck_update.cards_map[card_id],
-  )
-
-  const result = await extra.decks_repository.send_to_ai({
-    deck: deck_update.deck,
-    cards,
-    lessons: deck_update.lessons,
-    prompt,
-  })
-
-  return {
-    deck: result.deck,
-    cards: result.cards,
-    lessons: result.lessons,
-  }
-})
-
-export const update_description_with_ai = createAsyncThunk<
-  { description: string },
-  void,
-  AsyncThunkConfig
->("deck_update/update_description_with_ai", async (_, { getState, extra }) => {
-  const { deck_update } = getState()
-
-  if (!deck_update.deck) {
-    throw new Error("Deck not found")
-  }
-
-  const cards = deck_update.cards.map(
-    (card_id) => deck_update.cards_map[card_id],
-  )
-
-  const description = await extra.decks_repository.generate_description({
-    deck: deck_update.deck,
-    cards,
-    lessons: deck_update.lessons,
-  })
-
-  return {
-    description,
-  }
-})
-
 export const add_selected_cards_to_lesson = createAsyncThunk<
   { lesson_id: string },
   { lesson_id: string },
@@ -542,3 +483,92 @@ export const reorder_lessons = createAsyncThunk<
     })
   },
 )
+
+/**
+ * ------------------------------------------------------------
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * AI ACTIONS
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * ------------------------------------------------------------
+ */
+
+export const translate_card_with_ai = createAsyncThunk<
+  { card_id: string },
+  { card_id: string },
+  AsyncThunkConfig
+>(
+  "deck_update/translate_card_with_ai",
+  async ({ card_id }, { getState, extra, dispatch }) => {
+    const { deck_update } = getState()
+
+    if (!deck_update.deck) {
+      throw new Error("Deck not found")
+    }
+
+    const card = deck_update.cards_map[card_id]
+
+    if (!card) {
+      throw new Error("Card not found")
+    }
+
+    const result = await extra.decks_repository.translate_card({
+      front: card.front,
+      back: card.back,
+      front_language: deck_update.deck.front_language,
+      back_language: deck_update.deck.back_language,
+    })
+
+    dispatch(
+      update_card({
+        id: card_id,
+        field: "back",
+        value: result.back,
+      }),
+    )
+
+    return {
+      card_id,
+    }
+  },
+)
+
+export const update_description_with_ai = createAsyncThunk<
+  { description: string },
+  void,
+  AsyncThunkConfig
+>("deck_update/update_description_with_ai", async (_, { getState, extra }) => {
+  const { deck_update } = getState()
+
+  if (!deck_update.deck) {
+    throw new Error("Deck not found")
+  }
+
+  const cards = deck_update.cards.map(
+    (card_id) => deck_update.cards_map[card_id],
+  )
+
+  const description = await extra.decks_repository.generate_description({
+    deck: deck_update.deck,
+    cards,
+    lessons: deck_update.lessons,
+  })
+
+  return {
+    description,
+  }
+})

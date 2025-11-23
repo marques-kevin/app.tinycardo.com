@@ -121,5 +121,7 @@
   "discover_decks_search_modal/modal_description": "Introduce un título de mazo para filtrar los resultados.",
   "discover_decks_search_modal/modal_input_placeholder": "Escribe un título de mazo",
   "discover_decks_search_modal/modal_submit": "Buscar",
-  "discover_decks_search_modal/modal_title": "Buscar mazos por título"
+  "discover_decks_search_modal/modal_title": "Buscar mazos por título",
+  "decks_update_cards_list_table_item/tooltip/translate": "Traducir con IA",
+  "decks_update_description/update_with_ai": "Actualiza la descripción con IA"
 }

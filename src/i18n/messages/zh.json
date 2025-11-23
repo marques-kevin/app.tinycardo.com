@@ -121,5 +121,7 @@
   "discover_decks_search_modal/modal_description": "输入卡组标题以过滤结果。",
   "discover_decks_search_modal/modal_input_placeholder": "输入卡组标题",
   "discover_decks_search_modal/modal_submit": "搜索",
-  "discover_decks_search_modal/modal_title": "按标题搜索卡组"
+  "discover_decks_search_modal/modal_title": "按标题搜索卡组",
+  "decks_update_cards_list_table_item/tooltip/translate": "用 AI 翻译",
+  "decks_update_description/update_with_ai": "用 AI 更新描述"
 }

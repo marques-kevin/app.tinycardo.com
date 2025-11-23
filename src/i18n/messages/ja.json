@@ -121,5 +121,7 @@
   "discover_decks_search_modal/modal_description": "デッキタイトルを入力して結果を絞り込んでください。",
   "discover_decks_search_modal/modal_input_placeholder": "デッキタイトルを入力",
   "discover_decks_search_modal/modal_submit": "検索",
-  "discover_decks_search_modal/modal_title": "デッキをタイトルで検索"
+  "discover_decks_search_modal/modal_title": "デッキをタイトルで検索",
+  "decks_update_cards_list_table_item/tooltip/translate": "AIで翻訳",
+  "decks_update_description/update_with_ai": "AIで説明を更新する"
 }

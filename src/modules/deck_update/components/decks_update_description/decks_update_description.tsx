@@ -17,7 +17,7 @@ export function Wrapper(props: ContainerProps) {
           rows={4}
           className={cn(
             "textarea textarea-lg w-full resize-none pr-12",
-            props.description.length > 250 && "text-error input-error",
+            props.description.length > 1000 && "text-error input-error",
           )}
           placeholder={formatMessage({
             id: "decks_update_description/description/placeholder",
@@ -26,7 +26,7 @@ export function Wrapper(props: ContainerProps) {
           onChange={(e) => props.on_change(e.target.value)}
           disabled={props.is_updating_description_with_ai}
         />
-        <div className="absolute right-2 top-2">
+        <div className="absolute top-4 right-4">
           <Tooltip>
             <TooltipTrigger asChild>
               <button
@@ -42,7 +42,7 @@ export function Wrapper(props: ContainerProps) {
                 )}
               </button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent side="left">
               {formatMessage({
                 id: "decks_update_description/update_with_ai",
               })}
@@ -54,10 +54,10 @@ export function Wrapper(props: ContainerProps) {
       <div
         className={cn(
           "label flex justify-end text-right",
-          props.description.length > 250 && "text-error",
+          props.description.length > 1000 && "text-error",
         )}
       >
-        {props.description.length > 250 && (
+        {props.description.length > 1000 && (
           <span>
             {formatMessage(
               { id: "decks_update_description/length_error" },

@@ -121,5 +121,7 @@
   "discover_decks_search_modal/modal_description": "Decktitel eingeben, um die Ergebnisse zu filtern.",
   "discover_decks_search_modal/modal_input_placeholder": "Gib einen Decktitel ein",
   "discover_decks_search_modal/modal_submit": "Suche",
-  "discover_decks_search_modal/modal_title": "Decks nach Titel suchen"
+  "discover_decks_search_modal/modal_title": "Decks nach Titel suchen",
+  "decks_update_cards_list_table_item/tooltip/translate": "Mit KI übersetzen",
+  "decks_update_description/update_with_ai": "Beschreibung mit KI aktualisieren"
 }

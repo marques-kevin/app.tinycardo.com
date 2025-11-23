@@ -82,20 +82,19 @@ export interface DecksRepository {
    * ===============================
    */
 
-  send_to_ai(params: {
-    deck: DeckEntity
-    cards: CardEntity[]
-    lessons: LessonEntity[]
-    prompt: string
-  }): Promise<{
-    deck: DeckEntity
-    cards: CardEntity[]
-    lessons: LessonEntity[]
-  }>
-
   generate_description(params: {
     deck: DeckEntity
     cards: CardEntity[]
     lessons: LessonEntity[]
   }): Promise<string>
+
+  translate_card(params: {
+    front: string
+    back: string
+    front_language: string
+    back_language: string
+  }): Promise<{
+    front: string
+    back: string
+  }>
 }

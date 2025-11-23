@@ -121,5 +121,7 @@
   "discover_decks_search_modal/modal_description": "أدخل عنوان المجموعة لتصفية النتائج.",
   "discover_decks_search_modal/modal_input_placeholder": "أدخل عنوان المجموعة",
   "discover_decks_search_modal/modal_submit": "بحث",
-  "discover_decks_search_modal/modal_title": "ابحث عن المجموعات حسب العنوان"
+  "discover_decks_search_modal/modal_title": "ابحث عن المجموعات حسب العنوان",
+  "decks_update_cards_list_table_item/tooltip/translate": "ترجم باستخدام الذكاء الاصطناعي",
+  "decks_update_description/update_with_ai": "تحديث الوصف بالذكاء الاصطناعي"
 }
