@@ -254,4 +254,14 @@ export class DecksRepositoryInMemory implements DecksRepository {
       lessons: params.lessons.concat(lesson_created_by_ai),
     }
   }
+
+  async generate_description(
+    params: Parameters<DecksRepository["generate_description"]>[0],
+  ): ReturnType<DecksRepository["generate_description"]> {
+    // TODO: Implement actual AI communication for description generation
+    // For now, return a placeholder description
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    
+    return `A comprehensive deck for learning ${params.deck.name}. Master essential vocabulary and concepts with ${params.cards.length} carefully crafted flashcards organized into ${params.lessons.length} lessons.`
+  }
 }

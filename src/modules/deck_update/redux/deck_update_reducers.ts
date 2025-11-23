@@ -40,6 +40,7 @@ export type DeckUpdateState = {
   reorder_lessons_modal: boolean
   ai_modal: boolean
   ai_modal_is_sending: boolean
+  is_updating_description_with_ai: boolean
   lessons: LessonEntity[]
   active_lesson_id: string | null
 }
@@ -87,6 +88,7 @@ const initialState: DeckUpdateState = {
   reorder_lessons_modal: false,
   ai_modal: false,
   ai_modal_is_sending: false,
+  is_updating_description_with_ai: false,
   lessons: [],
   active_lesson_id: null,
 }
@@ -445,6 +447,14 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
   builder.addCase(actions.send_ai_prompt.fulfilled, (state, action) => {
     state.ai_modal_is_sending = false
 
+    // Update deck
+    if (action.payload.deck && state.deck) {
+      state.deck = {
+        ...state.deck,
+        ...action.payload.deck,
+      }
+    }
+
     const updated_cards = action.payload.cards
 
     // Replace cards_map with new cards
@@ -476,6 +486,24 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
 
   builder.addCase(actions.send_ai_prompt.rejected, (state) => {
     state.ai_modal_is_sending = false
+  })
+
+  builder.addCase(actions.update_description_with_ai.pending, (state) => {
+    state.is_updating_description_with_ai = true
+  })
+
+  builder.addCase(
+    actions.update_description_with_ai.fulfilled,
+    (state, action) => {
+      state.is_updating_description_with_ai = false
+      if (state.deck) {
+        state.deck.description = action.payload.description
+      }
+    },
+  )
+
+  builder.addCase(actions.update_description_with_ai.rejected, (state) => {
+    state.is_updating_description_with_ai = false
   })
 
   builder.addCase(actions.reorder_lessons.fulfilled, (state, action) => {

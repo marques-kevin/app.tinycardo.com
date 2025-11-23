@@ -88,7 +88,14 @@ export interface DecksRepository {
     lessons: LessonEntity[]
     prompt: string
   }): Promise<{
+    deck: DeckEntity
     cards: CardEntity[]
     lessons: LessonEntity[]
   }>
+
+  generate_description(params: {
+    deck: DeckEntity
+    cards: CardEntity[]
+    lessons: LessonEntity[]
+  }): Promise<string>
 }

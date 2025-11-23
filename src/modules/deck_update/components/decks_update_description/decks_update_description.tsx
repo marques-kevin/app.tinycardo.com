@@ -4,24 +4,52 @@ import {
 } from "./decks_update_description.container"
 import { cn } from "@/lib/utils"
 import { useIntl } from "react-intl"
+import { Sparkles } from "lucide-react"
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/lib/shadcn/tooltip"
 
 export function Wrapper(props: ContainerProps) {
   const { formatMessage } = useIntl()
 
   return (
     <fieldset className="fieldset">
-      <textarea
-        rows={4}
-        className={cn(
-          "textarea textarea-lg w-full resize-none",
-          props.description.length > 250 && "text-error input-error",
-        )}
-        placeholder={formatMessage({
-          id: "decks_update_description/description/placeholder",
-        })}
-        value={props.description}
-        onChange={(e) => props.on_change(e.target.value)}
-      />
+      <div className="relative">
+        <textarea
+          rows={4}
+          className={cn(
+            "textarea textarea-lg w-full resize-none pr-12",
+            props.description.length > 250 && "text-error input-error",
+          )}
+          placeholder={formatMessage({
+            id: "decks_update_description/description/placeholder",
+          })}
+          value={props.description}
+          onChange={(e) => props.on_change(e.target.value)}
+          disabled={props.is_updating_description_with_ai}
+        />
+        <div className="absolute right-2 top-2">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                className="btn btn-ghost btn-circle btn-sm"
+                onClick={props.on_update_description_with_ai}
+                disabled={props.is_updating_description_with_ai}
+              >
+                {props.is_updating_description_with_ai ? (
+                  <span className="loading loading-spinner loading-xs"></span>
+                ) : (
+                  <Sparkles className="size-4" />
+                )}
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              {formatMessage({
+                id: "decks_update_description/update_with_ai",
+              })}
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      </div>
 
       <div
         className={cn(

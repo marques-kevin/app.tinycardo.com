@@ -385,7 +385,7 @@ export const open_ai_modal = createAction("deck_update/open_ai_modal")
 export const close_ai_modal = createAction("deck_update/close_ai_modal")
 
 export const send_ai_prompt = createAsyncThunk<
-  { cards: CardEntity[]; lessons: LessonEntity[] },
+  { deck: DeckEntity; cards: CardEntity[]; lessons: LessonEntity[] },
   { prompt: string },
   AsyncThunkConfig
 >("deck_update/send_ai_prompt", async ({ prompt }, { getState, extra }) => {
@@ -407,8 +407,35 @@ export const send_ai_prompt = createAsyncThunk<
   })
 
   return {
+    deck: result.deck,
     cards: result.cards,
     lessons: result.lessons,
+  }
+})
+
+export const update_description_with_ai = createAsyncThunk<
+  { description: string },
+  void,
+  AsyncThunkConfig
+>("deck_update/update_description_with_ai", async (_, { getState, extra }) => {
+  const { deck_update } = getState()
+
+  if (!deck_update.deck) {
+    throw new Error("Deck not found")
+  }
+
+  const cards = deck_update.cards.map(
+    (card_id) => deck_update.cards_map[card_id],
+  )
+
+  const description = await extra.decks_repository.generate_description({
+    deck: deck_update.deck,
+    cards,
+    lessons: deck_update.lessons,
+  })
+
+  return {
+    description,
   }
 })
 

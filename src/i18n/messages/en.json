@@ -67,6 +67,7 @@
   "decks_loading/loading": "We are loading the decks for you...",
   "decks_update_description/description/placeholder": "Describe your deck in a few words",
   "decks_update_description/length_error": "This field must be 50 characters or less, here it's {length} long.",
+  "decks_update_description/update_with_ai": "Update description with AI",
   "decks_update_footer_actions/add_to_lesson": "Add to lesson",
   "decks_update_footer_actions/back": "Back",
   "decks_update_footer_actions/delete_selected_cards": "Delete {length} cards",
