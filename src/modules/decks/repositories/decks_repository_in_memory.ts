@@ -224,4 +224,22 @@ export class DecksRepositoryInMemory implements DecksRepository {
 
     return params.lessons
   }
+
+  async generate_description(
+    params: Parameters<DecksRepository["generate_description"]>[0],
+  ): ReturnType<DecksRepository["generate_description"]> {
+    return `description by ai`
+  }
+
+  async translate_card(params: {
+    front: string
+    back: string
+    front_language: string
+    back_language: string
+  }): ReturnType<DecksRepository["translate_card"]> {
+    return {
+      front: params.front + " - Translated by AI",
+      back: params.back + " - Translated by AI",
+    }
+  }
 }

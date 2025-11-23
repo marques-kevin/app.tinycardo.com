@@ -121,5 +121,7 @@
   "discover_decks_search_modal/modal_description": "Inserisci un titolo del mazzo per filtrare i risultati.",
   "discover_decks_search_modal/modal_input_placeholder": "Digita un titolo di mazzo",
   "discover_decks_search_modal/modal_submit": "Cerca",
-  "discover_decks_search_modal/modal_title": "Cerca mazzi per titolo"
+  "discover_decks_search_modal/modal_title": "Cerca mazzi per titolo",
+  "decks_update_cards_list_table_item/tooltip/translate": "Traduci con l'IA",
+  "decks_update_description/update_with_ai": "Aggiorna descrizione con l'IA"
 }

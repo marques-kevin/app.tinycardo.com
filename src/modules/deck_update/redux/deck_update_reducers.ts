@@ -28,6 +28,10 @@ export type DeckUpdateState = {
     selected_front: number
     selected_back: number
   }
+  ai: {
+    updating_description: boolean
+    cards_that_are_being_generated_by_ai: CardEntity["id"][]
+  }
   cards: CardEntity["id"][]
   cards_filtered_by_lesson_tab: CardEntity["id"][]
   cards_map: Record<string, CardEntity>
@@ -38,6 +42,7 @@ export type DeckUpdateState = {
   add_cards_to_lesson_modal: boolean
   add_cards_to_lesson_selected_lesson_id: string | null
   reorder_lessons_modal: boolean
+  is_updating_description_with_ai: boolean
   lessons: LessonEntity[]
   active_lesson_id: string | null
 }
@@ -83,8 +88,13 @@ const initialState: DeckUpdateState = {
   add_cards_to_lesson_modal: false,
   add_cards_to_lesson_selected_lesson_id: null,
   reorder_lessons_modal: false,
+  is_updating_description_with_ai: false,
   lessons: [],
   active_lesson_id: null,
+  ai: {
+    updating_description: false,
+    cards_that_are_being_generated_by_ai: [],
+  },
 }
 
 export const deck_update_reducers = createReducer(initialState, (builder) => {
@@ -425,6 +435,24 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
     state.reorder_lessons_modal = false
   })
 
+  builder.addCase(actions.update_description_with_ai.pending, (state) => {
+    state.is_updating_description_with_ai = true
+  })
+
+  builder.addCase(
+    actions.update_description_with_ai.fulfilled,
+    (state, action) => {
+      state.is_updating_description_with_ai = false
+      if (state.deck) {
+        state.deck.description = action.payload.description
+      }
+    },
+  )
+
+  builder.addCase(actions.update_description_with_ai.rejected, (state) => {
+    state.is_updating_description_with_ai = false
+  })
+
   builder.addCase(actions.reorder_lessons.fulfilled, (state, action) => {
     state.reorder_lessons_modal = false
 
@@ -439,5 +467,23 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
 
     // Sort lessons by position
     state.lessons.sort((a, b) => a.position - b.position)
+  })
+
+  builder.addCase(actions.translate_card_with_ai.pending, (state, action) => {
+    state.ai.cards_that_are_being_generated_by_ai.push(action.meta.arg.card_id)
+  })
+
+  builder.addCase(actions.translate_card_with_ai.fulfilled, (state, action) => {
+    state.ai.cards_that_are_being_generated_by_ai =
+      state.ai.cards_that_are_being_generated_by_ai.filter(
+        (c) => c !== action.payload.card_id,
+      )
+  })
+
+  builder.addCase(actions.translate_card_with_ai.rejected, (state, action) => {
+    state.ai.cards_that_are_being_generated_by_ai =
+      state.ai.cards_that_are_being_generated_by_ai.filter(
+        (c) => c !== action.meta.arg.card_id,
+      )
   })
 })

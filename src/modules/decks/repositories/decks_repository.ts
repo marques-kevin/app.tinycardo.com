@@ -70,4 +70,31 @@ export interface DecksRepository {
     deck_id: string
     lessons: LessonEntity[]
   }): Promise<LessonEntity[]>
+
+  /**
+   * ===============================
+   *
+   *
+   *
+   * AI
+   *
+   *
+   * ===============================
+   */
+
+  generate_description(params: {
+    deck: DeckEntity
+    cards: CardEntity[]
+    lessons: LessonEntity[]
+  }): Promise<string>
+
+  translate_card(params: {
+    front: string
+    back: string
+    front_language: string
+    back_language: string
+  }): Promise<{
+    front: string
+    back: string
+  }>
 }

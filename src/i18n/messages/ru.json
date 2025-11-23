@@ -121,5 +121,7 @@
   "discover_decks_search_modal/modal_description": "Введи название колоды, чтобы отфильтровать результаты.",
   "discover_decks_search_modal/modal_input_placeholder": "Введите название колоды",
   "discover_decks_search_modal/modal_submit": "Искать",
-  "discover_decks_search_modal/modal_title": "Искать колоды по названию"
+  "discover_decks_search_modal/modal_title": "Искать колоды по названию",
+  "decks_update_cards_list_table_item/tooltip/translate": "Перевести с AI",
+  "decks_update_description/update_with_ai": "Обновить описание с помощью ИИ"
 }

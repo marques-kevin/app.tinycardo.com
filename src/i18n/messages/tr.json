@@ -121,5 +121,7 @@
   "discover_decks_search_modal/modal_description": "Sonuçları filtrelemek için bir destanın başlığını girin.",
   "discover_decks_search_modal/modal_input_placeholder": "Küçük bir başlık yazın",
   "discover_decks_search_modal/modal_submit": "Araştır",
-  "discover_decks_search_modal/modal_title": "Başlıkla desteleri ara"
+  "discover_decks_search_modal/modal_title": "Başlıkla desteleri ara",
+  "decks_update_cards_list_table_item/tooltip/translate": "Yapay zeka ile çevir",
+  "decks_update_description/update_with_ai": "Yapay zeka ile tanımı güncelle"
 }

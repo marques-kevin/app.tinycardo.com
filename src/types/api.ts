@@ -242,6 +242,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/decks/builder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Build/update a deck using AI */
+        post: operations["DecksController_builder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/decks/generate_description": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate a deck description using AI */
+        post: operations["DecksController_generate_description"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/decks/translate_card_with_ai": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Translate a card front text using AI */
+        post: operations["DecksController_translate_card_with_ai"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/history/review": {
         parameters: {
             query?: never;
@@ -653,6 +704,83 @@ export interface components {
                 /** @description Back content of the card */
                 back: string;
             }[];
+        };
+        DecksBuilderDto: {
+            /** @description The deck to update */
+            deck: {
+                /** @description Name of the deck */
+                name: string;
+                /** @description Description of the deck */
+                description: string;
+                /** @description Language of the front side of cards */
+                front_language: string;
+                /** @description Language of the back side of cards */
+                back_language: string;
+            };
+            /** @description Array of cards in the deck */
+            cards: {
+                /** @description Unique identifier of the card */
+                id: string;
+                /** @description Front content of the card */
+                front: string;
+                /** @description Back content of the card */
+                back: string;
+            }[];
+            /** @description Array of lessons in the deck */
+            lessons: {
+                /** @description Unique identifier of the lesson */
+                id: string;
+                /** @description Name of the lesson */
+                name: string;
+                /** @description Position of the lesson for ordering */
+                position: number;
+                /** @description Array of card IDs in the lesson */
+                cards: string[];
+            }[];
+            /** @description Prompt describing how to update the deck */
+            prompt: string;
+        };
+        DecksBuilderOutputDto: {
+            deck: Record<string, never>;
+            cards: Record<string, never>;
+            lessons: Record<string, never>;
+        };
+        DecksGenerateDescriptionDto: {
+            /** @description ID of the deck to generate description for */
+            deck_id: string;
+            /** @description Name of the deck */
+            name: string;
+            /** @description Array of cards in the deck (at least front and back) */
+            cards: {
+                /** @description Front content of the card */
+                front: string;
+                /** @description Back content of the card */
+                back: string;
+            }[];
+            /** @description Language of the front side of cards */
+            front_language: string;
+            /** @description Language of the back side of cards */
+            back_language: string;
+        };
+        DecksGenerateDescriptionOutputDto: {
+            /** @description Generated description for the deck */
+            description: string;
+        };
+        DecksTranslateCardWithAiDto: {
+            /** @description Front content of the card to translate */
+            front: string;
+            /** @description Back content of the card (optional, for context) */
+            back: string;
+            /** @description Language of the front side */
+            front_language: string;
+            /** @description Language to translate to (back language) */
+            back_language: string;
+        };
+        DecksTranslateCardWithAiOutputDto: {
+            /** @description Translated front text */
+            front: string;
+            /** @description Translated back text */
+            back: string;
         };
         HistoryReviewCardDto: {
             /** @description ID of the card to review */
@@ -1138,6 +1266,75 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    DecksController_builder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DecksBuilderDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecksBuilderOutputDto"];
+                };
+            };
+        };
+    };
+    DecksController_generate_description: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DecksGenerateDescriptionDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecksGenerateDescriptionOutputDto"];
+                };
+            };
+        };
+    };
+    DecksController_translate_card_with_ai: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DecksTranslateCardWithAiDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecksTranslateCardWithAiOutputDto"];
+                };
             };
         };
     };

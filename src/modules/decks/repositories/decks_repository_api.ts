@@ -246,4 +246,61 @@ export class DecksRepositoryApi implements DecksRepository {
 
     return response.lessons.map((lesson) => this.map_lesson(lesson))
   }
+
+  /**
+   * ===============================
+   *
+   *
+   *
+   * AI
+   *
+   *
+   * ===============================
+   */
+
+  async generate_description(
+    params: Parameters<DecksRepository["generate_description"]>[0],
+  ): ReturnType<DecksRepository["generate_description"]> {
+    const body: paths["/decks/generate_description"]["post"]["requestBody"]["content"]["application/json"] =
+      {
+        deck_id: params.deck.id,
+        name: params.deck.name,
+        cards: params.cards.slice(0, 10).map((card) => ({
+          front: card.front,
+          back: card.back,
+        })),
+        front_language: params.deck.front_language,
+        back_language: params.deck.back_language,
+      }
+
+    const response = await this.api_service.post<
+      paths["/decks/generate_description"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/decks/generate_description", body)
+
+    return response.description
+  }
+
+  async translate_card(params: {
+    front: string
+    back: string
+    front_language: string
+    back_language: string
+  }): Promise<{ front: string; back: string }> {
+    const body: paths["/decks/translate_card_with_ai"]["post"]["requestBody"]["content"]["application/json"] =
+      {
+        front: params.front,
+        back: params.back,
+        front_language: params.front_language,
+        back_language: params.back_language,
+      }
+
+    const response = await this.api_service.post<
+      paths["/decks/translate_card_with_ai"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/decks/translate_card_with_ai", body)
+
+    return {
+      front: response.front,
+      back: response.back,
+    }
+  }
 }
