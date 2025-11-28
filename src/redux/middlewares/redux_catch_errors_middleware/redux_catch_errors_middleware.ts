@@ -1,6 +1,7 @@
 import { type RootState } from "@/redux/store"
 import { catch_error } from "@/modules/global/redux/global_actions"
 import { type Middleware, type UnknownAction } from "@reduxjs/toolkit"
+import * as Sentry from "@sentry/react"
 
 /**
  * Context information for error reporting
@@ -28,7 +29,13 @@ const createErrorContext = (
  * @param {unknown} error - The error to report
  * @param {ErrorContext} context - Context information about the error
  */
-const reportError = (error: unknown, context: ErrorContext): void => {}
+const reportError = (error: unknown, context: ErrorContext): void => {
+  Sentry.captureException(error, {
+    extra: {
+      context,
+    },
+  })
+}
 
 /**
  * Redux middleware that captures and reports errors to Sentry

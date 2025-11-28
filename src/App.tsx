@@ -6,18 +6,29 @@ import { Routes } from "@/routes"
 import { Toaster } from "sonner"
 import { StreakModal } from "@/modules/streak/components/streak-modal/streak_modal"
 import { GlobalReactScan } from "@/modules/global/components/global_react_scan/global_react_scan"
+import { GlobalErrorCrashPage } from "@/modules/global/components/global_error_crash_page/global_error_crash_page"
+import { ErrorBoundary } from "@sentry/react"
 
 function App() {
   return (
     <LanguageIntlProvider>
-      <AuthenticationProtection>
-        <Routes />
-        <Dialog />
-        <DialogCrashError />
-        <Toaster position="top-center" duration={3000} />
-        <StreakModal />
-        <GlobalReactScan />
-      </AuthenticationProtection>
+      <ErrorBoundary
+        fallback={({ error, resetError }) => (
+          <GlobalErrorCrashPage
+            error={error instanceof Error ? error : undefined}
+            resetError={resetError}
+          />
+        )}
+      >
+        <AuthenticationProtection>
+          <Routes />
+          <Dialog />
+          <DialogCrashError />
+          <Toaster position="top-center" duration={3000} />
+          <StreakModal />
+          <GlobalReactScan />
+        </AuthenticationProtection>
+      </ErrorBoundary>
     </LanguageIntlProvider>
   )
 }
