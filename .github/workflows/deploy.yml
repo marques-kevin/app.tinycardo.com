@@ -26,6 +26,7 @@ jobs:
         env:
           VITE_API_URL: https://api.tinycardo.com
           VITE_MIXPANEL_TOKEN: ${{ secrets.VITE_MIXPANEL_TOKEN }}
+          VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

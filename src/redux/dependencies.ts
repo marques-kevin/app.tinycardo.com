@@ -121,7 +121,7 @@ export function build_dependencies(
       audio_service: new AudioServiceWindow(),
       http_service: new HttpServiceWindow(),
       theme_service: new ThemeServiceWindow(),
-      analytics_service: new AnalyticsServiceMixpanel(),
+      analytics_service: new AnalyticsServiceInMemory(),
     }
   }
 
