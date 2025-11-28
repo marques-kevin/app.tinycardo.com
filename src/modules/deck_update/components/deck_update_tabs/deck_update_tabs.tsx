@@ -22,11 +22,14 @@ function Wrapper(props: ContainerProps) {
     <div className="pb-2">
       <div
         role="tablist"
-        className="tabs tabs-lg tabs-box flex w-full items-center"
+        className="tabs tabs-lg tabs-box flex w-full flex-nowrap items-center overflow-x-auto"
       >
         <a
           role="tab"
-          className={cn("tab", props.active_lesson_id === null && "tab-active")}
+          className={cn(
+            "tab flex flex-nowrap pr-1 whitespace-nowrap",
+            props.active_lesson_id === null && "tab-active",
+          )}
           onClick={() => props.on_set_active_lesson(null)}
         >
           {formatMessage({ id: "deck_update_tabs/all_cards" })}
@@ -37,7 +40,7 @@ function Wrapper(props: ContainerProps) {
             key={lesson.id}
             role="tab"
             className={cn(
-              "tab pr-1",
+              "tab flex flex-nowrap pr-1 whitespace-nowrap",
               props.active_lesson_id === lesson.id && "tab-active",
             )}
             onClick={() => props.on_set_active_lesson(lesson.id)}

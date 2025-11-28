@@ -9,7 +9,9 @@ import { useRef } from "react"
 import { DownloadIcon, PlusCircleIcon } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/lib/shadcn/tooltip"
 
-function CsvImportButton(props: { on_import_csv: (content: string) => void }) {
+function ImportFileButton(props: {
+  on_import_file: (params: { content: string; extension: string }) => void
+}) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { formatMessage } = useIntl()
 
@@ -17,11 +19,13 @@ function CsvImportButton(props: { on_import_csv: (content: string) => void }) {
     const file = event.target.files?.[0]
     if (!file) return
 
+    const extension = file.name.split(".").pop()?.toLowerCase() || ""
+
     const reader = new FileReader()
     reader.onload = (e) => {
       const content = e.target?.result as string
       if (content) {
-        props.on_import_csv(content)
+        props.on_import_file({ content, extension })
       }
     }
     reader.readAsText(file)
@@ -51,7 +55,7 @@ function CsvImportButton(props: { on_import_csv: (content: string) => void }) {
       <input
         ref={fileInputRef}
         type="file"
-        accept=".csv,text/csv,.tsv,text/tab-separated-values"
+        accept=".csv,text/csv,.tsv,text/tab-separated-values,.json,application/json"
         className="hidden"
         onChange={handle_file_change}
       />
@@ -113,7 +117,7 @@ export function Wrapper(props: ContainerProps) {
         </div>
 
         <div className="flex items-center justify-end gap-2">
-          <CsvImportButton on_import_csv={props.on_import_csv} />
+          <ImportFileButton on_import_file={props.on_import_file} />
 
           <button
             onClick={props.on_save}

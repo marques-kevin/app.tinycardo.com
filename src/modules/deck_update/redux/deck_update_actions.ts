@@ -225,6 +225,18 @@ export const _close_csv_import_dialog = createAction(
   "decks/_close_csv_import_dialog",
 )
 
+export const import_file = createAsyncThunk<
+  void,
+  { content: string; extension: string },
+  AsyncThunkConfig
+>("deck_update/import_file", async ({ content, extension }, { dispatch }) => {
+  if (extension === "csv" || extension === "tsv") {
+    await dispatch(import_cards_from_csv({ content }))
+  } else if (extension === "json") {
+    await dispatch(import_cards_from_json({ content }))
+  }
+})
+
 export const import_cards_from_csv = createAsyncThunk<
   { front: string; back: string }[] | void,
   { content: string },
@@ -260,6 +272,67 @@ export const import_cards_from_csv = createAsyncThunk<
 export const _add_cards_from_import = createAction<{
   cards: { front: string; back: string }[]
 }>("deck_update/_add_cards_from_import")
+
+export const import_cards_from_json = createAsyncThunk<
+  { cards: CardEntity[]; lessons: LessonEntity[] },
+  { content: string },
+  AsyncThunkConfig
+>(
+  "deck_update/import_cards_from_json",
+  async ({ content }, { dispatch, getState }) => {
+    const parsed = JSON.parse(content) as {
+      cards?: CardEntity[]
+      lessons?: LessonEntity[]
+    }
+
+    if (!parsed.cards || !Array.isArray(parsed.cards)) {
+      throw new Error("Invalid format")
+    }
+
+    const { deck_update } = getState()
+
+    if (!deck_update.deck) {
+      throw new Error("Deck not found")
+    }
+
+    // Map old card IDs to new card IDs
+    const card_id_map = new Map<string, string>()
+    const imported_cards: CardEntity[] = parsed.cards.map((card) => {
+      const new_id = v4()
+      card_id_map.set(card.id, new_id)
+      return {
+        ...card,
+        id: new_id,
+        deck_id: deck_update.deck!.id,
+        front_audio_url: card.front_audio_url || "",
+        back_audio_url: card.back_audio_url || "",
+      }
+    })
+
+    // Process lessons if provided
+    const imported_lessons: LessonEntity[] = parsed.lessons
+      ? parsed.lessons.map((lesson) => {
+          const new_lesson_id = v4()
+          return {
+            ...lesson,
+            id: new_lesson_id,
+            deck_id: deck_update.deck!.id,
+            cards: lesson.cards
+              .map((old_card_id) => card_id_map.get(old_card_id))
+              .filter((id): id is string => id !== undefined),
+            position: deck_update.lessons.length + lesson.position,
+            created_at: new Date(lesson.created_at || Date.now()),
+            updated_at: new Date(lesson.updated_at || Date.now()),
+          }
+        })
+      : []
+
+    return {
+      cards: imported_cards,
+      lessons: imported_lessons,
+    }
+  },
+)
 
 export const apply_csv_import_mapping = createAsyncThunk<
   void,

@@ -15,8 +15,8 @@ const map_dispatch = (dispatch: Dispatch) => ({
   on_back: () => {
     dispatch(deck_update_actions.exit_update_deck_page())
   },
-  on_import_csv: (content: string) => {
-    dispatch(deck_update_actions.import_cards_from_csv({ content }))
+  on_import_file: (params: { content: string; extension: string }) => {
+    dispatch(deck_update_actions.import_file(params))
   },
   on_delete_selected_cards() {
     dispatch(deck_update_actions.delete_selected_cards())

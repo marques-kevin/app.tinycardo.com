@@ -162,6 +162,39 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
     })
   })
 
+  builder.addCase(actions.import_cards_from_json.fulfilled, (state, action) => {
+    // Add cards to state
+    action.payload.cards.forEach((c) => {
+      state.cards_map[c.id] = c
+    })
+
+    state.cards = [...state.cards, ...action.payload.cards.map((c) => c.id)]
+
+    // Add lessons to state
+    if (action.payload.lessons.length > 0) {
+      state.lessons = [...state.lessons, ...action.payload.lessons]
+      state.lessons.sort((a, b) => a.position - b.position)
+    } else if (state.active_lesson_id) {
+      // If no lessons imported but there's an active lesson, add cards to it
+      state.lessons = state.lessons.map((lesson) => {
+        if (lesson.id === state.active_lesson_id) {
+          return {
+            ...lesson,
+            cards: [...lesson.cards, ...action.payload.cards.map((c) => c.id)],
+          }
+        }
+
+        return lesson
+      })
+    }
+
+    state.cards_filtered_by_lesson_tab = deck_update_filter_cards_by_lesson({
+      cards: state.cards,
+      lessons: state.lessons,
+      lesson_id: state.active_lesson_id,
+    })
+  })
+
   builder.addCase(actions.reset_create_deck, (state) => {
     return {
       ...initialState,
