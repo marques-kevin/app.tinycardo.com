@@ -1,6 +1,5 @@
 import { AlertOctagonIcon, RefreshCwIcon } from "lucide-react"
 import { useIntl } from "react-intl"
-import { GlobalLayout } from "../global_layout/global_layout"
 
 interface GlobalErrorCrashPageProps {
   error?: Error
