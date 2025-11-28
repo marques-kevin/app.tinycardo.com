@@ -486,4 +486,25 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
         (c) => c !== action.meta.arg.card_id,
       )
   })
+
+  builder.addCase(actions.swap_languages, (state) => {
+    state.deck = {
+      ...state.deck,
+      front_language: state.deck?.back_language,
+      back_language: state.deck?.front_language,
+    } as DeckEntity
+
+    state.cards_map = Object.fromEntries(
+      Object.entries(state.cards_map).map(([key, card]) => {
+        return [
+          key,
+          {
+            ...card,
+            front: card.back,
+            back: card.front,
+          },
+        ]
+      }),
+    )
+  })
 })

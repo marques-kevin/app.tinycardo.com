@@ -72,6 +72,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/authentication/is_premium": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Check if authenticated user is premium */
+        post: operations["AuthenticationController_is_premium"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/cards/get_cards": {
         parameters: {
             query?: never;
@@ -242,23 +259,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/decks/builder": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Build/update a deck using AI */
-        post: operations["DecksController_builder"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/decks/generate_description": {
         parameters: {
             query?: never;
@@ -355,6 +355,26 @@ export interface paths {
          * @description Returns the health status of the API. Used by load balancers and monitoring systems.
          */
         get: operations["HealthController_getHealth"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/health/crash": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Crash test endpoint
+         * @description Crashes the API. Used for testing crash reporting.
+         */
+        get: operations["HealthController_crash"];
         put?: never;
         post?: never;
         delete?: never;
@@ -705,46 +725,6 @@ export interface components {
                 back: string;
             }[];
         };
-        DecksBuilderDto: {
-            /** @description The deck to update */
-            deck: {
-                /** @description Name of the deck */
-                name: string;
-                /** @description Description of the deck */
-                description: string;
-                /** @description Language of the front side of cards */
-                front_language: string;
-                /** @description Language of the back side of cards */
-                back_language: string;
-            };
-            /** @description Array of cards in the deck */
-            cards: {
-                /** @description Unique identifier of the card */
-                id: string;
-                /** @description Front content of the card */
-                front: string;
-                /** @description Back content of the card */
-                back: string;
-            }[];
-            /** @description Array of lessons in the deck */
-            lessons: {
-                /** @description Unique identifier of the lesson */
-                id: string;
-                /** @description Name of the lesson */
-                name: string;
-                /** @description Position of the lesson for ordering */
-                position: number;
-                /** @description Array of card IDs in the lesson */
-                cards: string[];
-            }[];
-            /** @description Prompt describing how to update the deck */
-            prompt: string;
-        };
-        DecksBuilderOutputDto: {
-            deck: Record<string, never>;
-            cards: Record<string, never>;
-            lessons: Record<string, never>;
-        };
         DecksGenerateDescriptionDto: {
             /** @description ID of the deck to generate description for */
             deck_id: string;
@@ -1047,6 +1027,28 @@ export interface operations {
             };
         };
     };
+    AuthenticationController_is_premium: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User is premium */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        is_premium?: boolean;
+                    };
+                };
+            };
+        };
+    };
     CardsController_get_cards: {
         parameters: {
             query?: never;
@@ -1269,29 +1271,6 @@ export interface operations {
             };
         };
     };
-    DecksController_builder: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DecksBuilderDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DecksBuilderOutputDto"];
-                };
-            };
-        };
-    };
     DecksController_generate_description: {
         parameters: {
             query?: never;
@@ -1440,6 +1419,23 @@ export interface operations {
                         uptime?: number;
                     };
                 };
+            };
+        };
+    };
+    HealthController_crash: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

@@ -11,7 +11,9 @@ import type { UserEntity } from "@/modules/authentication/entities/user_entity"
 import type { ToastServiceInMemory } from "@/modules/global/services/toast_service/toast_service_in_memory"
 import { last } from "lodash"
 
-const prepare_store_for_tests = async () => {
+const prepare_store_for_tests = async (params?: {
+  is_user_premium?: boolean
+}) => {
   const { store, dependencies } = await create_store_for_tests()
 
   const users_repository =
@@ -25,6 +27,7 @@ const prepare_store_for_tests = async () => {
     email: "test@example.com",
   }
   await users_repository.set_authenticated_user(user)
+  await users_repository.set_is_user_premium(params?.is_user_premium ?? false)
 
   const deck: DeckEntity = {
     id: "deck-1",
@@ -267,6 +270,32 @@ describe("Feature: Deck Update", () => {
         store.getState().deck_update.cards_map[new_last_card_id]!
       expect(new_last_card.front).toEqual("")
       expect(new_last_card.back).toEqual("")
+    })
+
+    it(`
+      When the user swaps the languages
+      Then the front and back languages should be swapped
+      And the cards should be swapped
+      `, async () => {
+      const { store } = await prepare_store_for_tests()
+
+      let state = store.getState()
+
+      expect(state.deck_update.deck?.front_language).toEqual("en")
+      expect(state.deck_update.deck?.back_language).toEqual("fr")
+
+      store.dispatch(deck_update_actions.swap_languages())
+      state = store.getState()
+
+      expect(state.deck_update.deck?.back_language).toEqual("en")
+      expect(state.deck_update.deck?.front_language).toEqual("fr")
+
+      const cards = state.deck_update.cards.map((card_id) => {
+        return state.deck_update.cards_map[card_id]!
+      })
+
+      expect(cards[0].front).toContain("Back")
+      expect(cards[0].back).toContain("Front")
     })
 
     it(`
@@ -767,7 +796,9 @@ describe("Feature: Deck Update", () => {
     And the description should be in loading state
     Then the description should be updated
     `, async () => {
-    const { store } = await prepare_store_for_tests()
+    const { store } = await prepare_store_for_tests({
+      is_user_premium: true,
+    })
 
     store.dispatch(deck_update_actions.update_description_with_ai())
 
@@ -789,7 +820,9 @@ describe("Feature: Deck Update", () => {
     And the card should be in loading state
     Then the card should be translated
     `, async () => {
-    const { store, cards } = await prepare_store_for_tests()
+    const { store, cards } = await prepare_store_for_tests({
+      is_user_premium: true,
+    })
 
     const card = last(cards)!
 
@@ -812,5 +845,43 @@ describe("Feature: Deck Update", () => {
     expect(state.deck_update.cards_map[card.id].back).toContain(
       "Translated by AI",
     )
+  })
+
+  it(`
+    When the user is not premium and wants to translate a card with AI
+    Then the dialog should be opened with the error message
+    `, async () => {
+    const { store } = await prepare_store_for_tests({
+      is_user_premium: false,
+    })
+
+    await store.dispatch(
+      deck_update_actions.translate_card_with_ai({ card_id: "card-1" }),
+    )
+
+    await delay()
+
+    expect(store.getState().dialog.crash).toMatchObject({
+      is_open: true,
+      message: "User is not premium",
+    })
+  })
+
+  it(`
+    When the user is not premium and wants to update the description with AI
+    Then the dialog should be opened with the error message
+    `, async () => {
+    const { store } = await prepare_store_for_tests({
+      is_user_premium: false,
+    })
+
+    await store.dispatch(deck_update_actions.update_description_with_ai())
+
+    await delay()
+
+    expect(store.getState().dialog.crash).toMatchObject({
+      is_open: true,
+      message: "User is not premium",
+    })
   })
 })

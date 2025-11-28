@@ -9,6 +9,10 @@ export const _store_user = createAction<{ user: UserEntity | null }>(
   "authentication/store_user",
 )
 
+export const _store_is_user_premium = createAction<{
+  is_user_premium: boolean
+}>("authentication/store_is_user_premium")
+
 export const go_on_google_authentication_page = createAsyncThunk<
   void,
   void,
@@ -46,10 +50,20 @@ export const is_authenticated = createAsyncThunk<void, void, AsyncThunkConfig>(
     dispatch(_store_user({ user }))
 
     if (user) {
+      await dispatch(fetch_is_user_premium())
       await dispatch(global_app_user_authenticated())
     }
   },
 )
+
+export const fetch_is_user_premium = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("authentication/fetch_is_user_premium", async (_, { dispatch, extra }) => {
+  const is_user_premium = await extra.users_repository.is_user_premium()
+  dispatch(_store_is_user_premium({ is_user_premium }))
+})
 
 export const global_app_initialized = createAsyncThunk<
   void,
@@ -75,11 +89,8 @@ export const global_app_initialized = createAsyncThunk<
 
 export const logout = createAsyncThunk<void, void, AsyncThunkConfig>(
   "authentication/logout",
-  async (_, { dispatch, extra }) => {
+  async (_, { extra }) => {
     extra.local_storage_service.delete(LOCAL_STORAGE_KEYS.jwt)
-
-    dispatch(_store_user({ user: null }))
-
     extra.location_service.navigate("/")
   },
 )

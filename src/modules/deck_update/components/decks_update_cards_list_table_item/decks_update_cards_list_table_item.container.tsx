@@ -9,6 +9,7 @@ const mapState = (state: RootState, props: { card_id: string }) => {
     state.deck_update.ai.cards_that_are_being_generated_by_ai.includes(
       props.card_id,
     )
+  const is_user_premium = state.authentication.is_user_premium
 
   return {
     front: card?.front || "",
@@ -16,6 +17,7 @@ const mapState = (state: RootState, props: { card_id: string }) => {
     card_id: props.card_id,
     is_selected,
     is_translating,
+    is_user_premium,
   }
 }
 

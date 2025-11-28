@@ -32,9 +32,11 @@ export const toggle_select_card = createAction<{
   card_id: string
 }>("deck_update/toggle_select_card")
 
-export const toggle_select_all_cards = createAction<void>(
+export const toggle_select_all_cards = createAction(
   "deck_update/toggle_select_all_cards",
 )
+
+export const swap_languages = createAction("deck_update/swap_languages")
 
 export const update_card = createAction<{
   id: string
@@ -514,7 +516,11 @@ export const translate_card_with_ai = createAsyncThunk<
 >(
   "deck_update/translate_card_with_ai",
   async ({ card_id }, { getState, extra, dispatch }) => {
-    const { deck_update } = getState()
+    const { deck_update, authentication } = getState()
+
+    if (!authentication.is_user_premium) {
+      throw new Error("User is not premium")
+    }
 
     if (!deck_update.deck) {
       throw new Error("Deck not found")
@@ -552,7 +558,11 @@ export const update_description_with_ai = createAsyncThunk<
   void,
   AsyncThunkConfig
 >("deck_update/update_description_with_ai", async (_, { getState, extra }) => {
-  const { deck_update } = getState()
+  const { deck_update, authentication } = getState()
+
+  if (!authentication.is_user_premium) {
+    throw new Error("User is not premium")
+  }
 
   if (!deck_update.deck) {
     throw new Error("Deck not found")

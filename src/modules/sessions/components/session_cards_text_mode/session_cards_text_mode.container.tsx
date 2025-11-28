@@ -1,6 +1,6 @@
 import {
   flip_card,
-  help_open,
+  request_help,
   set_review_word,
   tts,
 } from "@/modules/sessions/redux/sessions_actions"
@@ -12,6 +12,7 @@ const mapState = (state: RootState) => {
     back: state.sessions.current_word?.back || "",
     front: state.sessions.current_word?.front || "",
     is_flipped: state.sessions.is_card_flipped,
+    is_premium: state.authentication.is_user_premium,
   }
 }
 
@@ -26,7 +27,7 @@ const mapDispatch = (dispatch: Dispatch) => ({
     dispatch(flip_card())
   },
   on_help() {
-    dispatch(help_open())
+    dispatch(request_help())
   },
 })
 

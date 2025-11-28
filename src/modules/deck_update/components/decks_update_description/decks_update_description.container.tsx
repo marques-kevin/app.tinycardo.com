@@ -7,6 +7,7 @@ const map_state = (state: RootState) => ({
   description: state.deck_update.deck?.description || "",
   is_updating_description_with_ai:
     state.deck_update.is_updating_description_with_ai,
+  is_user_premium: state.authentication.is_user_premium,
 })
 
 const map_dispatch = (dispatch: Dispatch) => ({

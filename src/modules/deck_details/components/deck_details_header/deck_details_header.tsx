@@ -3,7 +3,6 @@ import { connector, type ContainerProps } from "./deck_details_header.container"
 import {
   GalleryHorizontalEndIcon,
   UsersIcon,
-  UserIcon,
   PlayIcon,
   CalendarIcon,
   EllipsisIcon,
@@ -47,10 +46,6 @@ export function Wrapper(props: ContainerProps) {
               digits: 0,
             })}
           </span>
-        </div>
-        <div className="badge badge-lg badge-accent badge-soft">
-          <UserIcon className="size-4" />
-          <span>@michel876</span>
         </div>
         <div className="badge badge-lg badge-accent badge-soft">
           <CalendarIcon className="size-4" />
