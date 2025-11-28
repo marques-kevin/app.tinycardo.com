@@ -19,6 +19,10 @@ const map_dispatch = (dispatch: Dispatch) => ({
   on_update_back_language(language: string) {
     dispatch(deck_update_actions.update_field({ back_language: language }))
   },
+
+  on_swap_languages() {
+    dispatch(deck_update_actions.swap_languages())
+  },
 })
 
 export const connector = connect(map_state, map_dispatch)

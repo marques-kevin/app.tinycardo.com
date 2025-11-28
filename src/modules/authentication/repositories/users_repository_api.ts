@@ -1,5 +1,6 @@
 import type { UsersRepository } from "@/modules/authentication/repositories/users_repository"
 import { ApiService } from "@/modules/global/services/api_service/api_service"
+import type { paths } from "@/types/api"
 
 export class UsersRepositoryApi implements UsersRepository {
   private readonly api_service: ApiService
@@ -44,5 +45,13 @@ export class UsersRepositoryApi implements UsersRepository {
     } catch {
       return null
     }
+  }
+
+  async is_user_premium(): ReturnType<UsersRepository["is_user_premium"]> {
+    const data = await this.api_service.post<
+      paths["/authentication/is_premium"]["post"]["responses"]["200"]["content"]["application/json"]
+    >("/authentication/is_premium", {})
+
+    return Boolean(data.is_premium)
   }
 }

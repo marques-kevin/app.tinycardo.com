@@ -25,6 +25,7 @@ jobs:
       - run: yarn build
         env:
           VITE_API_URL: https://api.tinycardo.com
+          VITE_MIXPANEL_TOKEN: ${{ secrets.VITE_MIXPANEL_TOKEN }}
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

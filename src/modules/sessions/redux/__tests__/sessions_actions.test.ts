@@ -192,7 +192,7 @@ describe("sessions actions", () => {
 
     expect(state.sessions.help.is_open).toEqual(false)
 
-    await redux.store.dispatch(sessions_actions.help_open())
+    await redux.store.dispatch(sessions_actions.request_help())
 
     state = redux.store.getState()
 
@@ -211,7 +211,7 @@ describe("sessions actions", () => {
 
     expect(state.sessions.help.is_open).toEqual(false)
 
-    await redux.store.dispatch(sessions_actions.help_open())
+    await redux.store.dispatch(sessions_actions.request_help())
 
     state = redux.store.getState()
 

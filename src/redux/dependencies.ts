@@ -45,10 +45,17 @@ import { AudioServiceInMemory } from "@/modules/global/services/audio_service/au
 import { HttpServiceInMemory } from "@/modules/global/services/http_service/http_service_in_memory"
 import { AudioServiceWindow } from "@/modules/global/services/audio_service/audio_service_window"
 import { HttpServiceWindow } from "@/modules/global/services/http_service/http_service_window"
+import type { ThemeService } from "@/modules/global/services/theme_service/theme_service"
+import { ThemeServiceInMemory } from "@/modules/global/services/theme_service/theme_service_in_memory"
+import { ThemeServiceWindow } from "@/modules/global/services/theme_service/theme_service_window"
+import type { AnalyticsService } from "@/modules/global/services/analytics_service/analytics_service"
+import { AnalyticsServiceInMemory } from "@/modules/global/services/analytics_service/analytics_service_in_memory"
+import { AnalyticsServiceMixpanel } from "@/modules/global/services/analytics_service/analytics_service_mixpanel"
 
 export type Dependencies = {
   location_service: LocationService
   local_storage_service: LocalStorageService
+  theme_service: ThemeService
   downloader_service: DownloaderService
   decks_repository: DecksRepository
   sessions_repository: SessionsRepository
@@ -60,6 +67,7 @@ export type Dependencies = {
   plausible_service: PlausibleService
   audio_service: AudioService
   http_service: HttpService
+  analytics_service: AnalyticsService
 }
 
 export function build_dependencies(
@@ -80,6 +88,8 @@ export function build_dependencies(
       plausible_service: new PlausibleServiceInMemory(),
       audio_service: new AudioServiceInMemory(),
       http_service: new HttpServiceInMemory(),
+      theme_service: new ThemeServiceInMemory(),
+      analytics_service: new AnalyticsServiceInMemory(),
     }
   }
 
@@ -110,6 +120,8 @@ export function build_dependencies(
       plausible_service: new PlausibleServiceInMemory(),
       audio_service: new AudioServiceWindow(),
       http_service: new HttpServiceWindow(),
+      theme_service: new ThemeServiceWindow(),
+      analytics_service: new AnalyticsServiceMixpanel(),
     }
   }
 
@@ -127,5 +139,7 @@ export function build_dependencies(
     plausible_service: new PlausibleServiceWindow(),
     audio_service: new AudioServiceWindow(),
     http_service: new HttpServiceWindow(),
+    theme_service: new ThemeServiceWindow(),
+    analytics_service: new AnalyticsServiceMixpanel(),
   }
 }

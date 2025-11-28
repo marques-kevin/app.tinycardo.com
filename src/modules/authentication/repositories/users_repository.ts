@@ -9,4 +9,5 @@ export interface UsersRepository {
     callback_url: string
   }): Promise<{ user_id: string; jwt: string }>
   get_authenticated_user(): Promise<UserEntity | null>
+  is_user_premium(): Promise<boolean>
 }

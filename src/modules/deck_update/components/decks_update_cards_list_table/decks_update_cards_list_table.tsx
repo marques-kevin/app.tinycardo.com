@@ -4,6 +4,7 @@ import {
 } from "./decks_update_cards_list_table.container"
 import { emoji_flags } from "@/modules/decks/utils/emoji_flags"
 import { DecksUpdateCardsListTableItem } from "@/modules/deck_update/components/decks_update_cards_list_table_item/decks_update_cards_list_table_item"
+import { ArrowRightLeft } from "lucide-react"
 
 export function Wrapper(props: ContainerProps) {
   return (
@@ -35,6 +36,12 @@ export function Wrapper(props: ContainerProps) {
             <option value="zh">{emoji_flags.zh} Chinese</option>
           </select>
         </div>
+        <button
+          className="btn btn-ghost btn-circle"
+          onClick={props.on_swap_languages}
+        >
+          <ArrowRightLeft className="size-4" />
+        </button>
         <div className="w-1/2">
           <select
             className="select select-lg text-base-content w-full"

@@ -339,7 +339,7 @@ export const help_close = createAsyncThunk<void, void, AsyncThunkConfig>(
   },
 )
 
-export const help_open = createAsyncThunk<void, void, AsyncThunkConfig>(
+export const request_help = createAsyncThunk<void, void, AsyncThunkConfig>(
   "sessions/request_help",
   async (_, { dispatch, getState, extra }) => {
     const { sessions, decks, language } = getState()
