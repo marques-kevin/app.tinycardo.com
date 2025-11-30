@@ -128,5 +128,9 @@
   "discover_decks_search_modal/modal_submit": "Rechercher",
   "discover_decks_search_modal/modal_title": "Rechercher des decks par titre",
   "decks_update_cards_list_table_item/tooltip/translate": "Traduire avec l'IA",
-  "decks_update_description/update_with_ai": "Mettre à jour la description avec l'IA"
+  "decks_update_description/update_with_ai": "Mettre à jour la description avec l'IA",
+  "deck_update_ai_assistant_chat/title": "Assistant IA",
+  "deck_update_ai_assistant_chat/empty_state": "Commencez une conversation avec l'assistant IA pour modifier votre deck.",
+  "deck_update_ai_assistant_chat/input/placeholder": "Tapez votre message...",
+  "deck_update_ai_assistant_chat/execute_action": "Appliquer"
 }

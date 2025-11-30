@@ -1,0 +1,7 @@
+{
+  "title": "Assistant IA",
+  "empty_state": "Commencez une conversation avec l'assistant IA pour modifier votre deck.",
+  "input/placeholder": "Tapez votre message...",
+  "execute_action": "Appliquer"
+}
+
