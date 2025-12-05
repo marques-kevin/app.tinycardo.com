@@ -1,5 +1,5 @@
 import "../src/css/index.css"
-
+import React from "react"
 import type { Preview } from "@storybook/react-vite"
 import dayjs from "dayjs"
 import "dayjs/locale/ar"
@@ -76,9 +76,9 @@ const preview: Preview = {
     (Story, context) => {
       const locale = (context.globals.locale as keyof typeof messages) || "en"
       const dir = locale === "ar" ? "rtl" : "ltr"
-      const theme = context.globals.theme || "light"
+      const theme = context.globals.theme || "cupcake"
 
-      const { store } = init({}, build_dependencies("in-memory"))
+      const { store } = init({}, build_dependencies("test"))
 
       if (typeof document !== "undefined") {
         document.documentElement.lang = locale
