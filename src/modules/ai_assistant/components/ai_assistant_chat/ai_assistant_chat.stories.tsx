@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Wrapper } from "./deck_update_ai_assistant_chat"
+import { Wrapper } from "./ai_assistant_chat"
 import { v4 } from "uuid"
 
 const meta: Meta<typeof Wrapper> = {
-  title: "deck_update_ai_assistant_chat",
+  title: "ai_assistant_chat",
   component: Wrapper,
   parameters: {
     layout: "fullscreen",

@@ -28,4 +28,4 @@ export const Wrapper = () => {
   )
 }
 
-export const DeckUpdateAiAssistantBanner = Wrapper
+export const AiAssistantBanner = Wrapper

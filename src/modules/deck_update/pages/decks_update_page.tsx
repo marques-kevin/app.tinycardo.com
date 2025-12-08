@@ -9,7 +9,7 @@ import { DeckUpdateTabsRenameModal } from "@/modules/deck_update/components/deck
 import { DeckUpdateAddCardsToLessonModal } from "@/modules/deck_update/components/deck_update_add_cards_to_lesson_modal/deck_update_add_cards_to_lesson_modal"
 import { DeckUpdateReorderLessonsModal } from "@/modules/deck_update/components/deck_update_reorder_lessons_modal/deck_update_reorder_lessons_modal"
 import { DeckUpdateImportCsvModal } from "@/modules/deck_update/components/deck_update_import_csv_modal/deck_update_import_csv_modal"
-import { DeckUpdateAiAssistantBanner } from "@/modules/deck_update/components/deck_update_ai_assistant_banner/deck_update_ai_assistant_banner"
+import { AiAssistantBanner } from "@/modules/ai_assistant/components/ai_assistant_banner/ai_assistant_banner"
 
 export function DecksUpdatePage() {
   return (
@@ -18,7 +18,7 @@ export function DecksUpdatePage() {
         <div className="flex-1 overflow-y-auto">
           <GlobalNavbar />
           <div className="space-y-4 px-4 py-4">
-            <DeckUpdateAiAssistantBanner />
+            <AiAssistantBanner />
 
             <div>
               <DecksUpdateTitle />

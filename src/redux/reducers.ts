@@ -10,6 +10,7 @@ import { discover_reducers } from "@/modules/discover/redux/discover_reducers"
 import { decks_details_reducers } from "@/modules/deck_details/redux/deck_details_reducers"
 import { deck_update_reducers } from "@/modules/deck_update/redux/deck_update_reducers"
 import { streak_reducers } from "@/modules/streak/redux/streak_reducers"
+import { ai_assistant_reducers } from "@/modules/ai_assistant/redux/ai_assistant_reducers"
 
 export const reducers = combineReducers({
   deck_update: deck_update_reducers,
@@ -23,4 +24,5 @@ export const reducers = combineReducers({
   dialog: dialog_reducers,
   authentication: authentication_reducers,
   discover: discover_reducers,
+  ai_assistant: ai_assistant_reducers,
 })

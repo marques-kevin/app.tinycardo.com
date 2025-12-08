@@ -48,7 +48,7 @@ export function Wrapper(props: Props) {
           <div className="flex items-center gap-2">
             <SparklesIcon className="fill-primary text-primary-content size-5" />
             <h3 className="text-lg font-semibold">
-              {formatMessage({ id: "deck_update_ai_assistant_chat/title" })}
+              {formatMessage({ id: "ai_assistant_chat/title" })}
             </h3>
           </div>
           <button className="btn btn-ghost btn-circle">
@@ -113,7 +113,7 @@ export function Wrapper(props: Props) {
           <input
             className="input input-lg flex-1 resize-none"
             placeholder={formatMessage({
-              id: "deck_update_ai_assistant_chat/input/placeholder",
+              id: "ai_assistant_chat/input/placeholder",
             })}
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -137,4 +137,4 @@ export function Wrapper(props: Props) {
   )
 }
 
-export const DeckUpdateAiAssistantChat = Wrapper
+export const AiAssistantChat = Wrapper

@@ -1,79 +1,8 @@
 import { describe, it, expect } from "vitest"
-import { create_store_for_tests } from "@/tests/create_store_for_tests"
 import * as deck_update_actions from "@/modules/deck_update/redux/deck_update_actions"
-import * as global_actions from "@/modules/global/redux/global_actions"
-import type { DecksRepositoryInMemory } from "@/modules/decks/repositories/decks_repository_in_memory"
-import type { UsersRepositoryInMemory } from "@/modules/authentication/repositories/users_repository_in_memory"
-import type { DeckEntity } from "@/modules/decks/entities/deck_entity"
-import type { CardEntity } from "@/modules/decks/entities/card_entity"
 import { delay } from "@/modules/global/utils/delay"
-import type { UserEntity } from "@/modules/authentication/entities/user_entity"
-import type { ToastServiceInMemory } from "@/modules/global/services/toast_service/toast_service_in_memory"
 import { last } from "lodash"
-
-const prepare_store_for_tests = async (params?: {
-  is_user_premium?: boolean
-}) => {
-  const { store, dependencies } = await create_store_for_tests()
-
-  const users_repository =
-    dependencies.users_repository as UsersRepositoryInMemory
-  const decks_repository =
-    dependencies.decks_repository as DecksRepositoryInMemory
-  const toast_service = dependencies.toast_service as ToastServiceInMemory
-
-  const user: UserEntity = {
-    id: "user-1",
-    email: "test@example.com",
-  }
-  await users_repository.set_authenticated_user(user)
-  await users_repository.set_is_user_premium(params?.is_user_premium ?? false)
-
-  const deck: DeckEntity = {
-    id: "deck-1",
-    name: "Test Deck",
-    description: "Test Description",
-    front_language: "en",
-    back_language: "fr",
-    user_id: user.id,
-    updated_at: new Date(),
-    created_at: new Date(),
-    visibility: "private",
-    number_of_cards: 10,
-    number_of_cards_ready_to_be_reviewed: 0,
-    number_of_cards_not_ready_to_be_reviewed: 0,
-    number_of_users_using_this_deck: 0,
-  }
-
-  const cards: CardEntity[] = Array.from(
-    { length: deck.number_of_cards },
-    (_, index) => ({
-      id: `card-${index}`,
-      deck_id: deck.id,
-      front: `Front ${index}`,
-      back: `Back ${index}`,
-      front_audio_url: `https://example.com/front-${index}.mp3`,
-      back_audio_url: `https://example.com/back-${index}.mp3`,
-    }),
-  )
-
-  await decks_repository.sync_deck({ deck, cards })
-  await dependencies.location_service.navigate(`/decks/${deck.id}/update`)
-  await store.dispatch(global_actions.global_app_initialized())
-  await store.dispatch(global_actions.global_route_changed())
-
-  await delay()
-
-  return {
-    store,
-    deck,
-    cards,
-    user,
-    toast_service,
-    decks_repository,
-    dependencies,
-  }
-}
+import { prepare_tests_for_update_deck } from "@/tests/create_store_for_tests"
 
 describe("Feature: Deck Update", () => {
   describe("Given an authenticated user", () => {
@@ -81,7 +10,7 @@ describe("Feature: Deck Update", () => {
       When the user navigates to the deck update page
       Then the deck should be loaded into the reducer
       `, async () => {
-      const { store, deck } = await prepare_store_for_tests()
+      const { store, deck } = await prepare_tests_for_update_deck()
 
       const state = store.getState()
 
@@ -95,7 +24,7 @@ describe("Feature: Deck Update", () => {
       And a notification should be shown
       `, async () => {
       const { store, user, dependencies, toast_service } =
-        await prepare_store_for_tests()
+        await prepare_tests_for_update_deck()
 
       await store.dispatch(
         deck_update_actions.update_field({
@@ -134,7 +63,7 @@ describe("Feature: Deck Update", () => {
       When the user select cards,
       Then should be able to select and unselect cards
       `, async () => {
-      const { store, cards } = await prepare_store_for_tests()
+      const { store, cards } = await prepare_tests_for_update_deck()
 
       const card = cards[0]
 
@@ -187,7 +116,7 @@ describe("Feature: Deck Update", () => {
       And cards removed
       `, async () => {
       const { store, deck, cards, dependencies } =
-        await prepare_store_for_tests()
+        await prepare_tests_for_update_deck()
 
       const card = cards[0]
 
@@ -222,7 +151,7 @@ describe("Feature: Deck Update", () => {
       An user should be able to add cards
       So when the user updates the last card, a new empty card should be added
       `, async () => {
-      const { store } = await prepare_store_for_tests()
+      const { store } = await prepare_tests_for_update_deck()
 
       const state = store.getState()
 
@@ -277,7 +206,7 @@ describe("Feature: Deck Update", () => {
       Then the front and back languages should be swapped
       And the cards should be swapped
       `, async () => {
-      const { store } = await prepare_store_for_tests()
+      const { store } = await prepare_tests_for_update_deck()
 
       let state = store.getState()
 
@@ -303,7 +232,7 @@ describe("Feature: Deck Update", () => {
       Then the last card should be removed
       And a new empty card should be added
       `, async () => {
-      const { store } = await prepare_store_for_tests()
+      const { store } = await prepare_tests_for_update_deck()
 
       const state = store.getState()
 
@@ -332,7 +261,7 @@ describe("Feature: Deck Update", () => {
       When a user creates a lesson
       The user needs to save the deck to be applied on the database
       `, async () => {
-      const { store, decks_repository } = await prepare_store_for_tests()
+      const { store, decks_repository } = await prepare_tests_for_update_deck()
 
       let state = store.getState()
 
@@ -371,7 +300,7 @@ describe("Feature: Deck Update", () => {
       Then the lesson card should be saved into the database
       `, async () => {
       const { store, decks_repository, deck, user } =
-        await prepare_store_for_tests()
+        await prepare_tests_for_update_deck()
 
       await store.dispatch(deck_update_actions.create_lesson())
 
@@ -428,7 +357,7 @@ describe("Feature: Deck Update", () => {
       Then rename the lesson
       And delete the lesson
       `, async () => {
-      const { store } = await prepare_store_for_tests()
+      const { store } = await prepare_tests_for_update_deck()
 
       let state = store.getState()
 
@@ -464,7 +393,7 @@ describe("Feature: Deck Update", () => {
       But the user needs to save the deck to be applied on the database
       `, async () => {
       const { store, decks_repository, deck, user } =
-        await prepare_store_for_tests()
+        await prepare_tests_for_update_deck()
 
       /**
        *
@@ -520,7 +449,7 @@ describe("Feature: Deck Update", () => {
       And when the user deletes a card from the lesson
       Then the card should not be removed from the deck, but only from the lesson
       `, async () => {
-      const { store, cards } = await prepare_store_for_tests()
+      const { store, cards } = await prepare_tests_for_update_deck()
 
       let state = store.getState()
 
@@ -622,7 +551,7 @@ describe("Feature: Deck Update", () => {
       When a card is added to a lesson, 
       The card should not be displayed when no active lesson is selected
       `, async () => {
-      const { store, cards } = await prepare_store_for_tests()
+      const { store, cards } = await prepare_tests_for_update_deck()
 
       let state = store.getState()
 
@@ -694,7 +623,7 @@ describe("Feature: Deck Update", () => {
       When a user change card value, should add a new empty card at the end of the list
       And if the lesson is selected, the new empty card should be added to the lesson
       `, async () => {
-      const { store } = await prepare_store_for_tests()
+      const { store } = await prepare_tests_for_update_deck()
 
       await store.dispatch(deck_update_actions.create_lesson())
 
@@ -733,7 +662,7 @@ describe("Feature: Deck Update", () => {
       When the user imports cards from a CSV containing front and back headers
       Then the imported cards should be added to the deck
       `, async () => {
-      const { store } = await prepare_store_for_tests()
+      const { store } = await prepare_tests_for_update_deck()
 
       const initial_state = store.getState().deck_update
 
@@ -772,7 +701,7 @@ describe("Feature: Deck Update", () => {
       When the user imports cards from a CSV without front and back headers
       Then the CSV import dialog should open with the parsed data
       `, async () => {
-      const { store } = await prepare_store_for_tests()
+      const { store } = await prepare_tests_for_update_deck()
 
       const csv = ["term,definition", "Bonjour,Hello"].join("\n")
 
@@ -796,7 +725,7 @@ describe("Feature: Deck Update", () => {
     And the description should be in loading state
     Then the description should be updated
     `, async () => {
-    const { store } = await prepare_store_for_tests({
+    const { store } = await prepare_tests_for_update_deck({
       is_user_premium: true,
     })
 
@@ -820,7 +749,7 @@ describe("Feature: Deck Update", () => {
     And the card should be in loading state
     Then the card should be translated
     `, async () => {
-    const { store, cards } = await prepare_store_for_tests({
+    const { store, cards } = await prepare_tests_for_update_deck({
       is_user_premium: true,
     })
 
@@ -851,7 +780,7 @@ describe("Feature: Deck Update", () => {
     When the user is not premium and wants to translate a card with AI
     Then the dialog should be opened with the error message
     `, async () => {
-    const { store } = await prepare_store_for_tests({
+    const { store } = await prepare_tests_for_update_deck({
       is_user_premium: false,
     })
 
@@ -871,7 +800,7 @@ describe("Feature: Deck Update", () => {
     When the user is not premium and wants to update the description with AI
     Then the dialog should be opened with the error message
     `, async () => {
-    const { store } = await prepare_store_for_tests({
+    const { store } = await prepare_tests_for_update_deck({
       is_user_premium: false,
     })
 

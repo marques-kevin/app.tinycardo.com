@@ -51,6 +51,8 @@ import { ThemeServiceWindow } from "@/modules/global/services/theme_service/them
 import type { AnalyticsService } from "@/modules/global/services/analytics_service/analytics_service"
 import { AnalyticsServiceInMemory } from "@/modules/global/services/analytics_service/analytics_service_in_memory"
 import { AnalyticsServiceMixpanel } from "@/modules/global/services/analytics_service/analytics_service_mixpanel"
+import type { AiAssistantService } from "@/modules/ai_assistant/services/ai_assistant_service/ai_assistant_service"
+import { AiAssistantServiceInMemory } from "@/modules/ai_assistant/services/ai_assistant_service/ai_assistant_service_in_memory"
 
 export type Dependencies = {
   location_service: LocationService
@@ -68,6 +70,7 @@ export type Dependencies = {
   audio_service: AudioService
   http_service: HttpService
   analytics_service: AnalyticsService
+  ai_assistant_service: AiAssistantService
 }
 
 export function build_dependencies(
@@ -90,6 +93,7 @@ export function build_dependencies(
       http_service: new HttpServiceInMemory(),
       theme_service: new ThemeServiceInMemory(),
       analytics_service: new AnalyticsServiceInMemory(),
+      ai_assistant_service: new AiAssistantServiceInMemory(),
     }
   }
 
@@ -122,6 +126,7 @@ export function build_dependencies(
       http_service: new HttpServiceWindow(),
       theme_service: new ThemeServiceWindow(),
       analytics_service: new AnalyticsServiceInMemory(),
+      ai_assistant_service: new AiAssistantServiceInMemory(),
     }
   }
 
@@ -141,5 +146,6 @@ export function build_dependencies(
     http_service: new HttpServiceWindow(),
     theme_service: new ThemeServiceWindow(),
     analytics_service: new AnalyticsServiceMixpanel(),
+    ai_assistant_service: new AiAssistantServiceInMemory(),
   }
 }
