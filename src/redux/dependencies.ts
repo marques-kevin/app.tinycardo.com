@@ -53,6 +53,7 @@ import { AnalyticsServiceInMemory } from "@/modules/global/services/analytics_se
 import { AnalyticsServiceMixpanel } from "@/modules/global/services/analytics_service/analytics_service_mixpanel"
 import type { AiAssistantService } from "@/modules/ai_assistant/services/ai_assistant_service/ai_assistant_service"
 import { AiAssistantServiceInMemory } from "@/modules/ai_assistant/services/ai_assistant_service/ai_assistant_service_in_memory"
+import { AiAssistantServiceApi } from "@/modules/ai_assistant/services/ai_assistant_service/ai_assistant_service_api"
 
 export type Dependencies = {
   location_service: LocationService
@@ -97,38 +98,38 @@ export function build_dependencies(
     }
   }
 
-  if (mode === "development") {
-    return {
-      location_service: new LocationServiceWindow(),
-      local_storage_service: new LocalStorageServiceWindow(),
-      downloader_service: new DownloaderServiceWindow(),
-      decks_repository: new DecksRepositoryInMemory({
-        decks: seed_decks,
-        cards: seed_cards,
-        lessons: seed_lessons,
-      }),
-      sessions_repository: new SessionsRepositoryInMemory({
-        history: seed_history,
-      }),
-      users_repository: new UsersRepositoryInMemory({
-        user: seed_authenticated_user,
-      }),
-      session_help_service: new SessionHelpServiceInMemory(),
-      discover_decks_repository: new DiscoverDecksRepositoryInMemory({
-        decks: seed_discover_decks,
-      }),
-      toast_service: new ToastServiceSonner(),
-      streak_repository: new StreakRepositoryInMemory({
-        streaks: seed_streaks,
-      }),
-      plausible_service: new PlausibleServiceInMemory(),
-      audio_service: new AudioServiceWindow(),
-      http_service: new HttpServiceWindow(),
-      theme_service: new ThemeServiceWindow(),
-      analytics_service: new AnalyticsServiceInMemory(),
-      ai_assistant_service: new AiAssistantServiceInMemory(),
-    }
-  }
+  // if (mode === "development") {
+  //   return {
+  //     location_service: new LocationServiceWindow(),
+  //     local_storage_service: new LocalStorageServiceWindow(),
+  //     downloader_service: new DownloaderServiceWindow(),
+  //     decks_repository: new DecksRepositoryInMemory({
+  //       decks: seed_decks,
+  //       cards: seed_cards,
+  //       lessons: seed_lessons,
+  //     }),
+  //     sessions_repository: new SessionsRepositoryInMemory({
+  //       history: seed_history,
+  //     }),
+  //     users_repository: new UsersRepositoryInMemory({
+  //       user: seed_authenticated_user,
+  //     }),
+  //     session_help_service: new SessionHelpServiceInMemory(),
+  //     discover_decks_repository: new DiscoverDecksRepositoryInMemory({
+  //       decks: seed_discover_decks,
+  //     }),
+  //     toast_service: new ToastServiceSonner(),
+  //     streak_repository: new StreakRepositoryInMemory({
+  //       streaks: seed_streaks,
+  //     }),
+  //     plausible_service: new PlausibleServiceInMemory(),
+  //     audio_service: new AudioServiceWindow(),
+  //     http_service: new HttpServiceWindow(),
+  //     theme_service: new ThemeServiceWindow(),
+  //     analytics_service: new AnalyticsServiceInMemory(),
+  //     ai_assistant_service: new AiAssistantServiceInMemory(),
+  //   }
+  // }
 
   return {
     location_service: new LocationServiceWindow(),
@@ -146,6 +147,6 @@ export function build_dependencies(
     http_service: new HttpServiceWindow(),
     theme_service: new ThemeServiceWindow(),
     analytics_service: new AnalyticsServiceMixpanel(),
-    ai_assistant_service: new AiAssistantServiceInMemory(),
+    ai_assistant_service: new AiAssistantServiceApi(),
   }
 }

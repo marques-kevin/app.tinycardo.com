@@ -1,0 +1,11 @@
+{
+  "tools/add_cards_to_lessons": "Ajout de cartes à une leçon.",
+  "tools/create_cards": "Création et ajout de cartes dans le deck.",
+  "tools/create_lessons": "Création de nouvelles leçons dans le deck.",
+  "tools/delete_cards": "Suppression des cartes du deck.",
+  "tools/delete_lessons": "Suppression des leçons du deck.",
+  "tools/request_cards_context": "Récupération des cartes du deck.",
+  "tools/request_lessons_context": "Récupération des leçons du deck.",
+  "tools/update_cards": "Mise à jour des cartes dans le deck.",
+  "tools/update_lessons": "Mise à jour des leçons du deck."
+}

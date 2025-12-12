@@ -18,10 +18,12 @@ export class AnalyticsServiceMixpanel implements AnalyticsService {
   }
 
   identify(user_id: string): void {
+    if (!this.initialized) return
     mixpanel.identify(user_id)
   }
 
   track(event: string, properties?: Record<string, string>): void {
+    if (!this.initialized) return
     mixpanel.track(event, properties)
   }
 }

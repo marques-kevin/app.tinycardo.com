@@ -1,6 +1,10 @@
 {
-  "empty_state": "Commencez une conversation avec l'assistant IA pour modifier votre deck.",
+  "empty_state": "Bonjour, comment puis-je vous aider ? Je suis capable de créer des leçons, ajouter des cartes, réorganiser les leçons et même corriger les fautes d'orthographe.",
   "execute_action": "Appliquer",
   "input/placeholder": "Tapez votre message...",
-  "title": "Assistant IA"
+  "title": "Assistant IA",
+  "tools/create_cards/description": "Création et ajout de cartes dans le deck.",
+  "tools/request_cards_context/description": "Récupération des cartes du deck.",
+  "tools/request_deck_informations/description": "Récupération des informations du deck.",
+  "tools/request_lessons_context/description": "Récupération des leçons du deck."
 }

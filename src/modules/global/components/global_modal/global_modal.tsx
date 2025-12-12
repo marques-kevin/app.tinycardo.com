@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import type { LucideIcon } from "lucide-react"
+import { useIntl } from "react-intl"
 
 export interface ModalProps {
   title: string
@@ -20,6 +21,8 @@ export function GlobalModal({
   actions,
   on_close,
 }: ModalProps) {
+  const { formatMessage } = useIntl()
+
   return (
     <dialog className="modal" open={is_open} onClose={on_close}>
       <div className="modal-box w-full max-w-2xl space-y-4">
@@ -37,7 +40,7 @@ export function GlobalModal({
 
         <footer className="modal-action justify-between">
           <button className="btn btn-lg btn-ghost" onClick={on_close}>
-            Close
+            {formatMessage({ id: "global_modal/close" })}
           </button>
 
           {actions && actions}
@@ -45,7 +48,7 @@ export function GlobalModal({
       </div>
 
       <form method="dialog" className="modal-backdrop" onClick={on_close}>
-        <button>close</button>
+        <button>{formatMessage({ id: "global_modal/close" })}</button>
       </form>
     </dialog>
   )

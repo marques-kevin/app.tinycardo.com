@@ -54,6 +54,104 @@ export class AiAssistantServiceInMemory implements AiAssistantService {
       }
     }
 
+    if (message.includes("delete_cards")) {
+      return {
+        id: v4(),
+        role: "assistant",
+        content: "I will delete some cards for you",
+        timestamp: new Date(),
+        actions: [
+          {
+            type: "delete_cards",
+            description: "I will delete some cards for you",
+            payload: {
+              card_ids: params.cards.map((card) => card.id),
+            },
+          },
+        ],
+      }
+    }
+
+    if (message.includes("create_lessons")) {
+      return {
+        id: v4(),
+        role: "assistant",
+        content: "I will create some lessons for you",
+        timestamp: new Date(),
+        actions: [
+          {
+            type: "create_lessons",
+            description: "I will create some lessons for you",
+            payload: {
+              lessons: [
+                {
+                  name: "Created by AI assistant",
+                },
+              ],
+            },
+          },
+        ],
+      }
+    }
+
+    if (message.includes("update_lessons")) {
+      return {
+        id: v4(),
+        role: "assistant",
+        content: "I will update some lessons for you",
+        timestamp: new Date(),
+        actions: [
+          {
+            type: "update_lessons",
+            description: "I will update some lessons for you",
+            payload: {
+              lessons: params.lessons.map((lesson) => ({
+                id: lesson.id,
+                name: "Updated by AI assistant",
+              })),
+            },
+          },
+        ],
+      }
+    }
+
+    if (message.includes("delete_lessons")) {
+      return {
+        id: v4(),
+        role: "assistant",
+        content: "I will delete some lessons for you",
+        timestamp: new Date(),
+        actions: [
+          {
+            type: "delete_lessons",
+            description: "I will delete some lessons for you",
+            payload: {
+              lesson_ids: params.lessons.map((lesson) => lesson.id),
+            },
+          },
+        ],
+      }
+    }
+
+    if (message.includes("add_cards_to_lessons")) {
+      return {
+        id: v4(),
+        role: "assistant",
+        content: "I will add cards to a lesson for you",
+        timestamp: new Date(),
+        actions: [
+          {
+            type: "add_cards_to_lessons",
+            description: "I will add cards to a lesson for you",
+            payload: {
+              lesson_id: params.lessons[0]?.id ?? "",
+              card_ids: params.cards.slice(0, 2).map((card) => card.id),
+            },
+          },
+        ],
+      }
+    }
+
     return {
       id: v4(),
       role: "assistant",

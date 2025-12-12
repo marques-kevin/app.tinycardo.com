@@ -126,6 +126,45 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
     }
   })
 
+  builder.addCase(actions.delete_card, (state, action) => {
+    state.cards = state.cards.filter((c) => c !== action.payload.id)
+    state.cards_map = Object.fromEntries(
+      Object.entries(state.cards_map).filter(
+        ([key]) => key !== action.payload.id,
+      ),
+    )
+
+    state.lessons = state.lessons.map((lesson) => ({
+      ...lesson,
+      cards: lesson.cards.filter((c) => c !== action.payload.id),
+    }))
+
+    state.cards_filtered_by_lesson_tab = deck_update_filter_cards_by_lesson({
+      cards: state.cards,
+      lessons: state.lessons,
+      lesson_id: state.active_lesson_id,
+    })
+
+    if (state.cards_filtered_by_lesson_tab.length === 0) {
+      const new_card = create_card()
+      state.cards = [...state.cards, new_card.id]
+      state.cards_map = {
+        ...state.cards_map,
+        [new_card.id]: new_card,
+      }
+      state.lessons = state.lessons.map((lesson) => ({
+        ...lesson,
+        cards: [...lesson.cards, new_card.id],
+      }))
+
+      state.cards_filtered_by_lesson_tab = deck_update_filter_cards_by_lesson({
+        cards: state.cards,
+        lessons: state.lessons,
+        lesson_id: state.active_lesson_id,
+      })
+    }
+  })
+
   builder.addCase(actions._add_cards_from_import, (state, action) => {
     const cards = action.payload.cards.map((c) => ({
       id: create_uuid_for_cards({ front: c.front, back: c.back }),
@@ -134,26 +173,35 @@ export const deck_update_reducers = createReducer(initialState, (builder) => {
       deck_id: state.deck!.id,
       front_audio_url: "",
       back_audio_url: "",
+      lesson_id: c.lesson_id,
     }))
 
-    cards.forEach((c) => {
-      state.cards_map[c.id] = c
+    cards.forEach((card) => {
+      state.cards_map[card.id] = card
+
+      if (card.lesson_id) {
+        const lesson = state.lessons.find((l) => l.id === card.lesson_id)
+
+        if (lesson) {
+          lesson.cards = [...lesson.cards, card.id]
+        }
+      }
     })
 
-    state.cards = [...state.cards, ...cards.map((c) => c.id)]
+    state.cards = [...state.cards, ...cards.map((card) => card.id)]
 
-    if (state.active_lesson_id) {
-      state.lessons = state.lessons.map((lesson) => {
-        if (lesson.id === state.active_lesson_id) {
-          return {
-            ...lesson,
-            cards: [...lesson.cards, ...cards.map((c) => c.id)],
-          }
-        }
+    // if (state.active_lesson_id) {
+    //   state.lessons = state.lessons.map((lesson) => {
+    //     if (lesson.id === state.active_lesson_id) {
+    //       return {
+    //         ...lesson,
+    //         cards: [...lesson.cards, ...cards.map((c) => c.id)],
+    //       }
+    //     }
 
-        return lesson
-      })
-    }
+    //     return lesson
+    //   })
+    // }
 
     state.cards_filtered_by_lesson_tab = deck_update_filter_cards_by_lesson({
       cards: state.cards,

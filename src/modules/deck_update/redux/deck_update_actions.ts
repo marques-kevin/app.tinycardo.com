@@ -36,6 +36,10 @@ export const toggle_select_all_cards = createAction(
   "deck_update/toggle_select_all_cards",
 )
 
+export const delete_card = createAction<{
+  id: string
+}>("deck_update/delete_card")
+
 export const swap_languages = createAction("deck_update/swap_languages")
 
 export const update_card = createAction<{
@@ -258,7 +262,7 @@ export const import_cards_from_csv = createAsyncThunk<
 })
 
 export const _add_cards_from_import = createAction<{
-  cards: { front: string; back: string }[]
+  cards: { front: string; back: string; lesson_id?: string | null }[]
 }>("deck_update/_add_cards_from_import")
 
 export const apply_csv_import_mapping = createAsyncThunk<

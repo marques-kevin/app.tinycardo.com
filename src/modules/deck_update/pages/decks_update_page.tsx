@@ -10,6 +10,7 @@ import { DeckUpdateAddCardsToLessonModal } from "@/modules/deck_update/component
 import { DeckUpdateReorderLessonsModal } from "@/modules/deck_update/components/deck_update_reorder_lessons_modal/deck_update_reorder_lessons_modal"
 import { DeckUpdateImportCsvModal } from "@/modules/deck_update/components/deck_update_import_csv_modal/deck_update_import_csv_modal"
 import { AiAssistantBanner } from "@/modules/ai_assistant/components/ai_assistant_banner/ai_assistant_banner"
+import { AiAssistantChat } from "@/modules/ai_assistant/components/ai_assistant_chat/ai_assistant_chat"
 
 export function DecksUpdatePage() {
   return (
@@ -37,6 +38,7 @@ export function DecksUpdatePage() {
       <DeckUpdateAddCardsToLessonModal />
       <DeckUpdateReorderLessonsModal />
       <DeckUpdateImportCsvModal />
+      <AiAssistantChat />
     </>
   )
 }

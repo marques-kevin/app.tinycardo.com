@@ -5,6 +5,8 @@ import { reducers } from "@/redux/reducers"
 import { global_app_initialized } from "@/modules/global/redux/global_actions"
 import { redux_catch_errors_middleware } from "@/redux/middlewares/redux_catch_errors_middleware/redux_catch_errors_middleware"
 
+let _store: ReturnType<typeof init>["store"]
+
 export const init = (initialState = {}, dependencies: Dependencies) => {
   const store = configureStore({
     reducer: reducers,
@@ -17,6 +19,8 @@ export const init = (initialState = {}, dependencies: Dependencies) => {
         },
       }).concat(redux_catch_errors_middleware),
   })
+
+  _store = store
 
   store.dispatch(global_app_initialized())
 
@@ -34,3 +38,14 @@ export type AsyncThunkConfig = {
 export const useAppDispatch = () => useDispatch<Dispatch>()
 export const useAppSelector: <T>(selector: (state: RootState) => T) => T =
   useSelector
+
+export const getStore = () => {
+  if (!_store) {
+    throw new Error("Store not initialized")
+  }
+
+  return {
+    dispatch: _store.dispatch,
+    getState: _store.getState,
+  }
+}
