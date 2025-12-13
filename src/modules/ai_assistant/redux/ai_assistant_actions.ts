@@ -1,5 +1,8 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit"
-import type { AiAssistantMessageEntity } from "@/modules/ai_assistant/entities/ai_assistant_messages_entity"
+import type {
+  AiAssistantMessageEntity,
+  AiAssistantToolDispatch,
+} from "@/modules/ai_assistant/entities/ai_assistant_messages_entity"
 import type { AsyncThunkConfig } from "@/redux/store"
 import * as deck_update_actions from "@/modules/deck_update/redux/deck_update_actions"
 import type { LessonEntity } from "@/modules/decks/entities/lesson_entity"
@@ -29,7 +32,7 @@ export const create_cards = createAsyncThunk<
     }))
 
     dispatch(
-      deck_update_actions._add_cards_from_import({
+      deck_update_actions.create_cards({
         cards,
       }),
     )
@@ -43,17 +46,20 @@ export const update_cards = createAsyncThunk<
 >(
   "ai_assistant/update_cards",
   async (params, { getState, dispatch, extra }) => {
+    const state = getState()
+    const cards = state.ai_assistant.view.cards
+
     for (const card of params.cards) {
       dispatch(
         deck_update_actions.update_card({
-          id: card.id,
+          id: cards[card.id].id,
           field: "front",
           value: card.front,
         }),
       )
       dispatch(
         deck_update_actions.update_card({
-          id: card.id,
+          id: cards[card.id].id,
           field: "back",
           value: card.back,
         }),
@@ -95,10 +101,13 @@ export const update_lessons = createAsyncThunk<
 >(
   "ai_assistant/update_lessons",
   async (params, { getState, dispatch, extra }) => {
+    const state = getState()
+    const lessons = state.ai_assistant.view.lessons
+
     for (const lesson of params.lessons) {
       dispatch(
         deck_update_actions.rename_lesson({
-          lesson_id: lesson.id,
+          lesson_id: lessons[lesson.id].id,
           name: lesson.name,
         }),
       )
@@ -113,8 +122,13 @@ export const delete_lessons = createAsyncThunk<
 >(
   "ai_assistant/delete_lessons",
   async (params, { getState, dispatch, extra }) => {
+    const state = getState()
+    const lessons = state.ai_assistant.view.lessons
+
     for (const lesson_id of params.lesson_ids) {
-      dispatch(deck_update_actions.delete_lesson({ lesson_id }))
+      dispatch(
+        deck_update_actions.delete_lesson({ lesson_id: lessons[lesson_id].id }),
+      )
     }
   },
 )
@@ -126,9 +140,32 @@ export const delete_cards = createAsyncThunk<
 >(
   "ai_assistant/delete_cards",
   async (params, { getState, dispatch, extra }) => {
+    const state = getState()
+    const cards = state.ai_assistant.view.cards
+
     for (const card_id of params.card_ids) {
-      dispatch(deck_update_actions.delete_card({ id: card_id }))
+      dispatch(deck_update_actions.delete_card({ id: cards[card_id].id }))
     }
+  },
+)
+
+export const move_cards_to_a_lesson = createAsyncThunk<
+  void,
+  { card_ids: string[]; lesson_id: string },
+  AsyncThunkConfig
+>(
+  "ai_assistant/move_cards_to_a_lesson",
+  async (params, { getState, dispatch, extra }) => {
+    const state = getState()
+    const cards = state.ai_assistant.view.cards
+    const lessons = state.ai_assistant.view.lessons
+
+    dispatch(
+      deck_update_actions.move_cards_to_a_lesson({
+        card_ids: params.card_ids.map((card_id) => cards[card_id].id),
+        lesson_id: lessons[params.lesson_id].id,
+      }),
+    )
   },
 )
 
@@ -148,86 +185,9 @@ export const create_a_view_mapping = createAsyncThunk<
   },
 )
 
-export type DispatchToolType =
-  | {
-      tool_name: "create_cards"
-      values_returned_by_ai: {
-        cards: Array<{
-          front: string
-          back: string
-        }>
-      }
-      callback: (data: { type: "text"; value: string }) => void
-    }
-  | {
-      tool_name: "create_lessons"
-      values_returned_by_ai: {
-        lessons: Array<{
-          name: string
-        }>
-      }
-      callback: (data: { type: "text"; value: string }) => void
-    }
-  | {
-      tool_name: "update_lessons"
-      values_returned_by_ai: {
-        lessons: Array<{
-          id: string
-          name: string
-        }>
-      }
-      callback: (data: { type: "text"; value: string }) => void
-    }
-  | {
-      tool_name: "delete_lessons"
-      values_returned_by_ai: {
-        lesson_ids: string[]
-      }
-      callback: (data: { type: "text"; value: string }) => void
-    }
-  | {
-      tool_name: "request_cards_and_lessons_context"
-      values_returned_by_ai: {}
-      callback: (data: {
-        cards: Array<{
-          id: string
-          front: string
-          back: string
-          lesson_id?: string | null
-        }>
-        lessons: Array<{
-          id: string
-          name: string
-        }>
-      }) => void
-    }
-  | {
-      tool_name: "update_cards"
-      values_returned_by_ai: {
-        cards: Array<{
-          id: string
-          front: string
-          back: string
-        }>
-      }
-      callback: (data: { type: "text"; value: string }) => void
-    }
-  | {
-      tool_name: "delete_cards"
-      values_returned_by_ai: {
-        card_ids: string[]
-      }
-      callback: (data: { type: "text"; value: string }) => void
-    }
-  | {
-      tool_name: "unknown"
-      values_returned_by_ai: unknown
-      callback: (data: { type: "text"; value: string }) => void
-    }
-
 export const dispatch_tool = createAsyncThunk<
   unknown,
-  DispatchToolType,
+  AiAssistantToolDispatch,
   AsyncThunkConfig
 >(
   "ai_assistant/dispatch_tool",
@@ -269,6 +229,15 @@ export const dispatch_tool = createAsyncThunk<
       )
 
       return params.callback({ type: "text", value: "Lessons created" })
+    } else if (params.tool_name === "move_cards_to_a_lesson") {
+      await dispatch(
+        move_cards_to_a_lesson({
+          card_ids: params.values_returned_by_ai.card_ids,
+          lesson_id: params.values_returned_by_ai.lesson_id,
+        }),
+      )
+
+      return params.callback({ type: "text", value: "Cards moved to lessons" })
     } else if (params.tool_name === "update_cards") {
       await dispatch(
         update_cards({
@@ -286,20 +255,9 @@ export const dispatch_tool = createAsyncThunk<
 
       return params.callback({ type: "text", value: "Cards deleted" })
     } else if (params.tool_name === "update_lessons") {
-      const lessons_from_view = getState().ai_assistant.view.lessons
-
-      const lessons_to_update = params.values_returned_by_ai.lessons.map(
-        (lesson) => {
-          return {
-            id: lessons_from_view[lesson.id].id,
-            name: lesson.name,
-          }
-        },
-      )
-
       await dispatch(
         update_lessons({
-          lessons: lessons_to_update,
+          lessons: params.values_returned_by_ai.lessons,
         }),
       )
 

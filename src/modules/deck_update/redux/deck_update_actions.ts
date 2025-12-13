@@ -262,8 +262,17 @@ export const import_cards_from_csv = createAsyncThunk<
 })
 
 export const _add_cards_from_import = createAction<{
-  cards: { front: string; back: string; lesson_id?: string | null }[]
+  cards: { front: string; back: string }[]
 }>("deck_update/_add_cards_from_import")
+
+export const create_cards = createAction<{
+  cards: { front: string; back: string; lesson_id?: string | null }[]
+}>("deck_update/create_cards")
+
+export const move_cards_to_a_lesson = createAction<{
+  card_ids: string[]
+  lesson_id: string
+}>("deck_update/move_cards_to_a_lesson")
 
 export const apply_csv_import_mapping = createAsyncThunk<
   void,

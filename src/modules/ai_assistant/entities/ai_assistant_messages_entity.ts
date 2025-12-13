@@ -1,113 +1,4 @@
-type ActionBaseType = {
-  type:
-    | "create_cards"
-    | "update_cards"
-    | "delete_cards"
-    | "create_lessons"
-    | "update_lessons"
-    | "delete_lessons"
-    | "add_cards_to_lessons"
-  description: string
-  payload: unknown
-  is_fetching?: boolean
-}
-
-type ActionCreateCards = ActionBaseType & {
-  type: "create_cards"
-  payload: {
-    cards: Array<{
-      front: string
-      back: string
-    }>
-  }
-}
-
-type ActionUpdateCards = ActionBaseType & {
-  type: "update_cards"
-  payload: {
-    cards: Array<{
-      id: string
-      front: string
-      back: string
-    }>
-  }
-}
-
-type ActionDeleteCards = ActionBaseType & {
-  type: "delete_cards"
-  payload: {
-    card_ids: string[]
-  }
-}
-
-type ActionCreateLessons = ActionBaseType & {
-  type: "create_lessons"
-  payload: {
-    lessons: Array<{
-      name: string
-    }>
-  }
-}
-
-type ActionUpdateLessons = ActionBaseType & {
-  type: "update_lessons"
-  payload: {
-    lessons: Array<{
-      id: string
-      name: string
-    }>
-  }
-}
-
-type ActionDeleteLessons = ActionBaseType & {
-  type: "delete_lessons"
-  payload: {
-    lesson_ids: string[]
-  }
-}
-
-type ActionAddCardsToLessons = ActionBaseType & {
-  type: "add_cards_to_lessons"
-  payload: {
-    lesson_id: string
-    card_ids: string[]
-  }
-}
-
-export type AiAssistantMessageTools =
-  | "create_cards"
-  | "update_cards"
-  | "delete_cards"
-  | "create_lessons"
-  | "update_lessons"
-  | "delete_lessons"
-  | "add_cards_to_lessons"
-  | "request_lessons_context"
-  | "request_cards_context"
-
-export type AiAssistantMessageTool =
-  | {
-      tool_name: "request_cards_context"
-      values_returned_by_ai: {}
-      values_to_send_to_ai: {
-        cards: Array<{
-          id: string
-          front: string
-          back: string
-          lesson_id?: string | null
-        }>
-      }
-    }
-  | {
-      tool_name: "request_lessons_context"
-      values_returned_by_ai: {}
-      values_to_send_to_ai: {
-        lessons: Array<{
-          id: string
-          name: string
-        }>
-      }
-    }
+export type AiAssistantToolDispatch =
   | {
       tool_name: "create_cards"
       values_returned_by_ai: {
@@ -116,15 +7,83 @@ export type AiAssistantMessageTool =
           back: string
         }>
       }
-      values_to_send_to_ai: {
+      callback: (data: { type: "text"; value: string }) => void
+    }
+  | {
+      tool_name: "create_lessons"
+      values_returned_by_ai: {
+        lessons: Array<{
+          name: string
+        }>
+      }
+      callback: (data: { type: "text"; value: string }) => void
+    }
+  | {
+      tool_name: "update_lessons"
+      values_returned_by_ai: {
+        lessons: Array<{
+          id: string
+          name: string
+        }>
+      }
+      callback: (data: { type: "text"; value: string }) => void
+    }
+  | {
+      tool_name: "delete_lessons"
+      values_returned_by_ai: {
+        lesson_ids: string[]
+      }
+      callback: (data: { type: "text"; value: string }) => void
+    }
+  | {
+      tool_name: "request_cards_and_lessons_context"
+      values_returned_by_ai: {}
+      callback: (data: {
         cards: Array<{
           id: string
           front: string
           back: string
           lesson_id?: string | null
         }>
-      }
+        lessons: Array<{
+          id: string
+          name: string
+        }>
+      }) => void
     }
+  | {
+      tool_name: "move_cards_to_a_lesson"
+      values_returned_by_ai: {
+        card_ids: string[]
+        lesson_id: string
+      }
+      callback: (data: { type: "text"; value: string }) => void
+    }
+  | {
+      tool_name: "update_cards"
+      values_returned_by_ai: {
+        cards: Array<{
+          id: string
+          front: string
+          back: string
+        }>
+      }
+      callback: (data: { type: "text"; value: string }) => void
+    }
+  | {
+      tool_name: "delete_cards"
+      values_returned_by_ai: {
+        card_ids: string[]
+      }
+      callback: (data: { type: "text"; value: string }) => void
+    }
+  | {
+      tool_name: "unknown"
+      values_returned_by_ai: unknown
+      callback: (data: { type: "text"; value: string }) => void
+    }
+
+export type AiAssistantMessageToolName = AiAssistantToolDispatch["tool_name"]
 
 export type AiAssistantMessageContent =
   | {
@@ -135,14 +94,14 @@ export type AiAssistantMessageContent =
   | {
       id: string
       type: "tool"
-      tool_name: AiAssistantMessageTools
+      tool_name: AiAssistantMessageToolName
       tool_fetching: boolean
       text: string
     }
 
 export type AiAssistantMessageEntity = {
   id: string
-  role: "user" | "assistant"
+  role: "user" | "assistant" | "system"
   content: Array<AiAssistantMessageContent>
   timestamp: Date
   is_fetching?: boolean

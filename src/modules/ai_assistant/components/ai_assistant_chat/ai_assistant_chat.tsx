@@ -1,30 +1,19 @@
 import { useEffect, useRef, memo, useCallback } from "react"
-import {
-  CheckCircleIcon,
-  Loader2Icon,
-  SendIcon,
-  SparklesIcon,
-  XIcon,
-} from "lucide-react"
+import { SendIcon, SparklesIcon, XIcon } from "lucide-react"
 import { useIntl } from "react-intl"
-import ReactMarkdown from "react-markdown"
 import { useChat } from "@ai-sdk/react"
-import { z } from "zod"
 import {
   DefaultChatTransport,
   lastAssistantMessageIsCompleteWithToolCalls,
-  tool,
-  type ToolCallPart,
 } from "ai"
 import { getStore, useAppDispatch, useAppSelector } from "@/redux/store"
 import * as ai_assistant_actions from "@/modules/ai_assistant/redux/ai_assistant_actions"
 import type {
   AiAssistantMessageEntity,
-  AiAssistantMessageTool,
-  AiAssistantMessageTools,
-} from "../../entities/ai_assistant_messages_entity"
-import { AiAssistantChatMessage } from "../ai_assistant_chat_message/ai_assistant_chat_message"
-import type { DispatchToolType } from "@/modules/ai_assistant/redux/ai_assistant_actions"
+  AiAssistantMessageToolName,
+  AiAssistantToolDispatch,
+} from "@/modules/ai_assistant/entities/ai_assistant_messages_entity"
+import { AiAssistantChatMessage } from "@/modules/ai_assistant/components/ai_assistant_chat_message/ai_assistant_chat_message"
 
 const Footer = memo(
   (props: {
@@ -102,7 +91,7 @@ export const Conversations = (props: {
             <AiAssistantChatMessage
               key={index}
               message={content}
-              from={message.role}
+              role={message.role}
             />
           ))}
         </div>
@@ -169,52 +158,39 @@ export function Wrapper() {
               output: JSON.stringify(values_to_send_to_ai),
             })
           },
-        } as DispatchToolType),
+        } as AiAssistantToolDispatch),
       )
     },
   })
 
-  const messages_to_render = messages.map((message) => ({
-    id: message.id,
-    role: message.role,
-    content: message.parts
-      .map((part, index) => {
-        const id = `${message.id}-${index}`
+  const messages_to_render: AiAssistantMessageEntity[] = messages.map(
+    (message) => ({
+      id: message.id,
+      role: message.role,
+      content: message.parts
+        .filter((part) => part.type === "text" || part.type.includes("tool-"))
+        .map((part, index) => {
+          const id = `${message.id}-${index}`
 
-        if (part.type === "text") {
+          if (part.type.includes("tool-") && "state" in part) {
+            return {
+              id,
+              type: "tool" as const,
+              tool_name: part.type.split("-")[1] as AiAssistantMessageToolName,
+              tool_fetching: part.state !== "output-available",
+              text: "",
+            }
+          }
+
           return {
             id,
-            type: "text",
-            text: part.text,
+            type: "text" as const,
+            text: (part as { text: string }).text,
           }
-        }
-
-        if (part.type.includes("tool-") && "state" in part) {
-          return {
-            id,
-            type: "tool",
-            tool_name: part.type.split("-")[1],
-            tool_fetching: part.state !== "output-available",
-            text: "",
-          }
-        }
-
-        if (part.type === "step-start") {
-          return null
-        }
-
-        console.error(`Unknown part type: ${part.type}`)
-        console.error(part)
-
-        return {
-          id,
-          type: "text",
-          text: "unknown part type",
-        }
-      })
-      .filter((part) => part !== null),
-    timestamp: new Date(),
-  }))
+        }),
+      timestamp: new Date(),
+    }),
+  )
 
   const on_send_message = useCallback(
     (content: string) => {

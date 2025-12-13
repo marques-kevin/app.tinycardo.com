@@ -1,3 +1,8 @@
+/**
+ *
+ * @todo Seems dangerous because UUID should be unique and this is not guaranteed.
+ *
+ */
 export function create_uuid_for_cards(params: {
   front: string
   back: string

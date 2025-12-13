@@ -6,6 +6,11 @@ import type { LessonEntity } from "@/modules/decks/entities/lesson_entity"
 export interface AiAssistantState {
   is_open: boolean
   is_fetching: boolean
+  /**
+   * This is a view object that is used to match the IDs from the AI and the real cards and lessons.
+   *
+   * @see {@link docs/ai/view_mapping.md} for more information.
+   */
   view: {
     lessons: Record<string, LessonEntity>
     cards: Record<string, CardEntity & { lesson_id: string }>
@@ -46,10 +51,11 @@ export const ai_assistant_reducers = createReducer(initialState, (builder) => {
     const card_to_lesson_id_map: Record<string, string> = {}
 
     state.view.lessons = action.payload.lessons.reduce(
-      (acc, lesson) => {
-        acc[lesson.id] = lesson
+      (acc, lesson, index) => {
+        const id = index.toString()
+        acc[id] = lesson
         lesson.cards.forEach((card_id) => {
-          card_to_lesson_id_map[card_id] = lesson.id
+          card_to_lesson_id_map[card_id] = id
         })
         return acc
       },
@@ -57,8 +63,9 @@ export const ai_assistant_reducers = createReducer(initialState, (builder) => {
     )
 
     state.view.cards = action.payload.cards.reduce(
-      (acc, card) => {
-        acc[card.id] = {
+      (acc, card, index) => {
+        const id = index.toString()
+        acc[id] = {
           ...card,
           lesson_id: card_to_lesson_id_map[card.id] || "",
         }

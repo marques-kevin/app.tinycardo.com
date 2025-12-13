@@ -1,19 +1,22 @@
 import { memo } from "react"
 import ReactMarkdown from "react-markdown"
 import { Loader2Icon, CheckCircleIcon } from "lucide-react"
-import type { AiAssistantMessageContent } from "../../entities/ai_assistant_messages_entity"
+import type {
+  AiAssistantMessageContent,
+  AiAssistantMessageEntity,
+} from "@/modules/ai_assistant/entities/ai_assistant_messages_entity"
 import { useIntl } from "react-intl"
 
 export const AiAssistantChatMessage = memo(
   (props: {
     message: AiAssistantMessageContent
-    from: "user" | "assistant"
+    role: AiAssistantMessageEntity["role"]
   }) => {
     const { formatMessage } = useIntl()
 
     return (
       <>
-        {props.from === "user" && (
+        {props.role === "user" && (
           <div className="flex justify-end">
             <div
               className={`rounded-box bg-base-300 text-base-content inline-block p-3 px-4`}
@@ -23,7 +26,7 @@ export const AiAssistantChatMessage = memo(
           </div>
         )}
 
-        {props.from === "assistant" && props.message.type === "text" && (
+        {props.role !== "user" && props.message.type === "text" && (
           <div className="prose prose-lg text-base-content">
             <ReactMarkdown>{props.message.text}</ReactMarkdown>
           </div>
