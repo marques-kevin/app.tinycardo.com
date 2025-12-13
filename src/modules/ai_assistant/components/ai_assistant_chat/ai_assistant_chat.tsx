@@ -1,149 +1,44 @@
-import { useEffect, useRef, memo, useCallback } from "react"
-import { SendIcon, SparklesIcon, XIcon } from "lucide-react"
-import { useIntl } from "react-intl"
+import { useCallback } from "react"
 import { useChat } from "@ai-sdk/react"
 import {
   DefaultChatTransport,
   lastAssistantMessageIsCompleteWithToolCalls,
 } from "ai"
-import { getStore, useAppDispatch, useAppSelector } from "@/redux/store"
+import { getStore } from "@/redux/store"
 import * as ai_assistant_actions from "@/modules/ai_assistant/redux/ai_assistant_actions"
 import type {
   AiAssistantMessageEntity,
   AiAssistantMessageToolName,
   AiAssistantToolDispatch,
 } from "@/modules/ai_assistant/entities/ai_assistant_messages_entity"
-import { AiAssistantChatMessage } from "@/modules/ai_assistant/components/ai_assistant_chat_message/ai_assistant_chat_message"
-
-const Footer = memo(
-  (props: {
-    on_send_message: (content: string) => void
-    is_loading: boolean
-  }) => {
-    const { formatMessage } = useIntl()
-    const input_ref = useRef<HTMLInputElement>(null)
-
-    const on_publish = useCallback(() => {
-      const value = input_ref.current!.value.trim()
-      if (!value) return
-
-      props.on_send_message(value)
-
-      input_ref.current!.value = ""
-    }, [props.on_send_message])
-
-    return (
-      <div className="border-base-300 mt-auto mb-2 flex gap-2 border-t p-4">
-        <input
-          className="input input-lg flex-1 resize-none"
-          placeholder={formatMessage({
-            id: "ai_assistant_chat/input/placeholder",
-          })}
-          ref={input_ref}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault()
-              on_publish()
-            }
-          }}
-        />
-        <button
-          className="btn btn-primary btn-lg"
-          onClick={on_publish}
-          disabled={props.is_loading}
-        >
-          {props.is_loading ? (
-            <span className="loading loading-spinner"></span>
-          ) : (
-            <SendIcon className="size-5" />
-          )}
-        </button>
-      </div>
-    )
-  },
-)
-
-export const Conversations = (props: {
-  messages: AiAssistantMessageEntity[]
-  is_loading: boolean
-}) => {
-  const messages_container_ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (messages_container_ref.current) {
-      messages_container_ref.current.scrollTop =
-        messages_container_ref.current.scrollHeight
-    }
-  }, [
-    props.messages
-      .map((message) => message.content.map((message) => message.text).join(""))
-      .join(""),
-  ])
-
-  return (
-    <div
-      ref={messages_container_ref}
-      className="flex-1 space-y-8 overflow-y-auto p-4"
-    >
-      {props.messages.map((message) => (
-        <div key={message.id} className="w-full space-y-2">
-          {message.content.map((content, index) => (
-            <AiAssistantChatMessage
-              key={index}
-              message={content}
-              role={message.role}
-            />
-          ))}
-        </div>
-      ))}
-
-      {props.is_loading && (
-        <div className="flex justify-start">
-          <div className="bg-base-200 text-base-content rounded-lg p-3">
-            <span className="loading loading-dots loading-sm"></span>
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
-
-const Dialog = (props: {
-  is_open: boolean
-  on_close: () => void
-  children: React.ReactNode
-}) => {
-  const { formatMessage } = useIntl()
-  return (
-    <dialog className="modal p-4" open={props.is_open} onClose={props.on_close}>
-      <div className="modal-box border-base-300 rounded-box bg-base-100 flex h-full !w-full !max-w-2xl flex-col border p-0">
-        <div className="border-base-300 flex items-center justify-between gap-2 border-b p-4">
-          <div className="flex items-center gap-2">
-            <SparklesIcon className="fill-primary text-primary-content size-5" />
-            <h3 className="text-lg font-semibold">
-              {formatMessage({ id: "ai_assistant_chat/title" })}
-            </h3>
-          </div>
-          <button className="btn btn-ghost btn-circle" onClick={props.on_close}>
-            <XIcon className="size-5" />
-          </button>
-        </div>
-
-        {props.children}
-      </div>
-    </dialog>
-  )
-}
+import { LOCAL_STORAGE_KEYS } from "@/modules/global/services/localstorage_service/localstorage_service"
+import { catch_error } from "@/modules/global/redux/global_actions"
+import { AiAssistantChatMessages } from "@/modules/ai_assistant/components/ai_assistant_chat_messages/ai_assistant_chat_messages"
+import { AiAssistantChatDialog } from "@/modules/ai_assistant/components/ai_assistant_chat_dialog/ai_assistant_chat_dialog"
+import { AiAssistantChatFooter } from "@/modules/ai_assistant/components/ai_assistant_chat_footer/ai_assistant_chat_footer"
 
 export function Wrapper() {
-  const { messages, status, error, sendMessage, addToolOutput } = useChat({
+  const { messages, status, sendMessage, addToolOutput } = useChat({
     transport: new DefaultChatTransport({
       api: "http://localhost:3000/ai_assistant/chat",
       body: async () => ({
         deck: getStore().getState().deck_update.deck!,
       }),
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem(LOCAL_STORAGE_KEYS.jwt)}`,
+      },
     }),
     sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
+    onError: (error) => {
+      const store = getStore()
+
+      store.dispatch(
+        catch_error({
+          message: error.message,
+          stack: error.stack || "",
+        }),
+      )
+    },
     onToolCall: async ({ toolCall }) => {
       const store = getStore()
 
@@ -204,11 +99,11 @@ export function Wrapper() {
 
   return (
     <>
-      <Conversations
+      <AiAssistantChatMessages
         messages={messages_to_render}
         is_loading={status === "submitted"}
       />
-      <Footer
+      <AiAssistantChatFooter
         on_send_message={on_send_message}
         is_loading={status === "submitted"}
       />
@@ -217,17 +112,9 @@ export function Wrapper() {
 }
 
 export const AiAssistantChat = () => {
-  const { is_open } = useAppSelector((state) => state.ai_assistant)
-  const dispatch = useAppDispatch()
-
   return (
-    <Dialog
-      is_open={is_open}
-      on_close={() => {
-        dispatch(ai_assistant_actions.close())
-      }}
-    >
+    <AiAssistantChatDialog>
       <Wrapper />
-    </Dialog>
+    </AiAssistantChatDialog>
   )
 }

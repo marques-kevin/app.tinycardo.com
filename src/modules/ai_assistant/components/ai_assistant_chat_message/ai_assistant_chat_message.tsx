@@ -51,5 +51,5 @@ export const AiAssistantChatMessage = memo(
       </>
     )
   },
-  (prevProps, nextProps) => prevProps.message === nextProps.message,
+  (prevProps, nextProps) => prevProps.message.text === nextProps.message.text,
 )
